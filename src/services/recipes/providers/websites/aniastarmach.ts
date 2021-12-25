@@ -1,0 +1,36 @@
+import type { Provider, RecipeScrapper } from 'services/recipes/providers';
+import jsonldScrapper from 'services/recipes/providers/jsonld';
+import icon from 'assets/provider_icons/ania_starmach.png';
+import { colorExtractor } from '../utils';
+
+export const AniaStarmachProvider: Provider = (() => {
+  const name = 'Ania Starmach';
+  const url = 'aniastarmach.pl';
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const scrapper: RecipeScrapper = async (doc, url) => {
+    const data = await jsonldScrapper(doc, url);
+
+    let color;
+    if (data?.image) {
+      const palette = await colorExtractor(data.image);
+      color = palette.Vibrant?.hex;
+    }
+
+    const tagsElements = doc.querySelectorAll('.tags-wrapper a');
+    const tags = Array
+      .from(tagsElements)
+      .map((elem) => elem.textContent?.toLowerCase())
+      .filter(Boolean) as string[];
+
+    return {
+      ...data,
+      color,
+      tags,
+    };
+  };
+
+  return {
+    name, url, scrapper, icon,
+  };
+})();
