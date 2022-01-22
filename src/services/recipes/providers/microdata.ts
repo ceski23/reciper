@@ -22,7 +22,7 @@ const scrapper: RecipeScrapper = async (doc, url) => {
     .map((elem) => elem.textContent?.trim())
     .filter(Boolean) as string[];
 
-  if (instructions.length === 0) throw Error('No instructions found');
+  // if (instructions.length === 0) throw Error('No instructions found');
 
   const prepTime = root.querySelector('[itemprop="prepTime"]')?.getAttribute('content') || undefined;
 
@@ -46,7 +46,7 @@ const scrapper: RecipeScrapper = async (doc, url) => {
     .map((elem) => elem.textContent?.trim())
     .filter(Boolean) as string[];
 
-  if (ingredients.length === 0) throw Error('No ingredients found');
+  // if (ingredients.length === 0) throw Error('No ingredients found');
 
   return {
     name,

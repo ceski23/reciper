@@ -61,7 +61,8 @@ export const RecipeScreen: VFC = () => {
       scrapeRecipe(params.recipeUrl as string)
         // eslint-disable-next-line @typescript-eslint/no-shadow
         .then((recipe) => recipe && setRecipe(recipe))
-        .catch(() => {
+        .catch((err) => {
+          console.error(err);
           toast.error('Wystąpił błąd podczas wczytywania przepisu');
           navigate(urls.home);
         });
