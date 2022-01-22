@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { IntlMessageFormat } from 'intl-messageformat';
 import { UNITS } from '.';
 

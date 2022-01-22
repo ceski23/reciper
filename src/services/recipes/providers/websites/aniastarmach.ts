@@ -1,7 +1,7 @@
 import type { Provider, RecipeScrapper } from 'services/recipes/providers';
 import jsonldScrapper from 'services/recipes/providers/jsonld';
 import icon from 'assets/provider_icons/ania_starmach.png';
-import { colorExtractor } from '../utils';
+import { colorExtractor } from 'services/recipes/providers/utils';
 
 export const AniaStarmachProvider: Provider = (() => {
   const name = 'Ania Starmach';

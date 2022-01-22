@@ -1,5 +1,5 @@
 import { VFC } from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { transparentize } from 'polished';
 import IntlMessageFormat from 'intl-messageformat';
 import { Button } from 'components/Button';
@@ -24,7 +24,6 @@ const Container = styled.div`
   border-radius: 20px;
   display: flex;
   align-items: center;
-  margin-top: 50px;
 `;
 
 const Text = styled.p`
@@ -45,21 +44,21 @@ export const servingsText = new IntlMessageFormat(`
 export const Servings: VFC<Props> = ({ servings, onServingsChange }) => {
   const decreaseServings = () => {
     onServingsChange(Math.max(1, servings - 1));
-  }
+  };
 
   const increaseServings = () => {
     onServingsChange(servings + 1);
-  }
+  };
 
   return (
     <Container>
       <StyledButton onClick={decreaseServings}>-</StyledButton>
-     
+
       <Text>
         {servingsText.format({ quantity: servings })}
       </Text>
 
       <StyledButton onClick={increaseServings}>+</StyledButton>
     </Container>
-  );  
-}
+  );
+};

@@ -1,21 +1,14 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { VFC } from 'react';
-import { ReactComponent as BackIcon } from 'assets/left-arrow.svg';
-import { SettingsListItem } from 'components/SettingsListItem';
+import { SettingsListItem } from 'components/settings/SettingsListItem';
 import { ReactComponent as UserIcon } from 'assets/user.svg';
 import { ReactComponent as BrushIcon } from 'assets/brush.svg';
 import { ReactComponent as WeightIcon } from 'assets/kilogram.svg';
-import { ReactComponent as SettingsIcon } from 'assets/cogwheel.svg';
+// import { ReactComponent as SettingsIcon } from 'assets/cogwheel.svg';
 import { Link } from 'components/Link';
-import { ScreenContainer } from '../ScreenContainer';
 import { urls } from 'urls';
-
-const ScreenHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 16px;
-`;
+import { ScreenHeader } from 'components/Screen/ScreenHeader';
+import { FluidContainer } from 'components/Container';
 
 const SettingsList = styled.div`
   display: flex;
@@ -28,28 +21,12 @@ const SettingsList = styled.div`
   }
 `;
 
-const BackLink = styled(Link)`
-  width: 30px;
-  height: 30px;
-  color: ${(props) => props.theme.colors.textalt};
-  margin-right: 20px;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-`;
-
 export const SettingsScreen: VFC = () => (
-  <ScreenContainer>
-    <ScreenHeader>
-      <BackLink to={urls.home}>
-        <BackIcon />
-      </BackLink>
-      <h1>Ustawienia</h1>
-    </ScreenHeader>
+  <FluidContainer>
+    <ScreenHeader title="Ustawienia" />
 
     <SettingsList>
-      <SettingsListItem text="Ogólne" icon={SettingsIcon} />
+      {/* <SettingsListItem text="Ogólne" icon={SettingsIcon} /> */}
 
       <Link to={urls.settings.appearance}>
         <SettingsListItem text="Wygląd" icon={BrushIcon} />
@@ -63,5 +40,5 @@ export const SettingsScreen: VFC = () => (
         <SettingsListItem text="Jednostki" icon={WeightIcon} />
       </Link>
     </SettingsList>
-  </ScreenContainer>
+  </FluidContainer>
 );

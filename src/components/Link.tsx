@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
 import { isUrlExternal } from 'utils/url';
 

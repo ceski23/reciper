@@ -1,10 +1,8 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { transparentize } from 'polished';
-import React, { VFC } from 'react';
+import React from 'react';
 import { ReactComponent as LoupeIcon } from 'assets/loupe.svg';
-import { useNavigate } from 'react-router';
-import { reverse } from 'named-urls';
-import { urls } from 'urls';
+import { useDebouncedFn } from 'beautiful-react-hooks';
 
 const Input = styled('input')`
   border-radius: 15px;
@@ -40,23 +38,33 @@ const SearchIcon = styled(LoupeIcon)`
 
 interface Props {
   className?: string;
+  onDebouncedChange?: (query: string) => void;
+  onChange?: (query: string) => void;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  value: string;
 }
 
-export const Searchbar: VFC<Props> = ({ className }) => {
-  const navigate = useNavigate();
+export const Searchbar = React.forwardRef<HTMLInputElement, Props>(
+  ({
+    className, onChange, onClick, value, onDebouncedChange,
+  }, ref) => {
+    const debouncedOnChange = useDebouncedFn(onDebouncedChange ?? (() => {}), 500, undefined, []);
 
-  const handleChange: React.FocusEventHandler<HTMLInputElement> = (event) => {
-    const url = reverse(urls.recipe, {
-      recipeUrl: encodeURIComponent(event.currentTarget.value),
-    });
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+      debouncedOnChange(event.currentTarget.value);
+      onChange?.(event.currentTarget.value);
+    };
 
-    if (event.currentTarget.value) navigate(url);
-  };
-
-  return (
-    <Wrapper>
-      <Input placeholder="Search for recipes" className={className} onBlur={handleChange} />
-      <SearchIcon />
-    </Wrapper>
-  );
-};
+    return (
+      <Wrapper className={className} onClick={onClick}>
+        <Input
+          placeholder="Search for recipes"
+          onChange={handleChange}
+          value={value}
+          ref={ref}
+        />
+        <SearchIcon />
+      </Wrapper>
+    );
+  },
+);

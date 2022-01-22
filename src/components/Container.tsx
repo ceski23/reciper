@@ -1,22 +1,21 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { media } from 'utils/mediaQueries';
-import { Breakpoint } from 'theme';
-import { css, Theme } from '@emotion/react';
+import { css } from '@emotion/react/macro';
 
-export const fluidContainerStyles = ({ theme }: { theme: Theme }) => css`
+export const fluidContainerStyles = css`
   display: grid;
-  grid-template-columns: 1fr 90% 1fr;
+  grid-template-columns: 50px 1fr 50px;
+  align-content: flex-start;
 
   & > * {
     grid-column: 2;
     width: 100%;
   }
 
-  ${(Object.entries(theme.containerWidths).map(([name, width]) => (
-    `${media.up(name as Breakpoint)} {
-        grid-template-columns: 1fr ${width}px 1fr
-    }`
-  )))}
+  ${media.down('medium')} {
+    grid-template-columns: 1fr 90% 1fr;
+    padding-bottom: 70px;
+  }
 `;
 
 export const fullBleedStyles = css`

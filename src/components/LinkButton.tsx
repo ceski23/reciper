@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import React, { FC } from 'react';
 import { buttonIconStyles, buttonStyles } from './Button';
 import { Link, LinkProps } from './Link';

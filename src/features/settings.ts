@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
-import { Theme } from '@emotion/react';
+import { Theme } from '@emotion/react/macro';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -28,10 +28,8 @@ const initialState: SettingsState = {
   theme: 'system',
   dynamicPrimaryColor: true,
   useUnitsConversion: true,
-  unitsConversion: {
-    Tbs: 'ml',
-  },
-  conversionPrecision: 0,
+  unitsConversion: {},
+  conversionPrecision: 2,
 };
 
 const slice = createSlice({

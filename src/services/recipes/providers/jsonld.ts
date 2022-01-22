@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable import/no-cycle */
 /* eslint-disable prefer-destructuring */
 import { HowToStep, Recipe as SchemaRecipe } from 'schema-dts';
 import { Recipe, RecipeScrapper } from '.';
@@ -41,6 +45,7 @@ const parseInstructions = (instructions: SchemaRecipe['recipeInstructions']): st
   throw Error('Couldn\'t parse instructions');
 };
 
+// eslint-disable-next-line @typescript-eslint/require-await
 const scrapper: RecipeScrapper = async (doc, url) => {
   const data = doc.querySelectorAll('[type="application/ld+json"]');
 
@@ -50,7 +55,9 @@ const scrapper: RecipeScrapper = async (doc, url) => {
     return (parsed['@type'] === 'Recipe');
   });
 
-  const schemaRecipe = JSON.parse(recipeElement?.textContent || '') as SchemaRecipe;
+  if (!recipeElement) throw Error('No JSON-LD data available');
+
+  const schemaRecipe = JSON.parse(recipeElement.textContent ?? '') as SchemaRecipe;
 
   const { name } = schemaRecipe;
   if (!name) throw Error('Couldn\'t find recipe name');
@@ -74,7 +81,9 @@ const scrapper: RecipeScrapper = async (doc, url) => {
   // FIXME: Better duration recognition
   if (prepTime !== undefined && typeof prepTime !== 'string') prepTime = undefined;
 
-  const servings = schemaRecipe.recipeYield ? Number.parseInt(schemaRecipe.recipeYield.toString(), 10) : undefined;
+  const servings = schemaRecipe.recipeYield
+    ? Number.parseInt(schemaRecipe.recipeYield.toString(), 10)
+    : undefined;
 
   const recipe: Recipe = {
     name: name.toString(),
@@ -85,7 +94,7 @@ const scrapper: RecipeScrapper = async (doc, url) => {
     prepTime,
     url,
     tags: [],
-    servings
+    servings,
   };
 
   return recipe;

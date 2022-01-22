@@ -1,10 +1,7 @@
 /* eslint-disable max-len */
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { VFC } from 'react';
-
 import { useAppDispatch, useAppSelector } from 'hooks/store';
-import { ReactComponent as BackIcon } from 'assets/left-arrow.svg';
-import { Link } from 'components/Link';
 import { CheckboxSetting } from 'components/settings/CheckboxSetting';
 import {
   selectConversionPrecision,
@@ -13,31 +10,13 @@ import {
 import { UNITS } from 'services/units';
 import unitsConverter from 'utils/unitsConverter';
 import { InputSetting } from 'components/settings/InputSetting';
-import { ScreenContainer } from '../ScreenContainer';
-import { urls } from 'urls';
+import { ScreenHeader } from 'components/Screen/ScreenHeader';
+import { FluidContainer } from 'components/Container';
 
 const SettingsContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-`;
-
-const ScreenHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const BackLink = styled(Link)`
-  width: 30px;
-  height: 30px;
-  color: ${(props) => props.theme.colors.textalt};
-  margin-right: 20px;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
 `;
 
 export const UnitsSubPage: VFC = () => {
@@ -59,14 +38,8 @@ export const UnitsSubPage: VFC = () => {
   };
 
   return (
-    <ScreenContainer>
-      <ScreenHeader>
-        <BackLink to={urls.settings.toString()}>
-          <BackIcon />
-        </BackLink>
-
-        <h1>Jednostki</h1>
-      </ScreenHeader>
+    <FluidContainer>
+      <ScreenHeader title="Jednostki" />
 
       <CheckboxSetting
         title="Konwerter jednostek"
@@ -105,6 +78,6 @@ export const UnitsSubPage: VFC = () => {
           </div>
         ))}
       </SettingsContainer>
-    </ScreenContainer>
+    </FluidContainer>
   );
 };

@@ -1,4 +1,4 @@
-import { css, Theme } from '@emotion/react';
+import { css, Theme } from '@emotion/react/macro';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (theme: Theme) => css`
@@ -16,6 +16,7 @@ export default (theme: Theme) => css`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow: hidden;
   }
 
   * {

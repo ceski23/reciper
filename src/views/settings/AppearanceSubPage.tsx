@@ -1,33 +1,13 @@
-import styled from '@emotion/styled';
-import React, { VFC } from 'react';
+import { VFC } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
-import { ReactComponent as BackIcon } from 'assets/left-arrow.svg';
 import {
   selectCurrentThemeType, selectDynamicPrimaryColor, setDynamicPrimaryColor, setTheme, themeName,
 } from 'features/settings';
-import { Theme } from '@emotion/react';
+import { Theme } from '@emotion/react/macro';
 import { RadioGroup } from 'components/settings/RadioGroup';
-import { urls } from 'urls';
-import { Link } from 'components/Link';
 import { CheckboxSetting } from 'components/settings/CheckboxSetting';
-import { ScreenContainer } from '../ScreenContainer';
-
-const ScreenHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const BackLink = styled(Link)`
-  width: 30px;
-  height: 30px;
-  color: ${(props) => props.theme.colors.textalt};
-  margin-right: 20px;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-`;
+import { ScreenHeader } from 'components/Screen/ScreenHeader';
+import { FluidContainer } from 'components/Container';
 
 const themeOptions = (['light', 'dark', 'system'] as Array<Theme['type'] | 'system'>).map((type) => ({
   text: themeName(type),
@@ -48,14 +28,8 @@ export const AppearanceSubPage: VFC = () => {
   };
 
   return (
-    <ScreenContainer>
-      <ScreenHeader>
-        <BackLink to={urls.settings.toString()}>
-          <BackIcon />
-        </BackLink>
-
-        <h1>Wygląd</h1>
-      </ScreenHeader>
+    <FluidContainer>
+      <ScreenHeader title="Wygląd" />
 
       <RadioGroup
         title="Wybierz motyw"
@@ -73,6 +47,6 @@ export const AppearanceSubPage: VFC = () => {
         onChange={handleChangeDynamicColor}
       />
 
-    </ScreenContainer>
+    </FluidContainer>
   );
 };

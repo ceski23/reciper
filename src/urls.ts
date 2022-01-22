@@ -1,10 +1,13 @@
-import { include } from "named-urls";
+import { include } from 'named-urls';
 
 export const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
 export const urls = {
   home: '/',
-  recipe: '/recipe/:recipeUrl/',
+  recipes: include('/recipes', {
+    recipe: ':recipeUrl',
+  }),
+  sharedRecipe: '/sharedRecipe',
   colors: '/colors',
   authRedirect: {
     google: '/auth/google',
@@ -14,5 +17,8 @@ export const urls = {
     account: 'account',
     units: 'units',
   }),
-  tags: '/tags/:tag',
+  tags: include('/tags', {
+    tag: ':tag',
+  }),
+  search: '/search',
 };

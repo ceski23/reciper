@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import IntlMessageFormat from 'intl-messageformat';
 import { Unit } from './Unit';
 
@@ -13,5 +14,5 @@ export class Cup extends Unit {
       many {szklanek}
       other {szklanki}
     }
-  `);
+  `, 'pl-PL');
 }

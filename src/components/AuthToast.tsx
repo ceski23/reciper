@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { VFC } from 'react';
 import { urls } from 'urls';
 import { Link } from './Link';

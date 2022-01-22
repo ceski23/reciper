@@ -1,41 +1,59 @@
-import { VFC, useMemo, MouseEventHandler, useState } from 'react';
-import styled from '@emotion/styled';
+import {
+  VFC, useMemo, MouseEventHandler, useState,
+} from 'react';
+import styled from '@emotion/styled/macro';
 import { ParsedIngredient, parseIngredient } from 'services/ingredients/parser';
 import { chooseProvider, getRecipeId, Recipe as RecipeType } from 'services/recipes/providers';
 import dayjs from 'dayjs';
-import { RecipeStep } from 'components/RecipeStep';
-import { RecipeFeature } from 'components/RecipeFeature';
+import { RecipeStep } from 'components/recipe/RecipeStep';
+import { RecipeFeature } from 'components/recipe/RecipeFeature';
 import { ReactComponent as ClockIcon } from 'assets/clock.svg';
 import { ReactComponent as FlameIcon } from 'assets/fire.svg';
 import { ReactComponent as ServingsIcon } from 'assets/servings.svg';
 import { ReactComponent as StarIcon } from 'assets/favourite.svg';
 import { ReactComponent as DisketteIcon } from 'assets/diskette.svg';
 import { ReactComponent as TrashIcon } from 'assets/trash.svg';
-import { ReactComponent as LeftArrowIcon } from 'assets/left-arrow.svg';
 import { ReactComponent as ShoppingList } from 'assets/shopping-list.svg';
-import { RecipeCover } from 'components/RecipeCover';
-import { Button, buttonStyles } from 'components/Button';
-import { ThemeProvider, useTheme } from '@emotion/react';
+import { Button } from 'components/Button';
+import { ThemeProvider, useTheme } from '@emotion/react/macro';
 import { generateThemeColors, lightTheme } from 'theme';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 import { removeRecipe, saveRecipe, selectRecipeIds } from 'features/recipes';
 import toast from 'react-hot-toast';
-import { IngredientItem } from 'components/IngredientItem';
-import { urls } from 'urls';
+import { IngredientItem } from 'components/recipe/IngredientItem';
 import { selectShoppingList } from 'features/user';
-import { Tag } from 'components/Tag';
+import { Tag } from 'components/recipe/Tag';
 import { useAccountProvider } from 'hooks/useAccountProvider';
 import { selectDynamicPrimaryColor } from 'features/settings';
-import { Link } from 'components/Link';
 import { Servings, servingsText } from 'components/recipe/Servings';
+import IntlMessageFormat from 'intl-messageformat';
+import { media } from 'utils/mediaQueries';
+import { fluidTypography } from 'utils/typography';
+import { RecipeCover } from './recipe/RecipeCover';
+import { RecipeProvider } from './recipe/RecipeProvider';
+import { FluidContainer } from './Container';
+
+export const ingredientsText = new IntlMessageFormat(`
+  {quantity, plural,
+    one {# produkt}
+    few {# produkty}
+    many {# produktów}
+    other {# produktu}
+  }
+`, 'pl-PL');
 
 interface Props {
   recipe: RecipeType
 }
 
 const Title = styled('h1')`
-  font-size: 25px;
   margin-bottom: 10px;
+  ${({ theme }) => fluidTypography(
+    theme.breakpoints.small,
+    theme.breakpoints.xlarge,
+    25,
+    45,
+  )}
 `;
 
 const RecipeSteps = styled.div`
@@ -49,49 +67,27 @@ const Features = styled.div`
   justify-content: space-around;
   grid-auto-flow: column;
   grid-template-columns: repeat(3, 1fr);
-  margin-bottom: 30px;
-  margin-top: 30px;
 `;
 
 const Description = styled.div`
-  font-size: 16px;
+  font-size: clamp(16px, 1.1vw, 26px);
   line-height: 1.4;
   text-align: justify;
 `;
 
-const ProviderIcon = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
-`;
-
-const ProviderName = styled.span`
-  color: ${(props) => props.theme.colors.primary};
-  font-weight: 600;
-`;
-
-const Provider = styled.a`
-  text-decoration: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const ContentWrapper = styled.div`
-  margin-bottom: 20px;
+const ContentWrapper = styled(FluidContainer)`
+  margin: 50px 0;
   color: ${(props) => props.theme.colors.text};
   background-color: ${(props) => props.theme.colors.background};
+  row-gap: 50px;
+
+  ${media.down('medium')} {
+    margin-top: 0;
+  }
 `;
 
 const AddToListButton = styled(Button)`
   width: 100%;
-  margin-top: 30px;
-  margin-bottom: 50px;
-`;
-
-const BackArrowIcon = styled(LeftArrowIcon)`
-  width: 20px;
-  height: 20px;
 `;
 
 const SaveIcon = styled(DisketteIcon)`
@@ -104,34 +100,6 @@ const UnsaveIcon = styled(TrashIcon)`
   height: 20px;
 `;
 
-const AnotherContainer = styled.div`
-  margin-top: 30px;
-`;
-
-const BackButton = styled(Link)`
-  ${buttonStyles}
-
-  min-width: unset;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 10px;
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.background};
-  color: ${(props) => props.theme.colors.textalt};
-`;
-
-const FavButton = styled(Button)`
-  min-width: unset;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 10px 10px;
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.background};
-  color: ${(props) => props.theme.colors.textalt};
-`;
-
 const IngredientsHeader = styled.div`
   display: flex;
   justify-content: space-between;
@@ -140,7 +108,12 @@ const IngredientsHeader = styled.div`
 
 const AltText = styled.span`
   color: ${(props) => props.theme.colors.textalt};
-  font-size: 14px;
+  ${({ theme }) => fluidTypography(
+    theme.breakpoints.small,
+    theme.breakpoints.xlarge,
+    14,
+    16,
+  )}
 `;
 
 const RecipeLink = styled.a`
@@ -152,15 +125,11 @@ const Tags = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: -10px;
-  margin-right: -10px;
-  margin-top: 30px;
+  gap: 10px;
 
   & > * {
     text-align: center;
     flex: 1 0 auto;
-    margin-bottom: 10px;
-    margin-right: 10px;
   }
 `;
 
@@ -168,6 +137,31 @@ const IngredientsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
+
+const IngredientsSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 20px;
+  margin-bottom: auto;
+  gap: 30px;
+
+  ${media.down('large')} {
+    position: static;
+  }
+`;
+
+const SideBySide = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+
+  ${media.down('large')} {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 40px;
+  }
 `;
 
 export const Recipe: VFC<Props> = ({ recipe }) => {
@@ -184,9 +178,9 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
   const parsedIngredients = useMemo<ParsedIngredient[]>(() => (
     (recipe?.ingredients ?? [])
       .map(parseIngredient)
-      .map(ingredient => {
+      .map((ingredient) => {
         if (!servings || !('quantity' in ingredient) || !recipe.servings) return ingredient;
-        return {...ingredient, quantity: ingredient.quantity / recipe.servings * servings }
+        return { ...ingredient, quantity: (ingredient.quantity / recipe.servings) * servings };
       })
   ), [recipe?.ingredients, recipe.servings, servings]);
 
@@ -215,7 +209,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
     toast.success('Przepis został usunięty');
   };
 
-  const handleAddToShoppingList = async () => {
+  const handleAddToShoppingList = () => {
     if (accountProvider && shoppingList && parsedIngredients) {
       const promise = accountProvider.addIngredientsToList(
         shoppingList.id,
@@ -223,6 +217,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
         recipe.name,
       );
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       toast.promise(promise, {
         loading: 'Dodawanie do listy',
         success: 'Dodano składniki do listy',
@@ -233,36 +228,25 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
 
   return (
     <ThemeProvider theme={colorizedTheme ?? theme}>
-      {recipe.image && <RecipeCover src={recipe.image as string} />}
-
-      <BackButton to={urls.home}>
-        <BackArrowIcon />
-      </BackButton>
-
-      {recipeIds.includes(getRecipeId(recipe.url)) ? (
-        <FavButton onClick={handleRemoveRecipe} title="Usuń przepis">
-          <UnsaveIcon />
-        </FavButton>
-      ) : (
-        <FavButton onClick={handleSaveRecipe} title="Zapisz przepis">
-          <SaveIcon />
-        </FavButton>
-      )}
-
       <ContentWrapper>
-        <Title>{recipe.name}</Title>
+        {recipe.image && <RecipeCover src={recipe.image} />}
 
-        <Provider href={recipe.url} target="_blank">
-          {recipeProvider.icon && <ProviderIcon src={recipeProvider.icon} />}
-          <ProviderName>{recipeProvider.name || 'Strona przepisu'}</ProviderName>
-        </Provider>
+        <div>
+          <Title>{recipe.name}</Title>
+          <RecipeProvider provider={recipeProvider} recipeUrl={recipe.url} />
+        </div>
 
         {(recipe.rating || recipe.calories || preparationDuration) && (
           <Features>
             {preparationDuration && <RecipeFeature icon={ClockIcon} text={preparationDuration} />}
             {recipe.calories && <RecipeFeature icon={FlameIcon} text={`${recipe.calories} kcal`} />}
             {recipe.rating && <RecipeFeature icon={StarIcon} text={recipe.rating.toFixed(1)} />}
-            {recipe.servings && <RecipeFeature icon={ServingsIcon} text={servingsText.format({ quantity: recipe.servings }).toString()} />}
+            {recipe.servings && (
+              <RecipeFeature
+                icon={ServingsIcon}
+                text={servingsText.format({ quantity: recipe.servings }).toString()}
+              />
+            )}
           </Features>
         )}
 
@@ -271,57 +255,69 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
         )}
 
         {recipe.tags.length > 0 && (
-          <Tags>
-            {recipe.tags.map((tag) => <Tag key={tag} tag={tag} />)}
-          </Tags>
+          <Tags>{recipe.tags.map((tag) => <Tag key={tag} tag={tag} />)}</Tags>
         )}
 
-        {servings && <Servings servings={servings} onServingsChange={setServings} />}
+        {recipeIds.includes(getRecipeId(recipe.url)) ? (
+          <Button icon={UnsaveIcon} onClick={handleRemoveRecipe}>Usuń przepis</Button>
+        ) : (
+          <Button icon={SaveIcon} onClick={handleSaveRecipe}>Zapisz przepis</Button>
+        )}
 
-        {parsedIngredients && (
-          <AnotherContainer>
-            <IngredientsHeader>
-              <RecipeLink href="#ingredients" id="ingredients">
-                <h2>Składniki</h2>
+        <SideBySide>
+          {recipe.instructions && (
+            <div>
+              <RecipeLink href="#instructions" id="instructions">
+                <h2>Przygotowanie</h2>
               </RecipeLink>
 
-              <AltText>{recipe.ingredients.length} produktów</AltText>
-            </IngredientsHeader>
+              <RecipeSteps>
+                {recipe.instructions.map((ins, idx) => (
+                  <RecipeStep
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={idx}
+                    stepNumber={idx + 1}
+                    instruction={ins}
+                    done={doneSteps.includes(idx)}
+                    onClick={() => handleStepClicked(idx)}
+                  />
+                ))}
+              </RecipeSteps>
+            </div>
+          )}
 
-            <IngredientsContainer>
-              {parsedIngredients.map((ingredient) => (
-                <IngredientItem ingredient={ingredient} key={ingredient.original} />
-              ))}
-            </IngredientsContainer>
+          <IngredientsSection>
+            {servings && <Servings servings={servings} onServingsChange={setServings} />}
 
-            {shoppingList && (
-              <AddToListButton icon={ShoppingList} onClick={handleAddToShoppingList}>
-                {`Dodaj do "${shoppingList.name}"`}
-              </AddToListButton>
+            {parsedIngredients && (
+              <>
+                <div>
+                  <IngredientsHeader>
+                    <RecipeLink href="#ingredients" id="ingredients">
+                      <h2>Składniki</h2>
+                    </RecipeLink>
+
+                    <AltText>
+                      {ingredientsText.format({ quantity: recipe.ingredients.length })}
+                    </AltText>
+                  </IngredientsHeader>
+
+                  <IngredientsContainer>
+                    {parsedIngredients.map((ingredient) => (
+                      <IngredientItem ingredient={ingredient} key={ingredient.original} />
+                    ))}
+                  </IngredientsContainer>
+                </div>
+
+                {shoppingList && (
+                  <AddToListButton icon={ShoppingList} onClick={handleAddToShoppingList}>
+                    {`Dodaj do "${shoppingList.name}"`}
+                  </AddToListButton>
+                )}
+              </>
             )}
-          </AnotherContainer>
-        )}
-
-        {recipe.instructions && (
-          <AnotherContainer>
-            <RecipeLink href="#instructions" id="instructions">
-              <h2>Przygotowanie</h2>
-            </RecipeLink>
-
-            <RecipeSteps>
-              {recipe.instructions.map((ins, idx) => (
-                <RecipeStep
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={idx}
-                  stepNumber={idx + 1}
-                  instruction={ins}
-                  done={doneSteps.includes(idx)}
-                  onClick={() => handleStepClicked(idx)}
-                />
-              ))}
-            </RecipeSteps>
-          </AnotherContainer>
-        )}
+          </IngredientsSection>
+        </SideBySide>
       </ContentWrapper>
     </ThemeProvider>
   );

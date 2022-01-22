@@ -1,21 +1,28 @@
+/* eslint-disable import/no-cycle */
 import { RecipeScrapper } from '.';
 
+// eslint-disable-next-line @typescript-eslint/require-await
 const scrapper: RecipeScrapper = async (doc, url) => {
-  const root = doc.querySelector('[itemscope][itemtype="https://schema.org/Recipe"]');
+  const root = doc.querySelector('[itemscope][itemtype="https://schema.org/Recipe"], [itemscope][itemtype="http://schema.org/Recipe"]');
   if (!root) throw Error('Couldn\'t find recipe');
 
-  const name = root.querySelector('[itemprop="name"]')?.textContent || undefined;
+  const nameElement = root.querySelector('[itemprop="name"]');
+  const name = (nameElement?.tagName === 'META') ? nameElement.getAttribute('content') : nameElement?.textContent;
   if (!name) throw Error('Couldn\'t find recipe name');
 
-  const description = root.querySelector('[itemprop="description"]')?.textContent || undefined;
-  const image = root.querySelector('[itemprop="image"]')?.getAttribute('src') || undefined;
+  const descriptionElement = root.querySelector('[itemprop="description"]');
+  const description = ((descriptionElement?.tagName === 'META') ? descriptionElement.getAttribute('content') : descriptionElement?.textContent) ?? undefined;
+
+  const imageElement = root.querySelector('[itemprop="image"]');
+  const image = ((imageElement?.tagName === 'META') ? imageElement.getAttribute('content') : imageElement?.getAttribute('src')) ?? undefined;
 
   const instructionsElements = root.querySelectorAll('[itemprop="recipeInstructions"]');
   const instructions = Array
     .from(instructionsElements)
     .map((elem) => elem.textContent?.trim())
     .filter(Boolean) as string[];
-  // if (instructions.length === 0) return undefined;
+
+  if (instructions.length === 0) throw Error('No instructions found');
 
   const prepTime = root.querySelector('[itemprop="prepTime"]')?.getAttribute('content') || undefined;
 
@@ -38,7 +45,8 @@ const scrapper: RecipeScrapper = async (doc, url) => {
     .from(ingredientsElements)
     .map((elem) => elem.textContent?.trim())
     .filter(Boolean) as string[];
-  // if (ingredients.length === 0) return undefined;
+
+  if (ingredients.length === 0) throw Error('No ingredients found');
 
   return {
     name,

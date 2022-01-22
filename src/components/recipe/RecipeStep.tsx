@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import React, { VFC } from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { transparentize } from 'polished';
-import { css } from '@emotion/react';
+import { css } from '@emotion/react/macro';
+import { fluidTypography } from 'utils/typography';
 
 interface Props {
   stepNumber: number;
@@ -16,7 +17,12 @@ const StepNumber = styled('p')`
   margin: 0;
   margin-bottom: 10px;
   font-weight: 700;
-  font-size: 14px;
+  ${({ theme }) => fluidTypography(
+    theme.breakpoints.small,
+    theme.breakpoints.xlarge,
+    14,
+    18,
+  )}
 `;
 
 const Container = styled.div`
@@ -30,8 +36,13 @@ const Instruction = styled('p')`
   text-align: justify;
   margin: 0;
   line-height: 1.4;
-  font-size: 14px;
   font-weight: 500;
+  ${({ theme }) => fluidTypography(
+    theme.breakpoints.small,
+    theme.breakpoints.xlarge,
+    14,
+    18,
+  )}
 `;
 
 const doneStyles = css`

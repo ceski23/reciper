@@ -11,7 +11,7 @@ import { RootState } from 'store';
 interface UserState {
   accountInfo?: {
     accessToken: string;
-    refreshToken: string;
+    // refreshToken: string;
     type: AccountProviders;
   };
   userInfo?: UserInfo;
@@ -38,6 +38,7 @@ const slice = createSlice({
         const providerType = chooseAccountProvider(state.accountInfo?.type);
         // eslint-disable-next-line new-cap
         const provider = new providerType(state.accountInfo.accessToken);
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         provider.logout();
       }
 
@@ -52,7 +53,7 @@ const slice = createSlice({
 });
 
 export const {
-  setAccountProvider, setUserInfo, logoutUser, setShoppingList, setAccessToken
+  setAccountProvider, setUserInfo, logoutUser, setShoppingList, setAccessToken,
 } = slice.actions;
 
 export const selectAccountInfo = (state: RootState) => state.user.accountInfo;

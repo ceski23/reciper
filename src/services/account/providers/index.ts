@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable max-classes-per-file */
 import { GoogleAccountProvider } from './google';
 

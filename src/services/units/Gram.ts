@@ -1,8 +1,9 @@
+/* eslint-disable import/no-cycle */
 import IntlMessageFormat from 'intl-messageformat';
 import { Unit } from './Unit';
 
 export class Gram extends Unit {
-  pattern = /g|gram|gramy|gramów/;
+  pattern = /\b(?:gramów|gramy|gram|g)\b/;
 
   normalizedName = 'g';
 
@@ -10,5 +11,5 @@ export class Gram extends Unit {
     {quantity, plural,
       other {g}
     }
-  `);
+  `, 'pl-PL');
 }

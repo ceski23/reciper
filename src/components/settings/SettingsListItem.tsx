@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { css, Theme } from '@emotion/react';
-import styled from '@emotion/styled';
+import { css, Theme } from '@emotion/react/macro';
+import styled from '@emotion/styled/macro';
 import React, { VFC } from 'react';
 
 const Container = styled.div`

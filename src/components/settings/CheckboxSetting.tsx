@@ -1,6 +1,5 @@
 /* eslint-disable react/require-default-props */
-import styled from '@emotion/styled';
-import React from 'react';
+import styled from '@emotion/styled/macro';
 
 const InfoContainer = styled.div`
   display: flex;

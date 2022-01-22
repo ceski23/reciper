@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import React, { VFC } from 'react';
-import styled from '@emotion/styled';
-import { Theme, css } from '@emotion/react';
+import styled from '@emotion/styled/macro';
+import { Theme, css } from '@emotion/react/macro';
+import { fluidTypography } from 'utils/typography';
 
 interface Props {
   icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
@@ -12,6 +13,12 @@ const Text = styled('p')`
   margin: 0;
   margin-top: 10px;
   font-weight: 600;
+  ${({ theme }) => fluidTypography(
+    theme.breakpoints.small,
+    theme.breakpoints.xlarge,
+    16,
+    20,
+  )}
 `;
 
 const Container = styled.div`

@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable max-len */
-import styled from '@emotion/styled';
-import React, { VFC, useEffect, useState } from 'react';
+import styled from '@emotion/styled/macro';
+import { VFC, useEffect, useState } from 'react';
 import {
   logoutUser, selectAccountInfo, selectShoppingList, selectUserInfo, setShoppingList,
 } from 'features/user';
@@ -8,43 +11,22 @@ import toast from 'react-hot-toast';
 
 import { Button } from 'components/Button';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
-import { ReactComponent as BackIcon } from 'assets/left-arrow.svg';
 import { UserAvatar } from 'components/UserAvatar';
-import { urls } from 'urls';
 import { RadioGroup } from 'components/settings/RadioGroup';
 import { media } from 'utils/mediaQueries';
 import { getStoredRecipes, RecipesState, updateRecipesFromBackup } from 'features/recipes';
 import { useAccountProvider } from 'hooks/useAccountProvider';
 import { TaskListInfo } from 'services/account/providers/AccountProvider';
 import { AccountProviders, chooseAccountProvider } from 'services/account/providers';
-import { LinkButton } from 'components/LinkButton';
-import { Link } from 'components/Link';
 import { PersistedState } from 'redux-persist';
 import IntlMessageFormat from 'intl-messageformat';
-import { ScreenContainer } from '../ScreenContainer';
+import { ScreenHeader } from 'components/Screen/ScreenHeader';
+import { FluidContainer } from 'components/Container';
 
 const SettingsContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-`;
-
-const ScreenHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 16px;
-`;
-
-const BackLink = styled(Link)`
-  width: 30px;
-  height: 30px;
-  color: ${(props) => props.theme.colors.textalt};
-  margin-right: 20px;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
 `;
 
 const AccountInfo = styled.div`
@@ -88,8 +70,9 @@ const PROVIDERS = Object.values(AccountProviders).map((type) => {
   return {
     name: provider.providerName,
     icon: provider.icon,
-    login: provider.startLogin
-  }
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    login: provider.startLogin,
+  };
 });
 
 export const AccountSubPage: VFC = () => {
@@ -128,8 +111,10 @@ export const AccountSubPage: VFC = () => {
       try {
         const backupPromise = accountProvider.backupRecipes(storedRecipes);
 
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         toast.promise(backupPromise, {
           loading: 'Zapisywanie przepisów...',
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           success: `Zapisano ${recipeText.format({ quantity: Object.keys(storedRecipes.list).length })}`,
           error: 'Wystąpił problem podczas zapisywania przepisów',
         });
@@ -146,8 +131,10 @@ export const AccountSubPage: VFC = () => {
       try {
         const restorePromise = accountProvider.restoreRecipes();
 
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         toast.promise(restorePromise, {
           loading: 'Przywracanie przepisów...',
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           success: (data) => `Przywrócono ${recipeText.format({ quantity: Object.keys(data.list).length })}`,
           error: 'Wystąpił problem podczas przywracania przepisów',
         });
@@ -161,14 +148,8 @@ export const AccountSubPage: VFC = () => {
   };
 
   return (
-    <ScreenContainer>
-      <ScreenHeader>
-        <BackLink to={urls.settings.toString()}>
-          <BackIcon />
-        </BackLink>
-
-        <h1>Konto</h1>
-      </ScreenHeader>
+    <FluidContainer>
+      <ScreenHeader title="Konto" />
 
       <SettingsContainer>
         {accountInfo ? (
@@ -176,7 +157,11 @@ export const AccountSubPage: VFC = () => {
             <h3>Zalogowany jako</h3>
             <AccountInfo>
               <UserAvatar src={user?.image} />
-              <UserName>{user?.firstName} {user?.lastName}</UserName>
+              <UserName>
+                {user?.firstName}
+                {' '}
+                {user?.lastName}
+              </UserName>
               <Button onClick={handleLogoutClick}>
                 Wyloguj
               </Button>
@@ -185,26 +170,28 @@ export const AccountSubPage: VFC = () => {
         ) : (
           <LoginButtonsContainer>
             {PROVIDERS.map(({ icon, name, login }) => (
-              <Button icon={icon} key={name} onClick={login}>Zaloguj do konta {name}</Button>
+              <Button icon={icon} key={name} onClick={login}>
+                Zaloguj do konta
+                {' '}
+                {name}
+              </Button>
             ))}
           </LoginButtonsContainer>
         )}
       </SettingsContainer>
 
       {availableLists.length > 0 && (
-        <>
-          <RadioGroup
-            title="Wybierz listę zakupów"
-            hint="Po wybraniu listy zakupów będzie możliwe szybkie dodanie wszystkich składników do wybranej listy"
-            name="shoppingList"
-            value={shoppingList?.id}
-            options={availableLists.map((list) => ({
-              text: list.name,
-              value: list.id,
-            }))}
-            onSelected={handleSelectList}
-          />
-        </>
+        <RadioGroup
+          title="Wybierz listę zakupów"
+          hint="Po wybraniu listy zakupów będzie możliwe szybkie dodanie wszystkich składników do wybranej listy"
+          name="shoppingList"
+          value={shoppingList?.id}
+          options={availableLists.map((list) => ({
+            text: list.name,
+            value: list.id,
+          }))}
+          onSelected={handleSelectList}
+        />
       )}
 
       <SettingsContainer>
@@ -216,6 +203,6 @@ export const AccountSubPage: VFC = () => {
         </SyncButtonsContainer>
       </SettingsContainer>
 
-    </ScreenContainer>
+    </FluidContainer>
   );
 };

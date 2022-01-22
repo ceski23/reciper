@@ -11,7 +11,7 @@ export const useAccountProvider = () => {
     const providerType = chooseAccountProvider(accountInfo.type);
     // eslint-disable-next-line new-cap
     return new providerType(accountInfo.accessToken);
-  }, [accountInfo?.accessToken, accountInfo?.type]);
+  }, [accountInfo]);
 
   return accountProvider;
 };

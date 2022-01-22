@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import React, { FC } from 'react';
 import { transparentize } from 'polished';
-import { css, Theme } from '@emotion/react';
+import { css, Theme } from '@emotion/react/macro';
 
 export const buttonStyles = ({ theme }: { theme: Theme }) => css`
   padding: 15px 20px;

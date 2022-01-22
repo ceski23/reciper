@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Cup } from './Cup';
 import { Gram } from './Gram';
 import { Kilogram } from './Kilogram';

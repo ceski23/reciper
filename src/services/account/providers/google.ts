@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/naming-convention */
 import googleIcon from 'assets/provider_icons/google.svg';
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
@@ -81,7 +83,7 @@ export class GoogleAccountProvider extends AccountProvider {
     FILE_GET: 'https://www.googleapis.com/drive/v3/files',
     FILE_UPLOAD: 'https://www.googleapis.com/upload/drive/v3/files/{fileId}',
     GET_TOKEN: 'https://oauth2.googleapis.com/token',
-    AUTH: 'https://accounts.google.com/o/oauth2/v2/auth'
+    AUTH: 'https://accounts.google.com/o/oauth2/v2/auth',
   };
 
   constructor(accessToken: string) {
@@ -95,19 +97,20 @@ export class GoogleAccountProvider extends AccountProvider {
     });
   }
 
-  static async startLogin() {
+  static startLogin() {
     if (typeof process.env.REACT_APP_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
 
-    const code_verifier = base64url(randomBytes(96));
-    window.sessionStorage.setItem('code_verifier', code_verifier);
+    // const code_verifier = base64url(randomBytes(96));
+    // window.sessionStorage.setItem('code_verifier', code_verifier);
 
     const params = new URLSearchParams({
       client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       redirect_uri: baseUrl + urls.authRedirect.google,
-      response_type: 'code',
+      // response_type: 'code',
+      response_type: 'token',
       state: window.location.pathname,
-      code_challenge_method: 'S256',
-      code_challenge: await generateCodeChallenge(code_verifier),
+      // code_challenge_method: 'S256',
+      // code_challenge: await generateCodeChallenge(code_verifier),
       scope: [
         'https://www.googleapis.com/auth/tasks',
         'https://www.googleapis.com/auth/tasks.readonly',
@@ -127,20 +130,25 @@ export class GoogleAccountProvider extends AccountProvider {
 
     const params = new URLSearchParams(window.location.search);
     const code_verifier = window.sessionStorage.getItem('code_verifier') as string;
-  
+
     const data = new URLSearchParams({
       client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       grant_type: 'authorization_code',
       code: params.get('code') as string,
       redirect_uri: baseUrl + urls.authRedirect.google,
-      code_verifier: code_verifier,
+      code_verifier,
     });
-  
-    const response = await axios.post<AuthReturnedParams>(GoogleAccountProvider.URLS.GET_TOKEN, data, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    });
+
+    const response = await axios.post<AuthReturnedParams>(
+      GoogleAccountProvider.URLS.GET_TOKEN,
+      data,
+
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      },
+    );
 
     return response.data;
   }
@@ -151,12 +159,12 @@ export class GoogleAccountProvider extends AccountProvider {
     const data = new URLSearchParams({
       client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       grant_type: 'refresh_token',
-      refresh_token: refreshToken
+      refresh_token: refreshToken,
     });
-  
+
     return axios
       .post<{ access_token: string }>(GoogleAccountProvider.URLS.GET_TOKEN, data)
-      .then(res => res.data.access_token);
+      .then((res) => res.data.access_token);
   }
 
   private static handleError<T>(error: AxiosError<T>) {
@@ -207,7 +215,7 @@ export class GoogleAccountProvider extends AccountProvider {
   async addIngredientsToList(listId: string, ingredients: string[], recipeTitle: string) {
     const rootTask = await this.apiClient
       .post<GoogleTaskItem>(
-        GoogleAccountProvider.URLS.ADD_TASK.replace('{tasklist}', listId),
+      GoogleAccountProvider.URLS.ADD_TASK.replace('{tasklist}', listId),
       { title: recipeTitle },
       {
         headers: {

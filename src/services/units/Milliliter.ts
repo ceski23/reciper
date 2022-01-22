@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import IntlMessageFormat from 'intl-messageformat';
 import { Unit } from './Unit';
 
@@ -10,5 +11,5 @@ export class Milliliter extends Unit {
     {quantity, plural,
       other {ml}
     }
-  `);
+  `, 'pl-PL');
 }

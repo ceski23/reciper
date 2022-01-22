@@ -1,14 +1,15 @@
 import { VFC, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { chooseProvider, getRecipeId, Recipe as RecipeType, scrapeRecipe } from 'services/recipes/providers';
+import {
+  chooseProvider, getRecipeId, Recipe as RecipeType, scrapeRecipe,
+} from 'services/recipes/providers';
 import { selectRecipes } from 'features/recipes';
 import { useAppSelector } from 'hooks/store';
 import toast from 'react-hot-toast';
 import { urls } from 'urls';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { LinkButton } from 'components/LinkButton';
-import { Recipe } from './Recipe';
-import { ScreenContainer } from './ScreenContainer';
+import { Recipe } from 'components/Recipe';
 import { useWakeLock } from 'react-screen-wake-lock';
 
 const LoadingOverlay = styled.div`
@@ -37,11 +38,14 @@ export const RecipeScreen: VFC = () => {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     if (wakelock.isSupported) wakelock.request('screen');
     return () => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       if (wakelock.isSupported) wakelock.release();
-    }
-  }, [wakelock]);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const provider = chooseProvider(params.recipeUrl as string);
@@ -57,16 +61,15 @@ export const RecipeScreen: VFC = () => {
       scrapeRecipe(params.recipeUrl as string)
         // eslint-disable-next-line @typescript-eslint/no-shadow
         .then((recipe) => recipe && setRecipe(recipe))
-        .catch((err: Error) => {
+        .catch(() => {
           toast.error('Wystąpił błąd podczas wczytywania przepisu');
-          console.error(err.message);
           navigate(urls.home);
         });
     }
   }, [recipes, params.recipeUrl, navigate]);
 
   return (
-    <ScreenContainer>
+    <>
       {!recipe && (
         <LoadingOverlay>
           <LoadingText>Ładowanie przepisu...</LoadingText>
@@ -75,6 +78,6 @@ export const RecipeScreen: VFC = () => {
       )}
 
       {recipe && <Recipe recipe={recipe} />}
-    </ScreenContainer>
+    </>
   );
 };

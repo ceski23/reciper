@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { DefaultProvider } from './default';
 import { AniaStarmachProvider } from './websites/aniastarmach';
 import { BeszamelProvider } from './websites/beszamel';
@@ -48,7 +49,7 @@ export const chooseProvider = (url: string): Provider => {
 };
 
 export const scrapeRecipe = async (url: string): Promise<Recipe> => {
-  const data = await fetch(process.env.REACT_APP_CORS_PROXY + url, {
+  const data = await fetch((process.env.REACT_APP_CORS_PROXY ?? '') + encodeURIComponent(url), {
     headers: { 'X-Requested-With': 'XMLHttpRequest' },
   }).then((res) => res.text());
 

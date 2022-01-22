@@ -8,31 +8,31 @@ import eggs from 'assets/ingredients/eggs.png';
 
 const KNOWN_INGREDIENTS = {
   chocolate: {
-    pattern: /czekolad(?:a|y)/,
+    pattern: /\bczekolad(?:a|y)\b/,
     image: chocolate,
   },
   flour: {
-    pattern: /mąki/,
+    pattern: /\bmąki\b/,
     image: flour,
   },
   chicken: {
-    pattern: /kurczaka/,
+    pattern: /\bkurczaka\b/,
     image: chicken,
   },
   butter: {
-    pattern: /masła/,
+    pattern: /\bmasła\b/,
     image: butter,
   },
   eggs: {
-    pattern: /jaj(?:ko|ka|ek)?/,
+    pattern: /\bjaj(?:ko|ka|ek)?\b/,
     image: eggs,
   },
   sugar: {
-    pattern: /cukru/,
+    pattern: /\bcukru\b/,
     image: sugar,
   },
   salt: {
-    pattern: /soli/,
+    pattern: /\bsoli\b/,
     image: salt,
   },
 };

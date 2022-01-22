@@ -6,6 +6,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { getRecipeId, Recipe } from 'services/recipes/providers';
 import { RootState } from 'store';
+import Fuse from 'fuse.js';
 
 export interface RecipesState {
   list: Record<string, Recipe>;
@@ -45,6 +46,7 @@ const slice = createSlice({
 export const updateRecipesFromBackup = (data: any) => ({
   type: REHYDRATE,
   key: persistConfig.key,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   payload: data,
 });
 
@@ -55,6 +57,23 @@ export const selectRecipes = (state: RootState) => state.recipes.list;
 export const selectRecipeIds = (state: RootState) => Object.keys(state.recipes.list);
 
 export const getStoredRecipes = () => getStoredState(persistConfig);
+
+export const searchRecipes = createSelector(
+  selectRecipes,
+  (_: unknown, name: string) => name,
+  (recipes, name) => {
+    const recipesList = Object.values(recipes);
+    const searcher = new Fuse(recipesList, {
+      keys: [
+        { name: 'name', weight: 3 },
+        { name: 'tags', weight: 1 },
+      ],
+      minMatchCharLength: 3,
+    });
+
+    return searcher.search(name);
+  },
+);
 
 export default persistReducer(persistConfig, slice.reducer);
 
