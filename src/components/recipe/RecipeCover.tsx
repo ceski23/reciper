@@ -24,7 +24,7 @@ const Container = styled.div`
   position: relative;
 
   ${media.down('medium')} {
-    & {
+    && {
       ${fullBleedStyles}
       border-radius: 0;
       margin-bottom: -50px;
