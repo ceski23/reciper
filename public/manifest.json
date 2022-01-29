@@ -30,5 +30,37 @@
       "text": "url",
       "url": "url"
     }
-  }
+  },
+  "screenshots" : [
+    {
+      "src": "screenshots/1.jpg",
+      "sizes": "1080x2155",
+      "type": "image/jpeg",
+      "label": "Ekran główny"
+    },
+    {
+      "src": "screenshots/2.jpg",
+      "sizes": "1080x2155",
+      "type": "image/jpeg",
+      "label": "Ekran przepisu - opis"
+    },
+    {
+      "src": "screenshots/3.jpg",
+      "sizes": "1080x2155",
+      "type": "image/jpeg",
+      "label": "Ekran przepisu - składniki"
+    },
+    {
+      "src": "screenshots/4.jpg",
+      "sizes": "1080x2155",
+      "type": "image/jpeg",
+      "label": "Ekran przepisu - przygotowanie"
+    },
+    {
+      "src": "screenshots/5.jpg",
+      "sizes": "1080x2155",
+      "type": "image/jpeg",
+      "label": "Ekran ustawień"
+    }
+  ]  
 }

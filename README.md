@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Studentre" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/logo192.png?token=GHSAT0AAAAAABPE3EIKJCAIZOFZGF7GNQNQYPVLWXA" />
+  <img src="https://raw.githubusercontent.com/ceski23/reciper/master/public/logo192.png?token=GHSAT0AAAAAABPE3EIKJCAIZOFZGF7GNQNQYPVLWXA" />
 </p>
 
 # Reciper
@@ -54,3 +54,11 @@ npm run start
 
 ## Supported account providers
 - Google
+
+## Screenshots
+
+<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/1.jpg" />
+<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/2.jpg" />
+<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/3.jpg" />
+<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/4.jpg" />
+<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/5.jpg" />
