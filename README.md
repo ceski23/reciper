@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ceski23/reciper/master/public/logo192.png?token=GHSAT0AAAAAABPE3EIKJCAIZOFZGF7GNQNQYPVLWXA" />
+  <img src="https://github.com/ceski23/reciper/blob/master/public/logo192.png" />
 </p>
 
 # Reciper
@@ -57,8 +57,8 @@ npm run start
 
 ## Screenshots
 
-<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/1.jpg" />
-<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/2.jpg" />
-<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/3.jpg" />
-<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/4.jpg" />
-<img width="300" src="https://raw.githubusercontent.com/ceski23/reciper/master/public/screenshots/5.jpg" />
+<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/1.jpg" />
+<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/2.jpg" />
+<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/3.jpg" />
+<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/4.jpg" />
+<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/5.jpg" />
