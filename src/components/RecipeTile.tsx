@@ -7,6 +7,7 @@ import { Recipe } from 'services/recipes';
 import IntlMessageFormat from 'intl-messageformat';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
+import { ReactComponent as DishIcon } from 'assets/dish.svg';
 
 interface Props {
   recipe: Recipe;
@@ -58,6 +59,17 @@ const Info = styled.p`
   color: ${(props) => props.theme.colors.textalt};
 `;
 
+const Placeholder = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${(props) => props.theme.colors.backgroundalt};
+  color: ${(props) => props.theme.colors.textalt};
+  border-radius: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  padding: 50px;
+`;
+
 export const RecipeTile = forwardRef<HTMLElement, Props>(({ recipe }, ref) => {
   const ingredients = useMemo(() => ingredientsText.format({
     quantity: recipe.ingredients.length,
@@ -73,7 +85,10 @@ export const RecipeTile = forwardRef<HTMLElement, Props>(({ recipe }, ref) => {
       to={reverse(urls.recipes.recipeById, { recipeId: recipe.id })}
       // variants={recipeItemAnimation}
     >
-      {recipe.image && <Image src={recipe.image} alt={recipe.name} />}
+      {recipe.image
+        ? <Image src={recipe.image} alt={recipe.name} />
+        : <Placeholder><DishIcon /></Placeholder>}
+
       <Name>{recipe.name}</Name>
       <Info>{ingredients}{duration && ` • ${duration}`}</Info>
     </Tile>
