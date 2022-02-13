@@ -4,7 +4,7 @@ import {
   persistReducer, getStoredState, PersistConfig, REHYDRATE,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { getRecipeId, Recipe } from 'services/recipes/providers';
+import { Recipe } from 'services/recipes';
 import { RootState } from 'store';
 import Fuse from 'fuse.js';
 
@@ -35,10 +35,14 @@ const slice = createSlice({
   initialState,
   reducers: {
     save: (state, { payload }: PayloadAction<Recipe>) => {
-      state.list[getRecipeId(payload.url)] = payload;
+      state.list[payload.id] = payload;
     },
-    remove: (state, { payload }: PayloadAction<string>) => {
+    removeById: (state, { payload }: PayloadAction<string>) => {
       delete state.list[payload];
+    },
+    removeByUrl: (state, { payload }: PayloadAction<string>) => {
+      const id = Object.values(state.list).find((recipe) => recipe.url === payload)?.id;
+      if (id) delete state.list[id];
     },
   },
 });
@@ -50,7 +54,11 @@ export const updateRecipesFromBackup = (data: any) => ({
   payload: data,
 });
 
-export const { save: saveRecipe, remove: removeRecipe } = slice.actions;
+export const {
+  save: saveRecipe,
+  removeById: removeRecipeById,
+  removeByUrl: removeRecipeByUrl,
+} = slice.actions;
 
 export const selectRecipes = (state: RootState) => state.recipes.list;
 

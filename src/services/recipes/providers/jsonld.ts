@@ -4,7 +4,8 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable prefer-destructuring */
 import { HowToStep, Recipe as SchemaRecipe } from 'schema-dts';
-import { Recipe, RecipeScrapper } from '.';
+import { Recipe } from 'services/recipes';
+import { RecipeScrapper } from 'services/recipes/providers';
 
 function isHowToStepArray(instructions: SchemaRecipe['recipeInstructions']): instructions is HowToStep[] {
   return Array.isArray(instructions) && instructions[0]['@type'] === 'HowToStep';
@@ -46,7 +47,7 @@ const parseInstructions = (instructions: SchemaRecipe['recipeInstructions']): st
 };
 
 // eslint-disable-next-line @typescript-eslint/require-await
-const scrapper: RecipeScrapper = async (doc, url) => {
+const scrapper: RecipeScrapper = async (doc) => {
   const data = doc.querySelectorAll('[type="application/ld+json"]');
 
   const recipeElement = Array.from(data).find((elem) => {
@@ -85,14 +86,13 @@ const scrapper: RecipeScrapper = async (doc, url) => {
     ? Number.parseInt(schemaRecipe.recipeYield.toString(), 10)
     : undefined;
 
-  const recipe: Recipe = {
+  const recipe: Partial<Recipe> = {
     name: name.toString(),
     description: description?.toString(),
     image: image?.toString(),
     ingredients: Array.isArray(ingredients) ? ingredients : [ingredients],
     instructions,
     prepTime,
-    url,
     tags: [],
     servings,
   };

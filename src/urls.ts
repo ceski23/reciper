@@ -5,7 +5,8 @@ export const baseUrl = `${window.location.protocol}//${window.location.host}`;
 export const urls = {
   home: '/',
   recipes: include('/recipes', {
-    recipe: ':recipeUrl',
+    recipeByUrl: 'url/:recipeUrl',
+    recipeById: 'id/:recipeId',
   }),
   sharedRecipe: '/sharedRecipe',
   colors: '/colors',

@@ -32,7 +32,7 @@ export const RecipesScreen: VFC = () => {
 
       <RecipesList variants={staggeredGrid} initial="hidden" animate="show">
         {Object.values(recipes).map((recipe) => (
-          <AnimatedRecipeTile recipe={recipe} key={recipe.url} variants={slideUp} />
+          <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
         ))}
       </RecipesList>
     </FluidContainer>

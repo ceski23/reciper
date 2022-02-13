@@ -12,11 +12,13 @@ import { RecipeScreen } from 'views/RecipeScreen';
 import { HomeScreen } from 'views/HomeScreen';
 import { AuthWrapper } from 'components/AuthWrapper';
 import { SearchScreen } from 'views/SearchScreen';
+import { FindRecipeScreen } from 'views/FindRecipeScreen';
 
 export const routes: RouteObject[] = [
   { path: urls.home, element: <HomeScreen /> },
   { path: String(urls.recipes), element: <RecipesScreen /> },
-  { path: urls.recipes.recipe, element: <RecipeScreen /> },
+  { path: urls.recipes.recipeById, element: <RecipeScreen /> },
+  { path: urls.recipes.recipeByUrl, element: <FindRecipeScreen /> },
   { path: urls.sharedRecipe, element: <RedirectSharedRecipe /> },
   { path: String(urls.tags), element: <TagsScreen /> },
   { path: urls.tags.tag, element: <TagsScreen /> },

@@ -1,12 +1,12 @@
 import styled from '@emotion/styled/macro';
 import { reverse } from 'named-urls';
-import { forwardRef, useMemo, VFC } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { urls } from 'urls';
-import { Recipe } from 'services/recipes/providers';
+import { Recipe } from 'services/recipes';
 import IntlMessageFormat from 'intl-messageformat';
 import dayjs from 'dayjs';
-import { motion, Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface Props {
   recipe: Recipe;
@@ -70,7 +70,7 @@ export const RecipeTile = forwardRef<HTMLElement, Props>(({ recipe }, ref) => {
   return (
     <Tile
       ref={ref}
-      to={reverse(urls.recipes.recipe, { recipeUrl: encodeURIComponent(recipe.url) })}
+      to={reverse(urls.recipes.recipeById, { recipeId: recipe.id })}
       // variants={recipeItemAnimation}
     >
       {recipe.image && <Image src={recipe.image} alt={recipe.name} />}

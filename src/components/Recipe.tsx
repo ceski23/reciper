@@ -3,7 +3,8 @@ import {
 } from 'react';
 import styled from '@emotion/styled/macro';
 import { ParsedIngredient, parseIngredient } from 'services/ingredients/parser';
-import { chooseProvider, getRecipeId, Recipe as RecipeType } from 'services/recipes/providers';
+import { chooseProvider } from 'services/recipes/providers';
+import { Recipe as RecipeType } from 'services/recipes';
 import dayjs from 'dayjs';
 import { RecipeStep } from 'components/recipe/RecipeStep';
 import { RecipeFeature } from 'components/recipe/RecipeFeature';
@@ -18,7 +19,9 @@ import { Button } from 'components/Button';
 import { ThemeProvider, useTheme } from '@emotion/react/macro';
 import { generateThemeColors, lightTheme } from 'theme';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
-import { removeRecipe, saveRecipe, selectRecipeIds } from 'features/recipes';
+import {
+  removeRecipeById, removeRecipeByUrl, saveRecipe, selectRecipes,
+} from 'features/recipes';
 import toast from 'react-hot-toast';
 import { IngredientItem } from 'components/recipe/IngredientItem';
 import { selectShoppingList } from 'features/user';
@@ -29,6 +32,10 @@ import { Servings, servingsText } from 'components/recipe/Servings';
 import IntlMessageFormat from 'intl-messageformat';
 import { media } from 'utils/mediaQueries';
 import { fluidTypography } from 'utils/typography';
+import { normalizeUrl } from 'utils/url';
+import { useNavigate } from 'react-router';
+import { urls } from 'urls';
+import { reverse } from 'named-urls';
 import { RecipeCover } from './recipe/RecipeCover';
 import { RecipeProvider } from './recipe/RecipeProvider';
 import { FluidContainer } from './Container';
@@ -165,15 +172,25 @@ const SideBySide = styled.div`
 `;
 
 export const Recipe: VFC<Props> = ({ recipe }) => {
-  const recipeProvider = useMemo(() => chooseProvider(recipe.url), [recipe.url]);
+  const recipeProvider = recipe.url ? chooseProvider(recipe.url) : undefined;
   const dispatch = useAppDispatch();
-  const recipeIds = useAppSelector(selectRecipeIds);
   const [doneSteps, setDoneSteps] = useState<number[]>([]);
   const theme = useTheme();
   const shoppingList = useAppSelector(selectShoppingList);
   const accountProvider = useAccountProvider();
   const dynamicColor = useAppSelector(selectDynamicPrimaryColor);
   const [servings, setServings] = useState(recipe.servings);
+  const recipes = useAppSelector(selectRecipes);
+  const navigate = useNavigate();
+
+  const isRecipeSaved = useMemo(() => {
+    if (recipe.url === undefined) return true;
+    const recipeUrl = recipe.url;
+
+    return Object
+      .values(recipes)
+      .some((r) => r.url === normalizeUrl(recipeUrl));
+  }, [recipe.url, recipes]);
 
   const parsedIngredients = useMemo<ParsedIngredient[]>(() => (
     (recipe?.ingredients ?? [])
@@ -201,11 +218,26 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
 
   const handleSaveRecipe: MouseEventHandler<HTMLButtonElement> = () => {
     dispatch(saveRecipe(recipe));
+    navigate(
+      reverse(urls.recipes.recipeById, { recipeId: recipe.id }),
+      { replace: true },
+    );
     toast.success('Przepis został zapisany');
   };
 
   const handleRemoveRecipe: MouseEventHandler<HTMLButtonElement> = () => {
-    dispatch(removeRecipe(getRecipeId(recipe.url)));
+    if (recipe.url) dispatch(removeRecipeByUrl(recipe.url));
+    else dispatch(removeRecipeById(recipe.id));
+
+    if (recipe.url) {
+      navigate(
+        reverse(
+          urls.recipes.recipeByUrl,
+          { recipeUrl: encodeURIComponent(recipe.url) },
+        ),
+      );
+    } else navigate(urls.home);
+
     toast.success('Przepis został usunięty');
   };
 
@@ -233,7 +265,9 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
 
         <div>
           <Title>{recipe.name}</Title>
-          <RecipeProvider provider={recipeProvider} recipeUrl={recipe.url} />
+          {recipe.url && recipeProvider && (
+            <RecipeProvider provider={recipeProvider} recipeUrl={recipe.url} />
+          )}
         </div>
 
         {(recipe.rating || recipe.calories || preparationDuration) && (
@@ -258,7 +292,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
           <Tags>{recipe.tags.map((tag) => <Tag key={tag} tag={tag} />)}</Tags>
         )}
 
-        {recipeIds.includes(getRecipeId(recipe.url)) ? (
+        {isRecipeSaved ? (
           <Button icon={UnsaveIcon} onClick={handleRemoveRecipe}>Usuń przepis</Button>
         ) : (
           <Button icon={SaveIcon} onClick={handleSaveRecipe}>Zapisz przepis</Button>

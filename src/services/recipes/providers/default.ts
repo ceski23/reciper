@@ -4,10 +4,11 @@ import jsonld from './jsonld';
 import microdata from './microdata';
 
 export const DefaultProvider: Provider = (() => {
-  const scrapper: RecipeScrapper = async (doc, url) => {
-    const promises = [jsonld, microdata].map((fn) => fn(doc, url));
-    promises.map((p) => p.catch((e) => { console.log(e); }));
-    return Promise.any(promises);
+  const scrapper: RecipeScrapper = async (doc) => {
+    const promises = [jsonld, microdata].map((fn) => fn(doc));
+    const partialRecipe = await Promise.any(promises);
+
+    return partialRecipe;
   };
 
   return {

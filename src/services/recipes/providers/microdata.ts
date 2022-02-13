@@ -1,8 +1,9 @@
 /* eslint-disable import/no-cycle */
-import { RecipeScrapper } from '.';
+
+import { RecipeScrapper } from 'services/recipes/providers';
 
 // eslint-disable-next-line @typescript-eslint/require-await
-const scrapper: RecipeScrapper = async (doc, url) => {
+const scrapper: RecipeScrapper = async (doc) => {
   const root = doc.querySelector('[itemscope][itemtype="https://schema.org/Recipe"], [itemscope][itemtype="http://schema.org/Recipe"]');
   if (!root) throw Error('Couldn\'t find recipe');
 
@@ -55,7 +56,6 @@ const scrapper: RecipeScrapper = async (doc, url) => {
     image,
     prepTime,
     instructions,
-    url,
     rating,
     calories,
     tags: [],

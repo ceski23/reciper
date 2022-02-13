@@ -5,11 +5,11 @@ import { colorExtractor } from 'services/recipes/providers/utils';
 
 export const KwestiaSmakuProvider: Provider = (() => {
   const name = 'Kwestia Smaku';
-  const url = 'www.kwestiasmaku.com';
+  const url = 'https://www.kwestiasmaku.com/';
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const scrapper: RecipeScrapper = async (doc, url) => {
-    const microdata = await microdataScrapper(doc, url);
+  const scrapper: RecipeScrapper = async (doc) => {
+    const microdata = await microdataScrapper(doc);
     const description = doc.querySelector('.field-name-field-uwagi-wstepne')?.textContent || undefined;
 
     const instructionsElements = doc.querySelectorAll('.field-name-field-przygotowanie ul > li');

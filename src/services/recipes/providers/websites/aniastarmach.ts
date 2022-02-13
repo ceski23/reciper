@@ -5,11 +5,11 @@ import { colorExtractor } from 'services/recipes/providers/utils';
 
 export const AniaStarmachProvider: Provider = (() => {
   const name = 'Ania Starmach';
-  const url = 'aniastarmach.pl';
+  const url = 'https://aniastarmach.pl/';
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const scrapper: RecipeScrapper = async (doc, url) => {
-    const data = await jsonldScrapper(doc, url);
+  const scrapper: RecipeScrapper = async (doc) => {
+    const data = await jsonldScrapper(doc);
 
     let color;
     if (data?.image) {
