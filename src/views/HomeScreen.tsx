@@ -98,7 +98,7 @@ export const HomeScreen: VFC = () => {
       <h2 style={{ marginTop: 50 }}>Ostatnio dodane</h2>
       <RecipesList variants={staggeredGrid} initial="hidden" animate="show">
         {Object.values(recipes).slice(0, 6).reverse().map((recipe) => (
-          <AnimatedRecipeTile recipe={recipe} key={recipe.url} variants={slideUp} />
+          <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
         ))}
       </RecipesList>
 

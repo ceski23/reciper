@@ -11,7 +11,7 @@ export const RedirectSharedRecipe: VFC = () => {
   useEffect(() => {
     const recipeUrl = params.get('url');
     if (recipeUrl) {
-      const internalUrl = reverse(urls.recipes.recipe, {
+      const internalUrl = reverse(urls.recipes.recipeByUrl, {
         recipeUrl: encodeURIComponent(recipeUrl),
       });
       navigate(internalUrl, { replace: true });

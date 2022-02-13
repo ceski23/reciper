@@ -8,6 +8,9 @@ import { motion } from 'framer-motion';
 import { slideUp, staggeredGrid } from 'animations';
 import { media } from 'utils/mediaQueries';
 import { FluidContainer } from 'components/Container';
+import { ReactComponent as AddIcon } from 'assets/add-circle.svg';
+import { LinkButton } from 'components/LinkButton';
+import { urls } from 'urls';
 
 const RecipesList = styled(motion.div)`
   display: grid;
@@ -21,6 +24,10 @@ const RecipesList = styled(motion.div)`
   }
 `;
 
+const AddRecipeButton = styled(LinkButton)`
+  margin-bottom: 50px;
+`;
+
 const AnimatedRecipeTile = motion(RecipeTile);
 
 export const RecipesScreen: VFC = () => {
@@ -30,9 +37,11 @@ export const RecipesScreen: VFC = () => {
     <FluidContainer>
       <ScreenHeader title="Przepisy" />
 
+      <AddRecipeButton icon={AddIcon} to={String(urls.recipes.new)}>Nowy przepis</AddRecipeButton>
+
       <RecipesList variants={staggeredGrid} initial="hidden" animate="show">
         {Object.values(recipes).map((recipe) => (
-          <AnimatedRecipeTile recipe={recipe} key={recipe.url} variants={slideUp} />
+          <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
         ))}
       </RecipesList>
     </FluidContainer>

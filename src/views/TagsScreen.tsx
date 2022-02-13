@@ -5,7 +5,7 @@ import { useAppSelector } from 'hooks/store';
 import { useParams } from 'react-router-dom';
 import { ScreenHeader } from 'components/Screen/ScreenHeader';
 import { RecipeTile } from 'components/RecipeTile';
-import type { Recipe } from 'services/recipes/providers';
+import { Recipe } from 'services/recipes';
 import { media } from 'utils/mediaQueries';
 import { FluidContainer } from 'components/Container';
 
@@ -38,7 +38,7 @@ export const TagsScreen: VFC = () => {
           .values(recipes)
           .filter(filterByTag(tag))
           .map((recipe) => (
-            <RecipeTile recipe={recipe} key={recipe.url} />
+            <RecipeTile recipe={recipe} key={recipe.id} />
           ))}
       </RecipesList>
     </FluidContainer>
