@@ -8,7 +8,8 @@ declare module '@emotion/react/macro' {
       background: string,
       backgroundhover: string
       backgroundalt: string,
-      background2: string
+      background2: string,
+      backgroundInput: string,
       text: string
       textalt: string
       shadow: string
@@ -44,6 +45,7 @@ export const generateThemeColors = (primaryColor: string, type: Theme['type']): 
     background: hsl(primary.hue, 0.20, 0.97),
     backgroundhover: hsl(primary.hue, 0.20, 0.92),
     background2: hsl(primary.hue, 0.20, 0.85),
+    backgroundInput: hsl(primary.hue, 1, 1),
     text: hsl(primary.hue, primary.saturation, 0.10),
     textalt: hsl(primary.hue, 0.30, 0.30),
     shadow: hsl(primary.hue, 0.10, primary.lightness / 2),
@@ -53,6 +55,7 @@ export const generateThemeColors = (primaryColor: string, type: Theme['type']): 
     background: hsl(primary.hue, 0, 0.13),
     backgroundhover: hsl(primary.hue, 0.1, 0.15),
     background2: hsl(primary.hue, 0.20, 0.1),
+    backgroundInput: hsl(primary.hue, 0, 0.2),
     text: hsl(primary.hue, primary.saturation, 0.95),
     textalt: hsl(primary.hue, 0.30, 0.70),
     shadow: hsl(primary.hue, 0.10, primary.lightness / 2),

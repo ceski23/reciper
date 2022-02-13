@@ -14,6 +14,7 @@ import { AuthWrapper } from 'components/AuthWrapper';
 import { SearchScreen } from 'views/SearchScreen';
 import { FindRecipeScreen } from 'views/FindRecipeScreen';
 import { NewRecipeScreen } from 'views/NewRecipeScreen';
+import { NewManualRecipeScreen } from 'views/NewManualRecipeScreen';
 
 export const routes: RouteObject[] = [
   { path: urls.home, element: <HomeScreen /> },
@@ -22,6 +23,7 @@ export const routes: RouteObject[] = [
   { path: urls.recipes.recipeByUrl, element: <FindRecipeScreen /> },
   { path: String(urls.recipes.new), element: <NewRecipeScreen /> },
   { path: urls.sharedRecipe, element: <RedirectSharedRecipe /> },
+  { path: urls.recipes.new.manual, element: <NewManualRecipeScreen /> },
   { path: String(urls.tags), element: <TagsScreen /> },
   { path: urls.tags.tag, element: <TagsScreen /> },
   { path: urls.search, element: <SearchScreen /> },

@@ -2,6 +2,8 @@ import styled from '@emotion/styled/macro';
 import { useRef, useState, VFC } from 'react';
 import { SettingsListItem } from 'components/settings/SettingsListItem';
 import { ReactComponent as LinkIcon } from 'assets/link.svg';
+import { ReactComponent as PencilIcon } from 'assets/pencil.svg';
+import { Link } from 'components/Link';
 import { urls } from 'urls';
 import { ScreenHeader } from 'components/Screen/ScreenHeader';
 import { FluidContainer } from 'components/Container';
@@ -82,6 +84,9 @@ export const NewRecipeScreen: VFC = () => {
           </form>
         </Option>
 
+        <Link to={urls.recipes.new.manual}>
+          <Option text="Dodaj przepis ręcznie" icon={PencilIcon} />
+        </Link>
       </OptionsList>
     </FluidContainer>
   );

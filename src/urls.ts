@@ -8,6 +8,7 @@ export const urls = {
     recipeByUrl: 'url/:recipeUrl',
     recipeById: 'id/:recipeId',
     new: include('new', {
+      manual: 'manual',
     }),
   }),
   sharedRecipe: '/sharedRecipe',

@@ -1,7 +1,3 @@
-// https://www.mniammniam.com/kurczak-slodko-kwasny
-// https://beszamel.se.pl/przepisy/dania-glowne-miesne/prosty-kurczak-w-sosie-slodko-kwasnym-gotowy-w-30-minut-re-iB8s-pmcM-Rz5i.html
-// https://www.doradcasmaku.pl/przepis-soczysty-kurczak-w-sosie-slodko-kwasnym--349850
-
 export interface Recipe {
   id: string;
   name: string;
