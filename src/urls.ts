@@ -4,9 +4,11 @@ export const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
 export const urls = {
   home: '/',
-  recipes: include('/recipes', {
+  recipes: include('/recipes/', {
     recipeByUrl: 'url/:recipeUrl',
     recipeById: 'id/:recipeId',
+    new: include('new', {
+    }),
   }),
   sharedRecipe: '/sharedRecipe',
   colors: '/colors',

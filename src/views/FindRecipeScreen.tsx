@@ -36,13 +36,15 @@ export const FindRecipeScreen: VFC = () => {
 
   useEffect(() => {
     if (params.recipeUrl) {
-      const provider = chooseProvider(params.recipeUrl);
+      try {
+        const provider = chooseProvider(params.recipeUrl);
 
-      if (!provider.name) {
-        toast('Próbujesz wczytać przepis z niewspieranej strony, mogą wystąpić błędy.', {
-          icon: '⚠️',
-        });
-      }
+        if (!provider.name) {
+          toast('Próbujesz wczytać przepis z niewspieranej strony, mogą wystąpić błędy.', {
+            icon: '⚠️',
+          });
+        }
+      } catch { /* */ }
     }
   }, [params.recipeUrl]);
 

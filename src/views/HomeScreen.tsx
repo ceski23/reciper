@@ -2,8 +2,8 @@ import styled from '@emotion/styled/macro';
 import { VFC } from 'react';
 import { Searchbar } from 'components/Searchbar';
 import { UserAvatar } from 'components/UserAvatar';
-import { saveRecipe, selectAllTags, selectRecipes } from 'features/recipes';
-import { useAppDispatch, useAppSelector } from 'hooks/store';
+import { selectAllTags, selectRecipes } from 'features/recipes';
+import { useAppSelector } from 'hooks/store';
 import { selectUserInfo } from 'features/user';
 import { Link } from 'components/Link';
 import { urls } from 'urls';
@@ -98,7 +98,7 @@ export const HomeScreen: VFC = () => {
       <h2 style={{ marginTop: 50 }}>Ostatnio dodane</h2>
       <RecipesList variants={staggeredGrid} initial="hidden" animate="show">
         {Object.values(recipes).slice(0, 6).reverse().map((recipe) => (
-          <AnimatedRecipeTile recipe={recipe} key={recipe.url} variants={slideUp} />
+          <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
         ))}
       </RecipesList>
 

@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css, Theme } from '@emotion/react/macro';
 import styled from '@emotion/styled/macro';
-import React, { VFC } from 'react';
+import React, { FC } from 'react';
+import { Styleable } from 'types';
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.colors.backgroundhover};
   border-radius: 10px;
-  padding: 10px 20px;
+  padding: 26px 20px;
   font-size: 16px;
   font-weight: 600;
   display: flex;
@@ -21,6 +22,7 @@ const Container = styled.div`
 
 const Text = styled.p`
   color: currentColor;
+  margin: 0;
 `;
 
 export const iconStyles = ({ theme }: { theme: Theme }) => css`
@@ -31,16 +33,19 @@ export const iconStyles = ({ theme }: { theme: Theme }) => css`
 
 interface Props {
   icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | string;
-  text: string;
+  text?: string;
+  onClick?: () => void;
 }
 
-export const SettingsListItem: VFC<Props> = ({ icon: Icon, text }) => (
-  <Container>
+export const SettingsListItem: FC<Props & Styleable> = ({
+  icon: Icon, text, children, onClick, className,
+}) => (
+  <Container onClick={onClick} className={className}>
     {Icon && (typeof Icon === 'string' ? (
       <img src={Icon} alt="" css={(theme) => iconStyles({ theme })} />
     ) : (
       <Icon css={(theme) => iconStyles({ theme })} />
     ))}
-    <Text>{text}</Text>
+    {text ? <Text>{text}</Text> : children}
   </Container>
 );

@@ -13,12 +13,14 @@ import { HomeScreen } from 'views/HomeScreen';
 import { AuthWrapper } from 'components/AuthWrapper';
 import { SearchScreen } from 'views/SearchScreen';
 import { FindRecipeScreen } from 'views/FindRecipeScreen';
+import { NewRecipeScreen } from 'views/NewRecipeScreen';
 
 export const routes: RouteObject[] = [
   { path: urls.home, element: <HomeScreen /> },
   { path: String(urls.recipes), element: <RecipesScreen /> },
   { path: urls.recipes.recipeById, element: <RecipeScreen /> },
   { path: urls.recipes.recipeByUrl, element: <FindRecipeScreen /> },
+  { path: String(urls.recipes.new), element: <NewRecipeScreen /> },
   { path: urls.sharedRecipe, element: <RedirectSharedRecipe /> },
   { path: String(urls.tags), element: <TagsScreen /> },
   { path: urls.tags.tag, element: <TagsScreen /> },
