@@ -7,13 +7,21 @@ import storage from 'redux-persist/lib/storage';
 import { Recipe } from 'services/recipes';
 import { RootState } from 'store';
 import Fuse from 'fuse.js';
+import {
+  pancakes, kurczak, pierniczki, ramen,
+} from 'services/recipes/samples';
 
 export interface RecipesState {
   list: Record<string, Recipe>;
 }
 
 const initialState: RecipesState = {
-  list: {},
+  list: {
+    [pancakes.id]: pancakes,
+    [ramen.id]: ramen,
+    [kurczak.id]: kurczak,
+    [pierniczki.id]: pierniczki,
+  },
 };
 
 // const migrations: MigrationManifest = {
