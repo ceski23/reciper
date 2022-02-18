@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { FieldError, FieldErrors } from 'react-hook-form';
-import { Fields } from 'views/NewManualRecipeScreen';
+
+import { Fields } from 'views/recipes/NewManualRecipeScreen';
 
 export const undefinedEmptyString = (value: string) => value || undefined;
 

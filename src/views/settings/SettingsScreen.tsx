@@ -1,14 +1,16 @@
 import styled from '@emotion/styled/macro';
 import { VFC } from 'react';
+
+import { ReactComponent as UserIcon } from 'assets/common/user.svg';
+import { ReactComponent as BrushIcon } from 'assets/settings/brush.svg';
+import { ReactComponent as WeightIcon } from 'assets/settings/kilogram.svg';
+
+import { FluidContainer } from 'components/common/Container';
+import { Link } from 'components/common/Link';
+import { ScreenHeader } from 'components/common/ScreenHeader';
 import { SettingsListItem } from 'components/settings/SettingsListItem';
-import { ReactComponent as UserIcon } from 'assets/user.svg';
-import { ReactComponent as BrushIcon } from 'assets/brush.svg';
-import { ReactComponent as WeightIcon } from 'assets/kilogram.svg';
-// import { ReactComponent as SettingsIcon } from 'assets/cogwheel.svg';
-import { Link } from 'components/Link';
-import { urls } from 'urls';
-import { ScreenHeader } from 'components/Screen/ScreenHeader';
-import { FluidContainer } from 'components/Container';
+
+import { urls } from 'routing/urls';
 
 const SettingsList = styled.div`
   display: flex;

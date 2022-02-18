@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "dev",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "webpack",
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Compiling\\.\\.\\.",
+					"endsPattern": "^(?:Failed to compile\\.|Compiled with warnings\\.|Compiled successfully!)$"
+				},
+				"fileLocation": "relative",
+				"pattern": [
+					{
+						"regexp": "^ERROR in (.*):(.*):(.*)$",
+						"file": 1,
+						"line": 2,
+						"column": 3
+					},
+					{
+						"regexp": ".*",
+						"message": 0
+					}
+				],
+			},
+			"label": "npm: dev",
+			"detail": "react-scripts start"
+		}
+	]
+}

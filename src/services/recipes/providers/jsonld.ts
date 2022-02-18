@@ -4,6 +4,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable prefer-destructuring */
 import { HowToStep, Recipe as SchemaRecipe } from 'schema-dts';
+
 import { Recipe } from 'services/recipes';
 import { RecipeScrapper } from 'services/recipes/providers';
 

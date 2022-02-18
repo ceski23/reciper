@@ -1,11 +1,13 @@
 /* eslint-disable import/no-cycle */
 import { nanoid } from 'nanoid';
+
+import { isValidRecipe, Recipe } from 'services/recipes';
+import { DefaultProvider } from 'services/recipes/providers/default';
+import { AniaStarmachProvider } from 'services/recipes/providers/websites/aniastarmach';
+import { BeszamelProvider } from 'services/recipes/providers/websites/beszamel';
+import { KwestiaSmakuProvider } from 'services/recipes/providers/websites/kwestiasmaku';
+
 import { baseUrl } from 'utils/url';
-import { DefaultProvider } from './default';
-import { isValidRecipe, Recipe } from '..';
-import { AniaStarmachProvider } from './websites/aniastarmach';
-import { BeszamelProvider } from './websites/beszamel';
-import { KwestiaSmakuProvider } from './websites/kwestiasmaku';
 
 // ############################################################################
 export const PROVIDERS = [

@@ -1,18 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { unstable_HistoryRouter as Router } from 'react-router-dom';
-import App from 'App';
-
+import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import dayjs from 'dayjs';
-import 'dayjs/locale/pl';
-import { Provider } from 'react-redux';
-import { persistor, store } from 'store';
-import { PersistGate } from 'redux-persist/integration/react';
 import { createBrowserHistory } from 'history';
 import { wrapHistory } from 'oaf-react-router';
-import { ServiceWorker } from 'components/ServiceWorker';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { unstable_HistoryRouter as Router } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+
+import { persistor, store } from 'store';
+
+import App from 'components/app/App';
+import { ServiceWorker } from 'components/app/ServiceWorker';
+
+import 'dayjs/locale/pl';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);

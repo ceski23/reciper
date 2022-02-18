@@ -1,7 +1,8 @@
+import ingredientsDatabase, { KnownIngredient } from 'services/ingredients/database';
 import { UNITS } from 'services/units';
 import { Unit } from 'services/units/Unit';
+
 import unitsConverter from 'utils/unitsConverter';
-import ingredientsDatabase, { KnownIngredient } from './database';
 
 export type Measure = 'length' | 'mass' | 'volume' | 'area';
 

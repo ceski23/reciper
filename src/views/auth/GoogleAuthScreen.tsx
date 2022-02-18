@@ -1,11 +1,15 @@
-import { setAccountProvider } from 'features/user';
-import { useAppDispatch } from 'hooks/store';
 import { useEffect, VFC } from 'react';
 import { toast } from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router';
-import { AccountProviders } from 'services/account/providers';
+
+import { useAppDispatch } from 'hooks/store';
+
+import { urls } from 'routing/urls';
+
+import { AccountProviders } from 'services/accounts/providers';
+
 // import { GoogleAccountProvider } from 'services/account/providers/google';
-import { urls } from 'urls';
+import { setAccountProvider } from 'store/user';
 
 export const GoogleAuthScreen: VFC = () => {
   const navigate = useNavigate();

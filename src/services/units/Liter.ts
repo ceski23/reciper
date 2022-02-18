@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import IntlMessageFormat from 'intl-messageformat';
-import { Unit } from './Unit';
+
+import { Unit } from 'services/units/Unit';
 
 export class Liter extends Unit {
   pattern = /l|litr|litry|litrów/;

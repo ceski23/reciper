@@ -1,13 +1,16 @@
+import { Theme } from '@emotion/react/macro';
 import { VFC } from 'react';
+
+import { FluidContainer } from 'components/common/Container';
+import { ScreenHeader } from 'components/common/ScreenHeader';
+import { CheckboxSetting } from 'components/settings/CheckboxSetting';
+import { RadioGroup } from 'components/settings/RadioGroup';
+
 import { useAppDispatch, useAppSelector } from 'hooks/store';
+
 import {
   selectCurrentThemeType, selectDynamicPrimaryColor, setDynamicPrimaryColor, setTheme, themeName,
-} from 'features/settings';
-import { Theme } from '@emotion/react/macro';
-import { RadioGroup } from 'components/settings/RadioGroup';
-import { CheckboxSetting } from 'components/settings/CheckboxSetting';
-import { ScreenHeader } from 'components/Screen/ScreenHeader';
-import { FluidContainer } from 'components/Container';
+} from 'store/settings';
 
 const themeOptions = (['light', 'dark', 'system'] as Array<Theme['type'] | 'system'>).map((type) => ({
   text: themeName(type),

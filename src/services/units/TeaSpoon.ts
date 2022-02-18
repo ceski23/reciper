@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import IntlMessageFormat from 'intl-messageformat';
-import { Unit } from './Unit';
+
+import { Unit } from 'services/units/Unit';
 
 export class TeaSpoon extends Unit {
   pattern = /łyżeczka|łyżeczki|łyżeczek/;

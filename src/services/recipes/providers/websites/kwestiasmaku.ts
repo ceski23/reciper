@@ -1,6 +1,7 @@
+import icon from 'assets/providers/kwestia_smaku.png';
+
 import type { Provider, RecipeScrapper } from 'services/recipes/providers';
 import microdataScrapper from 'services/recipes/providers/microdata';
-import icon from 'assets/provider_icons/kwestia_smaku.png';
 import { colorExtractor } from 'services/recipes/providers/utils';
 
 export const KwestiaSmakuProvider: Provider = (() => {

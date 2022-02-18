@@ -1,7 +1,8 @@
 /* eslint-disable import/no-cycle */
-import type { Provider, RecipeScrapper } from '.';
-import jsonld from './jsonld';
-import microdata from './microdata';
+
+import { Provider, RecipeScrapper } from 'services/recipes/providers';
+import jsonld from 'services/recipes/providers/jsonld';
+import microdata from 'services/recipes/providers/microdata';
 
 export const DefaultProvider: Provider = (() => {
   const scrapper: RecipeScrapper = async (doc) => {

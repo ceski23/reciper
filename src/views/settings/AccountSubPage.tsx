@@ -3,25 +3,29 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable max-len */
 import styled from '@emotion/styled/macro';
+import IntlMessageFormat from 'intl-messageformat';
 import { VFC, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { PersistedState } from 'redux-persist';
+
+import { Button } from 'components/common/Button';
+import { FluidContainer } from 'components/common/Container';
+import { ScreenHeader } from 'components/common/ScreenHeader';
+import { UserAvatar } from 'components/common/UserAvatar';
+import { RadioGroup } from 'components/settings/RadioGroup';
+
+import { useAccountProvider } from 'hooks/accounts/useAccountProvider';
+import { useAppDispatch, useAppSelector } from 'hooks/store';
+
+import { TaskListInfo } from 'services/accounts/AccountProvider';
+import { AccountProviders, chooseAccountProvider } from 'services/accounts/providers';
+
+import { getStoredRecipes, RecipesState, updateRecipesFromBackup } from 'store/recipes';
 import {
   logoutUser, selectAccountInfo, selectShoppingList, selectUserInfo, setShoppingList,
-} from 'features/user';
-import toast from 'react-hot-toast';
+} from 'store/user';
 
-import { Button } from 'components/Button';
-import { useAppDispatch, useAppSelector } from 'hooks/store';
-import { UserAvatar } from 'components/UserAvatar';
-import { RadioGroup } from 'components/settings/RadioGroup';
-import { media } from 'utils/mediaQueries';
-import { getStoredRecipes, RecipesState, updateRecipesFromBackup } from 'features/recipes';
-import { useAccountProvider } from 'hooks/useAccountProvider';
-import { TaskListInfo } from 'services/account/providers/AccountProvider';
-import { AccountProviders, chooseAccountProvider } from 'services/account/providers';
-import { PersistedState } from 'redux-persist';
-import IntlMessageFormat from 'intl-messageformat';
-import { ScreenHeader } from 'components/Screen/ScreenHeader';
-import { FluidContainer } from 'components/Container';
+import { media } from 'utils/styles/mediaQueries';
 
 const SettingsContainer = styled.div`
   display: flex;

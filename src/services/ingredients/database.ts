@@ -1,10 +1,10 @@
-import chicken from 'assets/ingredients/chicken-fillet.png';
-import flour from 'assets/ingredients/flour.png';
-import chocolate from 'assets/ingredients/chocolate.png';
 import butter from 'assets/ingredients/butter.png';
+import chicken from 'assets/ingredients/chicken-fillet.png';
+import chocolate from 'assets/ingredients/chocolate.png';
+import eggs from 'assets/ingredients/eggs.png';
+import flour from 'assets/ingredients/flour.png';
 import salt from 'assets/ingredients/salt.png';
 import sugar from 'assets/ingredients/sugar.png';
-import eggs from 'assets/ingredients/eggs.png';
 
 const KNOWN_INGREDIENTS = {
   chocolate: {

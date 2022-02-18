@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import IntlMessageFormat from 'intl-messageformat';
-import { Unit } from './Unit';
+
+import { Unit } from 'services/units/Unit';
 
 export class Milliliter extends Unit {
   pattern = /ml|mililitr|mililitry|mililitrów/;

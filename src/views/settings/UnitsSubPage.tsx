@@ -1,17 +1,22 @@
 /* eslint-disable max-len */
 import styled from '@emotion/styled/macro';
 import { VFC } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks/store';
+
+import { FluidContainer } from 'components/common/Container';
+import { ScreenHeader } from 'components/common/ScreenHeader';
 import { CheckboxSetting } from 'components/settings/CheckboxSetting';
+import { InputSetting } from 'components/settings/InputSetting';
+
+import { useAppDispatch, useAppSelector } from 'hooks/store';
+
+import { UNITS } from 'services/units';
+
 import {
   selectConversionPrecision,
   selectUnitsConversions, selectUseUnitsConversion, setConversionPrecision, setUnitConversion, setUseUnitsConversion,
-} from 'features/settings';
-import { UNITS } from 'services/units';
+} from 'store/settings';
+
 import unitsConverter from 'utils/unitsConverter';
-import { InputSetting } from 'components/settings/InputSetting';
-import { ScreenHeader } from 'components/Screen/ScreenHeader';
-import { FluidContainer } from 'components/Container';
 
 const SettingsContainer = styled.div`
   display: flex;

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { IntlMessageFormat } from 'intl-messageformat';
-import { UNITS } from '.';
+
+import { UNITS } from 'services/units';
 
 export abstract class Unit {
   abstract pattern: RegExp;

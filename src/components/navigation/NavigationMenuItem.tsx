@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react/macro';
 import styled from '@emotion/styled/macro';
+import { transparentize } from 'polished';
 import { FC } from 'react';
 import { NavLink, NavLinkProps } from 'react-router-dom';
-import { media } from 'utils/mediaQueries';
-import { transparentize } from 'polished';
+
+import { media } from 'utils/styles/mediaQueries';
 
 const Item = styled(NavLink)`
   display: flex;

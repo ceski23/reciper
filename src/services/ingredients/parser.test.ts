@@ -1,5 +1,5 @@
+import { parseIngredient, ParsedIngredient } from 'services/ingredients/parser';
 import { Unit } from 'services/units/Unit';
-import { ParsedIngredient, parseIngredient } from './parser';
 
 // const ingredients = [
 //   'bazylia (1 doniczka)',
