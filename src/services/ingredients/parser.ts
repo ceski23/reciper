@@ -69,7 +69,7 @@ export const parseIngredient = (ingredient: string): ParsedIngredient => {
 
   const ingredientType = Object.entries(ingredientsDatabase).find(
     ([, { pattern }]) => ingredient.match(pattern),
-  )?.[0] as KnownIngredient | undefined;
+  )?.[0];
 
   // Składnik bez liczb, np. sól, pieprz
   if (!data) {

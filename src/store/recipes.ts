@@ -8,6 +8,7 @@ import storage from 'redux-persist/lib/storage';
 
 import { RootState } from 'store';
 
+import { IngredientType } from 'services/ingredients/database';
 import { Recipe } from 'services/recipes';
 import {
   pancakes, kurczak, pierniczki, ramen,
@@ -65,6 +66,34 @@ export const updateRecipesFromBackup = (data: any) => ({
   payload: data,
 });
 
+const filterByIngredients = (recipes: Recipe[], ingredients: IngredientType[]) => (
+  recipes.filter((result) => {
+    const hasAllRequiredIngredients = ingredients.every((requiredIngredient) => {
+      const hasRequiredIngredient = result.ingredients.some((ingredient) => (
+        requiredIngredient.pattern.test(ingredient)
+      ));
+
+      return hasRequiredIngredient;
+    });
+
+    return hasAllRequiredIngredients;
+  })
+);
+
+const filterByQuery = (recipes: Recipe[], query: string) => {
+  const searcher = new Fuse(recipes, {
+    keys: [
+      { name: 'name', weight: 3 },
+      { name: 'tags', weight: 1 },
+    ],
+    // minMatchCharLength: 3,
+  });
+
+  return searcher
+    .search(query)
+    .map((r) => r.item);
+};
+
 export const {
   save: saveRecipe,
   removeById: removeRecipeById,
@@ -78,19 +107,18 @@ export const selectRecipeIds = (state: RootState) => Object.keys(state.recipes.l
 export const getStoredRecipes = () => getStoredState(persistConfig);
 
 export const searchRecipes = createSelector(
-  selectRecipes,
-  (_: unknown, name: string) => name,
-  (recipes, name) => {
-    const recipesList = Object.values(recipes);
-    const searcher = new Fuse(recipesList, {
-      keys: [
-        { name: 'name', weight: 3 },
-        { name: 'tags', weight: 1 },
-      ],
-      minMatchCharLength: 3,
-    });
+  [
+    selectRecipes,
+    (_state, name: string) => name,
+    (_state, _name, ingredients: IngredientType[]) => ingredients,
+  ],
+  (recipes, name, ingredients) => {
+    let recipesList = Object.values(recipes);
 
-    return searcher.search(name);
+    if (name !== '') recipesList = filterByQuery(recipesList, name);
+    if (ingredients.length !== 0) recipesList = filterByIngredients(recipesList, ingredients);
+
+    return recipesList;
   },
 );
 
