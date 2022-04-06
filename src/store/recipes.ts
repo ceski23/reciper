@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Fuse from 'fuse.js';
 import {
   persistReducer, getStoredState, PersistConfig, REHYDRATE,
 } from 'redux-persist';
@@ -13,6 +12,7 @@ import { Recipe } from 'services/recipes';
 import {
   pancakes, kurczak, pierniczki, ramen,
 } from 'services/recipes/samples';
+import RecipeSearch from 'services/search';
 
 export interface RecipesState {
   list: Record<string, Recipe>;
@@ -66,34 +66,6 @@ export const updateRecipesFromBackup = (data: any) => ({
   payload: data,
 });
 
-const filterByIngredients = (recipes: Recipe[], ingredients: IngredientType[]) => (
-  recipes.filter((result) => {
-    const hasAllRequiredIngredients = ingredients.every((requiredIngredient) => {
-      const hasRequiredIngredient = result.ingredients.some((ingredient) => (
-        requiredIngredient.pattern.test(ingredient)
-      ));
-
-      return hasRequiredIngredient;
-    });
-
-    return hasAllRequiredIngredients;
-  })
-);
-
-const filterByQuery = (recipes: Recipe[], query: string) => {
-  const searcher = new Fuse(recipes, {
-    keys: [
-      { name: 'name', weight: 3 },
-      { name: 'tags', weight: 1 },
-    ],
-    // minMatchCharLength: 3,
-  });
-
-  return searcher
-    .search(query)
-    .map((r) => r.item);
-};
-
 export const {
   save: saveRecipe,
   removeById: removeRecipeById,
@@ -111,14 +83,17 @@ export const searchRecipes = createSelector(
     selectRecipes,
     (_state, name: string) => name,
     (_state, _name, ingredients: IngredientType[]) => ingredients,
+    (_state, _name, _ingredients, duration: number) => duration,
   ],
-  (recipes, name, ingredients) => {
-    let recipesList = Object.values(recipes);
+  (recipes, name, ingredients, duration) => {
+    const recipesList = Object.values(recipes);
+    const recipeSearch = new RecipeSearch(recipesList);
 
-    if (name !== '') recipesList = filterByQuery(recipesList, name);
-    if (ingredients.length !== 0) recipesList = filterByIngredients(recipesList, ingredients);
-
-    return recipesList;
+    return recipeSearch.search({
+      query: name,
+      ingredients,
+      duration,
+    });
   },
 );
 

@@ -1,55 +1,71 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { useSearchParams } from 'hooks/useSearchParams';
 
 import KNOWN_INGREDIENTS, { IngredientType } from 'services/ingredients/database';
 
-export type SearchState = {
-  query?: string,
-  ingredient?: string[]
-};
+interface RecipeSearchParams {
+  query: string,
+  ingredient: string[],
+  duration: number;
+}
+
+interface FiltersObject {
+  query: string;
+  ingredients: IngredientType[];
+  duration: number;
+}
 
 const findIngredient = (text: string) => (
   Object.values(KNOWN_INGREDIENTS).find((i) => i.name === text)
 );
 
-export const useRecipesFilters = (initialValues: SearchState) => {
+export const useRecipesFilters = () => {
   const location = useLocation();
-  const { searchParams, setSearchParams } = useSearchParams<SearchState>();
-  const [searchQuery, setSearchQuery] = useState(initialValues?.query ?? '');
-  const [ingredients, setIngredients] = useState<IngredientType[]>([]);
+  const { searchParams, setSearchParams } = useSearchParams<RecipeSearchParams>();
 
+  const [searchQuery, setSearchQuery] = useState(searchParams.query ?? '');
+  const [ingredients, setIngredients] = useState<IngredientType[]>([]);
+  const [duration, setDuration] = useState(searchParams.duration ?? 0);
+
+  // Update filters on URL change
   useEffect(() => {
-    setSearchQuery(searchParams.query as string ?? '');
+    setSearchQuery(searchParams.query ?? '');
+    setDuration(searchParams.duration ?? 0);
 
     let ingrNames = searchParams.ingredient ?? [];
     ingrNames = Array.isArray(ingrNames) ? ingrNames : [ingrNames];
     setIngredients(ingrNames.map(findIngredient).filter(Boolean) as IngredientType[]);
   }, [searchParams]);
 
-  const updateQuery = (newQuery: string) => {
-    const state = new URLSearchParams(location.search);
-    state.set('query', newQuery);
-
-    setSearchParams(state);
-  };
-
-  const updateIngredients = (newIngredients: (old: IngredientType[]) => IngredientType[]) => {
+  // Manually update filters
+  const updateFilters = useCallback((filters: Partial<FiltersObject>) => {
     const state = new URLSearchParams(location.search);
 
-    state.delete('ingredient');
-    newIngredients(ingredients).forEach((ingredient) => {
-      state.append('ingredient', ingredient.name);
-    });
+    if (filters.query !== undefined) {
+      state.set('query', filters.query);
+    }
+
+    if (filters.duration !== undefined) {
+      state.set('duration', filters.duration.toString(10));
+    }
+
+    if (filters.ingredients !== undefined) {
+      state.delete('ingredient');
+
+      filters.ingredients.forEach((ingredient) => {
+        state.append('ingredient', ingredient.name);
+      });
+    }
 
     setSearchParams(state);
-  };
+  }, [location.search, setSearchParams]);
 
   return {
     query: searchQuery,
-    updateQuery,
     ingredients,
-    updateIngredients,
+    duration,
+    updateFilters,
   };
 };

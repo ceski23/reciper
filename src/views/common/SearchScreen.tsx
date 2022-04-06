@@ -4,7 +4,6 @@ import {
   useEffect, useRef, useState, VFC,
 } from 'react';
 import Sheet from 'react-modal-sheet';
-import { useLocation } from 'react-router';
 
 import { ReactComponent as FilterIcon } from 'assets/common/filter.svg';
 
@@ -14,7 +13,7 @@ import { ScreenHeader } from 'components/common/ScreenHeader';
 import { Searchbar } from 'components/common/Searchbar';
 import { RecipeTile } from 'components/recipes/RecipeTile';
 
-import { SearchState, useRecipesFilters } from 'hooks/recipes/useRecipesFilters';
+import { useRecipesFilters } from 'hooks/recipes/useRecipesFilters';
 import { useAppSelector } from 'hooks/store';
 import { useToggle } from 'hooks/useToggle';
 
@@ -66,15 +65,14 @@ const AnimatedRecipeTile = motion(RecipeTile);
 export const SearchScreen: VFC = () => {
   const [filtersExpanded, expandFilters, closeFilters] = useToggle(false);
 
-  const location = useLocation();
   const {
-    query, updateQuery, ingredients, updateIngredients,
-  } = useRecipesFilters(location.state as SearchState);
+    duration, ingredients, query, updateFilters,
+  } = useRecipesFilters();
 
   const [searchBarValue, setSearchBarValue] = useState(query);
   const searchBar = useRef<HTMLInputElement>(null);
 
-  const results = useAppSelector((state) => searchRecipes(state, query, ingredients));
+  const results = useAppSelector((state) => searchRecipes(state, query, ingredients, duration));
 
   // Focus searchbar on mount
   useEffect(() => {
@@ -94,7 +92,7 @@ export const SearchScreen: VFC = () => {
         <StyledSearchBar
           value={searchBarValue}
           onChange={setSearchBarValue}
-          onDebouncedChange={updateQuery}
+          onDebouncedChange={(q) => updateFilters({ query: q })}
           ref={searchBar}
         />
         <MoreFiltersButton type="button" onClick={expandFilters}>
@@ -118,10 +116,7 @@ export const SearchScreen: VFC = () => {
           <Sheet.Header />
           <Sheet.Content style={{ margin: '0 20px', display: 'flex', flexDirection: 'column' }}>
             <h2>Filtry</h2>
-            <RecipesFilters
-              ingredients={ingredients}
-              setIngredients={updateIngredients}
-            />
+            <RecipesFilters />
           </Sheet.Content>
         </Sheet.Container>
 

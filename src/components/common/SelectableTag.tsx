@@ -12,6 +12,9 @@ const Tag = styled.div<Pick<Props, 'selected'>>`
   border: 1px solid ${(props) => (props.selected ? props.theme.colors.primary : props.theme.colors.background2)};
   padding: 5px 10px;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const SelectableTag: FC<Props> = ({ onClick, selected, children }) => (
