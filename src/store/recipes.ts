@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Fuse from 'fuse.js';
 import {
   persistReducer, getStoredState, PersistConfig, REHYDRATE,
 } from 'redux-persist';
@@ -8,10 +7,12 @@ import storage from 'redux-persist/lib/storage';
 
 import { RootState } from 'store';
 
+import { IngredientType } from 'services/ingredients/database';
 import { Recipe } from 'services/recipes';
 import {
   pancakes, kurczak, pierniczki, ramen,
 } from 'services/recipes/samples';
+import RecipeSearch from 'services/search';
 
 export interface RecipesState {
   list: Record<string, Recipe>;
@@ -78,19 +79,21 @@ export const selectRecipeIds = (state: RootState) => Object.keys(state.recipes.l
 export const getStoredRecipes = () => getStoredState(persistConfig);
 
 export const searchRecipes = createSelector(
-  selectRecipes,
-  (_: unknown, name: string) => name,
-  (recipes, name) => {
+  [
+    selectRecipes,
+    (_state, name: string) => name,
+    (_state, _name, ingredients: IngredientType[]) => ingredients,
+    (_state, _name, _ingredients, duration: number) => duration,
+  ],
+  (recipes, name, ingredients, duration) => {
     const recipesList = Object.values(recipes);
-    const searcher = new Fuse(recipesList, {
-      keys: [
-        { name: 'name', weight: 3 },
-        { name: 'tags', weight: 1 },
-      ],
-      minMatchCharLength: 3,
-    });
+    const recipeSearch = new RecipeSearch(recipesList);
 
-    return searcher.search(name);
+    return recipeSearch.search({
+      query: name,
+      ingredients,
+      duration,
+    });
   },
 );
 

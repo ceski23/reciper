@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { reverse } from 'named-urls';
 import { nanoid } from 'nanoid';
 import { VFC } from 'react';

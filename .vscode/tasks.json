@@ -5,29 +5,19 @@
 			"type": "npm",
 			"script": "dev",
 			"isBackground": true,
-			"problemMatcher": {
-				"owner": "webpack",
-				"background": {
-					"activeOnStart": true,
-					"beginsPattern": "Compiling\\.\\.\\.",
-					"endsPattern": "^(?:Failed to compile\\.|Compiled with warnings\\.|Compiled successfully!)$"
-				},
-				"fileLocation": "relative",
-				"pattern": [
-					{
-						"regexp": "^ERROR in (.*):(.*):(.*)$",
-						"file": 1,
-						"line": 2,
-						"column": 3
-					},
-					{
-						"regexp": ".*",
-						"message": 0
-					}
-				],
-			},
-			"label": "npm: dev",
-			"detail": "react-scripts start"
+			"problemMatcher": "$ts-webpack-watch",
+			"label": "Start development",
+			"group": "build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"problemMatcher": "$ts-webpack",
+			"label": "Build app",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		}
 	]
 }
