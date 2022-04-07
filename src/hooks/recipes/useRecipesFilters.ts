@@ -43,11 +43,11 @@ export const useRecipesFilters = () => {
   const updateFilters = useCallback((filters: Partial<FiltersObject>) => {
     const state = new URLSearchParams(location.search);
 
-    if (filters.query !== undefined) {
+    if (filters.query !== undefined && filters.query !== '') {
       state.set('query', filters.query);
     }
 
-    if (filters.duration !== undefined) {
+    if (filters.duration !== undefined && filters.duration > 0) {
       state.set('duration', filters.duration.toString(10));
     }
 
