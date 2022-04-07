@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 
 import { ReactComponent as DisketteIcon } from 'assets/common/diskette.svg';
+import { ReactComponent as PencilIcon } from 'assets/common/pencil.svg';
 import { ReactComponent as TrashIcon } from 'assets/common/trash.svg';
 import { ReactComponent as ClockIcon } from 'assets/recipes/clock.svg';
 import { ReactComponent as StarIcon } from 'assets/recipes/favourite.svg';
@@ -178,6 +179,20 @@ const SideBySide = styled.div`
   }
 `;
 
+const Actions = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+
+  & > * {
+    flex: 1;
+  }
+
+  ${media.down('small')} {
+    flex-direction: column-reverse;
+  }
+`;
+
 export const Recipe: VFC<Props> = ({ recipe }) => {
   const recipeProvider = recipe.url ? chooseProvider(recipe.url) : undefined;
   const dispatch = useAppDispatch();
@@ -248,6 +263,10 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
     toast.success('Przepis został usunięty');
   };
 
+  const handleEditRecipe = () => {
+    navigate(reverse(urls.recipes.edit, { recipeId: recipe.id }));
+  };
+
   const handleAddToShoppingList = () => {
     if (accountProvider && shoppingList && parsedIngredients) {
       const promise = accountProvider.addIngredientsToList(
@@ -300,7 +319,10 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
         )}
 
         {isRecipeSaved ? (
-          <Button icon={UnsaveIcon} onClick={handleRemoveRecipe}>Usuń przepis</Button>
+          <Actions>
+            <Button icon={UnsaveIcon} onClick={handleRemoveRecipe}>Usuń przepis</Button>
+            <Button icon={PencilIcon} onClick={handleEditRecipe}>Edytuj przepis</Button>
+          </Actions>
         ) : (
           <Button icon={SaveIcon} onClick={handleSaveRecipe}>Zapisz przepis</Button>
         )}
