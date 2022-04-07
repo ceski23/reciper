@@ -67,7 +67,7 @@ const TagsContainer = styled.div`
 `;
 
 export const TagInput: VFC<Props> = ({
-  onBlur, onChange, name, value = [],
+  onBlur, onChange, name, value,
 }) => {
   const [internalValue, setInternalValue] = useState<string>('');
 

@@ -10,6 +10,7 @@ export const urls = {
     new: include('new', {
       manual: 'manual',
     }),
+    edit: 'edit/:recipeId',
   }),
   sharedRecipe: '/sharedRecipe',
   colors: '/colors',

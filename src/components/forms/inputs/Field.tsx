@@ -1,5 +1,5 @@
 import styled from '@emotion/styled/macro';
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 export type InputProps =
   React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
@@ -7,7 +7,23 @@ export type InputProps =
 interface Props {
   label: string;
   error?: string;
+  deleteIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  onDeleteClick?: () => void;
 }
+
+const DeleteButton = styled.button`
+  border-radius: 0 10px 10px 0;
+  border: 1px solid ${(props) => props.theme.colors.textalt};
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+`;
 
 const StyledField = styled.input`
   font-family: inherit;
@@ -17,10 +33,16 @@ const StyledField = styled.input`
   border-radius: 10px;
   border: 1px solid ${(props) => props.theme.colors.textalt};
   background-color: ${(props) => props.theme.colors.backgroundInput};
+  flex: 1;
 
   &::placeholder {
     color: ${(props) => props.theme.colors.textalt};
     opacity: 1;
+  }
+
+  ${DeleteButton} + & {
+    border-radius: 10px 0 0 10px;
+    border-right: none;
   }
 `;
 
@@ -41,12 +63,28 @@ const Error = styled.p`
   color: red;
 `;
 
+const FieldContainer = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
 export const Field = forwardRef<HTMLInputElement, InputProps & Props>(({
-  error, label, children, ...props
+  error, label, children, deleteIcon: Icon, onDeleteClick, ...props
 }, ref) => (
   <Label onClick={(e) => e.preventDefault()}>
     <LabelText>{label}</LabelText>
-    {children ?? <StyledField ref={ref} {...props} />}
+    {children ?? (
+      Icon && onDeleteClick
+        ? (
+          <FieldContainer>
+            <DeleteButton type="button" onClick={onDeleteClick}>
+              <Icon />
+            </DeleteButton>
+            <StyledField ref={ref} {...props} />
+          </FieldContainer>
+        )
+        : <StyledField ref={ref} {...props} />
+    )}
     {error && <Error>{error}</Error>}
   </Label>
 ));

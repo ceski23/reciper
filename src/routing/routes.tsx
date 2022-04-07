@@ -5,6 +5,7 @@ import { urls } from 'routing/urls';
 import { HomeScreen } from 'views/common/HomeScreen';
 import { SearchScreen } from 'views/common/SearchScreen';
 import { TagsScreen } from 'views/common/TagsScreen';
+import { EditRecipeScreen } from 'views/recipes/EditRecipeScreen';
 import { FindRecipeScreen } from 'views/recipes/FindRecipeScreen';
 import { NewManualRecipeScreen } from 'views/recipes/NewManualRecipeScreen';
 import { NewRecipeScreen } from 'views/recipes/NewRecipeScreen';
@@ -24,6 +25,7 @@ const routes: RouteObject[] = [
   { path: String(urls.recipes.new), element: <NewRecipeScreen /> },
   { path: urls.sharedRecipe, element: <RedirectSharedRecipe /> },
   { path: urls.recipes.new.manual, element: <NewManualRecipeScreen /> },
+  { path: urls.recipes.edit, element: <EditRecipeScreen /> },
   { path: String(urls.tags), element: <TagsScreen /> },
   { path: urls.tags.tag, element: <TagsScreen /> },
   { path: urls.search, element: <SearchScreen /> },
