@@ -3,25 +3,32 @@ import styled from '@emotion/styled/macro';
 import React, { FC } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
-import { buttonStyles, buttonIconStyles } from 'components/common/Button';
+import {
+  buttonStyles, ButtonVariant, ButtonSize,
+} from 'components/common/Button';
 
-export const StyledLinkButton = styled(Link)`
-  ${buttonStyles}
-
+const RawLinkButton = styled(Link)`
   text-decoration: none;
   justify-content: center;
 `;
 
+const StyledLinkButton = styled(RawLinkButton)<{
+  variant: ButtonVariant,
+  size: ButtonSize
+}>(buttonStyles);
+
 interface Props {
   icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | string;
+  variant?: ButtonVariant
+  size?: ButtonSize
 }
 
 export const LinkButton: FC<LinkProps & Props> = ({
-  children, icon: Icon, ...props
+  children, icon: Icon, variant = 'normal', size = 'normal', ...props
 }) => (
-  <StyledLinkButton {...props}>
-    {Icon && (typeof Icon === 'string' ? <img src={Icon} alt="" css={buttonIconStyles} /> : <Icon css={buttonIconStyles} />)}
+  <StyledLinkButton variant={variant} size={size} {...props}>
+    {Icon && (typeof Icon === 'string' ? <img src={Icon} className="filler" alt="" /> : <Icon />)}
     {children}
-    {Icon && <span style={{ width: 25 }} />}
+    {Icon && <span className="filler" />}
   </StyledLinkButton>
 );

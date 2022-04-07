@@ -7,6 +7,7 @@ import {
 import { z } from 'zod';
 
 import { ReactComponent as DeleteIcon } from 'assets/common/delete.svg';
+import { ReactComponent as SaveIcon } from 'assets/common/diskette.svg';
 
 import { Button } from 'components/common/Button';
 import { Field } from 'components/forms/inputs/Field';
@@ -237,7 +238,7 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
           ))}
         </FieldsWrapper>
 
-        <Button type="button" onClick={() => ingredients.append({ value: '' })}>
+        <Button type="button" size="small" onClick={() => ingredients.append({ value: '' })}>
           Dodaj składnik
         </Button>
       </FieldsArrayWrapper>
@@ -260,12 +261,14 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
           ))}
         </FieldsWrapper>
 
-        <Button type="button" onClick={() => instructions.append({ value: '' })}>
+        <Button type="button" size="small" onClick={() => instructions.append({ value: '' })}>
           Dodaj krok
         </Button>
       </FieldsArrayWrapper>
 
-      <Button type="submit" style={{ marginTop: 20 }}>Zapisz przepis</Button>
+      <Button variant="primary" type="submit" icon={SaveIcon} style={{ marginTop: 20 }}>
+        Zapisz przepis
+      </Button>
     </StyledForm>
   );
 };

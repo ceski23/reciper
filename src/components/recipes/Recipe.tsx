@@ -179,20 +179,6 @@ const SideBySide = styled.div`
   }
 `;
 
-const Actions = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-
-  & > * {
-    flex: 1;
-  }
-
-  ${media.down('small')} {
-    flex-direction: column-reverse;
-  }
-`;
-
 export const Recipe: VFC<Props> = ({ recipe }) => {
   const recipeProvider = recipe.url ? chooseProvider(recipe.url) : undefined;
   const dispatch = useAppDispatch();
@@ -319,10 +305,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
         )}
 
         {isRecipeSaved ? (
-          <Actions>
-            <Button icon={UnsaveIcon} onClick={handleRemoveRecipe}>Usuń przepis</Button>
-            <Button icon={PencilIcon} onClick={handleEditRecipe}>Edytuj przepis</Button>
-          </Actions>
+          <Button icon={PencilIcon} onClick={handleEditRecipe}>Edytuj przepis</Button>
         ) : (
           <Button icon={SaveIcon} onClick={handleSaveRecipe}>Zapisz przepis</Button>
         )}
@@ -381,6 +364,10 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
             )}
           </IngredientsSection>
         </SideBySide>
+
+        {isRecipeSaved && (
+          <Button icon={UnsaveIcon} size="small" onClick={handleRemoveRecipe}>Usuń przepis</Button>
+        )}
       </ContentWrapper>
     </ThemeProvider>
   );

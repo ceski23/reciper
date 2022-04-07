@@ -10,8 +10,11 @@ declare module '@emotion/react/macro' {
       backgroundalt: string,
       background2: string,
       backgroundInput: string,
+      primaryDisabled: string
+      primaryHover: string
       text: string
       textalt: string
+      textLight: string
       shadow: string
     }
     type: 'dark' | 'light',
@@ -41,6 +44,8 @@ export const generateThemeColors = (primaryColor: string, type: Theme['type']): 
 
   return (type === 'light') ? {
     primary: hsl(primary),
+    primaryDisabled: hsl(primary.hue, 0.7, 0.7),
+    primaryHover: hsl(primary.hue, primary.saturation, primary.lightness - 0.1),
     backgroundalt: hsl(primary.hue, 0.25, 0.90),
     background: hsl(primary.hue, 0.20, 0.97),
     backgroundhover: hsl(primary.hue, 0.20, 0.92),
@@ -48,9 +53,12 @@ export const generateThemeColors = (primaryColor: string, type: Theme['type']): 
     backgroundInput: hsl(primary.hue, 1, 1),
     text: hsl(primary.hue, primary.saturation, 0.10),
     textalt: hsl(primary.hue, 0.30, 0.30),
+    textLight: hsl(primary.hue, 0.30, 0.95),
     shadow: hsl(primary.hue, 0.10, primary.lightness / 2),
   } : {
     primary: hsl(primary.hue, primary.saturation, 0.3),
+    primaryDisabled: hsl(primary.hue, primary.saturation, 0.3),
+    primaryHover: hsl(primary.hue, primary.saturation, 0.3),
     backgroundalt: hsl(primary.hue, 0.15, 0.17),
     background: hsl(primary.hue, 0, 0.13),
     backgroundhover: hsl(primary.hue, 0.1, 0.15),
@@ -58,6 +66,7 @@ export const generateThemeColors = (primaryColor: string, type: Theme['type']): 
     backgroundInput: hsl(primary.hue, 0, 0.2),
     text: hsl(primary.hue, primary.saturation, 0.95),
     textalt: hsl(primary.hue, 0.30, 0.70),
+    textLight: hsl(primary.hue, 0.30, 0.20),
     shadow: hsl(primary.hue, 0.10, primary.lightness / 2),
   };
 };
