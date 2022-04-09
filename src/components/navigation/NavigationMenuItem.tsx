@@ -6,6 +6,7 @@ import { FC } from 'react';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 
 import { media } from 'utils/styles/mediaQueries';
+import { color } from 'utils/styles/theme';
 
 const Item = styled(NavLink)`
   display: flex;
@@ -20,7 +21,7 @@ const Item = styled(NavLink)`
   border-radius: 10px;
 
   &.active {
-    color: ${(props) => props.theme.colors.primary};
+    color: ${color('primary')};
     background-color: ${(props) => transparentize(0.9, props.theme.colors.primary)};
   }
 

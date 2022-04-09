@@ -84,3 +84,9 @@ export const darkTheme: Theme = {
   breakpoints,
   containerWidths,
 };
+
+type PropsWithTheme = { theme: Theme };
+
+export const color = (selectedColor: keyof Theme['colors']) => (props: PropsWithTheme) => (
+  props.theme.colors[selectedColor]
+);

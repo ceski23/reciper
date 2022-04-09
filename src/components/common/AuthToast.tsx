@@ -5,6 +5,8 @@ import { Link } from 'components/common/Link';
 
 import { urls } from 'routing/urls';
 
+import { color } from 'utils/styles/theme';
+
 export const CustomToastIcon = styled.img`
   width: 20px;
   height: 20px;
@@ -20,10 +22,10 @@ const ToastContainer = styled.div`
 
 const ToastLink = styled(Link)`
   margin-left: 20px;
-  background-color: ${(props) => props.theme.colors.backgroundhover};
+  background-color: ${color('backgroundhover')};
   padding: 5px 10px;
   border-radius: 10px;
-  color: ${(props) => props.theme.colors.textalt};
+  color: ${color('textalt')};
   text-decoration: none;
   font-weight: 600;
 `;

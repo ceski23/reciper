@@ -4,6 +4,7 @@ import styled from '@emotion/styled/macro';
 import { transparentize } from 'polished';
 import React, { VFC } from 'react';
 
+import { color } from 'utils/styles/theme';
 import { fluidTypography } from 'utils/styles/typography';
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const StepNumber = styled('p')`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${color('primary')};
   margin: 0;
   margin-bottom: 10px;
   font-weight: 700;

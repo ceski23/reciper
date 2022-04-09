@@ -1,6 +1,8 @@
 import styled from '@emotion/styled/macro';
 import React, { forwardRef } from 'react';
 
+import { color } from 'utils/styles/theme';
+
 export type InputProps =
   React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
@@ -13,7 +15,7 @@ interface Props {
 
 const DeleteButton = styled.button`
   border-radius: 0 10px 10px 0;
-  border: 1px solid ${(props) => props.theme.colors.textalt};
+  border: 1px solid ${color('textalt')};
   padding: 8px 10px;
   display: flex;
   align-items: center;
@@ -31,12 +33,12 @@ const StyledField = styled.input`
   font-weight: 500;
   padding: 10px 15px;
   border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.colors.textalt};
-  background-color: ${(props) => props.theme.colors.backgroundInput};
+  border: 1px solid ${color('textalt')};
+  background-color: ${color('backgroundInput')};
   flex: 1;
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.textalt};
+    color: ${color('textalt')};
     opacity: 1;
   }
 

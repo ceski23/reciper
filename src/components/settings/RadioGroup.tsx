@@ -1,12 +1,14 @@
 /* eslint-disable react/require-default-props */
 import styled from '@emotion/styled/macro';
 
+import { color } from 'utils/styles/theme';
+
 const RadioContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 20px;
-  background-color: ${(props) => props.theme.colors.backgroundhover};
+  background-color: ${color('backgroundhover')};
   border-radius: 20px;
   padding: 20px;
 `;
@@ -22,13 +24,13 @@ const RadioInput = styled.input`
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 4px solid ${(props) => props.theme.colors.background};
-  background-color: ${(props) => props.theme.colors.background};
+  border: 4px solid ${color('background')};
+  background-color: ${color('background')};
   margin-right: 10px;
-  box-shadow: 0 0 1px ${(props) => props.theme.colors.shadow};
+  box-shadow: 0 0 1px ${color('shadow')};
 
   &:checked {
-    background-color: ${(props) => props.theme.colors.textalt};
+    background-color: ${color('textalt')};
   }
 `;
 
@@ -43,7 +45,7 @@ const Hint = styled.p`
   line-height: 1.4;
   margin-top: -5px;
   margin-bottom: 20px;
-  color: ${(props) => props.theme.colors.textalt};
+  color: ${color('textalt')};
 `;
 
 interface Props<T extends string | number> {

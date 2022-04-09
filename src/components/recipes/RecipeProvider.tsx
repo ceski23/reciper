@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import { Provider } from 'services/recipes/providers';
 
+import { color } from 'utils/styles/theme';
 import { fluidTypography } from 'utils/styles/typography';
 
 interface Props {
@@ -17,7 +18,7 @@ const Icon = styled.img`
 `;
 
 const Name = styled.span`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${color('primary')};
   font-weight: 600;
   ${({ theme }) => fluidTypography(
     theme.breakpoints.small,

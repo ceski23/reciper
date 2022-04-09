@@ -12,6 +12,8 @@ import { urls } from 'routing/urls';
 
 import { Recipe } from 'services/recipes';
 
+import { color } from 'utils/styles/theme';
+
 interface Props {
   recipe: Recipe;
 }
@@ -59,14 +61,14 @@ const Name = styled.p`
 const Info = styled.p`
   margin: 0;
   font-size: 14px;
-  color: ${(props) => props.theme.colors.textalt};
+  color: ${color('textalt')};
 `;
 
 const Placeholder = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${(props) => props.theme.colors.backgroundalt};
-  color: ${(props) => props.theme.colors.textalt};
+  background-color: ${color('backgroundalt')};
+  color: ${color('textalt')};
   border-radius: 15px;
   margin-bottom: 15px;
   display: flex;

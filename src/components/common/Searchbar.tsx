@@ -5,6 +5,8 @@ import React from 'react';
 
 import { ReactComponent as LoupeIcon } from 'assets/common/loupe.svg';
 
+import { color } from 'utils/styles/theme';
+
 const Input = styled('input')`
   border-radius: 15px;
   padding: 15px;
@@ -16,11 +18,11 @@ const Input = styled('input')`
   font-size: 1rem;
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.textalt};
+    color: ${color('textalt')};
   }
 
   &:focus {
-    outline: 2px solid ${(props) => props.theme.colors.primary};
+    outline: 2px solid ${color('primary')};
   }
 `;
 
@@ -34,7 +36,7 @@ const SearchIcon = styled(LoupeIcon)`
   bottom: 15px;
   width: 20px;
   height: 20px;
-  fill: ${(props) => props.theme.colors.textalt};
+  fill: ${color('textalt')};
 `;
 
 interface Props {

@@ -16,6 +16,7 @@ import { TagInput } from 'components/forms/inputs/TagInput';
 import {
   fieldOptions, getFieldError, getMultiFieldError,
 } from 'utils/forms';
+import { color } from 'utils/styles/theme';
 
 const StyledForm = styled.form`
   display: flex;
@@ -27,7 +28,7 @@ const StyledForm = styled.form`
 const Textarea = styled.textarea`
   padding: 10px 15px;
   border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.colors.textalt};
+  border: 1px solid ${color('textalt')};
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;

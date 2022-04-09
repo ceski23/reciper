@@ -11,6 +11,7 @@ import { convertIngredient, ParsedIngredient } from 'services/ingredients/parser
 
 import { selectConversionPrecision, selectUnitsConversions, selectUseUnitsConversion } from 'store/settings';
 
+import { color } from 'utils/styles/theme';
 import { fluidTypography } from 'utils/styles/typography';
 
 interface Props {
@@ -37,7 +38,7 @@ const Icon = styled.img`
 const FallbackIcon = styled(GroceryIcon)`
   ${iconStyles}
 
-  fill: ${(props) => props.theme.colors.text};
+  fill: ${color('text')};
 `;
 
 const Wrapper = styled.div`

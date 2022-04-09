@@ -13,6 +13,8 @@ import { SettingsListItem } from 'components/settings/SettingsListItem';
 
 import { urls } from 'routing/urls';
 
+import { color } from 'utils/styles/theme';
+
 const OptionsList = styled.div`
   display: flex;
   flex-direction: column;
@@ -29,7 +31,7 @@ const UrlInput = styled.input`
   margin-right: 10px;
   padding: 5px 10px;
   border-radius: 7px;
-  border: 1px solid ${(props) => props.theme.colors.backgroundalt};
+  border: 1px solid ${color('backgroundalt')};
 `;
 
 const Option = styled(SettingsListItem)`
@@ -38,13 +40,13 @@ const Option = styled(SettingsListItem)`
 
 const FindButton = styled.button`
   border: 0px;
-  background-color: ${(props) => props.theme.colors.background2};
+  background-color: ${color('background2')};
   padding: 5px 10px;
   border-radius: 7px;
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.backgroundhover};
+    background-color: ${color('backgroundhover')};
   }
 `;
 

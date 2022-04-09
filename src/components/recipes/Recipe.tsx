@@ -44,7 +44,7 @@ import { selectDynamicPrimaryColor } from 'store/settings';
 import { selectShoppingList } from 'store/user';
 
 import { media } from 'utils/styles/mediaQueries';
-import { lightTheme, generateThemeColors } from 'utils/styles/theme';
+import { lightTheme, generateThemeColors, color } from 'utils/styles/theme';
 import { fluidTypography } from 'utils/styles/typography';
 import { normalizeUrl } from 'utils/url';
 
@@ -92,8 +92,8 @@ const Description = styled.div`
 
 const ContentWrapper = styled(FluidContainer)`
   margin: 50px 0;
-  color: ${(props) => props.theme.colors.text};
-  background-color: ${(props) => props.theme.colors.background};
+  color: ${color('text')};
+  background-color: ${color('background')};
   row-gap: 50px;
 
   ${media.down('medium')} {
@@ -122,7 +122,7 @@ const IngredientsHeader = styled.div`
 `;
 
 const AltText = styled.span`
-  color: ${(props) => props.theme.colors.textalt};
+  color: ${color('textalt')};
   ${({ theme }) => fluidTypography(
     theme.breakpoints.small,
     theme.breakpoints.xlarge,

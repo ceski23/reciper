@@ -5,8 +5,10 @@ import React, { FC } from 'react';
 
 import { Styleable } from 'types';
 
+import { color } from 'utils/styles/theme';
+
 const Container = styled.div`
-  background-color: ${(props) => props.theme.colors.backgroundhover};
+  background-color: ${color('backgroundhover')};
   border-radius: 10px;
   padding: 26px 20px;
   font-size: 16px;
@@ -17,7 +19,7 @@ const Container = styled.div`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.background2};
+    background-color: ${color('background2')};
   }
 `;
 

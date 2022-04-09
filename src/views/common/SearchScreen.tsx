@@ -21,6 +21,7 @@ import { searchRecipes } from 'store/recipes';
 
 import { staggeredGrid, slideUp } from 'utils/styles/animations';
 import { media } from 'utils/styles/mediaQueries';
+import { color } from 'utils/styles/theme';
 
 const RecipesList = styled(motion.div)`
   display: grid;
@@ -44,7 +45,7 @@ const MoreFiltersButton = styled.button`
   font-weight: 600;
   font-size: 16px;
   text-align: left;
-  color: ${(props) => props.theme.colors.primary};
+  color: ${color('primary')};
   cursor: pointer;
 `;
 
@@ -57,7 +58,7 @@ const SearchContainer = styled.div`
 const StyledFilterIcon = styled(FilterIcon)`
   width: 30px;
   height: 100%;
-  fill: ${(props) => props.theme.colors.textalt};
+  fill: ${color('textalt')};
 `;
 
 const AnimatedRecipeTile = motion(RecipeTile);

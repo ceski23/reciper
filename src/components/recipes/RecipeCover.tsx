@@ -7,6 +7,7 @@ import { Styleable } from 'types';
 import { fullBleedStyles } from 'components/common/Container';
 
 import { media } from 'utils/styles/mediaQueries';
+import { color } from 'utils/styles/theme';
 
 interface Props {
   src?: string;
@@ -17,7 +18,7 @@ const Image = styled(motion.img)`
   height: 100%;
   object-fit: cover;
   min-height: 300px;
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${color('primary')};
 `;
 
 const Container = styled.div`
@@ -39,7 +40,7 @@ const CoverDecoration = styled.div`
   width: 100%;
   height: 20px;
   margin-top: -22px;
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${color('background')};
   z-index: 1;
   position: absolute;
   border-radius: 20px 20px 0 0;

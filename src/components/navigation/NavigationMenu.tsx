@@ -3,11 +3,12 @@ import { transparentize } from 'polished';
 import { FC } from 'react';
 
 import { media } from 'utils/styles/mediaQueries';
+import { color } from 'utils/styles/theme';
 
 const NavigationContainer = styled.nav`
   display: flex;
   flex-direction: row;
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${color('background')};
   width: 100%;
   z-index: 10;
 

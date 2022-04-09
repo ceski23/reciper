@@ -14,6 +14,7 @@ import { NavigationMenuItem } from 'components/navigation/NavigationMenuItem';
 import { urls } from 'routing/urls';
 
 import { media } from 'utils/styles/mediaQueries';
+import { color } from 'utils/styles/theme';
 
 const PageBody = styled(motion.div)`
   overflow: auto;
@@ -74,7 +75,7 @@ const AppIcon = styled(ReciperIcon)`
 `;
 
 const AppName = styled.p`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${color('primary')};
   font-size: 30px;
   font-weight: 700;
 `;

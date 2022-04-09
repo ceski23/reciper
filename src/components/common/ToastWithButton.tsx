@@ -3,6 +3,8 @@ import { FC } from 'react';
 
 import { Button } from 'components/common/Button';
 
+import { color } from 'utils/styles/theme';
+
 export const CustomToastIcon = styled.img`
   width: 20px;
   height: 20px;
@@ -18,11 +20,11 @@ const ToastContainer = styled.div`
 
 const ToastButton = styled(Button)`
   margin-left: 20px;
-  background-color: ${(props) => props.theme.colors.backgroundhover};
+  background-color: ${color('backgroundhover')};
   min-width: auto;
   padding: 7px 15px;
   border-radius: 10px;
-  color: ${(props) => props.theme.colors.textalt};
+  color: ${color('textalt')};
   text-decoration: none;
   font-weight: 600;
   text-align: center;

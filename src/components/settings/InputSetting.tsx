@@ -1,6 +1,8 @@
 /* eslint-disable react/require-default-props */
 import styled from '@emotion/styled/macro';
 
+import { color } from 'utils/styles/theme';
+
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,17 +20,17 @@ const Input = styled.input`
   width: 70px;
   height: 40px;
   border-radius: 5px;
-  border: 4px solid ${(props) => props.theme.colors.background};
-  background-color: ${(props) => props.theme.colors.background};
+  border: 4px solid ${color('background')};
+  background-color: ${color('background')};
   align-self: center;
-  box-shadow: 0 0 1px ${(props) => props.theme.colors.shadow};
+  box-shadow: 0 0 1px ${color('shadow')};
 `;
 
 const Hint = styled.p`
   font-size: 12px;
   line-height: 1.4;
   margin-top: -10px;
-  color: ${(props) => props.theme.colors.textalt};
+  color: ${color('textalt')};
   margin-bottom: 0;
 `;
 

@@ -5,6 +5,8 @@ import {
 
 import { ReactComponent as DeleteIcon } from 'assets/common/delete.svg';
 
+import { color } from 'utils/styles/theme';
+
 interface Props {
   onChange: (value: string[]) => void;
   onBlur: () => void;
@@ -22,7 +24,7 @@ const StyledField = styled.input`
   min-width: 0;
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.textalt};
+    color: ${color('textalt')};
     opacity: 1;
   }
 
@@ -36,7 +38,7 @@ const Tag = styled.span`
   gap: 10px;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => props.theme.colors.background2};
+  background-color: ${color('background2')};
   padding: 5px 10px;
   border-radius: 10px;
   font-size: 14px;
@@ -62,8 +64,8 @@ const TagsContainer = styled.div`
   gap: 10px;
   padding: 10px 15px;
   border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.colors.textalt};
-  background-color: ${(props) => props.theme.colors.backgroundInput};
+  border: 1px solid ${color('textalt')};
+  background-color: ${color('backgroundInput')};
 `;
 
 export const TagInput: VFC<Props> = ({
