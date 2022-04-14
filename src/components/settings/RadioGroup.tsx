@@ -8,7 +8,7 @@ const RadioContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 20px;
-  background-color: ${color('backgroundhover')};
+  background-color: ${color('backgroundHover')};
   border-radius: 20px;
   padding: 20px;
 `;

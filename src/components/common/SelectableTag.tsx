@@ -10,8 +10,8 @@ interface Props {
 
 const Tag = styled.div<Pick<Props, 'selected'>>`
   color: ${color('primary')};
-  background-color: ${(props) => (props.selected ? props.theme.colors.backgroundhover : props.theme.colors.backgroundalt)};
-  border: 1px solid ${(props) => (props.selected ? props.theme.colors.primary : props.theme.colors.background2)};
+  background-color: ${(props) => (props.selected ? props.theme.colors.backgroundHover : props.theme.colors.backgroundAlt)};
+  border: 1px solid ${(props) => (props.selected ? props.theme.colors.primary : props.theme.colors.backgroundAlt)};
   padding: 5px 10px;
   border-radius: 10px;
   display: flex;

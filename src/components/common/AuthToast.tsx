@@ -22,7 +22,7 @@ const ToastContainer = styled.div`
 
 const ToastLink = styled(Link)`
   margin-left: 20px;
-  background-color: ${color('backgroundhover')};
+  background-color: ${color('backgroundHover')};
   padding: 5px 10px;
   border-radius: 10px;
   color: ${color('textalt')};

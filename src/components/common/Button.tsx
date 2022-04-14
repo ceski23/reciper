@@ -22,7 +22,7 @@ export const buttonStyles = (
   justify-content: space-between;
   width: auto;
   cursor: pointer;
-  box-shadow: 0px 3px 2px #0000001c;
+  box-shadow: 0px 3px 2px ${theme.colors.shadow};
   
   &:disabled {
     opacity: 0.7;
@@ -31,21 +31,17 @@ export const buttonStyles = (
 
   ${match(variant)
     .with('normal', () => css`
-      background-color: ${theme.colors.backgroundhover};
+      background-color: ${theme.colors.backgroundAlt};
       color: ${theme.colors.textalt};
 
       &:disabled {
-        background-color: ${theme.colors.background2};
+        background-color: ${theme.colors.backgroundHover};
       }
 
       &:not(:disabled) {
         &:hover,
         &:focus-visible {
-          background-color: ${hsl({
-    hue: parseToHsl(theme.colors.backgroundhover).hue,
-    saturation: parseToHsl(theme.colors.backgroundhover).saturation,
-    lightness: parseToHsl(theme.colors.backgroundhover).lightness - 0.1,
-  })};
+          background-color: ${theme.colors.backgroundAltHover};
         }
       }
     `)

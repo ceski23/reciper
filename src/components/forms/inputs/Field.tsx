@@ -20,6 +20,13 @@ const DeleteButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: ${color('backgroundAltHover')};
+  color: ${color('textalt')};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${color('backgroundAlt')};
+  }
 
   svg {
     width: 15px;
@@ -35,6 +42,7 @@ const StyledField = styled.input`
   border-radius: 10px;
   border: 1px solid ${color('textalt')};
   background-color: ${color('backgroundInput')};
+  color: ${color('textalt')};
   flex: 1;
 
   &::placeholder {

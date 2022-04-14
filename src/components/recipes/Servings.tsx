@@ -5,6 +5,8 @@ import { VFC } from 'react';
 
 import { Button } from 'components/common/Button';
 
+import { color } from 'utils/styles/theme';
+
 interface Props {
   servings: number;
   onServingsChange: (servings: number) => void;
@@ -17,6 +19,7 @@ const StyledButton = styled(Button)`
   font-size: 25px;
   font-weight: 700;
   padding: 5px 15px;
+  background-color: ${color('primaryHighlight')};
 `;
 
 const Container = styled.div`

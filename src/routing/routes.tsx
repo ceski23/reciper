@@ -2,6 +2,7 @@ import { RouteObject } from 'react-router';
 
 import { urls } from 'routing/urls';
 
+import { ColorDebug } from 'views/ColorDebug';
 import { HomeScreen } from 'views/common/HomeScreen';
 import { SearchScreen } from 'views/common/SearchScreen';
 import { TagsScreen } from 'views/common/TagsScreen';
@@ -17,7 +18,12 @@ import { AppearanceSubPage } from 'views/settings/AppearanceSubPage';
 import { SettingsScreen } from 'views/settings/SettingsScreen';
 import { UnitsSubPage } from 'views/settings/UnitsSubPage';
 
+const devRoutes = process.env.NODE_ENV === 'development' ? [
+  { path: '/colors', element: <ColorDebug /> },
+] : [];
+
 const routes: RouteObject[] = [
+  ...devRoutes,
   { path: urls.home, element: <HomeScreen /> },
   { path: String(urls.recipes), element: <RecipesScreen /> },
   { path: urls.recipes.recipeById, element: <RecipeScreen /> },

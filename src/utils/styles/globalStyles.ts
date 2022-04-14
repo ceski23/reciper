@@ -10,6 +10,7 @@ export default (theme: Theme) => css`
     -moz-osx-font-smoothing: grayscale;
     background-color: ${theme.colors.background};
     color: ${theme.colors.text};
+    accent-color: ${theme.colors.primary};
   }
 
   #root {

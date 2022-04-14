@@ -29,12 +29,15 @@ const Textarea = styled.textarea`
   padding: 10px 15px;
   border-radius: 10px;
   border: 1px solid ${color('textalt')};
+  background-color: ${color('backgroundInput')};
+  color: ${color('textalt')};
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   width: 100%;
   resize: vertical;
   min-height: 150px;
+  line-height: 1.5;
 `;
 
 const RecipeImage = styled.img`

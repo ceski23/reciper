@@ -22,6 +22,7 @@ const StyledField = styled.input`
   border: none;
   padding: 5px 10px;
   min-width: 0;
+  background-color: ${color('backgroundInput')};
 
   &::placeholder {
     color: ${color('textalt')};
@@ -38,7 +39,7 @@ const Tag = styled.span`
   gap: 10px;
   justify-content: center;
   align-items: center;
-  background-color: ${color('background2')};
+  background-color: ${color('backgroundAltHover')};
   padding: 5px 10px;
   border-radius: 10px;
   font-size: 14px;
@@ -55,6 +56,8 @@ const TagDeleteButton = styled.button`
   align-items: center;
   font-weight: 500;
   padding: 5px;
+  background-color: ${color('backgroundAlt')};
+  color: ${color('text')};
 `;
 
 const TagsContainer = styled.div`

@@ -12,13 +12,17 @@ const Input = styled('input')`
   padding: 15px;
   padding-left: 50px;
   border: none;
-  box-shadow: 0 0 15px ${(props) => transparentize(0.9, props.theme.colors.shadow)};
+  box-shadow: 0px 2px 3px ${color('shadow')};
   font-family: Raleway, sans-serif;
   width: 100%;
   font-size: 1rem;
+  background-color: ${color('backgroundInput')};
+  color: ${color('textalt')};
+  font-weight: 600;
 
   &::placeholder {
     color: ${color('textalt')};
+    font-weight: 600;
   }
 
   &:focus {

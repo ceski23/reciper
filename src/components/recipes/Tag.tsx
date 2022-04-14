@@ -12,7 +12,7 @@ import { color } from 'utils/styles/theme';
 import { fluidTypography } from 'utils/styles/typography';
 
 const Container = styled(Link)`
-  background-color: ${color('backgroundhover')};
+  background-color: ${color('backgroundHover')};
   border-radius: 10px;
   padding: 10px;
   color: ${color('primary')};

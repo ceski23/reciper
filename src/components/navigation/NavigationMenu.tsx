@@ -1,5 +1,4 @@
 import styled from '@emotion/styled/macro';
-import { transparentize } from 'polished';
 import { FC } from 'react';
 
 import { media } from 'utils/styles/mediaQueries';
@@ -13,7 +12,7 @@ const NavigationContainer = styled.nav`
   z-index: 10;
 
   ${media.down('medium')} {
-    box-shadow: 0px 0px 20px ${(props) => transparentize(0.8, props.theme.colors.shadow)};
+    box-shadow: 0px 0px 20px ${color('shadow')};
     height: 70px;
     position: fixed;
     bottom: 0;

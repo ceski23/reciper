@@ -31,7 +31,7 @@ const UrlInput = styled.input`
   margin-right: 10px;
   padding: 5px 10px;
   border-radius: 7px;
-  border: 1px solid ${color('backgroundalt')};
+  border: 1px solid ${color('backgroundAlt')};
 `;
 
 const Option = styled(SettingsListItem)`
@@ -40,13 +40,13 @@ const Option = styled(SettingsListItem)`
 
 const FindButton = styled.button`
   border: 0px;
-  background-color: ${color('background2')};
+  background-color: ${color('background')};
   padding: 5px 10px;
   border-radius: 7px;
   cursor: pointer;
 
   &:hover {
-    background-color: ${color('backgroundhover')};
+    background-color: ${color('backgroundHover')};
   }
 `;
 

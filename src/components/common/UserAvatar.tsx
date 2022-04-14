@@ -12,7 +12,7 @@ const Image = styled('img')`
 `;
 
 const FallbackImage = styled(UserPlaceholder)`
-  background-color: ${color('backgroundhover')};
+  background-color: ${color('backgroundHover')};
   width: 40px;
   height: 40px;
   border-radius: 10px;

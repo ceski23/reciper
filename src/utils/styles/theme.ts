@@ -1,17 +1,18 @@
 import { Theme } from '@emotion/react/macro';
-import { hsl, parseToHsl } from 'polished';
+import { hsl, parseToHsl, transparentize } from 'polished';
 
 declare module '@emotion/react/macro' {
   export interface Theme {
     colors: {
       primary: string,
       background: string,
-      backgroundhover: string
-      backgroundalt: string,
-      background2: string,
+      backgroundHover: string
+      backgroundAlt: string,
+      backgroundAltHover: string,
       backgroundInput: string,
       primaryDisabled: string
       primaryHover: string
+      primaryHighlight: string
       text: string
       textalt: string
       textLight: string
@@ -42,33 +43,49 @@ export type Breakpoint = keyof Theme['breakpoints'];
 export const generateThemeColors = (primaryColor: string, type: Theme['type']): Theme['colors'] => {
   const primary = parseToHsl(primaryColor);
 
-  return (type === 'light') ? {
-    primary: hsl(primary),
-    primaryDisabled: hsl(primary.hue, 0.7, 0.7),
-    primaryHover: hsl(primary.hue, primary.saturation, primary.lightness - 0.1),
-    backgroundalt: hsl(primary.hue, 0.25, 0.90),
-    background: hsl(primary.hue, 0.20, 0.97),
-    backgroundhover: hsl(primary.hue, 0.20, 0.92),
-    background2: hsl(primary.hue, 0.20, 0.85),
-    backgroundInput: hsl(primary.hue, 1, 1),
-    text: hsl(primary.hue, primary.saturation, 0.10),
-    textalt: hsl(primary.hue, 0.30, 0.30),
-    textLight: hsl(primary.hue, 0.30, 0.95),
-    shadow: hsl(primary.hue, 0.10, primary.lightness / 2),
-  } : {
-    primary: hsl(primary.hue, primary.saturation, 0.3),
-    primaryDisabled: hsl(primary.hue, primary.saturation, 0.3),
-    primaryHover: hsl(primary.hue, primary.saturation, 0.3),
-    backgroundalt: hsl(primary.hue, 0.15, 0.17),
-    background: hsl(primary.hue, 0, 0.13),
-    backgroundhover: hsl(primary.hue, 0.1, 0.15),
-    background2: hsl(primary.hue, 0.20, 0.1),
-    backgroundInput: hsl(primary.hue, 0, 0.2),
-    text: hsl(primary.hue, primary.saturation, 0.95),
-    textalt: hsl(primary.hue, 0.30, 0.70),
-    textLight: hsl(primary.hue, 0.30, 0.20),
-    shadow: hsl(primary.hue, 0.10, primary.lightness / 2),
-  };
+  switch (type) {
+    case 'dark':
+      return {
+        primary: hsl(primary.hue, primary.saturation, 0.4),
+        primaryDisabled: hsl(primary.hue, primary.saturation, 0.3),
+        primaryHover: hsl(primary.hue, primary.saturation, 0.5),
+        primaryHighlight: transparentize(0.9, primaryColor),
+
+        background: hsl(primary.hue, 0, 0.13),
+        backgroundHover: hsl(primary.hue, 0.1, 0.15),
+        backgroundAlt: hsl(primary.hue, 0.15, 0.17),
+        backgroundAltHover: hsl(primary.hue, 0.15, 0.2),
+        backgroundInput: hsl(primary.hue, 0.1, 0.16),
+
+        text: hsl(primary.hue, primary.saturation, 0.95),
+        textalt: hsl(primary.hue, 0.30, 0.70),
+        textLight: hsl(primary.hue, 0.30, 0.20),
+
+        shadow: transparentize(0.8, hsl(primary.hue, 0.10, primary.lightness)),
+      };
+
+    case 'light':
+    default: {
+      return {
+        primary: hsl(primary),
+        primaryDisabled: hsl(primary.hue, 0.7, 0.7),
+        primaryHover: hsl(primary.hue, primary.saturation, primary.lightness - 0.1),
+        primaryHighlight: transparentize(0.9, primaryColor),
+
+        background: hsl(primary.hue, 0.20, 0.97),
+        backgroundHover: hsl(primary.hue, 0.20, 0.92),
+        backgroundAlt: hsl(primary.hue, 0.25, 0.90),
+        backgroundAltHover: hsl(primary.hue, 0.25, 0.85),
+        backgroundInput: hsl(primary.hue, 1, 1),
+
+        text: hsl(primary.hue, primary.saturation, 0.10),
+        textalt: hsl(primary.hue, 0.30, 0.30),
+        textLight: hsl(primary.hue, 0.30, 0.95),
+
+        shadow: transparentize(0.7, hsl(primary.hue, 0.10, primary.lightness / 2)),
+      };
+    }
+  }
 };
 
 export const lightTheme: Theme = {

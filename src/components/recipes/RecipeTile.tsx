@@ -46,6 +46,7 @@ const Image = styled.img`
   border-radius: 15px;
   margin-bottom: 15px;
   aspect-ratio: 1;
+  background-color: ${color('backgroundAlt')};
 `;
 
 const Name = styled.p`
@@ -67,7 +68,7 @@ const Info = styled.p`
 const Placeholder = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${color('backgroundalt')};
+  background-color: ${color('backgroundAlt')};
   color: ${color('textalt')};
   border-radius: 15px;
   margin-bottom: 15px;

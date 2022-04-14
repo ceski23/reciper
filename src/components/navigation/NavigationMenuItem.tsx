@@ -22,7 +22,7 @@ const Item = styled(NavLink)`
 
   &.active {
     color: ${color('primary')};
-    background-color: ${(props) => transparentize(0.9, props.theme.colors.primary)};
+    background-color: ${color('primaryHighlight')};
   }
 
   ${media.down('medium')} {

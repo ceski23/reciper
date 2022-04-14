@@ -8,7 +8,7 @@ import { Styleable } from 'types';
 import { color } from 'utils/styles/theme';
 
 const Container = styled.div`
-  background-color: ${color('backgroundhover')};
+  background-color: ${color('backgroundAlt')};
   border-radius: 10px;
   padding: 26px 20px;
   font-size: 16px;
@@ -19,7 +19,7 @@ const Container = styled.div`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${color('background2')};
+    background-color: ${color('backgroundAltHover')};
   }
 `;
 

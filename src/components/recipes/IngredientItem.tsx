@@ -20,7 +20,7 @@ interface Props {
 
 const iconStyles = ({ theme }: { theme: Theme }) => css`
   border-radius: 10px;
-  background-color: ${theme.colors.backgroundalt};
+  background-color: ${theme.colors.backgroundAlt};
   width: 50px;
   height: 50px;
   border: none;

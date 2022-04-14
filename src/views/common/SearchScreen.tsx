@@ -61,6 +61,22 @@ const StyledFilterIcon = styled(FilterIcon)`
   fill: ${color('textalt')};
 `;
 
+const StyledSheet = styled(Sheet)`
+  .react-modal-sheet-container {
+    background-color: ${color('background')} !important;
+  }
+
+  .react-modal-sheet-backdrop {
+    border: none;
+  }
+
+  .react-modal-sheet-content {
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column; 
+  }
+`;
+
 const AnimatedRecipeTile = motion(RecipeTile);
 
 export const SearchScreen: VFC = () => {
@@ -107,7 +123,7 @@ export const SearchScreen: VFC = () => {
         ))}
       </RecipesList>
 
-      <Sheet
+      <StyledSheet
         isOpen={filtersExpanded}
         onClose={closeFilters}
         snapPoints={[-100, 0.3, 0]}
@@ -122,7 +138,7 @@ export const SearchScreen: VFC = () => {
         </Sheet.Container>
 
         <Sheet.Backdrop onTap={closeFilters} />
-      </Sheet>
+      </StyledSheet>
     </FluidContainer>
   );
 };

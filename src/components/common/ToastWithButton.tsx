@@ -20,7 +20,7 @@ const ToastContainer = styled.div`
 
 const ToastButton = styled(Button)`
   margin-left: 20px;
-  background-color: ${color('backgroundhover')};
+  background-color: ${color('backgroundHover')};
   min-width: auto;
   padding: 7px 15px;
   border-radius: 10px;
