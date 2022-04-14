@@ -81,6 +81,7 @@ const AnimatedRecipeTile = motion(RecipeTile);
 
 export const SearchScreen: VFC = () => {
   const [filtersExpanded, expandFilters, closeFilters] = useToggle(false);
+  const [draggingDisabled, setDraggingDisabled] = useState(false);
 
   const {
     duration, ingredients, query, updateFilters,
@@ -131,9 +132,9 @@ export const SearchScreen: VFC = () => {
       >
         <Sheet.Container>
           <Sheet.Header />
-          <Sheet.Content style={{ margin: '0 20px', display: 'flex', flexDirection: 'column' }}>
+          <Sheet.Content disableDrag={draggingDisabled}>
             <h2>Filtry</h2>
-            <RecipesFilters />
+            <RecipesFilters onChangingDuration={setDraggingDisabled} />
           </Sheet.Content>
         </Sheet.Container>
 

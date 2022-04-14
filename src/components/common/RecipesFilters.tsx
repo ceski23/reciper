@@ -40,7 +40,11 @@ const FilterWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-export const RecipesFilters: VFC = () => {
+interface Props {
+  onChangingDuration: (changing: boolean) => void;
+}
+
+export const RecipesFilters: VFC<Props> = ({ onChangingDuration }) => {
   const { duration, ingredients, updateFilters } = useRecipesFilters();
   const [durationValue, debouncedDuration, setDurationValue] = useDebouncedState(duration, 500);
 
@@ -90,7 +94,7 @@ export const RecipesFilters: VFC = () => {
 
         <DurationFilter>
           <DurationText>
-            {durationValue > 0 ? `Mniej niż ${durationValue} minut` : 'Bez limitu czasu'}
+            {durationValue > 0 ? `Do ${durationValue} minut` : 'Bez limitu czasu'}
           </DurationText>
 
           <DurationSlider
@@ -100,6 +104,8 @@ export const RecipesFilters: VFC = () => {
             max={120}
             value={durationValue}
             onChange={handleDurationChange}
+            onPointerDown={() => onChangingDuration(true)}
+            onPointerUp={() => onChangingDuration(false)}
           />
         </DurationFilter>
       </FilterWrapper>
