@@ -43,6 +43,8 @@ export const EditRecipeScreen: VFC = () => {
 
   const handleSubmit: SubmitHandler<RecipeFormFields> = (data) => {
     const editedRecipe = processRecipeFormData(data);
+    if (recipe?.id) editedRecipe.id = recipe.id;
+    if (recipe?.color) editedRecipe.color = recipe.color;
 
     if (isValidRecipe(editedRecipe)) {
       dispatch(saveRecipe(editedRecipe));

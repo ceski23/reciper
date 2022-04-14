@@ -47,7 +47,8 @@
   "scripts": {
     "dev": "react-scripts start",
     "build": "react-scripts build",
-    "start": "npx serve -d build"
+    "start": "npx serve -d build",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": [
@@ -178,6 +179,7 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0"
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "source-map-explorer": "^2.5.2"
   }
 }

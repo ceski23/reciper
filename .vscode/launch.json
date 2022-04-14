@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "firefox",
+      "type": "pwa-chrome",
       "request": "launch",
       "name": "Debug app",
       "url": "http://localhost:3000",
@@ -10,7 +10,8 @@
       "sourceMapPathOverrides": {
         "webpack:///src/*": "${webRoot}/*"
       },
-      "preLaunchTask": "npm: dev"
+      "preLaunchTask": "Start development",
+      "userDataDir": false
     }
   ]
 }
