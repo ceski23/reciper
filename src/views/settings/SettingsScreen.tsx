@@ -3,6 +3,7 @@ import { VFC } from 'react';
 
 import { ReactComponent as UserIcon } from 'assets/common/user.svg';
 import { ReactComponent as BrushIcon } from 'assets/settings/brush.svg';
+import { ReactComponent as AboutIcon } from 'assets/settings/info.svg';
 import { ReactComponent as WeightIcon } from 'assets/settings/kilogram.svg';
 
 import { FluidContainer } from 'components/common/Container';
@@ -40,6 +41,10 @@ export const SettingsScreen: VFC = () => (
 
       <Link to={urls.settings.units}>
         <SettingsListItem text="Jednostki" icon={WeightIcon} />
+      </Link>
+
+      <Link to={urls.settings.about}>
+        <SettingsListItem text="O aplikacji" icon={AboutIcon} />
       </Link>
     </SettingsList>
   </FluidContainer>

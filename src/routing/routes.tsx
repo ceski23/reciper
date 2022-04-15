@@ -13,6 +13,7 @@ import { NewRecipeScreen } from 'views/recipes/NewRecipeScreen';
 import { RecipeScreen } from 'views/recipes/RecipeScreen';
 import { RecipesScreen } from 'views/recipes/RecipesScreen';
 import { RedirectSharedRecipe } from 'views/recipes/RedirectSharedRecipe';
+import { AboutPage } from 'views/settings/AboutPage';
 import { AccountSubPage } from 'views/settings/AccountSubPage';
 import { AppearanceSubPage } from 'views/settings/AppearanceSubPage';
 import { SettingsScreen } from 'views/settings/SettingsScreen';
@@ -39,6 +40,7 @@ const routes: RouteObject[] = [
   { path: urls.settings.appearance, element: <AppearanceSubPage /> },
   { path: urls.settings.account, element: <AccountSubPage /> },
   { path: urls.settings.units, element: <UnitsSubPage /> },
+  { path: urls.settings.about, element: <AboutPage /> },
 ];
 
 export default routes;

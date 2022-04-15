@@ -21,6 +21,7 @@ export const urls = {
     appearance: 'appearance',
     account: 'account',
     units: 'units',
+    about: 'about',
   }),
   tags: include('/tags', {
     tag: ':tag',
