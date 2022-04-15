@@ -12,6 +12,9 @@ interface Props {
   onBlur: () => void;
   value: string[];
   name: string;
+  error?: string;
+  required?: boolean;
+  id: string;
 }
 
 const StyledField = styled.input`
@@ -72,7 +75,7 @@ const TagsContainer = styled.div`
 `;
 
 export const TagInput: VFC<Props> = ({
-  onBlur, onChange, name, value,
+  onBlur, onChange, name, value, id, error, required,
 }) => {
   const [internalValue, setInternalValue] = useState<string>('');
 
@@ -118,6 +121,9 @@ export const TagInput: VFC<Props> = ({
         onBlur={onBlur}
         placeholder="Podaj tag..."
         enterKeyHint="next"
+        id={id}
+        aria-invalid={!!error}
+        aria-required={required}
       />
     </TagsContainer>
   );

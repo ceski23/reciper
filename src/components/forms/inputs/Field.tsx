@@ -3,16 +3,6 @@ import React, { forwardRef } from 'react';
 
 import { color } from 'utils/styles/theme';
 
-export type InputProps =
-  React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
-
-interface Props {
-  label: string;
-  error?: string;
-  deleteIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
-  onDeleteClick?: () => void;
-}
-
 const DeleteButton = styled.button`
   border-radius: 0 10px 10px 0;
   border: 1px solid ${color('textalt')};
@@ -56,13 +46,13 @@ const StyledField = styled.input`
   }
 `;
 
-const Label = styled.label`
+const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
 
-const LabelText = styled.span`
+const LabelText = styled.label`
   margin-bottom: 10px;
   font-weight: 700;
   font-size: 16px;
@@ -73,28 +63,62 @@ const Error = styled.p`
   color: red;
 `;
 
-const FieldContainer = styled.div`
+const InputContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
 `;
 
+const Required = styled.i`
+  color: #ff0000;
+`;
+
+export type InputProps =
+  React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+
+interface Props {
+  label: string;
+  error?: string;
+  deleteIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  onDeleteClick?: () => void;
+  required?: boolean;
+  id: string;
+}
+
 export const Field = forwardRef<HTMLInputElement, InputProps & Props>(({
-  error, label, children, deleteIcon: Icon, onDeleteClick, ...props
+  error,
+  label,
+  children,
+  deleteIcon: Icon,
+  onDeleteClick,
+  required = false,
+  id,
+  ...props
 }, ref) => (
-  <Label onClick={(e) => e.preventDefault()}>
-    <LabelText>{label}</LabelText>
+  <FieldContainer>
+    <LabelText htmlFor={id}>
+      {label}
+      {required && <Required aria-hidden>*</Required>}
+    </LabelText>
+
     {children ?? (
-      Icon && onDeleteClick
-        ? (
-          <FieldContainer>
-            <DeleteButton type="button" onClick={onDeleteClick}>
-              <Icon />
-            </DeleteButton>
-            <StyledField ref={ref} {...props} />
-          </FieldContainer>
-        )
-        : <StyledField ref={ref} {...props} />
+      <InputContainer>
+        {Icon && onDeleteClick && (
+          <DeleteButton type="button" onClick={onDeleteClick}>
+            <Icon />
+          </DeleteButton>
+        )}
+
+        <StyledField
+          id={id}
+          aria-invalid={!!error}
+          aria-required={required}
+          aria-describedby={error ? `${id}-error` : undefined}
+          ref={ref}
+          {...props}
+        />
+      </InputContainer>
     )}
-    {error && <Error>{error}</Error>}
-  </Label>
+
+    {error && <Error role="alert" id={`${id}-error`}>{error}</Error>}
+  </FieldContainer>
 ));

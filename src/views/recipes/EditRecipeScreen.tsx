@@ -27,15 +27,14 @@ export const EditRecipeScreen: VFC = () => {
 
   const recipeDefaultData = useMemo(() => {
     if (!recipe) return undefined;
+
     const {
-      ingredients, instructions, prepTime, servings, calories, ...recipeData
+      ingredients, instructions, prepTime, ...recipeData
     } = recipe;
 
     return {
       ...recipeData,
-      servings: servings ?? 0,
-      calories: calories ?? 0,
-      prepTime: prepTime ? dayjs.duration(prepTime).asMinutes() : 0,
+      prepTime: prepTime ? dayjs.duration(prepTime).asMinutes() : undefined,
       ingredients: ingredients.map((i) => ({ value: i })),
       instructions: instructions.map((i) => ({ value: i })),
     };

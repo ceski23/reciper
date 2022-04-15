@@ -91,17 +91,21 @@ const recipeSchema = z.object({
   prepTime: z
     .number({ invalid_type_error: 'Niepoprawny czas przygotowania' })
     .min(0, 'Minimalny czas przygotowania to 0 minut')
-    .int('Czas musi być liczbą całkowitą'),
+    .int('Czas musi być liczbą całkowitą')
+    .or(z.nan().transform(() => undefined).optional()),
   tags: z
-    .array(z.string().min(3, 'Minimalna długość tagu to 3 znaki')),
+    .array(z.string().min(3, 'Minimalna długość tagu to 3 znaki'))
+    .default([]),
   servings: z
     .number({ invalid_type_error: 'Niepoprawna ilość porcji' })
     .min(0, 'Minimalna ilość porcji to 0')
-    .int('Ilość porcji musi być liczbą całkowitą'),
+    .int('Ilość porcji musi być liczbą całkowitą')
+    .or(z.nan().transform(() => undefined).optional()),
   calories: z
     .number({ invalid_type_error: 'Niepoprawna ilość kalorii' })
     .min(0, 'Minimalna ilość kalorii to 0')
-    .int('Ilość kalorii musi być liczbą całkowitą'),
+    .int('Ilość kalorii musi być liczbą całkowitą')
+    .or(z.nan().transform(() => undefined).optional()),
   ingredients: z
     .array(
       z.object({
@@ -152,23 +156,32 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <Field
+        id="recipe-name"
         label="Nazwa przepisu"
         error={errors.name?.message}
+        required={!recipeSchema.shape.name.isOptional()}
         {...register('name', fieldOptions)}
       />
 
       <Field
+        id="recipe-description"
         label="Opis przepisu"
         error={errors.description?.message}
+        required={!recipeSchema.shape.description.isOptional()}
       >
         <Textarea
+          id="recipe-description"
+          aria-invalid={!!errors.description?.message}
+          aria-required={!recipeSchema.shape.description.isOptional()}
           {...register('description', fieldOptions)}
         />
       </Field>
 
       <Field
+        id="recipe-url"
         label="Adres URL przepisu"
         error={errors.url?.message}
+        required={!recipeSchema.shape.url.isOptional()}
         {...register('url', fieldOptions)}
       />
 
@@ -177,48 +190,65 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
       )}
 
       <Field
+        id="recipe-image"
         label="Adres zdjęcia"
         error={errors.image?.message}
+        required={!recipeSchema.shape.image.isOptional()}
         {...register('image', fieldOptions)}
       />
 
       <Field
+        id="recipe-prepTime"
         label="Czas przygotowywania (w minutach)"
         error={errors.prepTime?.message}
         type="text"
         inputMode="numeric"
+        required={!recipeSchema.shape.prepTime.isOptional()}
         {...register('prepTime', {
           valueAsNumber: true,
         })}
       />
 
       <Field
+        id="recipe-tags"
         label="Tagi"
         error={getFieldError(errors, 'tags')}
+        required={!recipeSchema.shape.tags.isOptional()}
       >
         <Controller
           name="tags"
           control={control}
-          render={({ field: { ref, ...field } }) => <TagInput {...field} />}
+          render={({ field: { ref, ...field } }) => (
+            <TagInput
+              error={getFieldError(errors, 'tags')}
+              required={!recipeSchema.shape.tags.isOptional()}
+              id="recipe-tags"
+              {...field}
+            />
+          )}
           defaultValue={[]}
         />
       </Field>
 
       <Field
+        id="recipe-servings"
         label="Ilość porcji"
         error={errors.servings?.message}
         type="text"
         inputMode="numeric"
+        required={!recipeSchema.shape.servings.isOptional()}
         {...register('servings', {
           valueAsNumber: true,
         })}
       />
 
       <Field
+        id="recipe-calories"
         label="Kalorie"
         error={errors.calories?.message}
         type="text"
         inputMode="numeric"
+        required={!recipeSchema.shape.calories.isOptional()}
         {...register('calories', {
           valueAsNumber: true,
         })}
@@ -232,12 +262,14 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
         <FieldsWrapper>
           {ingredients.fields.map((field, index) => (
             <Field
+              id={field.id}
               {...register(`ingredients.${index}.value`)}
               key={field.id}
               label={`Składnik ${index + 1}`}
               error={getMultiFieldError(errors, 'ingredients', index)}
               deleteIcon={DeleteIcon}
               onDeleteClick={() => ingredients.remove(index)}
+              required={!recipeSchema.shape.ingredients.element.isOptional()}
             />
           ))}
         </FieldsWrapper>
@@ -255,12 +287,14 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
         <FieldsWrapper>
           {instructions.fields.map((field, index) => (
             <Field
+              id={field.id}
               {...register(`instructions.${index}.value`)}
               key={field.id}
               label={`Krok ${index + 1}.`}
               error={getMultiFieldError(errors, 'instructions', index)}
               deleteIcon={DeleteIcon}
               onDeleteClick={() => instructions.remove(index)}
+              required={!recipeSchema.shape.instructions.element.isOptional()}
             />
           ))}
         </FieldsWrapper>
