@@ -32,6 +32,7 @@ const TagsContainer = styled.div`
 const IngredientIcon = styled.img`
   width: 20px;
   height: 20px;
+  object-fit: contain;
 `;
 
 const FilterWrapper = styled.div`

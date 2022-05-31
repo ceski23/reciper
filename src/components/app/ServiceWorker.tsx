@@ -14,12 +14,9 @@ export const ServiceWorker = () => {
   };
 
   const onSWUpdate = (registration: ServiceWorkerRegistration) => {
-    toast(
-      <ToastWithButton buttonText="Odśwież" onButtonClick={handleUpdate}>
-        Aktualizacja aplikacji jest dostępna
-      </ToastWithButton>,
-      { duration: Infinity },
-    );
+    toast('Aktualizacja aplikacji jest dostępna. Nowa wersja zostanie użyta przy następnym uruchomieniu aplikacji', {
+      duration: Infinity,
+    });
 
     setWaitingWorker(registration.waiting);
   };

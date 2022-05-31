@@ -108,17 +108,13 @@ export const StyledButton = styled.button<{
   size: ButtonSize
 }>(buttonStyles);
 
-export type HTMLButtonProps = React.DetailedHTMLProps<
-React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement
->;
-
 interface Props {
   icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | string;
   variant?: ButtonVariant;
   size?: ButtonSize;
 }
 
-export const Button: FC<HTMLButtonProps & Props> = ({
+export const Button: FC<React.ComponentPropsWithoutRef<'button'> & Props> = ({
   children, icon: Icon, variant = 'normal', size = 'normal', ...props
 }) => (
   <StyledButton size={size} variant={variant} {...props}>
