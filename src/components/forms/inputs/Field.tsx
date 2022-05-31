@@ -75,6 +75,8 @@ const Required = styled.i`
 export type InputProps =
   React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
+type FieldProps = Pick<InputProps, 'id' | 'aria-invalid' | 'aria-required' | 'aria-describedby'>;
+
 interface Props {
   label: string;
   error?: string;
@@ -82,6 +84,7 @@ interface Props {
   onDeleteClick?: () => void;
   required?: boolean;
   id: string;
+  render?: (fieldProps: FieldProps) => React.ReactNode;
 }
 
 export const Field = forwardRef<HTMLInputElement, InputProps & Props>(({
@@ -92,6 +95,7 @@ export const Field = forwardRef<HTMLInputElement, InputProps & Props>(({
   onDeleteClick,
   required = false,
   id,
+  render,
   ...props
 }, ref) => (
   <FieldContainer>
@@ -100,7 +104,12 @@ export const Field = forwardRef<HTMLInputElement, InputProps & Props>(({
       {required && <Required aria-hidden>*</Required>}
     </LabelText>
 
-    {children ?? (
+    {render ? render({
+      id,
+      'aria-invalid': !!error,
+      'aria-required': required,
+      'aria-describedby': error ? `${id}-error` : undefined,
+    }) : (
       <InputContainer>
         {Icon && onDeleteClick && (
           <DeleteButton type="button" onClick={onDeleteClick}>

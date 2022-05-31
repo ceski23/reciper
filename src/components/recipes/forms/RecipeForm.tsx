@@ -10,6 +10,7 @@ import { ReactComponent as DeleteIcon } from 'assets/common/delete.svg';
 import { ReactComponent as SaveIcon } from 'assets/common/diskette.svg';
 
 import { Button } from 'components/common/Button';
+import { ImageUpload } from 'components/common/ImageUpload';
 import { Field } from 'components/forms/inputs/Field';
 import { TagInput } from 'components/forms/inputs/TagInput';
 
@@ -38,14 +39,6 @@ const Textarea = styled.textarea`
   resize: vertical;
   min-height: 150px;
   line-height: 1.5;
-`;
-
-const RecipeImage = styled.img`
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-top: 30px;
 `;
 
 const FieldsWrapper = styled.div`
@@ -135,13 +128,11 @@ interface Props {
 
 export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
   const {
-    register, handleSubmit, formState: { errors }, control, watch,
+    register, handleSubmit, formState: { errors }, control,
   } = useForm<RecipeFormFields>({
     defaultValues,
     resolver: zodResolver(recipeSchema),
   });
-
-  const recipeImage = watch('image');
 
   const ingredients = useFieldArray({
     name: 'ingredients',
@@ -168,14 +159,13 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
         label="Opis przepisu"
         error={errors.description?.message}
         required={!recipeSchema.shape.description.isOptional()}
-      >
-        <Textarea
-          id="recipe-description"
-          aria-invalid={!!errors.description?.message}
-          aria-required={!recipeSchema.shape.description.isOptional()}
-          {...register('description', fieldOptions)}
-        />
-      </Field>
+        render={(fieldProps) => (
+          <Textarea
+            {...fieldProps}
+            {...register('description', fieldOptions)}
+          />
+        )}
+      />
 
       <Field
         id="recipe-url"
@@ -185,16 +175,20 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
         {...register('url', fieldOptions)}
       />
 
-      {recipeImage && !errors.image?.message && (
-        <RecipeImage src={recipeImage} alt="Zdjęcie przepisu" />
-      )}
-
       <Field
         id="recipe-image"
-        label="Adres zdjęcia"
+        label="Zdjęcie przepisu"
         error={errors.image?.message}
         required={!recipeSchema.shape.image.isOptional()}
-        {...register('image', fieldOptions)}
+        render={(fieldProps) => (
+          <Controller
+            control={control}
+            name="image"
+            render={({ field }) => (
+              <ImageUpload compress {...field} {...fieldProps} />
+            )}
+          />
+        )}
       />
 
       <Field
