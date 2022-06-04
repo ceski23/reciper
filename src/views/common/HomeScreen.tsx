@@ -45,7 +45,7 @@ const RecipesList = styled(motion.div)`
   column-gap: 40px;
   row-gap: 50px;
   padding-bottom: 20px;
-  grid-template-columns: repeat(auto-fit, 190px);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 
   ${media.down('small')} {
     grid-template-columns: repeat(2, 1fr);
