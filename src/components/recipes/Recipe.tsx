@@ -336,7 +336,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
           )}
 
           <IngredientsSection>
-            {servings && <Servings servings={servings} onServingsChange={setServings} />}
+            {!!servings && <Servings servings={servings} onServingsChange={setServings} />}
 
             {parsedIngredients && (
               <>
