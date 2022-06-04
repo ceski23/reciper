@@ -31,7 +31,7 @@ const Container = styled.div`
     && {
       ${fullBleedStyles}
       border-radius: 0;
-      margin-bottom: -50px;
+      /* margin-bottom: -50px; */
     }
   }
 `;

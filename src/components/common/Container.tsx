@@ -15,7 +15,7 @@ export const fluidContainerStyles = css`
 
   ${media.down('medium')} {
     grid-template-columns: 1fr 90% 1fr;
-    padding-bottom: 70px;
+    /* padding-bottom: 70px; */
   }
 `;
 

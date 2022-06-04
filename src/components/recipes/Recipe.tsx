@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { ThemeProvider, useTheme } from '@emotion/react/macro';
 import styled from '@emotion/styled/macro';
 import dayjs from 'dayjs';
@@ -19,7 +20,9 @@ import { ReactComponent as ServingsIcon } from 'assets/recipes/servings.svg';
 import { ReactComponent as ShoppingList } from 'assets/recipes/shopping-list.svg';
 
 import { Button } from 'components/common/Button';
-import { FluidContainer } from 'components/common/Container';
+import {
+  FluidContainer, fluidContainerStyles, fullBleedStyles,
+} from 'components/common/Container';
 import { Modal } from 'components/common/modal/Modal';
 import { IngredientItem } from 'components/recipes/IngredientItem';
 import { RecipeCover } from 'components/recipes/RecipeCover';
@@ -150,10 +153,16 @@ const Tags = styled.div`
   }
 `;
 
-const IngredientsContainer = styled.div`
+const IngredientsList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
+
+const IngredientsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 const IngredientsSection = styled.div`
@@ -162,7 +171,6 @@ const IngredientsSection = styled.div`
   position: sticky;
   top: 20px;
   margin-bottom: auto;
-  gap: 30px;
 
   ${media.down('large')} {
     position: static;
@@ -172,12 +180,45 @@ const IngredientsSection = styled.div`
 const SideBySide = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 100px;
+  gap: 80px;
 
   ${media.down('large')} {
     display: flex;
     flex-direction: column-reverse;
     gap: 40px;
+  }
+`;
+
+const RecipeHeaderWrapper = styled.div`
+  ${fullBleedStyles}
+  ${fluidContainerStyles}
+`;
+
+const RecipeHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  column-gap: 80px;
+
+  ${media.down('medium')} {
+    ${fullBleedStyles}
+  }
+
+  ${media.up('large')} {
+    flex-direction: row;
+
+    & > * {
+      flex: 1;
+    }
+  }
+`;
+
+const RecipeInfo = styled.div`
+  ${fluidContainerStyles}
+  row-gap: 50px;
+
+  ${media.up('medium')} {
+    display: flex;
+    flex-direction: column;
   }
 `;
 
@@ -276,28 +317,39 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
   return (
     <ThemeProvider theme={colorizedTheme ?? theme}>
       <ContentWrapper>
-        {recipe.image && <RecipeCover src={recipe.image} />}
-
-        <div>
-          <Title>{recipe.name}</Title>
-          {recipe.url && recipeProvider && (
-            <RecipeProvider provider={recipeProvider} recipeUrl={recipe.url} />
-          )}
-        </div>
-
-        {(recipe.rating || recipe.calories || preparationDuration) && (
-          <Features>
-            {preparationDuration && <RecipeFeature icon={ClockIcon} text={preparationDuration} />}
-            {recipe.calories && <RecipeFeature icon={FlameIcon} text={`${recipe.calories} kcal`} />}
-            {recipe.rating && <RecipeFeature icon={StarIcon} text={recipe.rating.toFixed(1)} />}
-            {recipe.servings && (
-              <RecipeFeature
-                icon={ServingsIcon}
-                text={servingsText.format({ quantity: recipe.servings }).toString()}
-              />
+        <RecipeHeaderWrapper>
+          <RecipeHeader>
+            {recipe.image && (
+              <RecipeCover src={recipe.image} />
             )}
-          </Features>
-        )}
+
+            <RecipeInfo>
+              <div>
+                <Title>{recipe.name}</Title>
+                {recipe.url && recipeProvider && (
+                <RecipeProvider provider={recipeProvider} recipeUrl={recipe.url} />
+                )}
+              </div>
+
+              {(recipe.rating || recipe.calories || preparationDuration) && (
+              <Features>
+                {preparationDuration && (
+                  <RecipeFeature icon={ClockIcon} text={preparationDuration} />
+                )}
+
+                {recipe.calories && <RecipeFeature icon={FlameIcon} text={`${recipe.calories} kcal`} />}
+                {recipe.rating && <RecipeFeature icon={StarIcon} text={recipe.rating.toFixed(1)} />}
+                {recipe.servings && (
+                <RecipeFeature
+                  icon={ServingsIcon}
+                  text={servingsText.format({ quantity: recipe.servings }).toString()}
+                />
+                )}
+              </Features>
+              )}
+            </RecipeInfo>
+          </RecipeHeader>
+        </RecipeHeaderWrapper>
 
         {recipe.description && (
           <Description>{recipe.description}</Description>
@@ -336,27 +388,27 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
           )}
 
           <IngredientsSection>
-            {!!servings && <Servings servings={servings} onServingsChange={setServings} />}
-
             {parsedIngredients && (
               <>
-                <div>
-                  <IngredientsHeader>
-                    <RecipeLink href="#ingredients" id="ingredients">
-                      <h2>Składniki</h2>
-                    </RecipeLink>
+                <IngredientsHeader>
+                  <RecipeLink href="#ingredients" id="ingredients">
+                    <h2>Składniki</h2>
+                  </RecipeLink>
 
-                    <AltText>
-                      {ingredientsText.format({ quantity: recipe.ingredients.length })}
-                    </AltText>
-                  </IngredientsHeader>
+                  <AltText>
+                    {ingredientsText.format({ quantity: recipe.ingredients.length })}
+                  </AltText>
+                </IngredientsHeader>
 
-                  <IngredientsContainer>
+                <IngredientsContainer>
+                  {!!servings && <Servings servings={servings} onServingsChange={setServings} />}
+
+                  <IngredientsList>
                     {parsedIngredients.map((ingredient) => (
                       <IngredientItem ingredient={ingredient} key={ingredient.original} />
                     ))}
-                  </IngredientsContainer>
-                </div>
+                  </IngredientsList>
+                </IngredientsContainer>
 
                 {shoppingList && (
                   <AddToListButton icon={ShoppingList} onClick={handleAddToShoppingList}>

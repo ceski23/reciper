@@ -19,19 +19,10 @@ import { color } from 'utils/styles/theme';
 const PageBody = styled(motion.div)`
   overflow: auto;
   grid-column: 2;
-  /* display: grid;
-  align-content: flex-start;
-  grid-template-columns: 50px 1fr 50px;
 
   ${media.down('medium')} {
-    grid-template-columns: 1fr 90% 1fr;
     padding-bottom: 70px;
   }
-
-  & > * {
-    grid-column: 2;
-    width: 100%;
-  } */
 `;
 
 const PageContainer = styled.div`
