@@ -20,6 +20,7 @@ import { ReactComponent as ShoppingList } from 'assets/recipes/shopping-list.svg
 
 import { Button } from 'components/common/Button';
 import { FluidContainer } from 'components/common/Container';
+import { Modal } from 'components/common/modal/Modal';
 import { IngredientItem } from 'components/recipes/IngredientItem';
 import { RecipeCover } from 'components/recipes/RecipeCover';
 import { RecipeFeature } from 'components/recipes/RecipeFeature';
@@ -30,6 +31,7 @@ import { Tag } from 'components/recipes/Tag';
 
 import { useAccountProvider } from 'hooks/accounts/useAccountProvider';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
+import { useModal } from 'hooks/useModal';
 
 import { urls } from 'routing/urls';
 
@@ -190,6 +192,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
   const [servings, setServings] = useState(recipe.servings);
   const recipes = useAppSelector(selectRecipes);
   const navigate = useNavigate();
+  const deleteModal = useModal(false);
 
   const isRecipeSaved = useMemo(() => {
     if (recipe.url === undefined) return true;
@@ -233,7 +236,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
     toast.success('Przepis został zapisany');
   };
 
-  const handleRemoveRecipe: MouseEventHandler<HTMLButtonElement> = () => {
+  const handleRemoveRecipe = () => {
     if (recipe.url) dispatch(removeRecipeByUrl(recipe.url));
     else dispatch(removeRecipeById(recipe.id));
 
@@ -365,8 +368,22 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
           </IngredientsSection>
         </SideBySide>
 
+        <Modal
+          isOpen={deleteModal.isOpen}
+          onClose={deleteModal.close}
+          onAccept={handleRemoveRecipe}
+          showBackdrop
+          closeOnEscape
+        >
+          <Modal.Header title="Usuwanie przepisu" />
+          <Modal.Body>
+            Czy na pewno chcesz usunąć przepis <strong>{recipe.name}</strong>?
+          </Modal.Body>
+          <Modal.Footer cancelText="Anuluj" acceptText="Usuń" />
+        </Modal>
+
         {isRecipeSaved && (
-          <Button icon={UnsaveIcon} size="small" onClick={handleRemoveRecipe}>Usuń przepis</Button>
+          <Button icon={UnsaveIcon} size="small" onClick={deleteModal.open}>Usuń przepis</Button>
         )}
       </ContentWrapper>
     </ThemeProvider>
