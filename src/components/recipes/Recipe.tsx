@@ -189,9 +189,10 @@ const SideBySide = styled.div`
   }
 `;
 
-const RecipeHeaderWrapper = styled.div`
-  ${fullBleedStyles}
-  ${fluidContainerStyles}
+const RecipeHeaderWrapper = styled(FluidContainer)`
+  &&&& {
+    ${fullBleedStyles}
+  }
 `;
 
 const RecipeHeader = styled.div`
@@ -408,13 +409,13 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
                       <IngredientItem ingredient={ingredient} key={ingredient.original} />
                     ))}
                   </IngredientsList>
-                </IngredientsContainer>
 
-                {shoppingList && (
+                  {shoppingList && (
                   <AddToListButton icon={ShoppingList} onClick={handleAddToShoppingList}>
                     {`Dodaj do "${shoppingList.name}"`}
                   </AddToListButton>
-                )}
+                  )}
+                </IngredientsContainer>
               </>
             )}
           </IngredientsSection>
