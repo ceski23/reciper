@@ -169,6 +169,7 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
     "@types/jest": "^27.0.3",
     "@types/lodash.debounce": "^4.0.6",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
@@ -182,5 +183,8 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "source-map-explorer": "^2.5.2"
+  },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"]
   }
 }
