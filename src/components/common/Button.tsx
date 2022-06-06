@@ -12,7 +12,6 @@ export const buttonStyles = (
   { theme, variant, size }: { theme: Theme, variant: ButtonVariant, size: ButtonSize },
 ) => css`
   font-weight: bold;
-  font-family: Raleway, sans-serif;
   border: none;
   transition: background-color 0.3s, color 0.3s;
   outline: none;

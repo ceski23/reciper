@@ -13,7 +13,7 @@ const Input = styled('input')`
   padding-left: 50px;
   border: none;
   box-shadow: 0px 2px 3px ${color('shadow')};
-  font-family: Raleway, sans-serif;
+  font-family: inherit;
   width: 100%;
   font-size: 1rem;
   background-color: ${color('backgroundInput')};

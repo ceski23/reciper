@@ -15,11 +15,6 @@ import globalStyles from 'utils/styles/globalStyles';
 import { media, mediaDown } from 'utils/styles/mediaQueries';
 import { darkTheme, lightTheme } from 'utils/styles/theme';
 
-import '@fontsource/raleway/400.css';
-import '@fontsource/raleway/500.css';
-import '@fontsource/raleway/600.css';
-import '@fontsource/raleway/700.css';
-
 const App = () => {
   const authContent = useRoutes(authRoutes);
   const isMobile = useMediaQuery(mediaDown('small'));
