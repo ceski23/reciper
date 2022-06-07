@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
-import { Theme } from '@emotion/react/macro';
+import { Theme } from '@emotion/react';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';

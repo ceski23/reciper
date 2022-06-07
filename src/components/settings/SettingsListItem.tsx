@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import { css, Theme } from '@emotion/react/macro';
-import styled from '@emotion/styled/macro';
+import { css, Theme } from '@emotion/react';
+import styled from '@emotion/styled';
 import React, { FC } from 'react';
 
 import { Styleable } from 'types';

@@ -32,7 +32,7 @@ export const chooseProvider = (url: string): Provider => {
 };
 
 export const scrapeRecipe = async (url: string): Promise<Recipe> => {
-  const targetUrl = (process.env.REACT_APP_CORS_PROXY ?? '') + encodeURIComponent(url);
+  const targetUrl = (import.meta.env.VITE_CORS_PROXY as string ?? '') + encodeURIComponent(url);
   const data = await fetch(targetUrl).then((res) => res.text());
 
   const parser = new DOMParser();

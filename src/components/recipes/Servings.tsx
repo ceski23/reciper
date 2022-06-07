@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import IntlMessageFormat from 'intl-messageformat';
 import { transparentize } from 'polished';
 import { VFC } from 'react';

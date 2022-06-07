@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { ReactComponent as SettingsIcon } from 'assets/cogwheel.svg';
 import { ReactComponent as HomeIcon } from 'assets/home.svg';
 import { ReactComponent as SearchIcon } from 'assets/loupe.svg';

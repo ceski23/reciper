@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react/macro';
-import styled from '@emotion/styled/macro';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { transparentize } from 'polished';
 import React, { VFC } from 'react';
 

@@ -1,7 +1,6 @@
-/** @jsxImportSource @emotion/react */
-import { css, Theme } from '@emotion/react/macro';
-import styled from '@emotion/styled/macro';
-import { hsl, parseToHsl, transparentize } from 'polished';
+import { css, Theme } from '@emotion/react';
+import styled from '@emotion/styled';
+import { transparentize } from 'polished';
 import React, { FC } from 'react';
 import { match } from 'ts-pattern';
 

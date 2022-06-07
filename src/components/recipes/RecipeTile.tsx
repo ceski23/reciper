@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import IntlMessageFormat from 'intl-messageformat';

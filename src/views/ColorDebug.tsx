@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@emotion/react';
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { VFC } from 'react';
 
 import { color, darkTheme, lightTheme } from 'utils/styles/theme';

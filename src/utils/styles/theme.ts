@@ -1,7 +1,7 @@
-import { Theme } from '@emotion/react/macro';
+import { Theme } from '@emotion/react';
 import { hsl, parseToHsl, transparentize } from 'polished';
 
-declare module '@emotion/react/macro' {
+declare module '@emotion/react' {
   export interface Theme {
     colors: {
       primary: string,

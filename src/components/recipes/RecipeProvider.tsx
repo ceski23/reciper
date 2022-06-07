@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { FC } from 'react';
 
 import { Provider } from 'services/recipes/providers';

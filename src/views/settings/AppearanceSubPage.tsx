@@ -1,4 +1,4 @@
-import { Theme } from '@emotion/react/macro';
+import { Theme } from '@emotion/react';
 import { VFC } from 'react';
 
 import { FluidContainer } from 'components/common/Container';

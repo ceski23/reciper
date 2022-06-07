@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { FC } from 'react';
 
 import { ReactComponent as CloseIcon } from 'assets/common/delete.svg';

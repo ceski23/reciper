@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import React, { VFC } from 'react';
 
 import { ReactComponent as UserPlaceholder } from 'assets/common/user.svg';

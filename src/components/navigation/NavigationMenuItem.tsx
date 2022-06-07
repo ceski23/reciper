@@ -1,7 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react/macro';
-import styled from '@emotion/styled/macro';
-import { transparentize } from 'polished';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { FC } from 'react';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 

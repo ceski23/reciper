@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 

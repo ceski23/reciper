@@ -7,6 +7,7 @@ export const undefinedEmptyString = (value: string) => value || undefined;
 
 export const fieldOptions = { setValueAs: undefinedEmptyString };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getFieldError = <T extends FieldValues>(
   errors: FieldErrors<RecipeFormFields>,
   field: keyof RecipeFormFields,
@@ -21,6 +22,7 @@ export const getFieldError = <T extends FieldValues>(
       .otherwise(() => undefined)
   );
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getMultiFieldError = <T extends FieldValues>(
   errors: FieldErrors<RecipeFormFields>,
   field: keyof RecipeFormFields,

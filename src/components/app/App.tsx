@@ -1,4 +1,4 @@
-import { Global, ThemeProvider } from '@emotion/react/macro';
+import { Global, ThemeProvider } from '@emotion/react';
 import { useMediaQuery } from 'beautiful-react-hooks';
 import { Suspense, useMemo } from 'react';
 import { Toaster } from 'react-hot-toast';

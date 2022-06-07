@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,6 +21,11 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
     "baseUrl": "./src",
+    "types": [
+      "vite/client",
+      "jest",
+      "vite-plugin-pwa"
+    ]
   },
   "include": [
     "src",

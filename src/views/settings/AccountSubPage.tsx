@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable max-len */
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import IntlMessageFormat from 'intl-messageformat';
 import { VFC, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';

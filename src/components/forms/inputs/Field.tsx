@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import React, { forwardRef } from 'react';
 
 import { color } from 'utils/styles/theme';

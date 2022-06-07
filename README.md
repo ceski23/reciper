@@ -27,8 +27,8 @@ npm install
 ```
 3. Create `.env` file in project's root directory with following content:
 ```bash
-REACT_APP_CORS_PROXY='URL_TO_CORS_PROXY'
-REACT_APP_GOOGLE_CLIENT_ID='GOOGLE_API_CLIENT_ID'
+VITE_CORS_PROXY='URL_TO_CORS_PROXY'
+VITE_GOOGLE_CLIENT_ID='GOOGLE_API_CLIENT_ID'
 ```
 
 ## Usage

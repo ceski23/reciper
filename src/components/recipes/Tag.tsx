@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { reverse } from 'named-urls';
 import { VFC } from 'react';
 

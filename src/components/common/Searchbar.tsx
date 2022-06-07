@@ -1,6 +1,5 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { useDebouncedFn } from 'beautiful-react-hooks';
-import { transparentize } from 'polished';
 import React from 'react';
 
 import { ReactComponent as LoupeIcon } from 'assets/common/loupe.svg';

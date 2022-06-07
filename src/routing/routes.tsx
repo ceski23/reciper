@@ -19,7 +19,7 @@ import { AppearanceSubPage } from 'views/settings/AppearanceSubPage';
 import { SettingsScreen } from 'views/settings/SettingsScreen';
 import { UnitsSubPage } from 'views/settings/UnitsSubPage';
 
-const devRoutes = process.env.NODE_ENV === 'development' ? [
+const devRoutes = import.meta.env.DEV ? [
   { path: '/colors', element: <ColorDebug /> },
 ] : [];
 

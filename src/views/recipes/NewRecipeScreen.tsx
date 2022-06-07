@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { reverse } from 'named-urls';
 import { useRef, useState, VFC } from 'react';
 import { useNavigate } from 'react-router';

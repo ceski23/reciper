@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { VFC } from 'react';
 import { useParams } from 'react-router-dom';
 

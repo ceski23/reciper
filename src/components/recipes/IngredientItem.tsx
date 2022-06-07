@@ -1,5 +1,5 @@
-import { css, Theme } from '@emotion/react/macro';
-import styled from '@emotion/styled/macro';
+import { css, Theme } from '@emotion/react';
+import styled from '@emotion/styled';
 import { VFC } from 'react';
 
 import { ReactComponent as GroceryIcon } from 'assets/recipes/grocery.svg';

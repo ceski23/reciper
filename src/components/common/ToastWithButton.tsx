@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { FC } from 'react';
 
 import { Button } from 'components/common/Button';
@@ -39,7 +39,7 @@ export const ToastWithButton: FC<Props> = ({ buttonText, onButtonClick, children
   <ToastContainer>
     {children}
 
-    <ToastButton onClick={onButtonClick}>
+    <ToastButton onClick={onButtonClick} size="small">
       {buttonText}
     </ToastButton>
   </ToastContainer>

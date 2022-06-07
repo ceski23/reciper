@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import { ThemeProvider, useTheme } from '@emotion/react/macro';
-import styled from '@emotion/styled/macro';
+import { ThemeProvider, useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import IntlMessageFormat from 'intl-messageformat';
 import { reverse } from 'named-urls';

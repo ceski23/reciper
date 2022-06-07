@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { VFC } from 'react';
 import {

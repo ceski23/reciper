@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 
 import { color } from 'utils/styles/theme';
 

@@ -1,6 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import { Theme, css } from '@emotion/react/macro';
-import styled from '@emotion/styled/macro';
+import { Theme, css } from '@emotion/react';
+import styled from '@emotion/styled';
 import React, { VFC } from 'react';
 
 import { fluidTypography } from 'utils/styles/typography';

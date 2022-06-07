@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { VFC } from 'react';
 
 import { ReactComponent as AppLogo } from 'assets/common/reciper.svg';
@@ -83,7 +83,7 @@ export const AboutPage: VFC = () => (
       <StyledLogo />
       <AppName>
         Reciper
-        <Version>Wersja: {process.env.REACT_APP_VERSION}</Version>
+        <Version>Wersja: {APP_VERSION}</Version>
       </AppName>
     </BrandContainer>
 

@@ -5,14 +5,63 @@
 			"type": "npm",
 			"script": "dev",
 			"isBackground": true,
-			"problemMatcher": "$ts-webpack-watch",
 			"label": "Start development",
-			"group": "build"
+			"group": "build",
+			"problemMatcher": [
+        {
+          "owner": "typescript",
+          "source": "TypeScript",
+          "fileLocation": "absolute",
+          "applyTo": "allDocuments",
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "hmr update",
+            "endsPattern": "\\[TypeScript\\] Found \\d+ errors?\\. Watching for file changes\\."
+          },
+          "pattern": [
+            {
+              "regexp": "(ERROR|WARNING)\\(TypeScript\\)  (.*)",
+              "severity": 1,
+              "message": 2
+            },
+            {
+              "regexp": "^ FILE  (.*):(\\d*):(\\d*)$",
+              "file": 1,
+              "line": 2,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "owner": "eslint",
+          "source": "ESLint",
+          "fileLocation": "absolute",
+          "applyTo": "allDocuments",
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "hmr update",
+            "endsPattern": "\\[ESLint\\] Found \\d+ errors? and \\d+ warnings?"
+          },
+          "pattern": [
+            {
+              "regexp": "^ (ERROR|WARNING)\\(ESLint\\)  (.*)$",
+              "severity": 1,
+              "message": 2
+            },
+            {
+              "regexp": "^ FILE  (.*):(\\d*):(\\d*)$",
+              "file": 1,
+              "line": 2,
+              "column": 3
+            }
+          ]
+        }
+      ]
 		},
 		{
 			"type": "npm",
 			"script": "build",
-			"problemMatcher": "$ts-webpack",
+			"problemMatcher": "$vite",
 			"label": "Build app",
 			"group": {
 				"kind": "build",

@@ -1,4 +1,4 @@
-import { css, Theme } from '@emotion/react/macro';
+import { css, Theme } from '@emotion/react';
 
 import '@fontsource/raleway/variable.css';
 import '@fontsource/raleway/500.css';

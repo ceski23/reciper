@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { VFC } from 'react';
 import { useNavigate } from 'react-router';

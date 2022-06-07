@@ -1,7 +1,5 @@
-/** @jsxImportSource @emotion/react */
-
-import { css, Theme } from '@emotion/react/macro';
-import styled from '@emotion/styled/macro';
+import { css, Theme } from '@emotion/react';
+import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { VFC } from 'react';
 import { Link, LinkProps, useNavigate } from 'react-router-dom';

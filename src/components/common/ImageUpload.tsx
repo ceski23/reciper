@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { css } from '@emotion/react';
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import imageCompression from 'browser-image-compression';
 import {
   ChangeEvent, ComponentPropsWithRef, DragEventHandler,

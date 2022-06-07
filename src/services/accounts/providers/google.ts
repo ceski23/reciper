@@ -101,13 +101,13 @@ export class GoogleAccountProvider extends AccountProvider {
   }
 
   static startLogin() {
-    if (typeof process.env.REACT_APP_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
+    if (typeof import.meta.env.VITE_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
 
     // const code_verifier = base64url(randomBytes(96));
     // window.sessionStorage.setItem('code_verifier', code_verifier);
 
     const params = new URLSearchParams({
-      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       redirect_uri: baseUrl + urls.authRedirect.google,
       // response_type: 'code',
       response_type: 'token',
@@ -129,13 +129,13 @@ export class GoogleAccountProvider extends AccountProvider {
   }
 
   static async completeLogin() {
-    if (typeof process.env.REACT_APP_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
+    if (typeof import.meta.env.VITE_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
 
     const params = new URLSearchParams(window.location.search);
     const code_verifier = window.sessionStorage.getItem('code_verifier') as string;
 
     const data = new URLSearchParams({
-      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       grant_type: 'authorization_code',
       code: params.get('code') as string,
       redirect_uri: baseUrl + urls.authRedirect.google,
@@ -157,10 +157,10 @@ export class GoogleAccountProvider extends AccountProvider {
   }
 
   static async refreshAccessToken(refreshToken: string) {
-    if (typeof process.env.REACT_APP_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
+    if (typeof import.meta.env.VITE_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
 
     const data = new URLSearchParams({
-      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       grant_type: 'refresh_token',
       refresh_token: refreshToken,
     });
