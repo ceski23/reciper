@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import { reverse } from 'named-urls';
 import { useMemo, VFC } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
@@ -23,7 +22,7 @@ export const EditRecipeScreen: VFC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const recipe = useRecipe(params.recipeId, urls.home);
+  const recipe = useRecipe(params.recipeId, urls.home());
 
   const recipeDefaultData = useMemo(() => {
     if (!recipe) return undefined;
@@ -48,7 +47,7 @@ export const EditRecipeScreen: VFC = () => {
     if (isValidRecipe(editedRecipe)) {
       dispatch(saveRecipe(editedRecipe));
 
-      navigate(reverse(urls.recipes.recipeById, {
+      navigate(urls.recipes.byId({
         recipeId: editedRecipe.id,
       }));
     } else throw Error('Invalid recipe');

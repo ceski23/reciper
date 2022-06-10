@@ -79,7 +79,7 @@ export const HomeScreen: VFC = () => {
   const navigate = useNavigate();
 
   const handleSearchbarClick: React.MouseEventHandler<HTMLElement> = () => {
-    navigate(urls.search);
+    navigate(urls.search());
   };
 
   return (
@@ -107,7 +107,7 @@ export const HomeScreen: VFC = () => {
         ))}
       </RecipesList>
 
-      <LinkButton to={String(urls.recipes)} style={{ marginTop: 30 }}>
+      <LinkButton to={urls.recipes()} style={{ marginTop: 30 }}>
         Wszystkie przepisy
       </LinkButton>
 

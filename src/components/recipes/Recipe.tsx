@@ -2,7 +2,6 @@ import { ThemeProvider, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import IntlMessageFormat from 'intl-messageformat';
-import { reverse } from 'named-urls';
 import {
   VFC, useMemo, MouseEventHandler, useState,
 } from 'react';
@@ -271,7 +270,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
   const handleSaveRecipe: MouseEventHandler<HTMLButtonElement> = () => {
     dispatch(saveRecipe(recipe));
     navigate(
-      reverse(urls.recipes.recipeById, { recipeId: recipe.id }),
+      urls.recipes.byId({ recipeId: recipe.id }),
       { replace: true },
     );
     toast.success('Przepis został zapisany');
@@ -282,19 +281,16 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
     else dispatch(removeRecipeById(recipe.id));
 
     if (recipe.url) {
-      navigate(
-        reverse(
-          urls.recipes.recipeByUrl,
-          { recipeUrl: encodeURIComponent(recipe.url) },
-        ),
-      );
-    } else navigate(urls.home);
+      navigate(urls.recipes.byUrl({
+        recipeUrl: encodeURIComponent(recipe.url),
+      }));
+    } else navigate(urls.home());
 
     toast.success('Przepis został usunięty');
   };
 
   const handleEditRecipe = () => {
-    navigate(reverse(urls.recipes.edit, { recipeId: recipe.id }));
+    navigate(urls.recipes.edit({ recipeId: recipe.id }));
   };
 
   const handleAddToShoppingList = () => {

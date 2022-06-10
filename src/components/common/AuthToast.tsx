@@ -33,6 +33,6 @@ const ToastLink = styled(Link)`
 export const AuthToast: VFC = () => (
   <ToastContainer>
     <span>Wymagane ponowne uwierzytelnienie</span>
-    <ToastLink to={urls.settings.account}>OK</ToastLink>
+    <ToastLink to={urls.settings.account()}>OK</ToastLink>
   </ToastContainer>
 );

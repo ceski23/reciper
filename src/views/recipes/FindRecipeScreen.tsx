@@ -57,7 +57,7 @@ export const FindRecipeScreen: VFC = () => {
       .then(setRecipe)
       .catch(() => {
         toast.error('Wystąpił błąd podczas wczytywania przepisu');
-        navigate(urls.home);
+        navigate(urls.home());
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.recipeUrl]);
@@ -67,7 +67,7 @@ export const FindRecipeScreen: VFC = () => {
       {!recipe && (
         <LoadingOverlay>
           <LoadingText>Ładowanie przepisu...</LoadingText>
-          <CancelButton to={urls.home}>Anuluj</CancelButton>
+          <CancelButton to={urls.home()}>Anuluj</CancelButton>
         </LoadingOverlay>
       )}
 

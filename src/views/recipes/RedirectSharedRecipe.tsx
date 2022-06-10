@@ -1,4 +1,3 @@
-import { reverse } from 'named-urls';
 import { useEffect, VFC } from 'react';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
@@ -12,7 +11,7 @@ export const RedirectSharedRecipe: VFC = () => {
   useEffect(() => {
     const recipeUrl = params.get('url');
     if (recipeUrl) {
-      const internalUrl = reverse(urls.recipes.recipeByUrl, {
+      const internalUrl = urls.recipes.byUrl({
         recipeUrl: encodeURIComponent(recipeUrl),
       });
       navigate(internalUrl, { replace: true });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteObject } from 'react-router';
+import { Outlet, RouteObject } from 'react-router';
 
 import { urls } from 'routing/urls';
 
@@ -27,22 +27,52 @@ const devRoutes = import.meta.env.DEV ? [
 
 const routes: RouteObject[] = [
   ...devRoutes,
-  { path: urls.home, element: <HomeScreen /> },
-  { path: String(urls.recipes), element: <RecipesScreen /> },
-  { path: urls.recipes.recipeById, element: <RecipeScreen /> },
-  { path: urls.recipes.recipeByUrl, element: <FindRecipeScreen /> },
-  { path: String(urls.recipes.new), element: <NewRecipeScreen /> },
-  { path: urls.sharedRecipe, element: <RedirectSharedRecipe /> },
-  { path: urls.recipes.new.manual, element: <NewManualRecipeScreen /> },
-  { path: urls.recipes.edit, element: <EditRecipeScreen /> },
-  { path: String(urls.tags), element: <TagsScreen /> },
-  { path: urls.tags.tag, element: <TagsScreen /> },
-  { path: urls.search, element: <SearchScreen /> },
-  { path: String(urls.settings), element: <SettingsScreen /> },
-  { path: urls.settings.appearance, element: <AppearanceSubPage /> },
-  { path: urls.settings.account, element: <AccountSubPage /> },
-  { path: urls.settings.units, element: <UnitsSubPage /> },
-  { path: urls.settings.about, element: <AboutPage /> },
+  {
+    path: urls.home.pattern,
+    element: <Outlet />,
+    children: [
+      { index: true, element: <HomeScreen /> },
+      { path: urls.search.pattern, element: <SearchScreen /> },
+      { path: urls.sharedRecipe.pattern, element: <RedirectSharedRecipe /> },
+      {
+        path: urls.tags.pattern,
+        element: <Outlet />,
+        children: [
+          { index: true, element: <TagsScreen /> },
+          { path: urls.tags.tag.pattern, element: <TagsScreen /> },
+        ],
+      },
+      {
+        path: urls.settings.pattern,
+        element: <Outlet />,
+        children: [
+          { index: true, element: <SettingsScreen /> },
+          { path: urls.settings.appearance.pattern, element: <AppearanceSubPage /> },
+          { path: urls.settings.account.pattern, element: <AccountSubPage /> },
+          { path: urls.settings.units.pattern, element: <UnitsSubPage /> },
+          { path: urls.settings.about.pattern, element: <AboutPage /> },
+        ],
+      },
+      {
+        path: urls.recipes.pattern,
+        element: <Outlet />,
+        children: [
+          { index: true, element: <RecipesScreen /> },
+          { path: urls.recipes.byId.pattern, element: <RecipeScreen /> },
+          { path: urls.recipes.byUrl.pattern, element: <FindRecipeScreen /> },
+          { path: urls.recipes.edit.pattern, element: <EditRecipeScreen /> },
+          {
+            path: urls.recipes.new.pattern,
+            element: <Outlet />,
+            children: [
+              { index: true, element: <NewRecipeScreen /> },
+              { path: urls.recipes.new.manual.pattern, element: <NewManualRecipeScreen /> },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export default routes;

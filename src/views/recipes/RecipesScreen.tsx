@@ -43,7 +43,7 @@ export const RecipesScreen: VFC = () => {
     <FluidContainer>
       <ScreenHeader title="Przepisy" />
 
-      <AddRecipeButton icon={AddIcon} to={String(urls.recipes.new)}>Nowy przepis</AddRecipeButton>
+      <AddRecipeButton icon={AddIcon} to={urls.recipes.new()}>Nowy przepis</AddRecipeButton>
 
       <RecipesList variants={staggeredGrid} initial="hidden" animate="show">
         {Object.values(recipes).map((recipe) => (

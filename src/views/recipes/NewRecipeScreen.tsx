@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { reverse } from 'named-urls';
 import { useRef, useState, VFC } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -62,7 +61,7 @@ export const NewRecipeScreen: VFC = () => {
   };
 
   const handleFindClick = () => {
-    navigate(reverse(urls.recipes.recipeByUrl, {
+    navigate(urls.recipes.byUrl({
       recipeUrl: encodeURIComponent(url),
     }));
   };
@@ -89,7 +88,7 @@ export const NewRecipeScreen: VFC = () => {
           </form>
         </Option>
 
-        <Link to={urls.recipes.new.manual}>
+        <Link to={urls.recipes.new.manual()}>
           <Option text="Dodaj przepis ręcznie" icon={PencilIcon} />
         </Link>
       </OptionsList>

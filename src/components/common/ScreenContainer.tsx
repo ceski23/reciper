@@ -26,10 +26,10 @@ interface Props {
 export const ScreenContainer: FC<Props> = ({ children, footer, header }) => (
   <>
     <NavigationMenu>
-      <NavigationMenuItem title="Główna" icon={HomeIcon} to={urls.home} />
-      <NavigationMenuItem title="Szukaj" icon={SearchIcon} to={String(urls.recipes)} />
-      <NavigationMenuItem title="Przepisy" icon={RecipesIcon} to={String(urls.recipes)} />
-      <NavigationMenuItem title="Ustawienia" icon={SettingsIcon} to={String(urls.settings)} />
+      <NavigationMenuItem title="Główna" icon={HomeIcon} to={urls.home()} />
+      <NavigationMenuItem title="Szukaj" icon={SearchIcon} to={urls.recipes()} />
+      <NavigationMenuItem title="Przepisy" icon={RecipesIcon} to={urls.recipes()} />
+      <NavigationMenuItem title="Ustawienia" icon={SettingsIcon} to={urls.settings()} />
     </NavigationMenu>
 
     {header}

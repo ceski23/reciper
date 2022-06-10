@@ -41,7 +41,7 @@ export const GoogleAuthScreen: VFC = () => {
 
     if ('error' in params) {
       toast.error(params.error);
-      navigate(urls.settings.account, { replace: true });
+      navigate(urls.settings.account(), { replace: true });
     } else {
       dispatch(setAccountProvider({
         accessToken: params.access_token,

@@ -1,4 +1,3 @@
-import { reverse } from 'named-urls';
 import { nanoid } from 'nanoid';
 import { VFC } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -29,7 +28,7 @@ export const NewManualRecipeScreen: VFC = () => {
     if (isValidRecipe(recipe)) {
       dispatch(saveRecipe(recipe));
 
-      navigate(reverse(urls.recipes.recipeById, {
+      navigate(urls.recipes.byId({
         recipeId: recipe.id,
       }));
     } else throw Error('Invalid recipe');

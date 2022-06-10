@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import IntlMessageFormat from 'intl-messageformat';
-import { reverse } from 'named-urls';
 import { forwardRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -88,7 +87,7 @@ export const RecipeTile = forwardRef<HTMLElement, Props>(({ recipe }, ref) => {
   return (
     <Tile
       ref={ref}
-      to={reverse(urls.recipes.recipeById, { recipeId: recipe.id })}
+      to={urls.recipes.byId({ recipeId: recipe.id })}
       // variants={recipeItemAnimation}
     >
       {recipe.image

@@ -31,19 +31,19 @@ export const SettingsScreen: VFC = () => (
     <SettingsList>
       {/* <SettingsListItem text="Ogólne" icon={SettingsIcon} /> */}
 
-      <Link to={urls.settings.appearance}>
+      <Link to={urls.settings.appearance()}>
         <SettingsListItem text="Wygląd" icon={BrushIcon} />
       </Link>
 
-      <Link to={urls.settings.account}>
+      <Link to={urls.settings.account()}>
         <SettingsListItem text="Konto i synchronizacja" icon={UserIcon} />
       </Link>
 
-      <Link to={urls.settings.units}>
+      <Link to={urls.settings.units()}>
         <SettingsListItem text="Jednostki" icon={WeightIcon} />
       </Link>
 
-      <Link to={urls.settings.about}>
+      <Link to={urls.settings.about()}>
         <SettingsListItem text="O aplikacji" icon={AboutIcon} />
       </Link>
     </SettingsList>

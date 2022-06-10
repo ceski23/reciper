@@ -23,7 +23,7 @@ export const RecipeScreen: VFC = () => {
   useEffect(() => {
     if (params.recipeId && !(params.recipeId in recipes)) {
       toast.error('Przepis o takim ID nie istnieje!');
-      navigate(urls.home);
+      navigate(urls.home());
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.recipeId]);

@@ -80,10 +80,10 @@ export const Page: FC = ({ children }) => (
       </Logo>
 
       <NavigationMenu>
-        <NavigationMenuItem title="Główna" icon={HomeIcon} to={urls.home} />
-        <NavigationMenuItem title="Szukaj" icon={SearchIcon} to={String(urls.search)} />
-        <NavigationMenuItem title="Przepisy" icon={RecipesIcon} to={String(urls.recipes)} />
-        <NavigationMenuItem title="Ustawienia" icon={SettingsIcon} to={String(urls.settings)} />
+        <NavigationMenuItem title="Główna" icon={HomeIcon} to={urls.home()} />
+        <NavigationMenuItem title="Szukaj" icon={SearchIcon} to={urls.search()} />
+        <NavigationMenuItem title="Przepisy" icon={RecipesIcon} to={urls.recipes()} />
+        <NavigationMenuItem title="Ustawienia" icon={SettingsIcon} to={urls.settings()} />
       </NavigationMenu>
     </PageSidebar>
 
