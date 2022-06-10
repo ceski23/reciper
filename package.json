@@ -46,7 +46,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "npx serve -d build"
+    "start": "npx serve -s build"
   },
   "browserslist": {
     "production": [

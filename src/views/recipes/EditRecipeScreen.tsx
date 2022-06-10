@@ -61,3 +61,5 @@ export const EditRecipeScreen: VFC = () => {
     </FluidContainer>
   );
 };
+
+export default EditRecipeScreen;

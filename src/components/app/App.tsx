@@ -5,6 +5,8 @@ import { Toaster } from 'react-hot-toast';
 import { DefaultToastOptions } from 'react-hot-toast/dist/core/types';
 import { useRoutes } from 'react-router';
 
+import { Loading } from 'components/common/Loading';
+
 import { useAppSelector } from 'hooks/store';
 
 import authRoutes from 'routing/authRoutes';
@@ -41,7 +43,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Global styles={globalStyles} />
 
-      <Suspense fallback={<p>Ładowanie...</p>}>
+      <Suspense fallback={<Loading>Ładowanie...</Loading>}>
         {authContent}
       </Suspense>
 

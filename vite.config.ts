@@ -50,7 +50,8 @@ const pwaPlugin = VitePWA({
 });
 
 const bundleVisualizerPlugin = visualizer({
-  sourcemap: true
+  sourcemap: true,
+  open: true
 });
 
 export default defineConfig({
@@ -63,19 +64,10 @@ export default defineConfig({
     tsconfigPathsPlugin,
     checkerPlugin,
     pwaPlugin,
-    bundleVisualizerPlugin
+    // bundleVisualizerPlugin,
   ],
   build: {
     outDir: 'build',
     // sourcemap: true,
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
-        }
-      }
-    }
   }
 });

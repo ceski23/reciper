@@ -42,3 +42,5 @@ export const NewManualRecipeScreen: VFC = () => {
     </FluidContainer>
   );
 };
+
+export default NewManualRecipeScreen;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { RouteObject } from 'react-router';
 
 import { urls } from 'routing/urls';
@@ -6,9 +7,7 @@ import { ColorDebug } from 'views/ColorDebug';
 import { HomeScreen } from 'views/common/HomeScreen';
 import { SearchScreen } from 'views/common/SearchScreen';
 import { TagsScreen } from 'views/common/TagsScreen';
-import { EditRecipeScreen } from 'views/recipes/EditRecipeScreen';
 import { FindRecipeScreen } from 'views/recipes/FindRecipeScreen';
-import { NewManualRecipeScreen } from 'views/recipes/NewManualRecipeScreen';
 import { NewRecipeScreen } from 'views/recipes/NewRecipeScreen';
 import { RecipeScreen } from 'views/recipes/RecipeScreen';
 import { RecipesScreen } from 'views/recipes/RecipesScreen';
@@ -18,6 +17,9 @@ import { AccountSubPage } from 'views/settings/AccountSubPage';
 import { AppearanceSubPage } from 'views/settings/AppearanceSubPage';
 import { SettingsScreen } from 'views/settings/SettingsScreen';
 import { UnitsSubPage } from 'views/settings/UnitsSubPage';
+
+const EditRecipeScreen = React.lazy(() => import('views/recipes/EditRecipeScreen'));
+const NewManualRecipeScreen = React.lazy(() => import('views/recipes/NewManualRecipeScreen'));
 
 const devRoutes = import.meta.env.DEV ? [
   { path: '/colors', element: <ColorDebug /> },
