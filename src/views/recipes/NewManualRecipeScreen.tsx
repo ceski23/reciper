@@ -15,15 +15,15 @@ import { isValidRecipe } from 'services/recipes';
 
 import { saveRecipe } from 'store/recipes';
 
-import { processRecipeFormData } from 'utils/recipes';
-
 export const NewManualRecipeScreen: VFC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSubmit: SubmitHandler<RecipeFormFields> = (data) => {
-    const recipe = processRecipeFormData(data);
-    recipe.id = nanoid();
+    const recipe = {
+      ...data,
+      id: nanoid(),
+    };
 
     if (isValidRecipe(recipe)) {
       dispatch(saveRecipe(recipe));

@@ -30,8 +30,8 @@ export const getMultiFieldError = <T extends FieldValues>(
 ) => (
     match(errors[field])
     // Array<{ value: FieldError }>
-      .with(P.array({ value: P._ }), (errs) => (
-        errs.map((err) => err.value?.message)[index]
+      .with(P.array({ text: P._ }), (errs) => (
+        errs.map((err) => err.text?.message)[index]
       ))
       .otherwise(() => undefined)
   );

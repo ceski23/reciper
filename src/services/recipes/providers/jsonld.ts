@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable import/no-cycle */
 /* eslint-disable prefer-destructuring */
+import dayjs from 'dayjs';
 import { HowToStep, Recipe as SchemaRecipe } from 'schema-dts';
 
 import { Recipe } from 'services/recipes';
@@ -76,12 +77,14 @@ const scrapper: RecipeScrapper = async (doc) => {
   if (!ingredients) throw Error('Couldn\'t find ingredients');
 
   // FIXME: Better instructions parsing
-  const instructions = parseInstructions(schemaRecipe.recipeInstructions);
+  const instructions = parseInstructions(schemaRecipe.recipeInstructions)
+    ?.map((i) => ({ text: i }));
   if (!instructions) throw Error('Couldn\'t find or parse instructions');
 
-  let prepTime = schemaRecipe.prepTime || schemaRecipe.totalTime;
+  let prepTimeISO = schemaRecipe.prepTime || schemaRecipe.totalTime;
   // FIXME: Better duration recognition
-  if (prepTime !== undefined && typeof prepTime !== 'string') prepTime = undefined;
+  if (prepTimeISO !== undefined && typeof prepTimeISO !== 'string') prepTimeISO = undefined;
+  const prepTime = prepTimeISO ? dayjs.duration(prepTimeISO).asMinutes() : undefined;
 
   const servings = schemaRecipe.recipeYield
     ? Number.parseInt(schemaRecipe.recipeYield.toString(), 10)

@@ -1,5 +1,4 @@
-import dayjs from 'dayjs';
-import { useMemo, VFC } from 'react';
+import { VFC } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 
@@ -16,33 +15,18 @@ import { isValidRecipe } from 'services/recipes';
 
 import { saveRecipe } from 'store/recipes';
 
-import { processRecipeFormData } from 'utils/recipes';
-
 export const EditRecipeScreen: VFC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const recipe = useRecipe(params.recipeId, urls.home());
 
-  const recipeDefaultData = useMemo(() => {
-    if (!recipe) return undefined;
-
-    const {
-      ingredients, instructions, prepTime, ...recipeData
-    } = recipe;
-
-    return {
-      ...recipeData,
-      prepTime: prepTime ? dayjs.duration(prepTime).asMinutes() : undefined,
-      ingredients: ingredients.map((i) => ({ value: i })),
-      instructions: instructions.map((i) => ({ value: i })),
-    };
-  }, [recipe]);
-
   const handleSubmit: SubmitHandler<RecipeFormFields> = (data) => {
-    const editedRecipe = processRecipeFormData(data);
-    if (recipe?.id) editedRecipe.id = recipe.id;
-    if (recipe?.color) editedRecipe.color = recipe.color;
+    const editedRecipe = {
+      ...data,
+      id: recipe?.id,
+      color: recipe?.color,
+    };
 
     if (isValidRecipe(editedRecipe)) {
       dispatch(saveRecipe(editedRecipe));
@@ -56,7 +40,7 @@ export const EditRecipeScreen: VFC = () => {
   return (
     <FluidContainer>
       <ScreenHeader title="Edytuj przepis" />
-      {recipe && <RecipeForm defaultValues={recipeDefaultData} onSubmit={handleSubmit} />}
+      {recipe && <RecipeForm defaultValues={recipe} onSubmit={handleSubmit} />}
     </FluidContainer>
   );
 };

@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 import {
-  persistReducer, getStoredState, PersistConfig, REHYDRATE,
+  persistReducer, getStoredState, PersistConfig, REHYDRATE, createMigrate,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -27,17 +28,36 @@ const initialState: RecipesState = {
   },
 };
 
-// const migrations: MigrationManifest = {
-//   0: (state: any) => ({
-//     ...state, test: 'a',
-//   }),
-// };
+type RecipesStateV1 = RecipesState;
+
+type RecipesStateV0 = Omit<RecipesStateV1, 'list'> & {
+  list: Record<string, Omit<Recipe, 'ingredients' | 'instructions'> & {
+    ingredients: string[]
+    instructions: string[]
+    prepTime: string
+  }>;
+};
+
+type MigrationState = RecipesStateV0 | RecipesStateV1;
+
+const migrations = {
+  1: (state: RecipesStateV0): RecipesStateV1 => ({
+    list: Object.fromEntries(Object.entries(state.list).map(([id, recipe]) => (
+      [id, {
+        ...recipe,
+        ingredients: recipe.ingredients.map((i) => ({ text: i })),
+        instructions: recipe.instructions.map((i) => ({ text: i })),
+        prepTime: recipe.prepTime ? dayjs.duration(recipe.prepTime).asMinutes() : undefined,
+      }]
+    ))),
+  }),
+};
 
 const persistConfig: PersistConfig<RecipesState> = {
   key: 'recipes',
   storage,
-  // version: 0,
-  // migrate: createMigrate(migrations, { debug: true }),
+  version: 1,
+  migrate: createMigrate<MigrationState>(migrations),
   debug: true,
 };
 

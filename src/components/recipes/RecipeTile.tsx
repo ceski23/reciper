@@ -81,7 +81,7 @@ export const RecipeTile = forwardRef<HTMLElement, Props>(({ recipe }, ref) => {
   }), [recipe.ingredients.length]);
 
   const duration = useMemo(() => (
-    recipe.prepTime ? dayjs.duration(recipe.prepTime).locale('pl').humanize() : undefined
+    recipe.prepTime ? dayjs.duration({ minutes: recipe.prepTime }).locale('pl').humanize() : undefined
   ), [recipe.prepTime]);
 
   return (

@@ -1,5 +1,8 @@
 /* eslint-disable import/no-cycle */
 
+import dayjs from 'dayjs';
+
+import { RecipeIngredient, RecipeInstruction } from 'services/recipes';
 import { RecipeScrapper } from 'services/recipes/providers';
 
 // eslint-disable-next-line @typescript-eslint/require-await
@@ -20,12 +23,13 @@ const scrapper: RecipeScrapper = async (doc) => {
   const instructionsElements = root.querySelectorAll('[itemprop="recipeInstructions"]');
   const instructions = Array
     .from(instructionsElements)
-    .map((elem) => elem.textContent?.trim())
-    .filter(Boolean) as string[];
+    .map((elem) => (elem.textContent ? ({ text: elem.textContent?.trim() }) : undefined))
+    .filter(Boolean) as RecipeInstruction[];
 
   // if (instructions.length === 0) throw Error('No instructions found');
 
-  const prepTime = root.querySelector('[itemprop="prepTime"]')?.getAttribute('content') || undefined;
+  const prepTimeISO = root.querySelector('[itemprop="prepTime"]')?.getAttribute('content') || undefined;
+  const prepTime = prepTimeISO ? dayjs.duration(prepTimeISO).asMinutes() : undefined;
 
   // Rating
   const ratingElement = root.querySelector('[itemprop="ratingValue"]');
@@ -44,8 +48,8 @@ const scrapper: RecipeScrapper = async (doc) => {
   const ingredientsElements = root.querySelectorAll('[itemprop="recipeIngredient"]');
   const ingredients = Array
     .from(ingredientsElements)
-    .map((elem) => elem.textContent?.trim())
-    .filter(Boolean) as string[];
+    .map((elem) => (elem.textContent ? ({ text: elem.textContent?.trim() }) : undefined))
+    .filter(Boolean) as RecipeIngredient[];
 
   // if (ingredients.length === 0) throw Error('No ingredients found');
 

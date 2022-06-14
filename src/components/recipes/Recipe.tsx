@@ -245,7 +245,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
 
   const parsedIngredients = useMemo<ParsedIngredient[]>(() => (
     (recipe?.ingredients ?? [])
-      .map(parseIngredient)
+      .map((i) => parseIngredient(i.text))
       .map((ingredient) => {
         if (!servings || !('quantity' in ingredient) || !recipe.servings) return ingredient;
         return { ...ingredient, quantity: (ingredient.quantity / recipe.servings) * servings };
@@ -259,7 +259,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
 
   const preparationDuration = useMemo(() => {
     if (!recipe.prepTime) return undefined;
-    return dayjs.duration(recipe.prepTime).locale('pl').humanize();
+    return dayjs.duration({ minutes: recipe.prepTime }).locale('pl').humanize();
   }, [recipe.prepTime]);
 
   const colorizedTheme = useMemo(() => {
@@ -374,7 +374,7 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
                     // eslint-disable-next-line react/no-array-index-key
                     key={idx}
                     stepNumber={idx + 1}
-                    instruction={ins}
+                    instruction={ins.text}
                     done={doneSteps.includes(idx)}
                     onClick={() => handleStepClicked(idx)}
                   />

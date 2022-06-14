@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import Fuse from 'fuse.js';
 
 import { IngredientType } from 'services/ingredients/database';
@@ -21,7 +20,7 @@ export default class RecipeSearch {
     return this.recipes.filter((result) => {
       const hasAllRequiredIngredients = ingredients.every((requiredIngredient) => {
         const hasRequiredIngredient = result.ingredients.some((ingredient) => (
-          requiredIngredient.pattern.test(ingredient)
+          requiredIngredient.pattern.test(ingredient.text)
         ));
 
         return hasRequiredIngredient;
@@ -47,7 +46,7 @@ export default class RecipeSearch {
 
   private filterByDuration(duration: number) {
     return this.recipes.filter((recipe) => {
-      if (recipe.prepTime) return dayjs.duration(recipe.prepTime).asMinutes() <= duration;
+      if (recipe.prepTime) return recipe.prepTime <= duration;
       return true;
     });
   }

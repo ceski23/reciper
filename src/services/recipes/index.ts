@@ -1,11 +1,19 @@
+export interface RecipeIngredient {
+  text: string
+}
+
+export interface RecipeInstruction {
+  text: string
+}
+
 export interface Recipe {
   id: string;
   name: string;
   image?: string;
   description?: string;
-  ingredients: string[];
-  instructions: string[];
-  prepTime?: string; // ISO-8601 Duration
+  ingredients: RecipeIngredient[];
+  instructions: RecipeInstruction[];
+  prepTime?: number;
   color?: string;
   url?: string;
   rating?: number;

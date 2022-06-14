@@ -102,7 +102,7 @@ const recipeSchema = z.object({
   ingredients: z
     .array(
       z.object({
-        value: z
+        text: z
           .string()
           .min(1, 'Składnik nie może być pusty'),
       }),
@@ -111,7 +111,7 @@ const recipeSchema = z.object({
   instructions: z
     .array(
       z.object({
-        value: z
+        text: z
           .string()
           .min(1, 'Krok nie może być pusty'),
       }),
@@ -257,7 +257,7 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
           {ingredients.fields.map((field, index) => (
             <Field
               id={field.id}
-              {...register(`ingredients.${index}.value`)}
+              {...register(`ingredients.${index}.text`)}
               key={field.id}
               label={`Składnik ${index + 1}`}
               error={getMultiFieldError(errors, 'ingredients', index)}
@@ -268,7 +268,7 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
           ))}
         </FieldsWrapper>
 
-        <Button type="button" size="small" onClick={() => ingredients.append({ value: '' })}>
+        <Button type="button" size="small" onClick={() => ingredients.append({ text: '' })}>
           Dodaj składnik
         </Button>
       </FieldsArrayWrapper>
@@ -282,7 +282,7 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
           {instructions.fields.map((field, index) => (
             <Field
               id={field.id}
-              {...register(`instructions.${index}.value`)}
+              {...register(`instructions.${index}.text`)}
               key={field.id}
               label={`Krok ${index + 1}.`}
               error={getMultiFieldError(errors, 'instructions', index)}
@@ -293,7 +293,7 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
           ))}
         </FieldsWrapper>
 
-        <Button type="button" size="small" onClick={() => instructions.append({ value: '' })}>
+        <Button type="button" size="small" onClick={() => instructions.append({ text: '' })}>
           Dodaj krok
         </Button>
       </FieldsArrayWrapper>
