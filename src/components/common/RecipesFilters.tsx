@@ -6,7 +6,8 @@ import { SelectableTag } from 'components/common/SelectableTag';
 import { useRecipesFilters } from 'hooks/recipes/useRecipesFilters';
 import { useDebouncedState } from 'hooks/useDebouncedState';
 
-import KNOWN_INGREDIENTS, { IngredientType } from 'services/ingredients/database';
+import KNOWN_INGREDIENTS from 'services/ingredients/database';
+import { KnownIngredient } from 'services/ingredients/models';
 
 const DurationFilter = styled.div`
   display: flex;
@@ -54,7 +55,7 @@ export const RecipesFilters: VFC<Props> = ({ onChangingDuration }) => {
     setDurationValue(newDuration);
   };
 
-  const handleIngredientClick = (ingredient: IngredientType) => {
+  const handleIngredientClick = (ingredient: KnownIngredient) => {
     let newIngredients;
 
     if (ingredients.includes(ingredient)) {

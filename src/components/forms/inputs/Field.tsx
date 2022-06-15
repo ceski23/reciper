@@ -78,7 +78,7 @@ export type InputProps =
 type FieldProps = Pick<InputProps, 'id' | 'aria-invalid' | 'aria-required' | 'aria-describedby'>;
 
 interface Props {
-  label: string;
+  label?: string;
   error?: string;
   deleteIcon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   onDeleteClick?: () => void;
@@ -99,10 +99,12 @@ export const Field = forwardRef<HTMLInputElement, InputProps & Props>(({
   ...props
 }, ref) => (
   <FieldContainer>
-    <LabelText htmlFor={id}>
-      {label}
-      {required && <Required aria-hidden>*</Required>}
-    </LabelText>
+    {label && (
+      <LabelText htmlFor={id}>
+        {label}
+        {required && <Required aria-hidden>*</Required>}
+      </LabelText>
+    )}
 
     {render ? render({
       id,

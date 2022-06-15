@@ -1,8 +1,11 @@
 import icon from 'assets/providers/ania_starmach.png';
 
+import { Recipe } from 'services/recipes';
 import type { Provider, RecipeScrapper } from 'services/recipes/providers';
 import jsonldScrapper from 'services/recipes/providers/jsonld';
 import { colorExtractor } from 'services/recipes/providers/utils';
+
+import { nonNullable } from 'utils/guards';
 
 export const AniaStarmachProvider: Provider = (() => {
   const name = 'Ania Starmach';
@@ -22,13 +25,14 @@ export const AniaStarmachProvider: Provider = (() => {
     const tags = Array
       .from(tagsElements)
       .map((elem) => elem.textContent?.toLowerCase())
-      .filter(Boolean) as string[];
+      .filter(nonNullable);
 
-    return {
-      ...data,
+    const partial: Partial<Recipe> = {
       color,
       tags,
     };
+
+    return Object.assign(data, partial);
   };
 
   return {

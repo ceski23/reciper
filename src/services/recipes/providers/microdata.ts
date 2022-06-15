@@ -2,8 +2,9 @@
 
 import dayjs from 'dayjs';
 
-import { RecipeIngredient, RecipeInstruction } from 'services/recipes';
 import { RecipeScrapper } from 'services/recipes/providers';
+
+import { nonNullable } from 'utils/guards';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 const scrapper: RecipeScrapper = async (doc) => {
@@ -24,7 +25,7 @@ const scrapper: RecipeScrapper = async (doc) => {
   const instructions = Array
     .from(instructionsElements)
     .map((elem) => (elem.textContent ? ({ text: elem.textContent?.trim() }) : undefined))
-    .filter(Boolean) as RecipeInstruction[];
+    .filter(nonNullable);
 
   // if (instructions.length === 0) throw Error('No instructions found');
 
@@ -49,7 +50,7 @@ const scrapper: RecipeScrapper = async (doc) => {
   const ingredients = Array
     .from(ingredientsElements)
     .map((elem) => (elem.textContent ? ({ text: elem.textContent?.trim() }) : undefined))
-    .filter(Boolean) as RecipeIngredient[];
+    .filter(nonNullable);
 
   // if (ingredients.length === 0) throw Error('No ingredients found');
 

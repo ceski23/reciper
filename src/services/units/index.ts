@@ -1,19 +1,118 @@
-/* eslint-disable import/no-cycle */
+import IntlMessageFormat from 'intl-messageformat';
 
-import { Cup } from 'services/units/Cup';
-import { Gram } from 'services/units/Gram';
-import { Kilogram } from 'services/units/Kilogram';
-import { Liter } from 'services/units/Liter';
-import { Milliliter } from 'services/units/Milliliter';
-import { TableSpoon } from 'services/units/TableSpoon';
-import { TeaSpoon } from 'services/units/TeaSpoon';
+import { UnitType } from 'services/units/models';
 
-export const UNITS = [
-  new Cup(),
-  new TeaSpoon(),
-  new TableSpoon(),
-  new Kilogram(),
-  new Gram(),
-  new Milliliter(),
-  new Liter(),
-];
+const createUnits = <T extends string>(units: Record<T, UnitType>): Record<T, UnitType> => units;
+
+export const units = createUnits({
+  cup: {
+    pattern: /szklan(?:ka|ki|ek)/,
+    abbreviation: 'cup',
+    formatter: new IntlMessageFormat(`
+      {quantity, plural,
+        one {szklanka}
+        few {szklanki}
+        many {szklanek}
+        other {szklanki}
+      }
+    `, 'pl-PL'),
+  },
+  teaspoon: {
+    pattern: /łyżeczka|łyżeczki|łyżeczek/,
+    abbreviation: 'tsp',
+    formatter: new IntlMessageFormat(`
+      {quantity, plural,
+        one {łyżeczka}
+        few {łyżeczki}
+        many {łyżeczek}
+        other {łyżeczki}
+      }
+    `, 'pl-PL'),
+  },
+  tablespoon: {
+    pattern: /łyżka|łyżki|łyżek|łyżkę/,
+    abbreviation: 'Tbs',
+    formatter: new IntlMessageFormat(`
+      {quantity, plural,
+        one {łyżka}
+        few {łyżki}
+        many {łyżek}
+        other {łyżki}
+      }
+    `, 'pl-PL'),
+  },
+  kilogram: {
+    pattern: /kg|kilogram|kilogramy|kilogramów/,
+    abbreviation: 'kg',
+    formatter: new IntlMessageFormat(`
+      {quantity, plural,
+        one {kilogram}
+        few {kilogramy}
+        many {kilogramów}
+        other {kilograma}
+      }
+    `, 'pl-PL'),
+  },
+  gram: {
+    pattern: /\b(?:gramów|gramy|gram|g)\b/,
+    abbreviation: 'g',
+    formatter: new IntlMessageFormat(`
+      {quantity, plural,
+        one {gram}
+        few {gramy}
+        many {gramów}
+        other {grama}
+      }
+    `, 'pl-PL'),
+  },
+  milliliter: {
+    pattern: /ml|mililitr|mililitry|mililitrów/,
+    abbreviation: 'ml',
+    formatter: new IntlMessageFormat(`
+      {quantity, plural,
+        one {mililitr}
+        few {mililitry}
+        many {mililitrów}
+        other {mililitra}
+      }
+    `, 'pl-PL'),
+  },
+  liter: {
+    pattern: /l|litr|litry|litrów/,
+    abbreviation: 'l',
+    formatter: new IntlMessageFormat(`
+      {quantity, plural,
+        one {litr}
+        few {litry}
+        many {litrów}
+        other {litra}
+      }
+    `, 'pl-PL'),
+  },
+  bar: {
+    pattern: /tabliczka|tabliczki|tabliczek/,
+    abbreviation: 'bar',
+    formatter: new IntlMessageFormat(`
+      {quantity, plural,
+        one {tabliczka}
+        few {tabliczki}
+        many {tabliczek}
+        other {tabliczki}
+      }
+    `, 'pl-PL'),
+  },
+  cube: {
+    pattern: /kostka|kostki|kostek/,
+    abbreviation: 'cube',
+    formatter: new IntlMessageFormat(`
+      {quantity, plural,
+        one {kostka}
+        few {kostki}
+        many {kostek}
+        other {kostki}
+      }
+    `, 'pl-PL'),
+  },
+});
+
+export type UnitName = keyof typeof units;

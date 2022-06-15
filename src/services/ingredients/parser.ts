@@ -1,49 +1,27 @@
-import ingredientsDatabase, { KnownIngredient } from 'services/ingredients/database';
-import { UNITS } from 'services/units';
-import { Unit } from 'services/units/Unit';
+import { Entries } from 'types';
 
-import unitsConverter from 'utils/unitsConverter';
+import ingredientsDatabase, { IngredientName } from 'services/ingredients/database';
+import { KnownIngredient, ParsedIngredient } from 'services/ingredients/models';
+import { units } from 'services/units';
+import { parseUnit } from 'services/units/utils';
 
-export type Measure = 'length' | 'mass' | 'volume' | 'area';
-
-interface IngredientWithQuantity {
-  original: string;
-  parsed: {
-    begin: string;
-    end: string;
-  }
-  quantity: number;
-  type?: KnownIngredient;
-}
-
-interface IngredientWithUnit extends IngredientWithQuantity {
-  unit: Unit;
-}
-
-interface UnknownIngredient {
-  original: string;
-  type?: KnownIngredient;
-}
-
-export type ParsedIngredient = IngredientWithQuantity | IngredientWithUnit | UnknownIngredient;
-
-const units = UNITS
+const unitPattern = Object
+  .values(units)
   .map((unit) => unit.pattern.source)
   .join('|');
 
 // eslint-disable-next-line no-useless-escape
-const quantityRegexp = /\d+(?:[\.,\/]\d+|\si\s\d+\/\d+)?/;
-
-const quantityPattern = new RegExp(`(${quantityRegexp.source})\\s?(${units})?`);
+const quantityPattern = /\d+(?:[\.,\/]\d+|\si\s\d+\/\d+)?/;
+const quantityWithUnitPattern = new RegExp(`(${quantityPattern.source})\\s?(${unitPattern})?`);
 
 const normalizeQuantity = (quantity: string): number => {
-  // 1 i 1/3
+  // 1 i 1/3 -> 1.33
   if (quantity.includes(' i ')) {
     const splitted = quantity.split(' i ');
     return normalizeQuantity(splitted[0]) + normalizeQuantity(splitted[1]);
   }
 
-  // 3/4
+  // 3/4 -> 0.75
   if (quantity.includes('/')) {
     const [dividend, divider] = quantity.split('/');
     return Number.parseInt(dividend, 10) / Number.parseInt(divider, 10);
@@ -53,23 +31,26 @@ const normalizeQuantity = (quantity: string): number => {
 };
 
 const extractQuantity = (ingredient: string) => {
-  const match = quantityPattern.exec(ingredient);
+  const match = quantityWithUnitPattern.exec(ingredient);
   if (!match) return undefined;
 
   return {
     quantity: normalizeQuantity(match[1]),
-    unit: Unit.fromPattern(match[2]),
+    unit: parseUnit(match[2]),
     index: match.index,
     length: match[0].length,
   };
 };
 
+const parseIngredientType = (text: string) => {
+  // eslint-disable-next-line max-len
+  const ingredients = Object.entries(ingredientsDatabase) as Entries<IngredientName, KnownIngredient>;
+  return ingredients.find(([, ingredient]) => ingredient.pattern.test(text))?.[0];
+};
+
 export const parseIngredient = (ingredient: string): ParsedIngredient => {
   const data = extractQuantity(ingredient);
-
-  const ingredientType = Object.entries(ingredientsDatabase).find(
-    ([, { pattern }]) => ingredient.match(pattern),
-  )?.[0];
+  const ingredientType = parseIngredientType(ingredient);
 
   // Składnik bez liczb, np. sól, pieprz
   if (!data) {
@@ -102,20 +83,4 @@ export const parseIngredient = (ingredient: string): ParsedIngredient => {
     unit: data.unit,
     type: ingredientType,
   };
-};
-
-export const convertIngredient = (ingredient: ParsedIngredient, newUnit?: string) => {
-  if (!newUnit || !('unit' in ingredient)) return ingredient;
-
-  const newQuantity = unitsConverter(ingredient.quantity)
-    .from(ingredient.unit.normalizedName)
-    .to(newUnit);
-
-  const newIngredient: ParsedIngredient = {
-    ...ingredient,
-    quantity: newQuantity,
-    unit: Unit.fromAbbrev(newUnit),
-  };
-
-  return newIngredient;
 };

@@ -7,7 +7,9 @@ import { ReactComponent as GroceryIcon } from 'assets/recipes/grocery.svg';
 import { useAppSelector } from 'hooks/store';
 
 import ingredientsDatabase from 'services/ingredients/database';
-import { convertIngredient, ParsedIngredient } from 'services/ingredients/parser';
+import { ParsedIngredient } from 'services/ingredients/models';
+import { units } from 'services/units';
+import { convertIngredient } from 'services/units/utils';
 
 import { selectConversionPrecision, selectUnitsConversions, selectUseUnitsConversion } from 'store/settings';
 
@@ -16,6 +18,7 @@ import { fluidTypography } from 'utils/styles/typography';
 
 interface Props {
   ingredient: ParsedIngredient;
+  onClick?: () => void;
 }
 
 const iconStyles = ({ theme }: { theme: Theme }) => css`
@@ -58,28 +61,36 @@ const Text = styled.p`
   )}
 `;
 
-export const IngredientItem: VFC<Props> = ({ ingredient }) => {
-  const conversions = useAppSelector(selectUnitsConversions);
-  const useConversion = useAppSelector(selectUseUnitsConversion);
-  const precision = useAppSelector(selectConversionPrecision);
+const formatQuantity = (quantity: number, precision?: number) => {
+  if (precision === undefined) return quantity;
+  return Number(quantity.toFixed(precision));
+};
 
-  const convertedIngredient = !useConversion
-    ? ingredient
-    : convertIngredient(ingredient, ('unit' in ingredient) ? conversions[ingredient.unit.normalizedName] : undefined);
+export const IngredientItem: VFC<Props> = ({ ingredient, onClick }) => {
+  const conversions = useAppSelector(selectUnitsConversions);
+  const conversionEnabled = useAppSelector(selectUseUnitsConversion);
+  const convertionPrecision = useAppSelector(selectConversionPrecision);
+
+  const precision = conversionEnabled ? convertionPrecision : undefined;
+
+  const convertedIngredient = conversionEnabled ? convertIngredient(
+    ingredient,
+    ('type' in ingredient && ingredient.type) ? conversions[ingredient.type] : undefined,
+  ) : ingredient;
 
   const quantity = ('parsed' in convertedIngredient)
-    ? Number(convertedIngredient.quantity.toFixed(useConversion ? precision : 0))
+    ? formatQuantity(convertedIngredient.quantity, precision)
     : undefined;
 
   const unitText = ('unit' in convertedIngredient)
-    ? convertedIngredient.unit.formatter.format({
-      quantity: Number(convertedIngredient.quantity.toFixed(useConversion ? precision : 0)),
+    ? units[convertedIngredient.unit].formatter.format({
+      quantity: formatQuantity(convertedIngredient.quantity, precision),
     })
     : undefined;
 
   return (
-    <Wrapper>
-      {ingredient.type ? (
+    <Wrapper onClick={onClick}>
+      {('type' in ingredient && ingredient.type) ? (
         <Icon src={ingredientsDatabase[ingredient.type].image} />
       ) : (
         <FallbackIcon />

@@ -11,7 +11,7 @@ import { useKeydown } from 'hooks/useKeydown';
 
 import { color } from 'utils/styles/theme';
 
-interface ModalProps {
+export interface ModalProps {
   children?: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;

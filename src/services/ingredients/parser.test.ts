@@ -1,5 +1,5 @@
-import { parseIngredient, ParsedIngredient } from 'services/ingredients/parser';
-import { Unit } from 'services/units/Unit';
+import { ParsedIngredient } from 'services/ingredients/models';
+import { parseIngredient } from 'services/ingredients/parser';
 
 // const ingredients = [
 //   'bazylia (1 doniczka)',
@@ -30,7 +30,7 @@ describe('grams', () => {
       original: '1.5g drożdży',
       quantity: 1.5,
       parsed: { begin: '', end: 'drożdży' },
-      unit: Unit.fromAbbrev('g'),
+      unit: 'gram',
     });
   });
 
@@ -41,7 +41,7 @@ describe('grams', () => {
       original: '300 g makaronu np. penne',
       quantity: 300,
       parsed: { begin: '', end: 'makaronu np. penne' },
-      unit: Unit.fromAbbrev('g'),
+      unit: 'gram',
     });
   });
 
@@ -52,7 +52,7 @@ describe('grams', () => {
       original: '500 g filetu kurczaka',
       quantity: 500,
       parsed: { begin: '', end: 'filetu kurczaka' },
-      unit: Unit.fromAbbrev('g'),
+      unit: 'gram',
       type: 'chicken',
     });
   });
@@ -96,7 +96,7 @@ test('number with Tbs', () => {
     original: '5 łyżek oliwy extra',
     quantity: 5,
     parsed: { begin: '', end: 'oliwy extra' },
-    unit: Unit.fromAbbrev('Tbs'),
+    unit: 'tablespoon',
   });
 });
 
@@ -107,7 +107,7 @@ test('decimal without Tsp', () => {
     original: '2.5 łyżeczki czerwonej pasty curry*',
     quantity: 2.5,
     parsed: { begin: '', end: 'czerwonej pasty curry*' },
-    unit: Unit.fromAbbrev('tsp'),
+    unit: 'teaspoon',
   });
 });
 
@@ -118,7 +118,7 @@ test('combined quantity with type', () => {
     original: '1 i 1/2 szklanki mąki pszennej',
     quantity: 1.5,
     parsed: { begin: '', end: 'mąki pszennej' },
-    unit: Unit.fromAbbrev('cup'),
+    unit: 'cup',
     type: 'flour',
   });
 });

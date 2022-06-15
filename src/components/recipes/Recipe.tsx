@@ -22,6 +22,7 @@ import {
   FluidContainer, fluidContainerStyles, fullBleedStyles,
 } from 'components/common/Container';
 import { Modal } from 'components/common/modal/Modal';
+import { IngredientConverterModal } from 'components/recipes/IngredientConverterModal';
 import { IngredientItem } from 'components/recipes/IngredientItem';
 import { RecipeCover } from 'components/recipes/RecipeCover';
 import { RecipeFeature } from 'components/recipes/RecipeFeature';
@@ -36,7 +37,8 @@ import { useModal } from 'hooks/useModal';
 
 import { urls } from 'routing/urls';
 
-import { ParsedIngredient, parseIngredient } from 'services/ingredients/parser';
+import { IngredientWithUnitAndType, ParsedIngredient } from 'services/ingredients/models';
+import { parseIngredient } from 'services/ingredients/parser';
 import { Recipe as RecipeType } from 'services/recipes';
 import { chooseProvider } from 'services/recipes/providers';
 
@@ -310,6 +312,17 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
     }
   };
 
+  const ingredientModal = useModal(false);
+  // eslint-disable-next-line max-len
+  const [selectedIngredient, setSelectedIngredient] = useState<IngredientWithUnitAndType | undefined>();
+
+  const handleIngredientClick = (ingredient: ParsedIngredient) => {
+    if ('unit' in ingredient && 'type' in ingredient && ingredient.type !== undefined) {
+      setSelectedIngredient(ingredient);
+      if (ingredient) ingredientModal.open();
+    }
+  };
+
   return (
     <ThemeProvider theme={colorizedTheme ?? theme}>
       <ContentWrapper>
@@ -401,8 +414,22 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
 
                   <IngredientsList>
                     {parsedIngredients.map((ingredient) => (
-                      <IngredientItem ingredient={ingredient} key={ingredient.original} />
+                      <IngredientItem
+                        ingredient={ingredient}
+                        key={ingredient.original}
+                        onClick={() => handleIngredientClick(ingredient)}
+                      />
                     ))}
+
+                    {selectedIngredient && (
+                      <IngredientConverterModal
+                        isOpen={ingredientModal.isOpen}
+                        onClose={ingredientModal.close}
+                        closeOnEscape
+                        showBackdrop
+                        ingredient={selectedIngredient}
+                      />
+                    )}
                   </IngredientsList>
 
                   {shoppingList && (

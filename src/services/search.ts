@@ -1,11 +1,11 @@
 import Fuse from 'fuse.js';
 
-import { IngredientType } from 'services/ingredients/database';
+import { KnownIngredient } from 'services/ingredients/models';
 import { Recipe } from 'services/recipes';
 
 interface SearchParams {
   query?: string;
-  ingredients?: IngredientType[];
+  ingredients?: KnownIngredient[];
   duration?: number;
 }
 
@@ -16,7 +16,7 @@ export default class RecipeSearch {
     this.recipes = recipes;
   }
 
-  private filterByIngredients(ingredients: IngredientType[]) {
+  private filterByIngredients(ingredients: KnownIngredient[]) {
     return this.recipes.filter((result) => {
       const hasAllRequiredIngredients = ingredients.every((requiredIngredient) => {
         const hasRequiredIngredient = result.ingredients.some((ingredient) => (

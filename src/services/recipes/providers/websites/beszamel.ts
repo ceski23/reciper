@@ -1,5 +1,6 @@
 import icon from 'assets/providers/beszamel.svg';
 
+import { Recipe } from 'services/recipes';
 import type { Provider, RecipeScrapper } from 'services/recipes/providers';
 import jsonldScrapper from 'services/recipes/providers/jsonld';
 import { colorExtractor } from 'services/recipes/providers/utils';
@@ -18,10 +19,11 @@ export const BeszamelProvider: Provider = (() => {
       color = palette.Vibrant?.hex;
     }
 
-    return {
-      ...data,
+    const partial: Partial<Recipe> = {
       color,
     };
+
+    return Object.assign(data, partial);
   };
 
   return {

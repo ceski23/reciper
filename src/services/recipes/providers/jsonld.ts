@@ -9,6 +9,8 @@ import { HowToStep, Recipe as SchemaRecipe } from 'schema-dts';
 import { Recipe } from 'services/recipes';
 import { RecipeScrapper } from 'services/recipes/providers';
 
+import { nonNullable } from 'utils/guards';
+
 function isHowToStepArray(instructions: SchemaRecipe['recipeInstructions']): instructions is HowToStep[] {
   return Array.isArray(instructions) && instructions[0]['@type'] === 'HowToStep';
 }
@@ -33,14 +35,14 @@ const parseInstructions = (instructions: SchemaRecipe['recipeInstructions']): st
       if (typeof i === 'string') return i;
       if ('@type' in i && i['@type'] === 'HowToStep') return i.description?.toString() || i.text?.toString();
       return undefined;
-    }).filter((a): a is string => a !== undefined);
+    }).filter(nonNullable);
   }
 
   if (isHowToStepArray(instructions)) {
     return instructions.map((i) => {
       if ('@type' in i && i['@type'] === 'HowToStep') return i.description?.toString() || i.text?.toString();
       return undefined;
-    }).filter((a): a is string => a !== undefined);
+    }).filter(nonNullable);
   }
 
   if (Array.isArray(instructions) && typeof instructions[0] === 'string') return instructions;

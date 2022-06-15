@@ -7,11 +7,16 @@ import storage from 'redux-persist/lib/storage';
 
 import { RootState } from 'store';
 
+import { IngredientName } from 'services/ingredients/database';
+import { UnitName } from 'services/units';
+
 interface SettingsState {
   theme: Theme['type'] | 'system';
   dynamicPrimaryColor: boolean;
   useUnitsConversion: boolean;
-  unitsConversion: Record<string, string | undefined>;
+  unitsConversion: {
+    [key in IngredientName]?: UnitName | undefined
+  };
   conversionPrecision: number;
 }
 
@@ -46,8 +51,8 @@ const slice = createSlice({
     setUseUnitsConversion: (state, { payload }: PayloadAction<SettingsState['useUnitsConversion']>) => {
       state.useUnitsConversion = payload;
     },
-    setUnitConversion: (state, { payload }: PayloadAction<{ unit: string, conversion?: string }>) => {
-      state.unitsConversion[payload.unit] = payload.conversion;
+    setUnitConversion: (state, { payload }: PayloadAction<{ ingredient: IngredientName, conversion?: UnitName }>) => {
+      state.unitsConversion[payload.ingredient] = payload.conversion;
     },
     setConversionPrecision: (state, { payload }: PayloadAction<SettingsState['conversionPrecision']>) => {
       state.conversionPrecision = payload;

@@ -8,7 +8,7 @@ import storage from 'redux-persist/lib/storage';
 
 import { RootState } from 'store';
 
-import { IngredientType } from 'services/ingredients/database';
+import { KnownIngredient } from 'services/ingredients/models';
 import { Recipe } from 'services/recipes';
 import {
   pancakes, kurczak, pierniczki, ramen,
@@ -102,7 +102,7 @@ export const searchRecipes = createSelector(
   [
     selectRecipes,
     (_state, name: string) => name,
-    (_state, _name, ingredients: IngredientType[]) => ingredients,
+    (_state, _name, ingredients: KnownIngredient[]) => ingredients,
     (_state, _name, _ingredients, duration: number) => duration,
   ],
   (recipes, name, ingredients, duration) => {

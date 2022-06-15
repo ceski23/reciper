@@ -3,7 +3,8 @@ import { useLocation } from 'react-router';
 
 import { useSearchParams } from 'hooks/useSearchParams';
 
-import KNOWN_INGREDIENTS, { IngredientType } from 'services/ingredients/database';
+import KNOWN_INGREDIENTS from 'services/ingredients/database';
+import { KnownIngredient } from 'services/ingredients/models';
 
 interface RecipeSearchParams {
   query: string,
@@ -13,7 +14,7 @@ interface RecipeSearchParams {
 
 interface FiltersObject {
   query: string;
-  ingredients: IngredientType[];
+  ingredients: KnownIngredient[];
   duration: number;
 }
 
@@ -26,7 +27,7 @@ export const useRecipesFilters = () => {
   const { searchParams, setSearchParams } = useSearchParams<RecipeSearchParams>();
 
   const [searchQuery, setSearchQuery] = useState(searchParams.query ?? '');
-  const [ingredients, setIngredients] = useState<IngredientType[]>([]);
+  const [ingredients, setIngredients] = useState<KnownIngredient[]>([]);
   const [duration, setDuration] = useState(searchParams.duration ?? 0);
 
   // Update filters on URL change
@@ -36,7 +37,7 @@ export const useRecipesFilters = () => {
 
     let ingrNames = searchParams.ingredient ?? [];
     ingrNames = Array.isArray(ingrNames) ? ingrNames : [ingrNames];
-    setIngredients(ingrNames.map(findIngredient).filter(Boolean) as IngredientType[]);
+    setIngredients(ingrNames.map(findIngredient).filter(Boolean) as KnownIngredient[]);
   }, [searchParams]);
 
   // Manually update filters
