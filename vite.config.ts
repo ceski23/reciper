@@ -30,6 +30,9 @@ const checkerPlugin = checker({
   eslint: {
     lintCommand: 'eslint --cache --cache-location "node_modules/.cache/.eslintcache" "./src/**/*.{ts,tsx}"'
   },
+  overlay: {
+    initialIsOpen: false
+  }
 });
 
 const pwaPlugin = VitePWA({

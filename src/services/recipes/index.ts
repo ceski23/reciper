@@ -32,9 +32,11 @@ export const isValidRecipe = (recipe: Partial<Recipe>): recipe is Recipe => {
 
   // Has ingredients
   if (!recipe.ingredients || recipe.ingredients.length <= 0) return false;
+  if (!recipe.ingredients[0].text) return false;
 
   // Has instructions
   if (!recipe.instructions || recipe.instructions.length <= 0) return false;
+  if (!recipe.instructions[0].text) return false;
 
   // Has tags array
   if (!recipe.tags) return false;

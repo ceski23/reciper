@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -8,6 +9,7 @@ import { HowToStep, Recipe as SchemaRecipe } from 'schema-dts';
 
 import { Recipe } from 'services/recipes';
 import { RecipeScrapper } from 'services/recipes/providers';
+import { colorExtractor } from 'services/recipes/providers/utils';
 
 import { nonNullable } from 'utils/guards';
 
@@ -26,12 +28,13 @@ const parseInstructions = (instructions: SchemaRecipe['recipeInstructions']): st
   if (typeof instructions === 'string') return [instructions];
 
   if ('@type' in instructions && instructions['@type'] === 'HowToSection') {
-    if (!instructions.steps) throw Error('Couldn\'t parse instructions');
-    if (typeof instructions.steps === 'string') return [instructions.steps];
+    const steps = instructions.steps ?? instructions.itemListElement;
+    if (!steps) throw Error('Couldn\'t parse instructions');
+    if (typeof steps === 'string') return [steps];
 
-    if ('@type' in instructions.steps || '@id' in instructions.steps) return undefined;
+    if ('@type' in steps || '@id' in steps) return undefined;
 
-    return instructions.steps.map((i) => {
+    return steps.map((i) => {
       if (typeof i === 'string') return i;
       if ('@type' in i && i['@type'] === 'HowToStep') return i.description?.toString() || i.text?.toString();
       return undefined;
@@ -50,19 +53,40 @@ const parseInstructions = (instructions: SchemaRecipe['recipeInstructions']): st
   throw Error('Couldn\'t parse instructions');
 };
 
+const parseJsons = (elems: NodeListOf<Element>) => {
+  const jsons = [];
+
+  for (const elem of elems) {
+    if (elem.textContent) {
+      const parsed = JSON.parse(elem.textContent);
+
+      if ('@graph' in parsed && Array.isArray(parsed['@graph'])) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        jsons.push(...parsed['@graph'].filter((x) => x['@type'] === 'Recipe'));
+      } else if (parsed['@type'] === 'Recipe') {
+        jsons.push(parsed);
+      }
+    }
+  }
+
+  return jsons;
+};
+
+const getRating = (data: SchemaRecipe['aggregateRating']) => {
+  if (!(data && '@type' in data && data['@type'] === 'AggregateRating')) return undefined;
+  if (!data.ratingValue) return undefined;
+
+  return Number.parseFloat(data.ratingValue?.toString());
+};
+
 // eslint-disable-next-line @typescript-eslint/require-await
 const scrapper: RecipeScrapper = async (doc) => {
-  const data = doc.querySelectorAll('[type="application/ld+json"]');
+  const elems = doc.querySelectorAll('[type="application/ld+json"]');
+  const data = parseJsons(elems)[0];
 
-  const recipeElement = Array.from(data).find((elem) => {
-    if (!elem.textContent) return false;
-    const parsed = JSON.parse(elem.textContent);
-    return (parsed['@type'] === 'Recipe');
-  });
+  if (!data) throw Error('No JSON-LD data available');
 
-  if (!recipeElement) throw Error('No JSON-LD data available');
-
-  const schemaRecipe = JSON.parse(recipeElement.textContent ?? '') as SchemaRecipe;
+  const schemaRecipe = data as SchemaRecipe;
 
   const { name } = schemaRecipe;
   if (!name) throw Error('Couldn\'t find recipe name');
@@ -75,22 +99,45 @@ const scrapper: RecipeScrapper = async (doc) => {
     else if (!!image && '@type' in image) image = image.url;
   }
 
-  const ingredients = schemaRecipe.recipeIngredient;
-  if (!ingredients) throw Error('Couldn\'t find ingredients');
+  const ingredientsData = schemaRecipe.recipeIngredient;
+  if (!ingredientsData) throw Error('Couldn\'t find ingredients');
+  const ingredientsArray = Array.from(ingredientsData as any[]);
+  const ingredients = ingredientsArray?.map((i) => ({ text: i }));
 
   // FIXME: Better instructions parsing
   const instructions = parseInstructions(schemaRecipe.recipeInstructions)
     ?.map((i) => ({ text: i }));
   if (!instructions) throw Error('Couldn\'t find or parse instructions');
 
-  let prepTimeISO = schemaRecipe.prepTime || schemaRecipe.totalTime;
+  let prepTimeISO = schemaRecipe.totalTime ?? schemaRecipe.prepTime;
   // FIXME: Better duration recognition
   if (prepTimeISO !== undefined && typeof prepTimeISO !== 'string') prepTimeISO = undefined;
   const prepTime = prepTimeISO ? dayjs.duration(prepTimeISO).asMinutes() : undefined;
 
-  const servings = schemaRecipe.recipeYield
+  let servings = schemaRecipe.recipeYield
     ? Number.parseInt(schemaRecipe.recipeYield.toString(), 10)
     : undefined;
+  if (Number.isNaN(servings)) servings = undefined;
+
+  const caloriesText = (schemaRecipe.nutrition && '@type' in schemaRecipe.nutrition)
+    ? schemaRecipe.nutrition.calories?.toString().replace('kcal', '').trim()
+    : undefined;
+  let calories = caloriesText ? Number.parseInt(caloriesText, 10) : undefined;
+  if (Number.isNaN(calories)) calories = undefined;
+
+  let color;
+  if (image) {
+    const palette = await colorExtractor(image.toString());
+    color = palette.Vibrant?.hex;
+  }
+
+  const tags: string[] = [];
+
+  const category = schemaRecipe.recipeCategory?.toString();
+  if (category) tags.push(category);
+
+  const cuisine = schemaRecipe.recipeCuisine?.toString();
+  if (cuisine) tags.push(cuisine);
 
   const recipe: Partial<Recipe> = {
     name: name.toString(),
@@ -99,8 +146,11 @@ const scrapper: RecipeScrapper = async (doc) => {
     ingredients: Array.isArray(ingredients) ? ingredients : [ingredients],
     instructions,
     prepTime,
-    tags: [],
+    tags,
     servings,
+    calories,
+    color,
+    rating: getRating(schemaRecipe.aggregateRating),
   };
 
   return recipe;

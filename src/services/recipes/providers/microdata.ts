@@ -2,6 +2,7 @@
 
 import dayjs from 'dayjs';
 
+import { Recipe } from 'services/recipes';
 import { RecipeScrapper } from 'services/recipes/providers';
 
 import { nonNullable } from 'utils/guards';
@@ -54,7 +55,7 @@ const scrapper: RecipeScrapper = async (doc) => {
 
   // if (ingredients.length === 0) throw Error('No ingredients found');
 
-  return {
+  const recipe: Partial<Recipe> = {
     name,
     ingredients,
     description,
@@ -65,6 +66,8 @@ const scrapper: RecipeScrapper = async (doc) => {
     calories,
     tags: [],
   };
+
+  return recipe;
 };
 
 export default scrapper;

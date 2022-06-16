@@ -5,6 +5,7 @@ import { isValidRecipe, Recipe } from 'services/recipes';
 import { DefaultProvider } from 'services/recipes/providers/default';
 import { AniaStarmachProvider } from 'services/recipes/providers/websites/aniastarmach';
 import { BeszamelProvider } from 'services/recipes/providers/websites/beszamel';
+import { DoradcaSmakuProvider } from 'services/recipes/providers/websites/doradcasmaku';
 import { KwestiaSmakuProvider } from 'services/recipes/providers/websites/kwestiasmaku';
 
 import { baseUrl } from 'utils/url';
@@ -14,6 +15,7 @@ export const PROVIDERS = [
   KwestiaSmakuProvider,
   BeszamelProvider,
   AniaStarmachProvider,
+  DoradcaSmakuProvider,
 ];
 // ############################################################################
 
