@@ -93,7 +93,7 @@ export const HomeScreen: VFC = () => {
         <WelcomeText>
           Witaj, {user ? user.firstName : 'nieznajomy'}!
         </WelcomeText>
-        <Link to={urls.settings.toString()}>
+        <Link to={urls.settings()}>
           <UserAvatar src={user?.image} />
         </Link>
       </Header>

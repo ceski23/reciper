@@ -108,7 +108,7 @@ export class GoogleAccountProvider extends AccountProvider {
 
     const params = new URLSearchParams({
       client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-      redirect_uri: baseUrl + urls.authRedirect.google,
+      redirect_uri: baseUrl + urls.authRedirect.google(),
       // response_type: 'code',
       response_type: 'token',
       state: window.location.pathname,
@@ -138,7 +138,7 @@ export class GoogleAccountProvider extends AccountProvider {
       client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       grant_type: 'authorization_code',
       code: params.get('code') as string,
-      redirect_uri: baseUrl + urls.authRedirect.google,
+      redirect_uri: baseUrl + urls.authRedirect.google(),
       code_verifier,
     });
 
