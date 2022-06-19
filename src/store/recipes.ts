@@ -75,6 +75,9 @@ const slice = createSlice({
       const id = Object.values(state.list).find((recipe) => recipe.url === payload)?.id;
       if (id) delete state.list[id];
     },
+    removeAll: (state) => {
+      state.list = {};
+    },
   },
 });
 
@@ -90,6 +93,7 @@ export const {
   save: saveRecipe,
   removeById: removeRecipeById,
   removeByUrl: removeRecipeByUrl,
+  removeAll: removeAllRecipes,
 } = slice.actions;
 
 export const selectRecipes = (state: RootState) => state.recipes.list;

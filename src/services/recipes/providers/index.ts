@@ -34,7 +34,8 @@ export const chooseProvider = (url: string): Provider => {
 };
 
 export const scrapeRecipe = async (url: string): Promise<Recipe> => {
-  const targetUrl = (import.meta.env.VITE_CORS_PROXY as string ?? '') + encodeURIComponent(url);
+  const recipeUrl = new URL(url);
+  const targetUrl = (import.meta.env.VITE_CORS_PROXY as string ?? '') + encodeURIComponent(recipeUrl.toString());
   const data = await fetch(targetUrl).then((res) => res.text());
 
   const parser = new DOMParser();

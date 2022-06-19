@@ -1,19 +1,24 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { VFC } from 'react';
+import toast from 'react-hot-toast';
 
 import { ReactComponent as AddIcon } from 'assets/common/add-circle.svg';
+import { ReactComponent as TrashIcon } from 'assets/common/trash.svg';
 
+import { Button } from 'components/common/Button';
 import { FluidContainer } from 'components/common/Container';
 import { LinkButton } from 'components/common/LinkButton';
+import { Modal } from 'components/common/modal/Modal';
 import { ScreenHeader } from 'components/common/ScreenHeader';
 import { RecipeTile } from 'components/recipes/RecipeTile';
 
-import { useAppSelector } from 'hooks/store';
+import { useAppDispatch, useAppSelector } from 'hooks/store';
+import { useModal } from 'hooks/useModal';
 
 import { urls } from 'routing/urls';
 
-import { selectRecipes } from 'store/recipes';
+import { removeAllRecipes, selectRecipes } from 'store/recipes';
 
 import { staggeredGrid, slideUp } from 'utils/styles/animations';
 import { media } from 'utils/styles/mediaQueries';
@@ -38,6 +43,14 @@ const AnimatedRecipeTile = motion(RecipeTile);
 
 export const RecipesScreen: VFC = () => {
   const recipes = useAppSelector(selectRecipes);
+  const deleteModal = useModal(false);
+  const dispatch = useAppDispatch();
+
+  const handleRemoveRecipe = () => {
+    dispatch(removeAllRecipes());
+    toast.success('Usunięto wszystkie przepisy');
+    deleteModal.close();
+  };
 
   return (
     <FluidContainer>
@@ -50,6 +63,31 @@ export const RecipesScreen: VFC = () => {
           <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
         ))}
       </RecipesList>
+
+      <Modal
+        isOpen={deleteModal.isOpen}
+        onClose={deleteModal.close}
+        onAccept={handleRemoveRecipe}
+        showBackdrop
+        closeOnEscape
+      >
+        <Modal.Header title="Usuwanie przepisów" />
+        <Modal.Body>
+          Czy na pewno chcesz usunąć <strong>wszystkie</strong> przepisy?
+        </Modal.Body>
+        <Modal.Footer cancelText="Anuluj" acceptText="Usuń" />
+      </Modal>
+
+      {Object.keys(recipes).length > 0 && (
+        <Button
+          style={{ margin: '50px 0' }}
+          icon={TrashIcon}
+          size="small"
+          onClick={deleteModal.open}
+        >
+          Usuń wszystkie przepisy
+        </Button>
+      )}
     </FluidContainer>
   );
 };

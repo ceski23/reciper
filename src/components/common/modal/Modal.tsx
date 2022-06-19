@@ -18,6 +18,7 @@ export interface ModalProps {
   onAccept?: () => void;
   showBackdrop?: boolean;
   closeOnEscape?: boolean;
+  loading?: boolean;
 }
 
 interface Subcomponents {
@@ -76,20 +77,21 @@ const dropIn = {
 interface ModalContextData {
   onClose: ModalProps['onClose'];
   onAccept: ModalProps['onAccept'];
+  loading?: boolean;
 }
 
 export const ModalContext = createContext<ModalContextData | undefined>(undefined);
 
 const Modal: FC<ModalProps> & Subcomponents = ({
-  children, isOpen, onClose, onAccept, showBackdrop, closeOnEscape,
+  children, isOpen, onClose, onAccept, showBackdrop, closeOnEscape, loading,
 }) => {
   useKeydown('Escape', () => {
     if (closeOnEscape) onClose();
   });
 
   const data = useMemo(() => ({
-    onAccept, onClose,
-  }), [onAccept, onClose]);
+    onAccept, onClose, loading,
+  }), [loading, onAccept, onClose]);
 
   return (
     <ModalContext.Provider value={data}>

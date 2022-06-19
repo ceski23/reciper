@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import { useRef, useState, VFC } from 'react';
-import { useNavigate } from 'react-router';
+import { VFC } from 'react';
 
-import { ReactComponent as LinkIcon } from 'assets/common/link.svg';
+import { ReactComponent as ImportIcon } from 'assets/common/import.svg';
 import { ReactComponent as PencilIcon } from 'assets/common/pencil.svg';
 
 import { FluidContainer } from 'components/common/Container';
@@ -10,9 +9,11 @@ import { Link } from 'components/common/Link';
 import { ScreenHeader } from 'components/common/ScreenHeader';
 import { SettingsListItem } from 'components/settings/SettingsListItem';
 
+import { useModal } from 'hooks/useModal';
+
 import { urls } from 'routing/urls';
 
-import { color } from 'utils/styles/theme';
+import { ImportRecipesModal } from 'views/recipes/ImportRecipesModal';
 
 const OptionsList = styled.div`
   display: flex;
@@ -25,46 +26,12 @@ const OptionsList = styled.div`
   }
 `;
 
-const UrlInput = styled.input`
-  flex: 1;
-  margin-right: 10px;
-  padding: 5px 10px;
-  border-radius: 7px;
-  border: 1px solid ${color('backgroundAlt')};
-`;
-
 const Option = styled(SettingsListItem)`
   cursor: pointer;
 `;
 
-const FindButton = styled.button`
-  border: 0px;
-  background-color: ${color('background')};
-  padding: 5px 10px;
-  border-radius: 7px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${color('backgroundHover')};
-  }
-`;
-
 export const NewRecipeScreen: VFC = () => {
-  const [showUrlInput, setShowUrlInput] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [url, setUrl] = useState('');
-  const navigate = useNavigate();
-
-  const handleUrlOptionClick = () => {
-    setShowUrlInput(true);
-    setTimeout(() => inputRef.current?.focus(), 0);
-  };
-
-  const handleFindClick = () => {
-    navigate(urls.recipes.byUrl({
-      recipeUrl: encodeURIComponent(url),
-    }));
-  };
+  const importModal = useModal(false);
 
   return (
     <FluidContainer>
@@ -72,26 +39,22 @@ export const NewRecipeScreen: VFC = () => {
 
       <OptionsList>
         <Option
-          text={!showUrlInput ? 'Podaj adres URL przepisu' : undefined}
-          icon={LinkIcon}
-          onClick={handleUrlOptionClick}
-        >
-          <form style={{ width: '100%', display: 'flex' }}>
-            <UrlInput
-              type="url"
-              ref={inputRef}
-              placeholder="Podaj adres URL..."
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-            />
-            <FindButton type="submit" onClick={handleFindClick}>SZUKAJ</FindButton>
-          </form>
-        </Option>
+          text="Importuj przepisy"
+          icon={ImportIcon}
+          onClick={importModal.open}
+        />
 
         <Link to={urls.recipes.new.manual()}>
           <Option text="Dodaj przepis ręcznie" icon={PencilIcon} />
         </Link>
       </OptionsList>
+
+      <ImportRecipesModal
+        isOpen={importModal.isOpen}
+        onClose={importModal.close}
+        closeOnEscape
+        showBackdrop
+      />
     </FluidContainer>
   );
 };

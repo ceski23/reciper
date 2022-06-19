@@ -22,12 +22,12 @@ export const ModalFooter: FC<ModalFooterProps> = ({
   cancelText,
   acceptText,
 }) => {
-  const { onAccept, onClose } = useModalContext();
+  const { onAccept, onClose, loading } = useModalContext();
 
   return (
     <Container>
-      {cancelText && <Button size="small" variant="normal" onClick={onClose}>{cancelText}</Button>}
-      {onAccept && acceptText && <Button variant="primary" size="small" onClick={onAccept}>{acceptText}</Button>}
+      {cancelText && <Button size="small" variant="normal" onClick={onClose} disabled={loading}>{cancelText}</Button>}
+      {onAccept && acceptText && <Button variant="primary" size="small" onClick={onAccept} disabled={loading}>{acceptText}</Button>}
     </Container>
   );
 };
