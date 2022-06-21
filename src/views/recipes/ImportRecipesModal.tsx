@@ -10,7 +10,7 @@ import { useAppDispatch } from 'hooks/store';
 
 import { scrapeRecipe } from 'services/recipes/providers';
 
-import { addMultipleRecipes, syncRecipes } from 'store/recipes';
+import { addMultipleRecipes } from 'store/recipes';
 
 import { color } from 'utils/styles/theme';
 
@@ -108,9 +108,6 @@ export const ImportRecipesModal: FC<ImportRecipesModalProps> = ({
     dispatch(addMultipleRecipes(recipes));
 
     setImportStatus(failed.length === 0 ? 'success' : 'failure');
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    dispatch(syncRecipes());
   };
 
   const handleClose = () => {

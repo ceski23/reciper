@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import {
-  createAsyncThunk, createSelector, createSlice, PayloadAction,
+  createAsyncThunk, createSelector, createSlice, isAnyOf, PayloadAction,
 } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import {
@@ -8,7 +8,9 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { AppDispatch, RootState } from 'store';
+import {
+  AppDispatch, AppStartListening, RootState,
+} from 'store';
 
 import { chooseAccountProvider } from 'services/accounts/providers';
 import { KnownIngredient } from 'services/ingredients/models';
@@ -137,6 +139,21 @@ const slice = createSlice({
     },
   },
 });
+
+export const addRecipesSyncListener = (startListening: AppStartListening) => {
+  startListening({
+    matcher: isAnyOf(
+      slice.actions.addMultiple,
+      slice.actions.removeAll,
+      slice.actions.removeById,
+      slice.actions.removeByUrl,
+      slice.actions.save,
+    ),
+    effect: async (_, { dispatch }) => {
+      await dispatch(syncRecipes());
+    },
+  });
+};
 
 export const {
   save: saveRecipe,

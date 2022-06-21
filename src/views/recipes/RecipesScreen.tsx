@@ -18,7 +18,7 @@ import { useModal } from 'hooks/useModal';
 
 import { urls } from 'routing/urls';
 
-import { removeAllRecipes, selectRecipes, syncRecipes } from 'store/recipes';
+import { removeAllRecipes, selectRecipes } from 'store/recipes';
 
 import { staggeredGrid, slideUp } from 'utils/styles/animations';
 import { media } from 'utils/styles/mediaQueries';
@@ -50,9 +50,6 @@ export const RecipesScreen: VFC = () => {
     dispatch(removeAllRecipes());
     toast.success('Usunięto wszystkie przepisy');
     deleteModal.close();
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    dispatch(syncRecipes());
   };
 
   return (
