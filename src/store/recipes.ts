@@ -108,10 +108,14 @@ export const syncRecipes = createAsyncThunk<void, void, {
     const remoteData = await accountProvider.restoreRecipes();
     const localData = getState().recipes;
 
-    const newData = await synchronizeRecipes(remoteData, localData);
+    if (!remoteData) {
+      await accountProvider.backupRecipes(localData);
+    } else {
+      const newData = await synchronizeRecipes(remoteData, localData);
 
-    dispatch(updateRecipesFromBackup(newData));
-    await accountProvider.backupRecipes(newData);
+      dispatch(updateRecipesFromBackup(newData));
+      await accountProvider.backupRecipes(newData);
+    }
   },
 );
 
@@ -149,8 +153,9 @@ export const addRecipesSyncListener = (startListening: AppStartListening) => {
       slice.actions.removeByUrl,
       slice.actions.save,
     ),
-    effect: async (_, { dispatch }) => {
-      await dispatch(syncRecipes());
+    effect: async (_, { dispatch, getState }) => {
+      const syncEnabled = getState().settings.autoRecipesSync;
+      if (syncEnabled) await dispatch(syncRecipes());
     },
   });
 };

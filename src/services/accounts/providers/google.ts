@@ -252,35 +252,39 @@ export class GoogleAccountProvider extends AccountProvider {
       .catch(GoogleAccountProvider.handleError);
   }
 
+  private async createBackupFile(content: string) {
+    const formData = new FormData();
+
+    const metadata = new Blob([JSON.stringify({
+      name: 'recipes.json',
+      parents: ['appDataFolder'],
+    })], {
+      type: 'application/json',
+    });
+
+    const file = new Blob([content], {
+      type: 'application/json',
+    });
+
+    formData.append('metadata', metadata);
+    formData.append('file', file);
+
+    return this.apiClient
+      .post<GoogleDriveFileResponse>(GoogleAccountProvider.URLS.FILE_UPLOAD.replace('{fileId}', ''), formData, {
+      params: {
+        uploadType: 'multipart',
+      },
+    })
+      .then(GoogleAccountProvider.handleResponse)
+      .catch(GoogleAccountProvider.handleError);
+  }
+
   async backupRecipes(recipes: RecipesState & PersistPartial) {
     const searchResponse = await this.findRecipesFile();
     const fileId = searchResponse.files?.[0]?.id;
 
     if (!fileId) {
-      const formData = new FormData();
-
-      const metadata = new Blob([JSON.stringify({
-        name: 'recipes.json',
-        parents: ['appDataFolder'],
-      })], {
-        type: 'application/json',
-      });
-
-      const file = new Blob([JSON.stringify(recipes)], {
-        type: 'application/json',
-      });
-
-      formData.append('metadata', metadata);
-      formData.append('file', file);
-
-      await this.apiClient
-        .post(GoogleAccountProvider.URLS.FILE_UPLOAD.replace('{fileId}', fileId), formData, {
-          params: {
-            uploadType: 'multipart',
-          },
-        })
-        .then(GoogleAccountProvider.handleResponse)
-        .catch(GoogleAccountProvider.handleError);
+      await this.createBackupFile(JSON.stringify(recipes));
     } else {
       await this.apiClient
         .patch(GoogleAccountProvider.URLS.FILE_UPLOAD.replace('{fileId}', fileId), JSON.stringify(recipes), {
@@ -298,10 +302,14 @@ export class GoogleAccountProvider extends AccountProvider {
 
   async restoreRecipes() {
     const searchResponse = await this.findRecipesFile();
-    const fileId = searchResponse.files[0].id;
+    let fileId = searchResponse.files?.[0]?.id;
+
+    if (!fileId) {
+      fileId = (await this.createBackupFile('')).id;
+    }
 
     const fileContent = await this.apiClient
-      .get<RecipesState & PersistPartial>(`${GoogleAccountProvider.URLS.FILE_GET}/${fileId}`, {
+      .get<(RecipesState & PersistPartial) | undefined>(`${GoogleAccountProvider.URLS.FILE_GET}/${fileId}`, {
       params: {
         alt: 'media',
       },

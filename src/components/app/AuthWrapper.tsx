@@ -13,6 +13,7 @@ import routes from 'routing/routes';
 import { AuthError, chooseAccountProvider } from 'services/accounts/providers';
 
 import { syncRecipes } from 'store/recipes';
+import { selectRecipesAutoSync } from 'store/settings';
 import { selectAccountInfo, setUserInfo } from 'store/user';
 
 export const AuthWrapper: VFC = () => {
@@ -21,6 +22,7 @@ export const AuthWrapper: VFC = () => {
   const accountInfo = useAppSelector(selectAccountInfo);
   const content = useRoutes(routes);
   const location = useLocation();
+  const syncEnabled = useAppSelector(selectRecipesAutoSync);
 
   const handleExitComplete = () => {
     window.scrollTo(0, 0);
@@ -31,7 +33,7 @@ export const AuthWrapper: VFC = () => {
       .then((user) => {
         dispatch(setUserInfo(user));
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        dispatch(syncRecipes());
+        if (syncEnabled) dispatch(syncRecipes()).unwrap();
       })
       .catch((err) => {
         if (err instanceof AuthError) {
@@ -46,7 +48,7 @@ export const AuthWrapper: VFC = () => {
           toast.error((err as Error).message);
         }
       });
-  }, [accountInfo?.type, accountProvider, dispatch]);
+  }, [accountInfo?.type, accountProvider, dispatch, syncEnabled]);
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return (

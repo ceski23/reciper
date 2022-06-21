@@ -42,5 +42,5 @@ export abstract class AccountProvider {
 
   abstract backupRecipes(recipes: RecipesState & PersistPartial): Promise<void>;
 
-  abstract restoreRecipes(): Promise<RecipesState & PersistPartial>;
+  abstract restoreRecipes(): Promise<(RecipesState & PersistPartial) | undefined>;
 }
