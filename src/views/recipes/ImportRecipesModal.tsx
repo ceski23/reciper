@@ -10,7 +10,7 @@ import { useAppDispatch } from 'hooks/store';
 
 import { scrapeRecipe } from 'services/recipes/providers';
 
-import { saveRecipe } from 'store/recipes';
+import { addMultipleRecipes, syncRecipes } from 'store/recipes';
 
 import { color } from 'utils/styles/theme';
 
@@ -105,11 +105,12 @@ export const ImportRecipesModal: FC<ImportRecipesModalProps> = ({
 
     const recipes = data.filter(isFulfilled).map((s) => s.value);
 
-    recipes.forEach((recipe) => {
-      dispatch(saveRecipe(recipe));
-    });
+    dispatch(addMultipleRecipes(recipes));
 
     setImportStatus(failed.length === 0 ? 'success' : 'failure');
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    dispatch(syncRecipes());
   };
 
   const handleClose = () => {

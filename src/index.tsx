@@ -14,6 +14,8 @@ import { persistor, store } from 'store';
 import App from 'components/app/App';
 import { ServiceWorker } from 'components/app/ServiceWorker';
 
+import 'core-js/proposals/set-methods';
+
 import 'dayjs/locale/pl';
 
 dayjs.extend(duration);

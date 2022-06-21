@@ -3,15 +3,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable max-len */
 import styled from '@emotion/styled';
-import IntlMessageFormat from 'intl-messageformat';
 import { VFC, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { PersistedState } from 'redux-persist';
 
 import { Button } from 'components/common/Button';
 import { FluidContainer } from 'components/common/Container';
 import { ScreenHeader } from 'components/common/ScreenHeader';
 import { UserAvatar } from 'components/common/UserAvatar';
+import { CheckboxSetting } from 'components/settings/CheckboxSetting';
 import { RadioGroup } from 'components/settings/RadioGroup';
 
 import { useAccountProvider } from 'hooks/accounts/useAccountProvider';
@@ -20,12 +19,11 @@ import { useAppDispatch, useAppSelector } from 'hooks/store';
 import { TaskListInfo } from 'services/accounts/AccountProvider';
 import { AccountProviders, chooseAccountProvider } from 'services/accounts/providers';
 
-import { getStoredRecipes, RecipesState, updateRecipesFromBackup } from 'store/recipes';
+import { syncRecipes } from 'store/recipes';
+import { selectRecipesAutoSync, setAutoRecipesSync } from 'store/settings';
 import {
   logoutUser, selectAccountInfo, selectShoppingList, selectUserInfo, setShoppingList,
 } from 'store/user';
-
-import { media } from 'utils/styles/mediaQueries';
 
 const SettingsContainer = styled.div`
   display: flex;
@@ -44,30 +42,11 @@ const UserName = styled.p`
   margin-right: auto;
 `;
 
-const SyncButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-
-  ${media.down('small')} {
-    flex-direction: column;
-  }
-`;
-
 const LoginButtonsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
 `;
-
-const recipeText = new IntlMessageFormat(`
-  {quantity, plural,
-    one {# przepis}
-    few {# przepisy}
-    many {# przepisów}
-    other {# przepisu}
-  }
-`, 'pl-PL');
 
 const PROVIDERS = Object.values(AccountProviders).map((type) => {
   const provider = chooseAccountProvider(type);
@@ -86,6 +65,7 @@ export const AccountSubPage: VFC = () => {
   const shoppingList = useAppSelector(selectShoppingList);
   const user = useAppSelector(selectUserInfo);
   const accountProvider = useAccountProvider();
+  const syncEnabled = useAppSelector(selectRecipesAutoSync);
 
   useEffect(() => {
     if (!accountProvider) setAvailableLists([]);
@@ -107,48 +87,10 @@ export const AccountSubPage: VFC = () => {
     dispatch(logoutUser());
   };
 
-  const handleBackupRecipes = async () => {
-    const storedRecipes = await getStoredRecipes() as (RecipesState & PersistedState) | undefined;
-
-    if (storedRecipes === undefined) toast.error('Brak przepisów do zapisania');
-    else if (accountProvider) {
-      try {
-        const backupPromise = accountProvider.backupRecipes(storedRecipes);
-
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        toast.promise(backupPromise, {
-          loading: 'Zapisywanie przepisów...',
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          success: `Zapisano ${recipeText.format({ quantity: Object.keys(storedRecipes.list).length })}`,
-          error: 'Wystąpił problem podczas zapisywania przepisów',
-        });
-
-        await backupPromise;
-      } catch (error) {
-        toast.error('Wystąpił problem podczas zapisywania przepisów');
-      }
-    }
-  };
-
-  const handleRestoreRecipes = async () => {
-    if (accountProvider) {
-      try {
-        const restorePromise = accountProvider.restoreRecipes();
-
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        toast.promise(restorePromise, {
-          loading: 'Przywracanie przepisów...',
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          success: (data) => `Przywrócono ${recipeText.format({ quantity: Object.keys(data.list).length })}`,
-          error: 'Wystąpił problem podczas przywracania przepisów',
-        });
-
-        const persistedRecipes = await restorePromise;
-        dispatch(updateRecipesFromBackup(persistedRecipes));
-      } catch (error) {
-        toast.error('Wystąpił problem podczas przywracania przepisów');
-      }
-    }
+  const handleAutoSyncChange = (enabled: boolean) => {
+    dispatch(setAutoRecipesSync(enabled));
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    if (enabled) dispatch(syncRecipes());
   };
 
   return (
@@ -198,14 +140,15 @@ export const AccountSubPage: VFC = () => {
         />
       )}
 
-      <SettingsContainer>
-        <h3>Synchronizacja przepisów</h3>
-
-        <SyncButtonsContainer>
-          <Button onClick={handleBackupRecipes} disabled={!accountInfo}>Zapisz przepisy w chmurze</Button>
-          <Button onClick={handleRestoreRecipes} disabled={!accountInfo}>Przywróć przepisy</Button>
-        </SyncButtonsContainer>
-      </SettingsContainer>
+      {accountProvider && (
+        <CheckboxSetting
+          title="Synchronizacja przepisów"
+          hint="Automatycznie synchronizuj przepisy"
+          name="autoSyncRecipes"
+          checked={syncEnabled}
+          onChange={handleAutoSyncChange}
+        />
+      )}
 
     </FluidContainer>
   );

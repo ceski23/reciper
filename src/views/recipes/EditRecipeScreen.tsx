@@ -13,7 +13,7 @@ import { urls } from 'routing/urls';
 
 import { isValidRecipe } from 'services/recipes';
 
-import { saveRecipe } from 'store/recipes';
+import { saveRecipe, syncRecipes } from 'store/recipes';
 
 export const EditRecipeScreen: VFC = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +34,9 @@ export const EditRecipeScreen: VFC = () => {
       navigate(urls.recipes.byId({
         recipeId: editedRecipe.id,
       }));
+
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      dispatch(syncRecipes());
     } else throw Error('Invalid recipe');
   };
 

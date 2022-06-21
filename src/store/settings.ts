@@ -18,6 +18,7 @@ interface SettingsState {
     [key in IngredientName]?: UnitName | undefined
   };
   conversionPrecision: number;
+  autoRecipesSync: boolean;
 }
 
 export const themeName = (theme: SettingsState['theme']) => {
@@ -36,6 +37,7 @@ const initialState: SettingsState = {
   useUnitsConversion: true,
   unitsConversion: {},
   conversionPrecision: 2,
+  autoRecipesSync: false,
 };
 
 const slice = createSlice({
@@ -57,11 +59,15 @@ const slice = createSlice({
     setConversionPrecision: (state, { payload }: PayloadAction<SettingsState['conversionPrecision']>) => {
       state.conversionPrecision = payload;
     },
+    setAutoRecipesSync: (state, { payload }: PayloadAction<SettingsState['autoRecipesSync']>) => {
+      state.autoRecipesSync = payload;
+    },
   },
 });
 
 export const {
   setTheme, setDynamicPrimaryColor, setUseUnitsConversion, setUnitConversion, setConversionPrecision,
+  setAutoRecipesSync,
 } = slice.actions;
 
 export const selectCurrentThemeType = (state: RootState) => state.settings.theme;
@@ -73,6 +79,8 @@ export const selectUnitsConversions = (state: RootState) => state.settings.units
 export const selectUseUnitsConversion = (state: RootState) => state.settings.useUnitsConversion;
 
 export const selectConversionPrecision = (state: RootState) => state.settings.conversionPrecision;
+
+export const selectRecipesAutoSync = (state: RootState) => state.settings.autoRecipesSync;
 
 export default persistReducer({
   key: 'settings',

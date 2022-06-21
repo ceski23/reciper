@@ -12,6 +12,7 @@ import routes from 'routing/routes';
 
 import { AuthError, chooseAccountProvider } from 'services/accounts/providers';
 
+import { syncRecipes } from 'store/recipes';
 import { selectAccountInfo, setUserInfo } from 'store/user';
 
 export const AuthWrapper: VFC = () => {
@@ -29,6 +30,8 @@ export const AuthWrapper: VFC = () => {
     accountProvider?.getUserInfo()
       .then((user) => {
         dispatch(setUserInfo(user));
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        dispatch(syncRecipes());
       })
       .catch((err) => {
         if (err instanceof AuthError) {

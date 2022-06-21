@@ -43,7 +43,7 @@ import { Recipe as RecipeType } from 'services/recipes';
 import { chooseProvider } from 'services/recipes/providers';
 
 import {
-  removeRecipeById, removeRecipeByUrl, saveRecipe, selectRecipes,
+  removeRecipeById, removeRecipeByUrl, saveRecipe, selectRecipes, syncRecipes,
 } from 'store/recipes';
 import { selectDynamicPrimaryColor } from 'store/settings';
 import { selectShoppingList } from 'store/user';
@@ -276,6 +276,9 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
       { replace: true },
     );
     toast.success('Przepis został zapisany');
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    dispatch(syncRecipes());
   };
 
   const handleRemoveRecipe = () => {
@@ -289,6 +292,9 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
     } else navigate(urls.home());
 
     toast.success('Przepis został usunięty');
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    dispatch(syncRecipes());
   };
 
   const handleEditRecipe = () => {

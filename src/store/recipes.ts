@@ -1,22 +1,30 @@
 /* eslint-disable no-param-reassign */
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk, createSelector, createSlice, PayloadAction,
+} from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import {
   persistReducer, getStoredState, PersistConfig, REHYDRATE, createMigrate,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { RootState } from 'store';
+import { AppDispatch, RootState } from 'store';
 
+import { chooseAccountProvider } from 'services/accounts/providers';
 import { KnownIngredient } from 'services/ingredients/models';
 import { Recipe } from 'services/recipes';
 import {
   pancakes, kurczak, pierniczki, ramen,
 } from 'services/recipes/samples';
 import RecipeSearch from 'services/search';
+import { synchronizeRecipes } from 'services/synchronization';
 
 export interface RecipesState {
   list: Record<string, Recipe>;
+  status: Record<string, {
+    localHash: string,
+    remoteHash: string
+  }>;
 }
 
 const initialState: RecipesState = {
@@ -26,9 +34,12 @@ const initialState: RecipesState = {
     [kurczak.id]: kurczak,
     [pierniczki.id]: pierniczki,
   },
+  status: {},
 };
 
-type RecipesStateV1 = RecipesState;
+type RecipesStateV2 = RecipesState;
+
+type RecipesStateV1 = Omit<RecipesStateV2, 'status'>;
 
 type RecipesStateV0 = Omit<RecipesStateV1, 'list'> & {
   list: Record<string, Omit<Recipe, 'ingredients' | 'instructions'> & {
@@ -40,7 +51,7 @@ type RecipesStateV0 = Omit<RecipesStateV1, 'list'> & {
 
 type MigrationState = RecipesStateV0 | RecipesStateV1;
 
-const migrations = {
+export const migrate = createMigrate<MigrationState>({
   1: (state: RecipesStateV0): RecipesStateV1 => ({
     list: Object.fromEntries(Object.entries(state.list).map(([id, recipe]) => (
       [id, {
@@ -51,15 +62,56 @@ const migrations = {
       }]
     ))),
   }),
-};
+  2: (state: RecipesStateV1): RecipesStateV2 => ({
+    ...state,
+    status: {},
+  }),
+});
+
+export const RECIPES_STATE_VERSION = 2;
 
 const persistConfig: PersistConfig<RecipesState> = {
   key: 'recipes',
   storage,
-  version: 1,
-  migrate: createMigrate<MigrationState>(migrations),
+  version: RECIPES_STATE_VERSION,
+  migrate,
   debug: true,
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const updateRecipesFromBackup = (data: any) => ({
+  type: REHYDRATE,
+  key: persistConfig.key,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  payload: data,
+});
+
+export const syncRecipes = createAsyncThunk<void, void, {
+  dispatch: AppDispatch,
+  state: RootState
+}>(
+  'recipes/sync',
+  async (_, { dispatch, getState }) => {
+    const syncEnabled = getState().settings.autoRecipesSync;
+    if (!syncEnabled) return;
+
+    // eslint-disable-next-line prefer-destructuring
+    const accountInfo = getState().user.accountInfo;
+    if (!accountInfo) return;
+
+    const providerType = chooseAccountProvider(accountInfo.type);
+    // eslint-disable-next-line new-cap
+    const accountProvider = new providerType(accountInfo.accessToken);
+
+    const remoteData = await accountProvider.restoreRecipes();
+    const localData = getState().recipes;
+
+    const newData = await synchronizeRecipes(remoteData, localData);
+
+    dispatch(updateRecipesFromBackup(newData));
+    await accountProvider.backupRecipes(newData);
+  },
+);
 
 const slice = createSlice({
   name: 'recipes',
@@ -67,6 +119,11 @@ const slice = createSlice({
   reducers: {
     save: (state, { payload }: PayloadAction<Recipe>) => {
       state.list[payload.id] = payload;
+    },
+    addMultiple: (state, { payload }: PayloadAction<Recipe[]>) => {
+      payload.forEach((recipe) => {
+        state.list[recipe.id] = recipe;
+      });
     },
     removeById: (state, { payload }: PayloadAction<string>) => {
       delete state.list[payload];
@@ -81,20 +138,15 @@ const slice = createSlice({
   },
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const updateRecipesFromBackup = (data: any) => ({
-  type: REHYDRATE,
-  key: persistConfig.key,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  payload: data,
-});
-
 export const {
   save: saveRecipe,
   removeById: removeRecipeById,
   removeByUrl: removeRecipeByUrl,
   removeAll: removeAllRecipes,
+  addMultiple: addMultipleRecipes,
 } = slice.actions;
+
+export const selectRecipesData = (state: RootState) => state.recipes;
 
 export const selectRecipes = (state: RootState) => state.recipes.list;
 
