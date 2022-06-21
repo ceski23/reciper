@@ -18,7 +18,11 @@ import { useModal } from 'hooks/useModal';
 
 import { urls } from 'routing/urls';
 
-import { removeAllRecipes, selectRecipes } from 'store/recipes';
+import {
+  kurczak, pancakes, pierniczki, ramen,
+} from 'services/recipes/samples';
+
+import { addMultipleRecipes, removeAllRecipes, selectRecipes } from 'store/recipes';
 
 import { staggeredGrid, slideUp } from 'utils/styles/animations';
 import { media } from 'utils/styles/mediaQueries';
@@ -39,6 +43,16 @@ const AddRecipeButton = styled(LinkButton)`
   margin-bottom: 50px;
 `;
 
+const EmptyText = styled.p`
+  text-align: center;
+`;
+
+const SampleRecipesLink = styled.a`
+  color: unset;
+  font-weight: 700;
+  cursor: pointer;
+`;
+
 const AnimatedRecipeTile = motion(RecipeTile);
 
 export const RecipesScreen: VFC = () => {
@@ -52,6 +66,15 @@ export const RecipesScreen: VFC = () => {
     deleteModal.close();
   };
 
+  const handleAddSampleRecipes = () => {
+    dispatch(addMultipleRecipes([
+      pancakes,
+      ramen,
+      kurczak,
+      pierniczki,
+    ]));
+  };
+
   return (
     <FluidContainer>
       <ScreenHeader title="Przepisy" />
@@ -63,6 +86,15 @@ export const RecipesScreen: VFC = () => {
           <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
         ))}
       </RecipesList>
+
+      {Object.keys(recipes).length === 0 ? (
+        <EmptyText>
+          Nie masz jeszcze żadnych przepisów. Kliknij
+          <SampleRecipesLink onClick={handleAddSampleRecipes}>
+            tutaj
+          </SampleRecipesLink> aby dodać kilka przykładowych.
+        </EmptyText>
+      ) : null}
 
       <Modal
         isOpen={deleteModal.isOpen}

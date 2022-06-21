@@ -15,9 +15,6 @@ import {
 import { chooseAccountProvider } from 'services/accounts/providers';
 import { KnownIngredient } from 'services/ingredients/models';
 import { Recipe } from 'services/recipes';
-import {
-  pancakes, kurczak, pierniczki, ramen,
-} from 'services/recipes/samples';
 import RecipeSearch from 'services/search';
 import { synchronizeRecipes } from 'services/synchronization';
 
@@ -30,12 +27,7 @@ export interface RecipesState {
 }
 
 const initialState: RecipesState = {
-  list: {
-    [pancakes.id]: pancakes,
-    [ramen.id]: ramen,
-    [kurczak.id]: kurczak,
-    [pierniczki.id]: pierniczki,
-  },
+  list: {},
   status: {},
 };
 
