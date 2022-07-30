@@ -65,11 +65,11 @@ export const RadioGroup = <T extends string | number>({
   name, onSelected, options, value, title, hint,
 }: Props<T>) => (
   <Container>
-    {title && <h3>{title}</h3>}
+    {title && <h3 id={`${name}-radiogroup`}>{title}</h3>}
 
     {hint && <Hint>{hint}</Hint>}
 
-    <RadioContainer>
+    <RadioContainer role="radiogroup" aria-labelledby={`${name}-radiogroup`}>
       {options.map((option) => (
         // eslint-disable-next-line jsx-a11y/label-has-associated-control
         <RadioLabel key={option.value}>

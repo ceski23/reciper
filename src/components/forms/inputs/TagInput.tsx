@@ -12,9 +12,7 @@ interface Props {
   onBlur: () => void;
   value: string[];
   name: string;
-  error?: string;
-  required?: boolean;
-  id: string;
+  id?: string;
 }
 
 const StyledField = styled.input`
@@ -75,7 +73,7 @@ const TagsContainer = styled.div`
 `;
 
 export const TagInput: VFC<Props> = ({
-  onBlur, onChange, name, value, id, error, required,
+  onBlur, onChange, name, value, id, ...props
 }) => {
   const [internalValue, setInternalValue] = useState<string>('');
 
@@ -107,13 +105,14 @@ export const TagInput: VFC<Props> = ({
       {value.map((tag) => (
         <Tag key={tag}>
           {tag}
-          <TagDeleteButton type="button" onClick={() => deleteTag(tag)}>
+          <TagDeleteButton aria-label={tag} type="button" onClick={() => deleteTag(tag)}>
             <DeleteIcon />
           </TagDeleteButton>
         </Tag>
       ))}
 
       <StyledField
+        {...props}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         value={internalValue}
@@ -122,8 +121,6 @@ export const TagInput: VFC<Props> = ({
         placeholder="Podaj tag..."
         enterKeyHint="next"
         id={id}
-        aria-invalid={!!error}
-        aria-required={required}
       />
     </TagsContainer>
   );

@@ -1,10 +1,12 @@
 /// <reference types="vitest" />
 
 import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import checker from 'vite-plugin-checker';
 import { VitePWA } from 'vite-plugin-pwa';
+import svgr from 'vite-plugin-svgr';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import GithubActionsReporter from 'vitest-github-actions-reporter'
 
 import manifest from './src/manifest';
@@ -12,14 +14,14 @@ import manifest from './src/manifest';
 const reactPlugin = react({
   jsxImportSource: '@emotion/react',
   babel: {
-    plugins: ["@emotion/babel-plugin"],
+    plugins: ['@emotion/babel-plugin'],
   },
 });
 
 const svgrPlugin = svgr({
   svgrOptions: {
-    
-  }
+
+  },
 });
 
 const tsconfigPathsPlugin = tsconfigPaths({
@@ -29,16 +31,16 @@ const tsconfigPathsPlugin = tsconfigPaths({
 const checkerPlugin = checker({
   typescript: true,
   eslint: {
-    lintCommand: 'eslint --cache --cache-location "node_modules/.cache/.eslintcache" "./src/**/*.{ts,tsx}"'
+    lintCommand: 'eslint --cache --cache-location "node_modules/.cache/.eslintcache" "./src/**/*.{ts,tsx}"',
   },
   overlay: {
-    initialIsOpen: false
-  }
+    initialIsOpen: false,
+  },
 });
 
 const pwaPlugin = VitePWA({
   includeAssets: ['favicon.ico', 'robots.txt'],
-  manifest: manifest,
+  manifest,
   workbox: {
     runtimeCaching: [{
       urlPattern: /^https?:\/\/.*?\.(?:jpg|png|gif|webp)/,
@@ -46,16 +48,16 @@ const pwaPlugin = VitePWA({
       options: {
         cacheName: 'recipesImages',
         expiration: {
-          maxEntries: 100
-        }
-      }
-    }]
-  }
+          maxEntries: 100,
+        },
+      },
+    }],
+  },
 });
 
 const bundleVisualizerPlugin = visualizer({
   sourcemap: true,
-  open: true
+  open: true,
 });
 
 export default defineConfig(({ mode }) => {

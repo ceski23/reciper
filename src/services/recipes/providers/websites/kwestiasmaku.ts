@@ -36,6 +36,11 @@ export const KwestiaSmakuProvider: Provider = (() => {
       .map((elem) => elem.textContent?.toLowerCase())
       .filter(nonNullable);
 
+    const servingsElement = doc.querySelector('.field-name-field-ilosc-porcji');
+    const servings = servingsElement?.textContent
+      ? Number.parseInt(servingsElement.textContent, 10)
+      : undefined;
+
     let color;
     if (microdata?.image) {
       const palette = await colorExtractor(microdata.image);
@@ -48,6 +53,7 @@ export const KwestiaSmakuProvider: Provider = (() => {
       color,
       description,
       tags,
+      servings,
     };
 
     return Object.assign(microdata, partial);

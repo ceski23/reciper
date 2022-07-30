@@ -13,8 +13,8 @@ const scrapper: RecipeScrapper = async (doc) => {
   if (!root) throw Error('Couldn\'t find recipe');
 
   const nameElement = root.querySelector('[itemprop="name"]');
-  const name = (nameElement?.tagName === 'META') ? nameElement.getAttribute('content') : nameElement?.textContent;
-  if (!name) throw Error('Couldn\'t find recipe name');
+  const name = (nameElement?.tagName === 'META') ? nameElement.getAttribute('content') : nameElement?.textContent?.trim();
+  // if (!name) throw Error('Couldn\'t find recipe name');
 
   const descriptionElement = root.querySelector('[itemprop="description"]');
   const description = ((descriptionElement?.tagName === 'META') ? descriptionElement.getAttribute('content') : descriptionElement?.textContent) ?? undefined;
@@ -56,7 +56,7 @@ const scrapper: RecipeScrapper = async (doc) => {
   // if (ingredients.length === 0) throw Error('No ingredients found');
 
   const recipe: Partial<Recipe> = {
-    name,
+    name: name ?? undefined,
     ingredients,
     description,
     image,

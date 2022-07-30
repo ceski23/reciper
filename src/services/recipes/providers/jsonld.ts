@@ -23,13 +23,15 @@ const parseInstructions = (instructions: SchemaRecipe['recipeInstructions']): st
   // eslint-disable-next-line prefer-destructuring, no-param-reassign
   if (Array.isArray(instructions) && instructions.length === 1) instructions = instructions[0];
 
-  if (!instructions) throw Error('Couldn\'t parse instructions');
+  // if (!instructions) throw Error('Couldn\'t parse instructions');
+  if (!instructions) return [];
 
   if (typeof instructions === 'string') return [instructions];
 
   if ('@type' in instructions && instructions['@type'] === 'HowToSection') {
     const steps = instructions.steps ?? instructions.itemListElement;
-    if (!steps) throw Error('Couldn\'t parse instructions');
+    // if (!steps) throw Error('Couldn\'t parse instructions');
+    if (!steps) return [];
     if (typeof steps === 'string') return [steps];
 
     if ('@type' in steps || '@id' in steps) return undefined;
@@ -50,7 +52,8 @@ const parseInstructions = (instructions: SchemaRecipe['recipeInstructions']): st
 
   if (Array.isArray(instructions) && typeof instructions[0] === 'string') return instructions;
 
-  throw Error('Couldn\'t parse instructions');
+  // throw Error('Couldn\'t parse instructions');
+  return [];
 };
 
 const parseJsons = (elems: NodeListOf<Element>) => {
@@ -89,7 +92,7 @@ const scrapper: RecipeScrapper = async (doc) => {
   const schemaRecipe = data as SchemaRecipe;
 
   const { name } = schemaRecipe;
-  if (!name) throw Error('Couldn\'t find recipe name');
+  // if (!name) throw Error('Couldn\'t find recipe name');
 
   const { description } = schemaRecipe;
   let { image } = schemaRecipe;
@@ -100,14 +103,15 @@ const scrapper: RecipeScrapper = async (doc) => {
   }
 
   const ingredientsData = schemaRecipe.recipeIngredient;
-  if (!ingredientsData) throw Error('Couldn\'t find ingredients');
-  const ingredientsArray = Array.from(ingredientsData as any[]);
+  // if (!ingredientsData) throw Error('Couldn\'t find ingredients');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ingredientsArray = Array.from(ingredientsData as any[] ?? []);
   const ingredients = ingredientsArray?.map((i) => ({ text: i }));
 
   // FIXME: Better instructions parsing
   const instructions = parseInstructions(schemaRecipe.recipeInstructions)
     ?.map((i) => ({ text: i }));
-  if (!instructions) throw Error('Couldn\'t find or parse instructions');
+  // if (!instructions) throw Error('Couldn\'t find or parse instructions');
 
   let prepTimeISO = schemaRecipe.totalTime ?? schemaRecipe.prepTime;
   // FIXME: Better duration recognition
@@ -126,9 +130,13 @@ const scrapper: RecipeScrapper = async (doc) => {
   if (Number.isNaN(calories)) calories = undefined;
 
   let color;
-  if (image) {
-    const palette = await colorExtractor(image.toString());
-    color = palette.Vibrant?.hex;
+  try {
+    if (image) {
+      const palette = await colorExtractor(image.toString());
+      color = palette.Vibrant?.hex;
+    }
+  } catch (error) {
+    color = undefined;
   }
 
   const tags: string[] = [];
@@ -140,7 +148,7 @@ const scrapper: RecipeScrapper = async (doc) => {
   if (cuisine) tags.push(cuisine);
 
   const recipe: Partial<Recipe> = {
-    name: name.toString(),
+    name: name ? name.toString() : undefined,
     description: description?.toString(),
     image: image?.toString(),
     ingredients: Array.isArray(ingredients) ? ingredients : [ingredients],

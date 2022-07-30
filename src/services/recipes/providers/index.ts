@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import fetch from 'cross-fetch';
 import { nanoid } from 'nanoid';
 
 import { isValidRecipe, Recipe } from 'services/recipes';
@@ -33,23 +34,30 @@ export const chooseProvider = (url: string): Provider => {
   return choosenProvider ?? DefaultProvider;
 };
 
+export class InvalidRecipeError extends Error {}
+
 export const scrapeRecipe = async (url: string): Promise<Recipe> => {
-  const recipeUrl = new URL(url);
-  const targetUrl = (import.meta.env.VITE_CORS_PROXY as string ?? '') + encodeURIComponent(recipeUrl.toString());
-  const data = await fetch(targetUrl).then((res) => res.text());
+  try {
+    const recipeUrl = new URL(url);
+    const targetUrl = (import.meta.env.VITE_CORS_PROXY as string ?? '') + encodeURIComponent(recipeUrl.toString());
+    const data = await fetch(targetUrl).then((res) => res.text());
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(data, 'text/html');
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(data, 'text/html');
 
-  const provider = chooseProvider(url);
-  const partialRecipe = await provider.scrapper(doc);
+    const provider = chooseProvider(url);
+    const partialRecipe = await provider.scrapper(doc);
 
-  const recipe = {
-    ...partialRecipe,
-    id: nanoid(),
-    url,
-  };
+    const recipe = {
+      ...partialRecipe,
+      id: nanoid(),
+      url,
+    };
 
-  if (isValidRecipe(recipe)) return recipe;
-  throw Error('Invalid recipe');
+    if (isValidRecipe(recipe)) return recipe;
+    throw Error('Invalid recipe');
+  } catch (error) {
+    const anyError = error as Error;
+    throw new InvalidRecipeError(anyError.message);
+  }
 };

@@ -9,7 +9,7 @@ import { useDebouncedState } from 'hooks/useDebouncedState';
 import KNOWN_INGREDIENTS from 'services/ingredients/database';
 import { KnownIngredient } from 'services/ingredients/models';
 
-const DurationFilter = styled.div`
+const DurationFilter = styled.label`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -28,12 +28,6 @@ const TagsContainer = styled.div`
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-`;
-
-const IngredientIcon = styled.img`
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
 `;
 
 const FilterWrapper = styled.div`
@@ -75,24 +69,23 @@ export const RecipesFilters: VFC<Props> = ({ onChangingDuration }) => {
   return (
     <>
       <FilterWrapper>
-        <h3>Zawiera składniki</h3>
+        <h3 id="ingredients-label">Zawiera składniki</h3>
 
-        <TagsContainer>
+        <TagsContainer role="group" aria-labelledby="ingredients-label">
           {Object.values(KNOWN_INGREDIENTS).map((ingredient) => (
             <SelectableTag
               key={ingredient.name}
               onClick={() => handleIngredientClick(ingredient)}
               selected={ingredients.includes(ingredient)}
-            >
-              <IngredientIcon src={ingredient.image} alt={ingredient.name} />
-              {ingredient.name}
-            </SelectableTag>
+              label={ingredient.name}
+              icon={ingredient.image}
+            />
           ))}
         </TagsContainer>
       </FilterWrapper>
 
       <FilterWrapper>
-        <h3>Czas przygotowania</h3>
+        <h3 id="preparation-time-label">Czas przygotowania</h3>
 
         <DurationFilter>
           <DurationText>
@@ -108,6 +101,7 @@ export const RecipesFilters: VFC<Props> = ({ onChangingDuration }) => {
             onChange={handleDurationChange}
             onPointerDown={() => onChangingDuration(true)}
             onPointerUp={() => onChangingDuration(false)}
+            aria-labelledby="preparation-time-label"
           />
         </DurationFilter>
       </FilterWrapper>

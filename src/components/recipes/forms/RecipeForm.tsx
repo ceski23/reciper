@@ -6,18 +6,19 @@ import {
 } from 'react-hook-form';
 import { z } from 'zod';
 
-import { ReactComponent as DeleteIcon } from 'assets/common/delete.svg';
 import { ReactComponent as SaveIcon } from 'assets/common/diskette.svg';
 
 import { Button } from 'components/common/Button';
 import { ImageUpload } from 'components/common/ImageUpload';
+import { inputStyles } from 'components/common/Input';
+import { DeletableField } from 'components/forms/inputs/DeletableField';
 import { Field } from 'components/forms/inputs/Field';
+import { NumberField } from 'components/forms/inputs/NumberField';
 import { TagInput } from 'components/forms/inputs/TagInput';
 
 import {
   fieldOptions, getFieldError, getMultiFieldError,
 } from 'utils/forms';
-import { color } from 'utils/styles/theme';
 
 const StyledForm = styled.form`
   display: flex;
@@ -27,18 +28,8 @@ const StyledForm = styled.form`
 `;
 
 const Textarea = styled.textarea`
-  padding: 10px 15px;
-  border-radius: 10px;
-  border: 1px solid ${color('textalt')};
-  background-color: ${color('backgroundInput')};
-  color: ${color('textalt')};
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  width: 100%;
-  resize: vertical;
+  ${inputStyles}
   min-height: 150px;
-  line-height: 1.5;
 `;
 
 const FieldsWrapper = styled.div`
@@ -51,6 +42,8 @@ const FieldsWrapper = styled.div`
 const ErrorText = styled.p`
   font-size: 13px;
   color: red;
+  margin: 0;
+  margin-bottom: 20px;
 
   &:empty {
     display: none;
@@ -60,13 +53,15 @@ const ErrorText = styled.p`
 const FieldsArrayWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
 
-  & > button {
-    margin-top: 40px;
+const AddButton = styled(Button)`
+  ${FieldsWrapper} + & {
+    margin-top: 20px;
   }
 `;
 
-const recipeSchema = z.object({
+export const recipeSchema = z.object({
   name: z
     .string({ required_error: 'Nazwa przepisu jest wymagana' })
     .min(5, 'Minimalna długośc nazwy to 5 znaków'),
@@ -124,9 +119,11 @@ export type RecipeFormFields = z.infer<typeof recipeSchema>;
 interface Props {
   onSubmit: SubmitHandler<RecipeFormFields>;
   defaultValues?: RecipeFormFields;
+  'aria-labelledby'?: string;
+  'aria-label'?: string;
 }
 
-export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
+export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit, ...props }) => {
   const {
     register, handleSubmit, formState: { errors }, control,
   } = useForm<RecipeFormFields>({
@@ -144,8 +141,11 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
     control,
   });
 
+  const ingredientsErrors = getFieldError(errors, 'ingredients');
+  const instructionsErrors = getFieldError(errors, 'instructions');
+
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)} {...props}>
       <Field
         id="recipe-name"
         label="Nazwa przepisu"
@@ -154,17 +154,13 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
         {...register('name', fieldOptions)}
       />
 
-      <Field
+      <Field<'textarea'>
         id="recipe-description"
         label="Opis przepisu"
         error={errors.description?.message}
         required={!recipeSchema.shape.description.isOptional()}
-        render={(fieldProps) => (
-          <Textarea
-            {...fieldProps}
-            {...register('description', fieldOptions)}
-          />
-        )}
+        {...register('description', fieldOptions)}
+        render={(fieldProps) => <Textarea {...fieldProps} />}
       />
 
       <Field
@@ -185,22 +181,26 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
             control={control}
             name="image"
             render={({ field }) => (
-              <ImageUpload compress {...field} {...fieldProps} />
+              <ImageUpload compress {...fieldProps} {...field} />
             )}
           />
         )}
       />
 
       <Field
-        id="recipe-prepTime"
         label="Czas przygotowywania (w minutach)"
+        id="recipe-prepTime"
         error={errors.prepTime?.message}
-        type="text"
-        inputMode="numeric"
         required={!recipeSchema.shape.prepTime.isOptional()}
-        {...register('prepTime', {
-          valueAsNumber: true,
-        })}
+        render={({ step, ...fieldProps }) => (
+          <Controller
+            name="prepTime"
+            control={control}
+            render={({ field: { ref, ...field } }) => (
+              <NumberField {...fieldProps} {...field} />
+            )}
+          />
+        )}
       />
 
       <Field
@@ -208,94 +208,107 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit }) => {
         label="Tagi"
         error={getFieldError(errors, 'tags')}
         required={!recipeSchema.shape.tags.isOptional()}
-      >
-        <Controller
-          name="tags"
-          control={control}
-          render={({ field: { ref, ...field } }) => (
-            <TagInput
-              error={getFieldError(errors, 'tags')}
-              required={!recipeSchema.shape.tags.isOptional()}
-              id="recipe-tags"
-              {...field}
-            />
-          )}
-          defaultValue={[]}
-        />
-      </Field>
+        render={(fieldProps) => (
+          <Controller
+            name="tags"
+            control={control}
+            render={({ field: { ref, ...field } }) => (
+              <TagInput {...fieldProps} {...field} />
+            )}
+            defaultValue={[]}
+          />
+        )}
+      />
 
       <Field
         id="recipe-servings"
         label="Ilość porcji"
         error={errors.servings?.message}
-        type="text"
-        inputMode="numeric"
         required={!recipeSchema.shape.servings.isOptional()}
-        {...register('servings', {
-          valueAsNumber: true,
-        })}
+        render={({ step, ...fieldProps }) => (
+          <Controller
+            name="servings"
+            control={control}
+            render={({ field: { ref, ...field } }) => (
+              <NumberField {...fieldProps} {...field} />
+            )}
+          />
+        )}
       />
 
       <Field
         id="recipe-calories"
         label="Kalorie"
         error={errors.calories?.message}
-        type="text"
-        inputMode="numeric"
         required={!recipeSchema.shape.calories.isOptional()}
-        {...register('calories', {
-          valueAsNumber: true,
-        })}
+        render={({ step, ...fieldProps }) => (
+          <Controller
+            name="calories"
+            control={control}
+            render={({ field: { ref, ...field } }) => (
+              <NumberField {...fieldProps} {...field} />
+            )}
+          />
+        )}
       />
 
       <FieldsArrayWrapper>
         <h2>Składniki</h2>
 
-        <ErrorText>{getFieldError(errors, 'ingredients')}</ErrorText>
+        {ingredientsErrors && <ErrorText role="alert">{ingredientsErrors}</ErrorText>}
 
-        <FieldsWrapper>
-          {ingredients.fields.map((field, index) => (
-            <Field
-              id={field.id}
-              {...register(`ingredients.${index}.text`)}
-              key={field.id}
-              label={`Składnik ${index + 1}`}
-              error={getMultiFieldError(errors, 'ingredients', index)}
-              deleteIcon={DeleteIcon}
-              onDeleteClick={() => ingredients.remove(index)}
-              required={!recipeSchema.shape.ingredients.element.isOptional()}
-            />
-          ))}
-        </FieldsWrapper>
+        {ingredients.fields.length > 0 && (
+          <FieldsWrapper>
+            {ingredients.fields.map((field, index) => (
+              <Field
+                id={field.id}
+                {...register(`ingredients.${index}.text`)}
+                key={field.id}
+                label={`Składnik ${index + 1}`}
+                error={getMultiFieldError(errors, 'ingredients', index)}
+                required={!recipeSchema.shape.ingredients.element.isOptional()}
+                render={(fieldProps) => (
+                  <DeletableField onDeleteClick={() => ingredients.remove(index)} {...fieldProps} />
+                )}
+              />
+            ))}
+          </FieldsWrapper>
+        )}
 
-        <Button type="button" size="small" onClick={() => ingredients.append({ text: '' })}>
+        <AddButton type="button" size="small" onClick={() => ingredients.append({ text: '' })}>
           Dodaj składnik
-        </Button>
+        </AddButton>
       </FieldsArrayWrapper>
 
       <FieldsArrayWrapper>
         <h2>Instrukcje</h2>
 
-        <ErrorText>{getFieldError(errors, 'instructions')}</ErrorText>
+        {instructionsErrors && <ErrorText role="alert">{instructionsErrors}</ErrorText>}
 
-        <FieldsWrapper>
-          {instructions.fields.map((field, index) => (
-            <Field
-              id={field.id}
-              {...register(`instructions.${index}.text`)}
-              key={field.id}
-              label={`Krok ${index + 1}.`}
-              error={getMultiFieldError(errors, 'instructions', index)}
-              deleteIcon={DeleteIcon}
-              onDeleteClick={() => instructions.remove(index)}
-              required={!recipeSchema.shape.instructions.element.isOptional()}
-            />
-          ))}
-        </FieldsWrapper>
+        {instructions.fields.length > 0 && (
+          <FieldsWrapper>
+            {instructions.fields.map((field, index) => (
+              <Field
+                id={field.id}
+                {...register(`instructions.${index}.text`)}
+                key={field.id}
+                label={`Krok ${index + 1}.`}
+                error={getMultiFieldError(errors, 'instructions', index)}
+                required={!recipeSchema.shape.instructions.element.isOptional()}
+                render={(fieldProps) => (
+                  <DeletableField
+                    onDeleteClick={() => instructions.remove(index)}
+                    {...fieldProps}
+                  />
+                )}
+              />
+            ))}
+          </FieldsWrapper>
+        )}
 
-        <Button type="button" size="small" onClick={() => instructions.append({ text: '' })}>
+        <AddButton type="button" size="small" onClick={() => instructions.append({ text: '' })}>
           Dodaj krok
-        </Button>
+        </AddButton>
       </FieldsArrayWrapper>
 
       <Button variant="primary" type="submit" icon={SaveIcon} style={{ marginTop: 20 }}>

@@ -30,9 +30,10 @@ const BackButton = styled.button(backlinkStyles);
 interface Props {
   backLink?: LinkProps['to'] | false;
   title: string;
+  id?: string;
 }
 
-export const ScreenHeader: VFC<Props> = ({ title, backLink }) => {
+export const ScreenHeader: VFC<Props> = ({ title, backLink, id }) => {
   const navigate = useNavigate();
 
   return (
@@ -48,7 +49,7 @@ export const ScreenHeader: VFC<Props> = ({ title, backLink }) => {
         <BackButton onClick={() => navigate(-1)}><BackIcon /></BackButton>
       )}
 
-      <h1>{title}</h1>
+      <h1 id={id}>{title}</h1>
     </Header>
   );
 };

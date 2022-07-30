@@ -1,5 +1,6 @@
 import {
-  configureStore, createListenerMiddleware, TypedStartListening,
+  combineReducers,
+  configureStore, createListenerMiddleware, PreloadedState, TypedStartListening,
 } from '@reduxjs/toolkit';
 import {
   FLUSH, REHYDRATE, PAUSE, PURGE, REGISTER, PERSIST, persistStore,
@@ -11,25 +12,32 @@ import user from 'store/user';
 
 export const listenerMiddleware = createListenerMiddleware();
 
-export const store = configureStore({
-  reducer: {
-    recipes,
-    user,
-    settings,
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PURGE, REGISTER, PERSIST],
-    },
-  }).prepend(listenerMiddleware.middleware),
+const rootReducer = combineReducers({
+  recipes,
+  user,
+  settings,
 });
+
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => (
+  configureStore({
+    preloadedState,
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PURGE, REGISTER, PERSIST],
+      },
+    }).prepend(listenerMiddleware.middleware),
+  })
+);
+
+export const store = setupStore();
+export const persistor = persistStore(store);
 
 export const startAppListening = listenerMiddleware.startListening as AppStartListening;
 
 addRecipesSyncListener(startAppListening);
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore['dispatch'];
 export type AppStartListening = TypedStartListening<RootState, AppDispatch>;
-
-export const persistor = persistStore(store);

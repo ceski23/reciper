@@ -25,5 +25,5 @@ React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement
 >;
 
 export const UserAvatar: VFC<ImageProps> = ({ src, ...props }) => (
-  src ? <Image src={src} {...props} /> : <FallbackImage />
+  src ? <Image src={src} {...props} /> : <FallbackImage role="img" />
 );

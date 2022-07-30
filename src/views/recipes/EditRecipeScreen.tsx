@@ -39,8 +39,10 @@ export const EditRecipeScreen: VFC = () => {
 
   return (
     <FluidContainer>
-      <ScreenHeader title="Edytuj przepis" />
-      {recipe && <RecipeForm defaultValues={recipe} onSubmit={handleSubmit} />}
+      <ScreenHeader title="Edytuj przepis" id="edit-recipe" />
+      {recipe && (
+        <RecipeForm defaultValues={recipe} onSubmit={handleSubmit} aria-labelledby="edit-recipe" />
+      )}
     </FluidContainer>
   );
 };

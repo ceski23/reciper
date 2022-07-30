@@ -4,6 +4,10 @@
 import { useMemo } from 'react';
 import { useSearchParams as useRouterSearchParams } from 'react-router-dom';
 
+const parseValue = (value: string) => (
+  Number.isNaN(Number(value)) ? value : Number(value)
+);
+
 export const useSearchParams = <T>() => {
   const [searchParams, setSearchParams] = useRouterSearchParams();
 
@@ -14,8 +18,8 @@ export const useSearchParams = <T>() => {
       const value = searchParams.getAll(key);
       const typedKey = key as unknown as keyof T;
 
-      if (value.length > 1) map[typedKey] = value as any;
-      else map[typedKey] = value[0] as any;
+      if (value.length > 1) map[typedKey] = value.map(parseValue) as any;
+      else map[typedKey] = parseValue(value[0]) as any;
     });
 
     return map;

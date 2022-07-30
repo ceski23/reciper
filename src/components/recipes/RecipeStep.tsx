@@ -54,7 +54,7 @@ const doneStyles = css`
 export const RecipeStep: VFC<Props> = ({
   stepNumber, instruction, done, onClick,
 }) => (
-  <Container css={done && doneStyles} onClick={onClick}>
+  <Container css={done && doneStyles} onClick={onClick} role="button">
     <StepNumber>Krok {stepNumber}</StepNumber>
     <Instruction>{instruction}</Instruction>
   </Container>

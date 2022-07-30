@@ -42,7 +42,7 @@ interface Props {
 export const SettingsListItem: FC<Props & Styleable> = ({
   icon: Icon, text, children, onClick, className,
 }) => (
-  <Container onClick={onClick} className={className}>
+  <Container onClick={onClick} className={className} role={onClick ? 'button' : undefined}>
     {Icon && (typeof Icon === 'string' ? (
       <img src={Icon} alt="" css={(theme) => iconStyles({ theme })} />
     ) : (

@@ -12,6 +12,7 @@ import KNOWN_INGREDIENTS from 'services/ingredients/database';
 import { IngredientWithUnitAndType } from 'services/ingredients/models';
 import { UnitName, units } from 'services/units';
 
+import { capitalize, stringToNumber } from 'utils/string';
 import { color } from 'utils/styles/theme';
 
 const IngredientRow = styled.div`
@@ -76,18 +77,9 @@ const QuantityField = styled(Field)`
   }
 `;
 
-const capitalize = (text: string) => (
-  `${text[0].toLocaleUpperCase()}${text.substring(1)}`
-);
-
 interface IngredientConverterModalProps {
   ingredient: IngredientWithUnitAndType;
 }
-
-const stringToNumber = (text: string) => {
-  const num = Number.parseFloat(text);
-  return Number.isNaN(num) ? 0 : num;
-};
 
 export const IngredientConverterModal: FC<IngredientConverterModalProps & ModalProps> = ({
   ingredient, ...props
@@ -144,7 +136,11 @@ export const IngredientConverterModal: FC<IngredientConverterModalProps & ModalP
             </Select>
           </ConversionRow>
 
-          <StyledConversionIcon onClick={swapPositions} />
+          <StyledConversionIcon
+            role="button"
+            onClick={swapPositions}
+            aria-label="Zamień"
+          />
 
           <ConversionRow>
             <QuantityField

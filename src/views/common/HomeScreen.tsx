@@ -100,8 +100,8 @@ export const HomeScreen: VFC = () => {
 
       <StyledSearchBar value="" onClick={handleSearchbarClick} />
 
-      <h2 style={{ marginTop: 50 }}>Ostatnio dodane</h2>
-      <RecipesList variants={staggeredGrid} initial="hidden" animate="show">
+      <h2 style={{ marginTop: 50 }} id="recently-added">Ostatnio dodane</h2>
+      <RecipesList variants={staggeredGrid} initial="hidden" animate="show" role="list" aria-labelledby="recently-added">
         {Object.values(recipes).slice(0, 6).reverse().map((recipe) => (
           <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
         ))}

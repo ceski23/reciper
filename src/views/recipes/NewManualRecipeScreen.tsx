@@ -36,8 +36,8 @@ export const NewManualRecipeScreen: VFC = () => {
 
   return (
     <FluidContainer>
-      <ScreenHeader title="Nowy przepis" />
-      <RecipeForm onSubmit={handleSubmit} />
+      <ScreenHeader title="Nowy przepis" id="new-recipe" />
+      <RecipeForm onSubmit={handleSubmit} aria-labelledby="new-recipe" />
     </FluidContainer>
   );
 };

@@ -5,6 +5,8 @@ import type { Provider, RecipeScrapper } from 'services/recipes/providers';
 import jsonldScrapper from 'services/recipes/providers/jsonld';
 import { colorExtractor } from 'services/recipes/providers/utils';
 
+import { nonNullable } from 'utils/guards';
+
 export const BeszamelProvider: Provider = (() => {
   const name = 'Beszamel';
   const url = 'https://beszamel.se.pl/';
@@ -19,8 +21,15 @@ export const BeszamelProvider: Provider = (() => {
       color = palette.Vibrant?.hex;
     }
 
+    const tagsElements = doc.querySelectorAll('.breadcrumb .breadcrumb__item');
+    const tags = Array
+      .from(tagsElements)
+      .map((elem) => elem.textContent?.toLowerCase().trim())
+      .filter(nonNullable);
+
     const partial: Partial<Recipe> = {
       color,
+      tags,
     };
 
     return Object.assign(data, partial);

@@ -42,7 +42,7 @@ export const units = createUnits({
     `, 'pl-PL'),
   },
   kilogram: {
-    pattern: /kg|kilogram|kilogramy|kilogramów/,
+    pattern: /(?:kg|kilogramy|kilogramów|kilogram)(?=$|\s)/,
     abbreviation: 'kg',
     formatter: new IntlMessageFormat(`
       {quantity, plural,
@@ -54,7 +54,7 @@ export const units = createUnits({
     `, 'pl-PL'),
   },
   gram: {
-    pattern: /\b(?:gramów|gramy|gram|g)\b/,
+    pattern: /(?:gramów|gramy|gram|g)(?=$|\s)/,
     abbreviation: 'g',
     formatter: new IntlMessageFormat(`
       {quantity, plural,
@@ -66,7 +66,7 @@ export const units = createUnits({
     `, 'pl-PL'),
   },
   milliliter: {
-    pattern: /ml|mililitr|mililitry|mililitrów/,
+    pattern: /(?:ml|mililitr|mililitry|mililitrów)(?=$|\s)/,
     abbreviation: 'ml',
     formatter: new IntlMessageFormat(`
       {quantity, plural,
@@ -78,7 +78,7 @@ export const units = createUnits({
     `, 'pl-PL'),
   },
   liter: {
-    pattern: /l|litr|litry|litrów/,
+    pattern: /(?:l|litr|litry|litrów)(?=$|\s)/,
     abbreviation: 'l',
     formatter: new IntlMessageFormat(`
       {quantity, plural,

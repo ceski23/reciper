@@ -56,7 +56,7 @@ export const parseIngredient = (ingredient: string): ParsedIngredient => {
   if (!data) {
     return {
       original: ingredient,
-      type: ingredientType,
+      ...(ingredientType && { type: ingredientType }),
     };
   }
 
@@ -69,7 +69,7 @@ export const parseIngredient = (ingredient: string): ParsedIngredient => {
         end: ingredient.substring(data.index + data.length).trim(),
       },
       quantity: data.quantity,
-      type: ingredientType,
+      ...(ingredientType && { type: ingredientType }),
     };
   }
 
@@ -81,6 +81,6 @@ export const parseIngredient = (ingredient: string): ParsedIngredient => {
     },
     quantity: data.quantity,
     unit: data.unit,
-    type: ingredientType,
+    ...(ingredientType && { type: ingredientType }),
   };
 };

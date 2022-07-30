@@ -116,7 +116,7 @@ export const Button: FC<React.ComponentPropsWithoutRef<'button'> & Props> = ({
   children, icon: Icon, variant = 'normal', size = 'normal', ...props
 }) => (
   <StyledButton size={size} variant={variant} {...props}>
-    {Icon && (typeof Icon === 'string' ? <img src={Icon} className="filler" alt="" /> : <Icon />)}
+    {Icon && (typeof Icon === 'string' ? <img src={Icon} className="filler" alt="" /> : <Icon role="img" />)}
     {children}
     {Icon && <span className="filler" />}
   </StyledButton>

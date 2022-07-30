@@ -112,6 +112,7 @@ export const SearchScreen: VFC = () => {
           onChange={setSearchBarValue}
           onDebouncedChange={(q) => updateFilters({ query: q })}
           ref={searchBar}
+          debounce={500}
         />
         <MoreFiltersButton type="button" onClick={expandFilters}>
           <StyledFilterIcon />

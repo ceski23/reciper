@@ -48,13 +48,19 @@ interface Props {
   onChange?: (query: string) => void;
   onClick?: React.MouseEventHandler<HTMLElement>;
   value: string;
+  debounce?: number;
 }
 
 export const Searchbar = React.forwardRef<HTMLInputElement, Props>(
   ({
-    className, onChange, onClick, value, onDebouncedChange,
+    className, onChange, onClick, value, onDebouncedChange, debounce,
   }, ref) => {
-    const debouncedOnChange = useDebouncedFn(onDebouncedChange ?? (() => {}), 500, undefined, []);
+    const debouncedOnChange = useDebouncedFn(
+      onDebouncedChange ?? (() => {}),
+      debounce,
+      undefined,
+      [],
+    );
 
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
       debouncedOnChange(event.currentTarget.value);
@@ -68,6 +74,7 @@ export const Searchbar = React.forwardRef<HTMLInputElement, Props>(
           onChange={handleChange}
           value={value}
           ref={ref}
+          type="search"
         />
         <SearchIcon />
       </Wrapper>

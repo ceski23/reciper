@@ -89,10 +89,9 @@ export const RecipesScreen: VFC = () => {
 
       {Object.keys(recipes).length === 0 ? (
         <EmptyText>
-          Nie masz jeszcze żadnych przepisów. Kliknij
-          <SampleRecipesLink onClick={handleAddSampleRecipes}>
-            tutaj
-          </SampleRecipesLink> aby dodać kilka przykładowych.
+          Nie masz jeszcze żadnych przepisów.
+          Kliknij <SampleRecipesLink onClick={handleAddSampleRecipes}>
+            tutaj </SampleRecipesLink> aby dodać kilka przykładowych.
         </EmptyText>
       ) : null}
 

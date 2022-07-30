@@ -105,6 +105,7 @@ const Modal: FC<ModalProps> & Subcomponents = ({
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
                 onClick={onClose}
+                data-testid="backdrop"
               />
             )}
 
@@ -113,6 +114,8 @@ const Modal: FC<ModalProps> & Subcomponents = ({
               initial="hidden"
               animate="visible"
               exit="exit"
+              role="dialog"
+              aria-modal="true"
             >
               {children}
             </Container>

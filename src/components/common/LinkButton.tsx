@@ -26,7 +26,7 @@ export const LinkButton: FC<LinkProps & Props> = ({
   children, icon: Icon, variant = 'normal', size = 'normal', ...props
 }) => (
   <StyledLinkButton variant={variant} size={size} {...props}>
-    {Icon && (typeof Icon === 'string' ? <img src={Icon} className="filler" alt="" /> : <Icon />)}
+    {Icon && (typeof Icon === 'string' ? <img src={Icon} className="filler" alt="" /> : <Icon role="img" />)}
     {children}
     {Icon && <span className="filler" />}
   </StyledLinkButton>

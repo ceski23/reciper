@@ -3,7 +3,7 @@ import Fuse from 'fuse.js';
 import { KnownIngredient } from 'services/ingredients/models';
 import { Recipe } from 'services/recipes';
 
-interface SearchParams {
+export interface SearchParams {
   query?: string;
   ingredients?: KnownIngredient[];
   duration?: number;
@@ -32,11 +32,15 @@ export default class RecipeSearch {
 
   private filterByQuery(query: string) {
     const fuzzySearch = new Fuse(this.recipes, {
+      includeMatches: true,
+      includeScore: true,
       keys: [
         { name: 'name', weight: 3 },
         { name: 'tags', weight: 1 },
       ],
-      // minMatchCharLength: 3,
+      minMatchCharLength: 3,
+      threshold: 0.55,
+      distance: 30,
     });
 
     return fuzzySearch
