@@ -1,6 +1,3 @@
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { createBrowserHistory } from 'history';
 import { wrapHistory } from 'oaf-react-router';
 import React from 'react';
@@ -13,13 +10,7 @@ import { persistor, store } from 'store';
 
 import App from 'components/app/App';
 import { ServiceWorker } from 'components/app/ServiceWorker';
-
-import 'core-js/proposals/set-methods';
-
-import 'dayjs/locale/pl';
-
-dayjs.extend(duration);
-dayjs.extend(relativeTime);
+import 'configure';
 
 const history = createBrowserHistory();
 

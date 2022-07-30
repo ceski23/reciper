@@ -1,0 +1,50 @@
+// Vitest Snapshot v1
+
+exports[`AuthToast > should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.emotion-3 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  margin-left: 20px;
+  background-color: #e7ecef;
+  padding: 5px 10px;
+  border-radius: 10px;
+  color: #365463;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+<div
+    class="emotion-0 emotion-1"
+  >
+    <span>
+      Wymagane ponowne uwierzytelnienie
+    </span>
+    <a
+      class="emotion-2 emotion-3 emotion-4"
+      href="/settings/account"
+    >
+      OK
+    </a>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,57 @@
+// Vitest Snapshot v1
+
+exports[`SettingsListItem > should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  background-color: #dfe8ec;
+  border-radius: 10px;
+  padding: 26px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+
+.emotion-0:hover {
+  background-color: #cfdce2;
+}
+
+.emotion-2 {
+  margin-right: 20px;
+  width: 25px;
+  fill: #365463;
+}
+
+.emotion-3 {
+  color: currentColor;
+  margin: 0;
+}
+
+<div
+    class="emotion-0 emotion-1"
+    role="button"
+  >
+    <img
+      alt=""
+      class="emotion-2"
+      src="test.jpg"
+    />
+    <p
+      class="emotion-3 emotion-4"
+    >
+      Test
+    </p>
+  </div>
+</DocumentFragment>
+`;

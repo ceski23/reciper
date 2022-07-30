@@ -1,124 +1,100 @@
 import { ParsedIngredient } from 'services/ingredients/models';
 import { parseIngredient } from 'services/ingredients/parser';
 
-// const ingredients = [
-//   'bazylia (1 doniczka)',
-//   '50 g orzeszków pinii',
-//   '50 g tartego sera grana padano',
-//   '500 g filetu kurczaka',
-//   '1/2 papryczki chili',
-//   '1 łyżeczka skrobi ziemniaczanej',
-//   '2 łyżki oleju kokosowego',
-//   '1/2 małej cebuli',
-//   '200 ml mleka kokosowego',
-//   '1 łyżka sosu rybnego (lub sojowego)',
-//   '2 łyżki posiekanego szczypiorku',
-//   'do podania: 200 g białego ryżu',
-//   '3/4 łyżeczki sody oczyszczonej',
-//   '1 jajko',
-//   '100 g czekoladowych dropsów lub posiekanej czekolady',
-//   '1/4 szklanki kakao',
-//   '1 szklanka cukru pudru',
-//   '1/2 szklanki nutelli'
-// ];
+describe('parseIngredient', () => {
+  it('should parse ingredient with unknown unit', () => {
+    expect(parseIngredient('bazylia (1 doniczka)')).not.toHaveProperty('unit');
 
-describe('grams', () => {
-  test('decimal', () => {
-    const ingredient = parseIngredient('1.5g drożdży');
+    expect(parseIngredient('sok z 1/4 limonki')).not.toHaveProperty('unit');
 
-    expect(ingredient).toEqual<ParsedIngredient>({
-      original: '1.5g drożdży',
-      quantity: 1.5,
-      parsed: { begin: '', end: 'drożdży' },
+    expect(parseIngredient('3 mleka w proszku')).not.toHaveProperty('unit');
+
+    expect(parseIngredient('1 jajko')).not.toHaveProperty('unit');
+
+    expect(parseIngredient('1/2 papryczki chili')).not.toHaveProperty('unit');
+
+    expect(parseIngredient('1/2 małej cebuli')).not.toHaveProperty('unit');
+  });
+
+  it('should parse unknown ingredient', () => {
+    expect(parseIngredient('szczypta magii')).toStrictEqual({ original: 'szczypta magii' });
+  });
+
+  it('should parse ingredient with unit', () => {
+    expect(parseIngredient('50 g orzeszków pinii')).toMatchObject<Partial<ParsedIngredient>>({
+      unit: 'gram',
+    });
+
+    expect(parseIngredient('50 g tartego sera grana padano')).toMatchObject<Partial<ParsedIngredient>>({
+      unit: 'gram',
+    });
+
+    expect(parseIngredient('200 ml mleka kokosowego')).toMatchObject<Partial<ParsedIngredient>>({
+      unit: 'milliliter',
+    });
+
+    expect(parseIngredient('do podania: 200 g białego ryżu')).toMatchObject<Partial<ParsedIngredient>>({
       unit: 'gram',
     });
   });
 
-  test('integer', () => {
-    const ingredient = parseIngredient('300 g makaronu np. penne');
+  it('should parse ingredient without quantity', () => {
+    expect(parseIngredient('szklanka cukru pudru')).not.toHaveProperty('quantity');
 
-    expect(ingredient).toEqual<ParsedIngredient>({
-      original: '300 g makaronu np. penne',
-      quantity: 300,
-      parsed: { begin: '', end: 'makaronu np. penne' },
-      unit: 'gram',
-    });
+    expect(parseIngredient('szczypta soli i pieprzu')).not.toHaveProperty('quantity');
+
+    expect(parseIngredient('kilka liści szafranu')).not.toHaveProperty('quantity');
   });
 
-  test('with type', () => {
-    const ingredient = parseIngredient('500 g filetu kurczaka');
-
-    expect(ingredient).toEqual<ParsedIngredient>({
-      original: '500 g filetu kurczaka',
+  it('should parse ingredient with quantity', () => {
+    expect(parseIngredient('500 g filetu kurczaka')).toMatchObject<Partial<ParsedIngredient>>({
       quantity: 500,
-      parsed: { begin: '', end: 'filetu kurczaka' },
-      unit: 'gram',
-      type: 'chicken',
     });
-  });
-});
 
-describe('no unit', () => {
-  test('no useful data', () => {
-    const ingredient = parseIngredient('sól, pieprz');
-
-    expect(ingredient).toEqual<ParsedIngredient>({
-      original: 'sól, pieprz',
+    expect(parseIngredient('1 łyżeczka skrobi ziemniaczanej')).toMatchObject<Partial<ParsedIngredient>>({
+      quantity: 1,
     });
-  });
 
-  test('fraction', () => {
-    const ingredient = parseIngredient('sok z 1/4 limonki');
-
-    expect(ingredient).toEqual<ParsedIngredient>({
-      original: 'sok z 1/4 limonki',
+    expect(parseIngredient('1/4 szklanki kakao')).toMatchObject<Partial<ParsedIngredient>>({
       quantity: 0.25,
+    });
+
+    expect(parseIngredient('1 i 3/4 łyżeczki sody oczyszczonej')).toMatchObject<Partial<ParsedIngredient>>({
+      quantity: 1.75,
+    });
+
+    expect(parseIngredient('2.5 łyżki posiekanego szczypiorku')).toMatchObject<Partial<ParsedIngredient>>({
+      quantity: 2.5,
+    });
+  });
+
+  it('should properly split text', () => {
+    expect(parseIngredient('500 g filetu kurczaka')).toMatchObject<Partial<ParsedIngredient>>({
+      parsed: { begin: '', end: 'filetu kurczaka' },
+    });
+
+    expect(parseIngredient('1 i 3/4 łyżeczki sody oczyszczonej')).toMatchObject<Partial<ParsedIngredient>>({
+      parsed: { begin: '', end: 'sody oczyszczonej' },
+    });
+
+    expect(parseIngredient('bazylia (1 doniczka)')).toMatchObject<Partial<ParsedIngredient>>({
+      parsed: { begin: 'bazylia (', end: 'doniczka)' },
+    });
+
+    expect(parseIngredient('sok z 1/4 limonki')).toMatchObject<Partial<ParsedIngredient>>({
       parsed: { begin: 'sok z', end: 'limonki' },
     });
-  });
 
-  test('with type', () => {
-    const ingredient = parseIngredient('1 podwójny filet kurczaka');
-
-    expect(ingredient).toEqual<ParsedIngredient>({
-      original: '1 podwójny filet kurczaka',
-      quantity: 1,
-      parsed: { begin: '', end: 'podwójny filet kurczaka' },
-      type: 'chicken',
+    expect(parseIngredient('3 mleka w proszku')).toMatchObject<Partial<ParsedIngredient>>({
+      parsed: { begin: '', end: 'mleka w proszku' },
     });
-  });
-});
 
-test('number with Tbs', () => {
-  const ingredient = parseIngredient('5 łyżek oliwy extra');
+    expect(parseIngredient('2 główki kapusty')).toMatchObject<Partial<ParsedIngredient>>({
+      parsed: { begin: '', end: 'główki kapusty' },
+    });
 
-  expect(ingredient).toEqual<ParsedIngredient>({
-    original: '5 łyżek oliwy extra',
-    quantity: 5,
-    parsed: { begin: '', end: 'oliwy extra' },
-    unit: 'tablespoon',
-  });
-});
-
-test('decimal without Tsp', () => {
-  const ingredient = parseIngredient('2.5 łyżeczki czerwonej pasty curry*');
-
-  expect(ingredient).toEqual<ParsedIngredient>({
-    original: '2.5 łyżeczki czerwonej pasty curry*',
-    quantity: 2.5,
-    parsed: { begin: '', end: 'czerwonej pasty curry*' },
-    unit: 'teaspoon',
-  });
-});
-
-test('combined quantity with type', () => {
-  const ingredient = parseIngredient('1 i 1/2 szklanki mąki pszennej');
-
-  expect(ingredient).toEqual<ParsedIngredient>({
-    original: '1 i 1/2 szklanki mąki pszennej',
-    quantity: 1.5,
-    parsed: { begin: '', end: 'mąki pszennej' },
-    unit: 'cup',
-    type: 'flour',
+    expect(parseIngredient('do podania: 200 g białego ryżu')).toMatchObject<Partial<ParsedIngredient>>({
+      parsed: { begin: 'do podania:', end: 'białego ryżu' },
+    });
   });
 });

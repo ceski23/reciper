@@ -1,0 +1,15 @@
+// Vitest Snapshot v1
+
+exports[`ModalBody > should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  padding: 20px;
+  line-height: 1.5;
+  color: #365463;
+}
+
+<div
+    class="emotion-0 emotion-1"
+  />
+</DocumentFragment>
+`;

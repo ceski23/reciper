@@ -1,11 +1,17 @@
 {
+  "plugins": [
+    "jest-dom",
+    "testing-library"
+  ],
   "extends": [
     "airbnb",
     "airbnb/hooks",
     "airbnb-typescript",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
+    "plugin:jest-dom/recommended",
+    "plugin:testing-library/react"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -100,5 +106,8 @@
     "import/resolver": {
       "typescript": {}
     }
-  }
+  },
+  "ignorePatterns": [
+    "vite.config.ts"
+  ]
 }

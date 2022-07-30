@@ -1,0 +1,101 @@
+// Vitest Snapshot v1
+
+exports[`ToastWithButton > should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.emotion-3 {
+  font-weight: bold;
+  border: none;
+  -webkit-transition: background-color 0.3s,color 0.3s;
+  transition: background-color 0.3s,color 0.3s;
+  outline: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  width: auto;
+  cursor: pointer;
+  box-shadow: 0px 3px 2px rgba(57,66,70,0.3);
+  background-color: #dfe8ec;
+  color: #365463;
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 12px 12px;
+  line-height: 1;
+  margin-left: 20px;
+  background-color: #e7ecef;
+  min-width: auto;
+  padding: 7px 15px;
+  border-radius: 10px;
+  color: #365463;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+}
+
+.emotion-3:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.emotion-3:disabled {
+  background-color: #e7ecef;
+}
+
+.emotion-3:not(:disabled):hover,
+.emotion-3:not(:disabled):focus-visible {
+  background-color: #cfdce2;
+}
+
+.emotion-3>svg,
+.emotion-3>img {
+  margin-right: 15px;
+  width: 15px;
+  height: 15px;
+}
+
+.emotion-3>.filler {
+  margin-left: 15px;
+  width: 15px;
+  height: 15px;
+}
+
+<div
+    class="emotion-0 emotion-1"
+  >
+    <button
+      class="emotion-2 emotion-3 emotion-4"
+    >
+      Test
+    </button>
+  </div>
+</DocumentFragment>
+`;

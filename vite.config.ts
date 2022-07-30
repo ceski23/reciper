@@ -1,10 +1,11 @@
-import svgr from 'vite-plugin-svgr';
+/// <reference types="vitest" />
+
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import checker from 'vite-plugin-checker';
 import { VitePWA } from 'vite-plugin-pwa';
-import { visualizer } from "rollup-plugin-visualizer";
+import GithubActionsReporter from 'vitest-github-actions-reporter'
 
 import manifest from './src/manifest';
 
@@ -57,20 +58,43 @@ const bundleVisualizerPlugin = visualizer({
   open: true
 });
 
-export default defineConfig({
-  define: {
-    APP_VERSION: JSON.stringify(process.env.npm_package_version),
-  },
-  plugins: [
-    reactPlugin,
-    svgrPlugin,
-    tsconfigPathsPlugin,
-    checkerPlugin,
-    pwaPlugin,
-    // bundleVisualizerPlugin,
-  ],
-  build: {
-    outDir: 'build',
-    // sourcemap: true,
+export default defineConfig(({ mode }) => {
+  return {
+    define: {
+      APP_VERSION: JSON.stringify(process.env.npm_package_version),
+    },
+    plugins: [
+      reactPlugin,
+      svgrPlugin,
+      tsconfigPathsPlugin,
+      pwaPlugin,
+      mode !== 'test' && checkerPlugin,
+      mode === 'production' && bundleVisualizerPlugin,
+    ],
+    build: {
+      outDir: 'build',
+      sourcemap: true,
+    },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: './src/test/setup.ts',
+      deps: {
+        inline: [
+          'framer-motion',
+        ],
+      },
+      exclude: [
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/cypress/**',
+        '**/e2e/**',
+        '**/.{idea,git,cache,output,temp}/**'
+      ],
+      reporters: process.env.GITHUB_ACTIONS ? new GithubActionsReporter() : 'default'
+    },
+    esbuild: {
+      logOverride: { 'this-is-undefined-in-esm': 'silent' },
+    },
   }
 });

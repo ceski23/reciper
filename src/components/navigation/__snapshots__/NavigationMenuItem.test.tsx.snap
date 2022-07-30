@@ -1,0 +1,73 @@
+// Vitest Snapshot v1
+
+exports[`NavigationMenuItem > should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 15px;
+  position: relative;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: unset;
+  font-weight: 600;
+  gap: 10px;
+  border-radius: 10px;
+}
+
+.emotion-0.active {
+  color: #0af;
+  background-color: rgba(0,170,255,0.1);
+}
+
+@media (max-width: 768px) {
+  .emotion-0.active {
+    background-color: transparent;
+  }
+
+  .emotion-0.active::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 80%;
+    height: 4px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 15px 15px 0 0;
+    background-color: currentColor;
+  }
+}
+
+.emotion-2 {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  .emotion-2 {
+    display: block;
+  }
+}
+
+<a
+    class="emotion-0 emotion-1"
+    href="/test"
+  >
+    <span
+      class="emotion-2 emotion-3"
+    >
+      Test
+    </span>
+  </a>
+</DocumentFragment>
+`;

@@ -1,0 +1,60 @@
+// Vitest Snapshot v1
+
+exports[`SelectableTag > should render with label and icon 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  color: #0af;
+  background-color: #dfe8ec;
+  border: 1px solid #dfe8ec;
+  padding: 5px 10px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+}
+
+.emotion-2 {
+  width: 0;
+  height: 0;
+}
+
+.emotion-2::after {
+  display: block;
+  content: '';
+  inset: 0;
+  position: absolute;
+}
+
+.emotion-2:focus-visible::after {
+  border-radius: 10px;
+  outline: 2px solid #0af;
+}
+
+.emotion-4 {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+<label
+    class="emotion-0 emotion-1"
+  >
+    <input
+      class="emotion-2 emotion-3"
+      type="checkbox"
+    />
+    <img
+      class="emotion-4 emotion-5"
+      src="test"
+    />
+    Test
+  </label>
+</DocumentFragment>
+`;
