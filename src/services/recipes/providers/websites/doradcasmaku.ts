@@ -1,14 +1,36 @@
+/* eslint-disable no-restricted-syntax */
 import icon from 'assets/providers/doradca_smaku.png';
 
-import { Recipe } from 'services/recipes';
+import { Recipe, RecipeIngredient } from 'services/recipes';
 import type { Provider, RecipeScrapper } from 'services/recipes/providers';
 import jsonldScrapper from 'services/recipes/providers/jsonld';
 
+import { getTextFromNode } from 'utils/dom';
 import { nonNullable } from 'utils/guards';
+import { removeEmpty } from 'utils/objects';
 
 export const DoradcaSmakuProvider: Provider = (() => {
   const name = 'Doradca smaku';
   const url = 'https://www.doradcasmaku.pl/';
+
+  const parseIngredients = (doc: Document) => {
+    const ingredientsGroups = doc.querySelectorAll('.recipe_ingredients_inner > .ingredients_group');
+    const ingredients: RecipeIngredient[] = [];
+
+    for (const ingredientsGroup of ingredientsGroups) {
+      const group = ingredientsGroup.querySelector('.ingredients_group_title')?.textContent?.trim();
+
+      const groupIngredients = Array
+        .from(ingredientsGroup.querySelectorAll('.ingredients_list > li'))
+        .map((elem) => getTextFromNode(elem).trim())
+        .filter(nonNullable)
+        .map<RecipeIngredient>((text) => removeEmpty({ text, group }));
+
+      ingredients.push(...groupIngredients);
+    }
+
+    return ingredients;
+  };
 
   const scrapper: RecipeScrapper = async (doc) => {
     const data = await jsonldScrapper(doc);
@@ -20,16 +42,24 @@ export const DoradcaSmakuProvider: Provider = (() => {
 
     const instructions = Array
       .from(instructionsElements)
-      .map((elem) => elem.textContent?.trim())
+      .map(getTextFromNode)
       .filter(nonNullable)
       .map((text) => ({ text }));
+
+    const tags = Array
+      .from(doc.querySelectorAll('.recipe_tags > a'))
+      .map(getTextFromNode)
+      .filter(nonNullable)
+      .map((text) => text.toLocaleLowerCase());
 
     const partial: Partial<Recipe> = {
       image,
       instructions,
+      ingredients: parseIngredients(doc),
+      tags: [...tags, ...(data.tags ?? [])],
     };
 
-    return Object.assign(data, partial);
+    return Object.assign(data, removeEmpty(partial));
   };
 
   return {

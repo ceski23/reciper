@@ -17,7 +17,7 @@ export const handlers: RequestHandler[] = [
     res(context.text('test'))
   )),
 
-  new CorsProxyHandler(/\.(jpg|jpeg)$/, async (req, res, ctx) => {
+  new CorsProxyHandler(/\.(jpg|jpeg|png)$/, async (req, res, ctx) => {
     const fixturePath = path.resolve(__dirname, '../fixtures/image.jpg');
     const imageBuffer = await fs.readFile(fixturePath);
 

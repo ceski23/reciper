@@ -37,6 +37,7 @@ const Instruction = styled('p')`
   text-align: justify;
   margin: 0;
   line-height: 1.4;
+  white-space: pre-wrap;
   font-weight: 500;
   ${({ theme }) => fluidTypography(
     theme.breakpoints.small,

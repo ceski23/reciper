@@ -15,7 +15,6 @@ import { ReactComponent as ClockIcon } from 'assets/recipes/clock.svg';
 import { ReactComponent as StarIcon } from 'assets/recipes/favourite.svg';
 import { ReactComponent as FlameIcon } from 'assets/recipes/fire.svg';
 import { ReactComponent as ServingsIcon } from 'assets/recipes/servings.svg';
-import { ReactComponent as ShoppingList } from 'assets/recipes/shopping-list.svg';
 
 import { Button } from 'components/common/Button';
 import {
@@ -23,30 +22,27 @@ import {
 } from 'components/common/Container';
 import { Modal } from 'components/common/modal/Modal';
 import { IngredientConverterModal } from 'components/recipes/IngredientConverterModal';
-import { IngredientItem } from 'components/recipes/IngredientItem';
+import { IngredientsSection } from 'components/recipes/IngredientsSection';
+import { InstructionsSection } from 'components/recipes/InstructionsSection';
 import { RecipeCover } from 'components/recipes/RecipeCover';
 import { RecipeFeature } from 'components/recipes/RecipeFeature';
 import { RecipeProvider } from 'components/recipes/RecipeProvider';
-import { RecipeStep } from 'components/recipes/RecipeStep';
-import { Servings, servingsText } from 'components/recipes/Servings';
+import { servingsText } from 'components/recipes/Servings';
 import { Tag } from 'components/recipes/Tag';
 
-import { useAccountProvider } from 'hooks/accounts/useAccountProvider';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 import { useModal } from 'hooks/useModal';
 
 import { urls } from 'routing/urls';
 
 import { IngredientWithUnitAndType, ParsedIngredient } from 'services/ingredients/models';
-import { parseIngredient } from 'services/ingredients/parser';
-import { Recipe as RecipeType } from 'services/recipes';
+import { Recipe as RecipeType, RecipeIngredient, RecipeInstruction } from 'services/recipes';
 import { chooseProvider } from 'services/recipes/providers';
 
 import {
   removeRecipeById, removeRecipeByUrl, saveRecipe, selectRecipes,
 } from 'store/recipes';
 import { selectDynamicPrimaryColor } from 'store/settings';
-import { selectShoppingList } from 'store/user';
 
 import { media } from 'utils/styles/mediaQueries';
 import { lightTheme, generateThemeColors, color } from 'utils/styles/theme';
@@ -76,12 +72,6 @@ const Title = styled('h1')`
   )}
 `;
 
-const RecipeSteps = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
 const Features = styled.div`
   display: grid;
   justify-content: space-around;
@@ -106,10 +96,6 @@ const ContentWrapper = styled(FluidContainer)`
   }
 `;
 
-const AddToListButton = styled(Button)`
-  width: 100%;
-`;
-
 const SaveIcon = styled(DisketteIcon)`
   width: 20px;
   height: 20px;
@@ -118,27 +104,6 @@ const SaveIcon = styled(DisketteIcon)`
 const UnsaveIcon = styled(TrashIcon)`
   width: 20px;
   height: 20px;
-`;
-
-const IngredientsHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const AltText = styled.span`
-  color: ${color('textalt')};
-  ${({ theme }) => fluidTypography(
-    theme.breakpoints.small,
-    theme.breakpoints.xlarge,
-    14,
-    16,
-  )}
-`;
-
-const RecipeLink = styled.a`
-  text-decoration: none;
-  color: unset;
 `;
 
 const Tags = styled.div`
@@ -153,19 +118,7 @@ const Tags = styled.div`
   }
 `;
 
-const IngredientsList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const IngredientsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const IngredientsSection = styled.div`
+const IngredientsSection0 = styled.div`
   display: flex;
   flex-direction: column;
   position: sticky;
@@ -226,12 +179,8 @@ const RecipeInfo = styled.div`
 export const Recipe: VFC<Props> = ({ recipe }) => {
   const recipeProvider = recipe.url ? chooseProvider(recipe.url) : undefined;
   const dispatch = useAppDispatch();
-  const [doneSteps, setDoneSteps] = useState<number[]>([]);
   const theme = useTheme();
-  const shoppingList = useAppSelector(selectShoppingList);
-  const accountProvider = useAccountProvider();
   const dynamicColor = useAppSelector(selectDynamicPrimaryColor);
-  const [servings, setServings] = useState(recipe.servings);
   const recipes = useAppSelector(selectRecipes);
   const navigate = useNavigate();
   const deleteModal = useModal(false);
@@ -244,20 +193,6 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
       .values(recipes)
       .some((r) => r.url === normalizeUrl(recipeUrl));
   }, [recipe.url, recipes]);
-
-  const parsedIngredients = useMemo<ParsedIngredient[]>(() => (
-    (recipe?.ingredients ?? [])
-      .map((i) => parseIngredient(i.text))
-      .map((ingredient) => {
-        if (!servings || !('quantity' in ingredient) || !recipe.servings) return ingredient;
-        return { ...ingredient, quantity: (ingredient.quantity / recipe.servings) * servings };
-      })
-  ), [recipe?.ingredients, recipe.servings, servings]);
-
-  const handleStepClicked = (idx: number) => {
-    if (doneSteps.includes(idx)) setDoneSteps(doneSteps.filter((i) => i !== idx));
-    else setDoneSteps([...doneSteps, idx]);
-  };
 
   const preparationDuration = useMemo(() => {
     if (!recipe.prepTime) return undefined;
@@ -295,26 +230,8 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
     navigate(urls.recipes.edit({ recipeId: recipe.id }));
   };
 
-  const handleAddToShoppingList = () => {
-    if (accountProvider && shoppingList && parsedIngredients) {
-      const promise = accountProvider.addIngredientsToList(
-        shoppingList.id,
-        parsedIngredients.map((i) => i.original),
-        recipe.name,
-      );
-
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      toast.promise(promise, {
-        loading: 'Dodawanie do listy',
-        success: 'Dodano składniki do listy',
-        error: 'Wystąpił błąd podczas dodawania składników',
-      });
-    }
-  };
-
   const ingredientModal = useModal(false);
-  // eslint-disable-next-line max-len
-  const [selectedIngredient, setSelectedIngredient] = useState<IngredientWithUnitAndType | undefined>();
+  const [selectedIngredient, setSelectedIngredient] = useState<IngredientWithUnitAndType>();
 
   const handleIngredientClick = (ingredient: ParsedIngredient) => {
     if ('unit' in ingredient && 'type' in ingredient && ingredient.type !== undefined) {
@@ -322,6 +239,30 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
       if (ingredient) ingredientModal.open();
     }
   };
+
+  const instructionsGroups = useMemo(() => (
+    recipe.instructions.reduce((acc, curr) => {
+      const group = curr.group ?? '';
+      const instructions = acc[group] ?? [];
+
+      return ({
+        ...acc,
+        [group]: [...instructions, curr],
+      });
+    }, {} as Record<string, RecipeInstruction[]>)
+  ), [recipe.instructions]);
+
+  const ingredientsGroups = useMemo(() => (
+    recipe.ingredients.reduce((acc, curr) => {
+      const group = curr.group ?? '';
+      const ingredients = acc[group] ?? [];
+
+      return ({
+        ...acc,
+        [group]: [...ingredients, curr],
+      });
+    }, {} as Record<string, RecipeIngredient[]>)
+  ), [recipe.ingredients]);
 
   return (
     <ThemeProvider theme={colorizedTheme ?? theme}>
@@ -375,72 +316,36 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
         )}
 
         <SideBySide>
-          {recipe.instructions && (
-            <div>
-              <RecipeLink href="#instructions" id="instructions">
-                <h2>Przygotowanie</h2>
-              </RecipeLink>
+          <div>
+            {Object.entries(instructionsGroups).map(([group, instructions]) => (
+              <InstructionsSection
+                key={group}
+                instructionsGroup={{ group, instructions }}
+              />
+            ))}
+          </div>
 
-              <RecipeSteps>
-                {recipe.instructions.map((ins, idx) => (
-                  <RecipeStep
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={idx}
-                    stepNumber={idx + 1}
-                    instruction={ins.text}
-                    done={doneSteps.includes(idx)}
-                    onClick={() => handleStepClicked(idx)}
-                  />
-                ))}
-              </RecipeSteps>
-            </div>
+          <IngredientsSection0>
+            {Object.entries(ingredientsGroups).map(([group, ingredients]) => (
+              <IngredientsSection
+                key={group}
+                recipeName={recipe.name}
+                ingredientsGroup={{ group, ingredients }}
+                servings={recipe.servings}
+                onIngredientClick={handleIngredientClick}
+              />
+            ))}
+          </IngredientsSection0>
+
+          {selectedIngredient && (
+            <IngredientConverterModal
+              isOpen={ingredientModal.isOpen}
+              onClose={ingredientModal.close}
+              closeOnEscape
+              showBackdrop
+              ingredient={selectedIngredient}
+            />
           )}
-
-          <IngredientsSection>
-            {parsedIngredients && (
-              <>
-                <IngredientsHeader>
-                  <RecipeLink href="#ingredients" id="ingredients">
-                    <h2>Składniki</h2>
-                  </RecipeLink>
-
-                  <AltText>
-                    {ingredientsText.format({ quantity: recipe.ingredients.length })}
-                  </AltText>
-                </IngredientsHeader>
-
-                <IngredientsContainer>
-                  {!!servings && <Servings servings={servings} onServingsChange={setServings} />}
-
-                  <IngredientsList>
-                    {parsedIngredients.map((ingredient) => (
-                      <IngredientItem
-                        ingredient={ingredient}
-                        key={ingredient.original}
-                        onClick={() => handleIngredientClick(ingredient)}
-                      />
-                    ))}
-
-                    {selectedIngredient && (
-                      <IngredientConverterModal
-                        isOpen={ingredientModal.isOpen}
-                        onClose={ingredientModal.close}
-                        closeOnEscape
-                        showBackdrop
-                        ingredient={selectedIngredient}
-                      />
-                    )}
-                  </IngredientsList>
-
-                  {shoppingList && (
-                  <AddToListButton icon={ShoppingList} onClick={handleAddToShoppingList}>
-                    {`Dodaj do "${shoppingList.name}"`}
-                  </AddToListButton>
-                  )}
-                </IngredientsContainer>
-              </>
-            )}
-          </IngredientsSection>
         </SideBySide>
 
         <Modal

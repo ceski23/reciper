@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 
 import { isValidRecipe, Recipe } from 'services/recipes';
 import { DefaultProvider } from 'services/recipes/providers/default';
+import { AniaGotujeProvider } from 'services/recipes/providers/websites/aniagotuje';
 import { AniaStarmachProvider } from 'services/recipes/providers/websites/aniastarmach';
 import { BeszamelProvider } from 'services/recipes/providers/websites/beszamel';
 import { DoradcaSmakuProvider } from 'services/recipes/providers/websites/doradcasmaku';
@@ -17,6 +18,7 @@ export const PROVIDERS = [
   BeszamelProvider,
   AniaStarmachProvider,
   DoradcaSmakuProvider,
+  AniaGotujeProvider,
 ];
 // ############################################################################
 

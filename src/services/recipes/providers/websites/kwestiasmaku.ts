@@ -1,34 +1,99 @@
+/* eslint-disable @typescript-eslint/no-loop-func */
+/* eslint-disable @typescript-eslint/brace-style */
+/* eslint-disable no-restricted-syntax */
 import icon from 'assets/providers/kwestia_smaku.png';
 
-import { Recipe } from 'services/recipes';
+import { Recipe, RecipeIngredient, RecipeInstruction } from 'services/recipes';
 import type { Provider, RecipeScrapper } from 'services/recipes/providers';
 import microdataScrapper from 'services/recipes/providers/microdata';
 import { colorExtractor } from 'services/recipes/providers/utils';
 
+import { getTextFromNode } from 'utils/dom';
 import { nonNullable } from 'utils/guards';
+import { removeEmpty } from 'utils/objects';
 
 export const KwestiaSmakuProvider: Provider = (() => {
   const name = 'Kwestia Smaku';
   const url = 'https://www.kwestiasmaku.com/';
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  const scrapper: RecipeScrapper = async (doc) => {
-    const microdata = await microdataScrapper(doc);
-    const description = doc.querySelector('.field-name-field-uwagi-wstepne')?.textContent || undefined;
+  const parseIngredients = (doc: Document) => {
+    const ingredientsRoot = doc.querySelector('.field-name-field-skladniki');
+    if (!ingredientsRoot) return [];
 
-    const instructionsElements = doc.querySelectorAll('.field-name-field-przygotowanie ul > li');
-    const recipeInstructions = Array
-      .from(instructionsElements)
-      .map((elem) => elem.textContent?.trim())
-      .filter(nonNullable)
-      .map((text) => ({ text }));
+    // Multiple ingredients groups
+    if (ingredientsRoot.querySelector('.wyroznione')) {
+      let group: string | undefined;
+      const ingredients: RecipeIngredient[] = [];
 
-    const ingredientsElements = doc.querySelectorAll('.field-name-field-skladniki > ul > li');
-    const recipeIngredient = Array
+      for (const element of ingredientsRoot.children) {
+        if (element.tagName === 'DIV') {
+          group = element.textContent?.trim() ?? undefined;
+        } else {
+          const recipeIngredients = Array
+            .from(element.querySelectorAll('li'))
+            .map((elem) => elem.textContent?.trim())
+            .filter(nonNullable)
+            .map<RecipeInstruction>((text) => ({ text, group }));
+
+          ingredients.push(...recipeIngredients);
+        }
+      }
+
+      return ingredients;
+    }
+
+    // Signle ingredients group
+    const ingredientsElements = ingredientsRoot.querySelectorAll('ul > li');
+    const recipeIngredients = Array
       .from(ingredientsElements)
       .map((elem) => elem.textContent?.trim())
       .filter(nonNullable)
       .map((text) => ({ text }));
+
+    return recipeIngredients;
+  };
+
+  const parseInstructions = (doc: Document) => {
+    const instructionsRoot = doc.querySelector('.field-name-field-przygotowanie');
+    if (!instructionsRoot) return [];
+
+    // Multiple instruction groups
+    if (instructionsRoot.querySelector('.wyroznione')) {
+      let group: string | undefined;
+      const instructions: RecipeInstruction[] = [];
+
+      for (const element of instructionsRoot.children) {
+        if (element.tagName === 'DIV') {
+          group = element.textContent?.trim() ?? undefined;
+        } else {
+          const recipeInstructions = Array
+            .from(element.querySelectorAll('li'))
+            .map((elem) => getTextFromNode(elem).trim())
+            .filter(nonNullable)
+            .map<RecipeInstruction>((text) => ({ text, group }));
+
+          instructions.push(...recipeInstructions);
+        }
+      }
+
+      return instructions;
+    }
+
+    // Signle instructions group
+    const instructionsElements = instructionsRoot.querySelectorAll('ul > li');
+    const recipeInstructions = Array
+      .from(instructionsElements)
+      .map((elem) => getTextFromNode(elem).trim())
+      .filter(nonNullable)
+      .map((text) => ({ text }));
+
+    return recipeInstructions;
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const scrapper: RecipeScrapper = async (doc) => {
+    const microdata = await microdataScrapper(doc);
+    const description = doc.querySelector('.field-name-field-uwagi-wstepne')?.textContent?.trim() || undefined;
 
     const tagsElements = doc.querySelectorAll('#node-przepis-full-group-kategorie a');
     const tags = Array
@@ -48,15 +113,15 @@ export const KwestiaSmakuProvider: Provider = (() => {
     }
 
     const partial: Partial<Recipe> = {
-      ingredients: recipeIngredient,
-      instructions: recipeInstructions,
+      ingredients: parseIngredients(doc),
+      instructions: parseInstructions(doc),
       color,
       description,
       tags,
       servings,
     };
 
-    return Object.assign(microdata, partial);
+    return Object.assign(microdata, removeEmpty(partial));
   };
 
   return {

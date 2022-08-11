@@ -1,0 +1,172 @@
+// Vitest Snapshot v1
+
+exports[`scrapper > should scrape valid recipe 1`] = `
+{
+  "color": "#7f7f7f",
+  "description": "Orzeźwiająca i obłędnie cytrynowa. Lemoniada na upalne dni.",
+  "id": "1",
+  "image": "https://aniastarmach.pl/content/uploads/2016/05/najlepsza-lemoniada-5-1200x630.jpg",
+  "ingredients": [
+    {
+      "text": "4 cytryny",
+    },
+    {
+      "text": "1 pomarańcza",
+    },
+    {
+      "text": "1 garść świeżej mięty",
+    },
+    {
+      "text": "100 g cukru",
+    },
+    {
+      "text": "1 l wody niegazowanej (jeśli lubisz wodę gazowaną, możesz ją wymieszać pół na pół z niegazowaną)",
+    },
+  ],
+  "instructions": [
+    {
+      "text": "Z owoców wyciśnij sok, przelej przez sitko, aby pozbyć się pestek.",
+    },
+    {
+      "text": "Miętę utrzyj z cukrem w moździerzu lub w wysokim naczyniu (wtedy użyj łyżki).",
+    },
+    {
+      "text": "Do dzbanka przelej sok z owoców. Dodaj miętę utartą z cukrem i wodę, wymieszaj.",
+    },
+    {
+      "text": "Lemoniada smakuje najlepiej, gdy jest schłodzona (jeśli nie masz czasu na chłodzenie, dodaj po prostu kilka kostek lodu).",
+    },
+  ],
+  "name": "Najlepsza lemoniada",
+  "prepTime": 15,
+  "servings": 4,
+  "tags": [
+    "cytryna",
+    "lemoniada",
+    "mięta",
+    "na słodko",
+    "napój",
+    "pomarańcza",
+    "wegetariańskie",
+  ],
+}
+`;
+
+exports[`scrapper > should scrape valid recipe with ingredients groups 1`] = `
+{
+  "color": "#7f7f7f",
+  "description": "Przepyszny tort urodzinowy, który sprawi, że ten dzień będzie naprawdę wyjątkowy :)",
+  "id": "1",
+  "image": "https://aniastarmach.pl/content/uploads/2016/10/tort-urodzinowy-1200x630.png",
+  "ingredients": [
+    {
+      "group": "Biszkopt",
+      "text": "6 jajek",
+    },
+    {
+      "group": "Biszkopt",
+      "text": "6 łyżek mąki ziemniaczanej",
+    },
+    {
+      "group": "Biszkopt",
+      "text": "150 g cukru",
+    },
+    {
+      "group": "Biszkopt",
+      "text": "200 g mąki pszennej",
+    },
+    {
+      "group": "Masa",
+      "text": "400 ml śmietanki kremówki 36%",
+    },
+    {
+      "group": "Masa",
+      "text": "400 g serka mascarpone",
+    },
+    {
+      "group": "Masa",
+      "text": "700 g truskawek",
+    },
+    {
+      "group": "Masa",
+      "text": "2 łyżki cukru pudru",
+    },
+    {
+      "group": "Do nasączania biszkopta",
+      "text": "0.5 szklanki wody",
+    },
+    {
+      "group": "Do nasączania biszkopta",
+      "text": "1 łyżka soku z cytryny",
+    },
+    {
+      "group": "Do nasączania biszkopta",
+      "text": "sok wyciśnięty z 2 pomarańczy",
+    },
+  ],
+  "instructions": [
+    {
+      "text": "Piekarnik rozgrzej do temperatury 170 stopni.",
+    },
+    {
+      "text": "Dno tortownicy ze zdejmowanym brzegiem o średnicy 26 cm wyłóż papierem do pieczenia. Wytnij pasek papieru i wyłóż nim brzegi tortownicy (pasek papieru powinien być wyższy od wysokości formy).",
+    },
+    {
+      "text": "Wymieszaj mąkę pszenną z ziemniaczaną.",
+    },
+    {
+      "text": "Oddziel białka od żółtek.",
+    },
+    {
+      "text": "Białka ubij na sztywną pianę, pod koniec ubijania dodaj cukier, następnie pojedynczo dodawaj żółtka, wymieszaj mikserem.",
+    },
+    {
+      "text": "Do masy powoli dosypuj mąkę, zmieszaj delikatnie za pomocą szpatułki.",
+    },
+    {
+      "text": "Ciasto przełóż do formy.",
+    },
+    {
+      "text": "Piecz 45 minut.",
+    },
+    {
+      "text": "Wyciągnij blachę z piekarnika. Jak nieco ostygnie, ściągnij obręcz tortownicy. Przewróć biszkopt na drugą stronę, aby wyrównać powierzchnię (zazwyczaj po upieczeniu biszkopt ma małą górkę).",
+    },
+    {
+      "text": "Składniki do nasączania biszkopta zagotuj, ostudź.",
+    },
+    {
+      "text": "Śmietanę ubij z serkiem mascarpone i cukrem.",
+    },
+    {
+      "text": "Biszkopt przetnij na dwie części, za pomocą pędzla lub łyżki nasącz oba blaty ciasta, powinny być wilgotne.",
+    },
+    {
+      "text": "Posmaruj jeden z blatów masą śmietankową, część masy zachowaj do dekoracji. Z truskawek usuń szypułki, owoce przekrój na połówki. Na pierwszym blacie połóż połowę truskawek, przykryj drugim blatem, udekoruj śmietaną i pozostałymi owocami.",
+    },
+  ],
+  "name": "Tort urodzinowy",
+  "prepTime": 60,
+  "servings": 6,
+  "tags": [
+    "ciasto",
+    "cukier",
+    "cukier puder",
+    "cytryna",
+    "deser",
+    "dla dzieci",
+    "mąka pszenna",
+    "mąka ziemniaczana",
+    "mascarpone",
+    "na słodko",
+    "owoce",
+    "piknik",
+    "podwieczorek",
+    "przyjęcie",
+    "śmietanka",
+    "tort",
+    "truskawki",
+    "wegetariańskie",
+  ],
+}
+`;

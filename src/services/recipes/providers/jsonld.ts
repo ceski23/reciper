@@ -12,6 +12,7 @@ import { RecipeScrapper } from 'services/recipes/providers';
 import { colorExtractor } from 'services/recipes/providers/utils';
 
 import { nonNullable } from 'utils/guards';
+import { removeEmpty } from 'utils/objects';
 
 function isHowToStepArray(instructions: SchemaRecipe['recipeInstructions']): instructions is HowToStep[] {
   return Array.isArray(instructions) && instructions[0]['@type'] === 'HowToStep';
@@ -110,7 +111,7 @@ const scrapper: RecipeScrapper = async (doc) => {
 
   // FIXME: Better instructions parsing
   const instructions = parseInstructions(schemaRecipe.recipeInstructions)
-    ?.map((i) => ({ text: i }));
+    ?.map((i) => ({ text: i.trim() }));
   // if (!instructions) throw Error('Couldn\'t find or parse instructions');
 
   let prepTimeISO = schemaRecipe.totalTime ?? schemaRecipe.prepTime;
@@ -142,10 +143,10 @@ const scrapper: RecipeScrapper = async (doc) => {
   const tags: string[] = [];
 
   const category = schemaRecipe.recipeCategory?.toString();
-  if (category) tags.push(category);
+  if (category) tags.push(category.toLocaleLowerCase());
 
   const cuisine = schemaRecipe.recipeCuisine?.toString();
-  if (cuisine) tags.push(cuisine);
+  if (cuisine) tags.push(cuisine.toLocaleLowerCase());
 
   const recipe: Partial<Recipe> = {
     name: name ? name.toString() : undefined,
@@ -161,7 +162,7 @@ const scrapper: RecipeScrapper = async (doc) => {
     rating: getRating(schemaRecipe.aggregateRating),
   };
 
-  return recipe;
+  return removeEmpty(recipe);
 };
 
 export default scrapper;

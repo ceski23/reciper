@@ -36,7 +36,7 @@ const KNOWN_INGREDIENTS = createIngredients({
   },
   flour: {
     name: 'mąka',
-    pattern: /\bmąki\b/u,
+    pattern: /\bmąk(?:i|a)\b/u,
     image: flour,
     baseUnit: 'gram',
     conversions: {
@@ -47,7 +47,7 @@ const KNOWN_INGREDIENTS = createIngredients({
   },
   chicken: {
     name: 'kurczak',
-    pattern: /\bkurczaka\b/u,
+    pattern: /\bkurczak(?:a|)\b/u,
     image: chicken,
     baseUnit: 'gram',
     conversions: {
@@ -57,7 +57,7 @@ const KNOWN_INGREDIENTS = createIngredients({
   },
   butter: {
     name: 'masło',
-    pattern: /\bmasła\b/u,
+    pattern: /\bmasł(?:a|o)\b/u,
     image: butter,
     baseUnit: 'gram',
     conversions: {
@@ -78,7 +78,7 @@ const KNOWN_INGREDIENTS = createIngredients({
   },
   sugar: {
     name: 'cukier',
-    pattern: /\bcukru\b/u,
+    pattern: /\bcuk(?:ru|ier)\b/u,
     image: sugar,
     baseUnit: 'gram',
     conversions: {
@@ -91,7 +91,7 @@ const KNOWN_INGREDIENTS = createIngredients({
   },
   salt: {
     name: 'sól',
-    pattern: /\bsoli\b/u,
+    pattern: /\b(?:soli|sól)\b/u,
     image: salt,
     baseUnit: 'gram',
     conversions: {
@@ -113,7 +113,7 @@ const KNOWN_INGREDIENTS = createIngredients({
   },
   milk: {
     name: 'mleko',
-    pattern: /\bmleka\b/u,
+    pattern: /\bmlek(?:a|o)\b/u,
     image: milk,
     baseUnit: 'milliliter',
     conversions: {
@@ -124,7 +124,7 @@ const KNOWN_INGREDIENTS = createIngredients({
   },
   bakingpowder: {
     name: 'proszek do pieczenia',
-    pattern: /\bproszku do pieczenia\b/u,
+    pattern: /\bprosz(?:ek|ku) do pieczenia\b/u,
     image: bakingpowder,
     baseUnit: 'gram',
     conversions: {

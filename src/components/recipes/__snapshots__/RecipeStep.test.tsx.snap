@@ -22,6 +22,7 @@ exports[`RecipeStep > should render correctly 1`] = `
   text-align: justify;
   margin: 0;
   line-height: 1.4;
+  white-space: pre-wrap;
   font-weight: 500;
   font-size: 14px;
   font-size: clamp(14px, 10.307692307692308px + 0.641025641025641vw, 18px);
@@ -70,6 +71,7 @@ exports[`RecipeStep > should render marked as done 1`] = `
   text-align: justify;
   margin: 0;
   line-height: 1.4;
+  white-space: pre-wrap;
   font-weight: 500;
   font-size: 14px;
   font-size: clamp(14px, 10.307692307692308px + 0.641025641025641vw, 18px);

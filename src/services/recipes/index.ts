@@ -1,9 +1,11 @@
 export interface RecipeIngredient {
-  text: string
+  text: string;
+  group?: string;
 }
 
 export interface RecipeInstruction {
-  text: string
+  text: string;
+  group?: string;
 }
 
 export interface Recipe {

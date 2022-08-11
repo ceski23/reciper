@@ -1,0 +1,173 @@
+// Vitest Snapshot v1
+
+exports[`scrapper > should scrape valid recipe 1`] = `
+{
+  "color": "#7f7f7f",
+  "description": "Lemoniada z limonek, cytryn i pomarańczy to bardzo prosty w przygotowaniu i niezwykle smaczny napój na upalne dni. Podajemy dobry przepis na lemoniadę cytrusową. Sprawdź, jak ją przygotować.",
+  "id": "1",
+  "image": "https://cdn.galleries.smcloud.net/t/photos/gf-EQGW-RBcL-arZc_lemoniada-cytrusowa-przepis-na-lemoniade-z-cytryn-limonek-i-pomaranczy.jpg",
+  "ingredients": [
+    {
+      "text": "2 pomarańcze",
+    },
+    {
+      "text": "sok z 2 pomarańczy",
+    },
+    {
+      "text": "2 cytryny",
+    },
+    {
+      "text": "sok z 1 cytryny",
+    },
+    {
+      "text": "2 limonki",
+    },
+    {
+      "text": "sok z 2 limonek",
+    },
+    {
+      "text": "syrop przygotowany z 2 litrów wody i 8 łyżek cukru",
+    },
+  ],
+  "instructions": [
+    {
+      "text": "Cytrusy umyć i pokroić w plasterki.",
+    },
+    {
+      "text": "Wlać do dzbanka sok wyciśnięty z cytrusów i syrop cukrowy, a następnie dodać do niego pokrojone w plasterki owoce.",
+    },
+    {
+      "text": "Całość wstawić na kilka godzin do lodówki.",
+    },
+    {
+      "text": "Podawać z plasterkami owoców i lodem.",
+    },
+  ],
+  "name": "Lemoniada cytrusowa - przepis na lemoniadę z cytryn, limonek i pomarańczy",
+  "prepTime": 15,
+  "servings": 4,
+  "tags": [
+    "napoje",
+    "napoje alkoholowe",
+    "koktajle",
+    "kompoty",
+    "soki",
+    "kawa i herbata",
+  ],
+}
+`;
+
+exports[`scrapper > should scrape valid recipe with ingredients groups 1`] = `
+{
+  "color": "#7f7f7f",
+  "description": "Samodzielne przygotowanie tortu jest dość czasochłonne, ale wbrew pozorom nie takie trudne. Jeżeli po raz pierwszy zamierzasz zrobić tort - ten prosty i łatwy przepis jest właśnie dla ciebie. To nasz specjalny przepis na tort dla początkujących, który przy odrobinie wysiłku na pewno się uda.",
+  "id": "1",
+  "image": "https://cdn.galleries.smcloud.net/t/photos/gf-eBME-h8Zw-WmRp_tort-dla-poczatkujacych.jpg",
+  "ingredients": [
+    {
+      "group": "BISZKOPT:",
+      "text": "12 łyżek mąki",
+    },
+    {
+      "group": "BISZKOPT:",
+      "text": "6 jajek",
+    },
+    {
+      "group": "BISZKOPT:",
+      "text": "1 szklanka cukru pudru",
+    },
+    {
+      "group": "BISZKOPT:",
+      "text": "1 łyżeczka masła i bułka tarta do formy",
+    },
+    {
+      "group": "PONCZ:",
+      "text": "1 łyżeczka czarnej herbaty",
+    },
+    {
+      "group": "PONCZ:",
+      "text": "4 łyżeczki cukru",
+    },
+    {
+      "group": "PONCZ:",
+      "text": "1 łyżka spirytusu",
+    },
+    {
+      "group": "KREM:",
+      "text": "1,5 kostki masła",
+    },
+    {
+      "group": "KREM:",
+      "text": "1 szklanka cukru pudru",
+    },
+    {
+      "group": "KREM:",
+      "text": "4 żółtka",
+    },
+    {
+      "group": "KREM:",
+      "text": "2 łyżki kakao",
+    },
+    {
+      "group": "KREM:",
+      "text": "1 łyżeczka mleka",
+    },
+    {
+      "group": "DEKORACJA:",
+      "text": "3-4 łyżki wiórków kokosowych",
+    },
+    {
+      "group": "DEKORACJA:",
+      "text": "12 obranych migdałów",
+    },
+  ],
+  "instructions": [
+    {
+      "text": "Najpierw przygotuj ciasto - bazę tortu.",
+    },
+    {
+      "text": "Oddziel żółtka od białek. Żółtka utrzyj z cukrem na jasną i puszystą masę. Białka ubij z odrobiną soli na sztywną pianę.",
+    },
+    {
+      "text": "Delikatnie wymieszaj masę z żółtek z pianą białkową, a następnie dodawaj porcjami mąkę, mieszając szpatułką lub mikserem na najmniejszych obrotach.",
+    },
+    {
+      "text": "Tak przygotowane ciasto przełóż do wysmarowanej masłem i posypanej bułką tartą tortownicy. Piecz około 40 minut, początkowo w 160 st. C, a po 15 minutach w 180 st. C.",
+    },
+    {
+      "text": "Upieczone ciasto wyjmij z piekarnika i odstaw do ostygnięcia, wystudzone ciasto wyjmij z tortownicy i przekrój na 3 blaty.",
+    },
+    {
+      "text": "Aby przygotować krem, miękkie masło utrzyj z cukrem pudrem na puszystą masę.",
+    },
+    {
+      "text": "Dodaj kakao rozmieszane z mlekiem i - stale ucierając - po jednym żółtku. Dokładnie połącz składniki.",
+    },
+    {
+      "text": "Herbatę zaparz w połowie szklanki wrzątku, posłódź i wymieszaj. Do wystudzonej dodaj spirytus. Nasącz blaty biszkoptowe.",
+    },
+    {
+      "text": "Układaj blaty tortu jeden na drugim przekładając kremem. Kremem posmarować także boki i wierzch tortu.",
+    },
+    {
+      "text": "Udekorować tartą czekoladą, sypkim kakao lub wiórkami kokosowymi i migdałami.",
+    },
+  ],
+  "name": "Tort dla początkujących - łatwy przepis krok po kroku",
+  "prepTime": 60,
+  "servings": 4,
+  "tags": [
+    "ciasta okazjonalne",
+    "ciasta regionalne",
+    "sękacz",
+    "pascha wielkanocna",
+    "keks",
+    "makowiec",
+    "mazurki",
+    "miodowniki",
+    "pierniki",
+    "torty",
+    "babki",
+  ],
+}
+`;

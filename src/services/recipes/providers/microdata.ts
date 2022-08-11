@@ -5,7 +5,15 @@ import dayjs from 'dayjs';
 import { Recipe } from 'services/recipes';
 import { RecipeScrapper } from 'services/recipes/providers';
 
+import { getTextFromNode } from 'utils/dom';
 import { nonNullable } from 'utils/guards';
+import { removeEmpty } from 'utils/objects';
+
+const getMetaData = (element: Element | null) => {
+  if (element === null) return undefined;
+  if (element.tagName === 'META') return element.getAttribute('content');
+  return getTextFromNode(element);
+};
 
 // eslint-disable-next-line @typescript-eslint/require-await
 const scrapper: RecipeScrapper = async (doc) => {
@@ -17,7 +25,7 @@ const scrapper: RecipeScrapper = async (doc) => {
   // if (!name) throw Error('Couldn\'t find recipe name');
 
   const descriptionElement = root.querySelector('[itemprop="description"]');
-  const description = ((descriptionElement?.tagName === 'META') ? descriptionElement.getAttribute('content') : descriptionElement?.textContent) ?? undefined;
+  const description = descriptionElement ? getMetaData(descriptionElement)?.trim() : undefined;
 
   const imageElement = root.querySelector('[itemprop="image"]');
   const image = ((imageElement?.tagName === 'META') ? imageElement.getAttribute('content') : imageElement?.getAttribute('src')) ?? undefined;
@@ -53,6 +61,13 @@ const scrapper: RecipeScrapper = async (doc) => {
     .map((elem) => (elem.textContent ? ({ text: elem.textContent?.trim() }) : undefined))
     .filter(nonNullable);
 
+  const tagsElement = root.querySelector('[itemprop="keywords"]');
+  const tags = getMetaData(tagsElement)?.split(',').map((text) => text.toLocaleLowerCase().trim());
+
+  const servingsElement = root.querySelector('[itemprop="recipeYield"]');
+  const servingsText = getMetaData(servingsElement);
+  const servings = servingsText ? Number.parseInt(servingsText, 10) : undefined;
+
   // if (ingredients.length === 0) throw Error('No ingredients found');
 
   const recipe: Partial<Recipe> = {
@@ -64,10 +79,11 @@ const scrapper: RecipeScrapper = async (doc) => {
     instructions,
     rating,
     calories,
-    tags: [],
+    tags,
+    servings,
   };
 
-  return recipe;
+  return removeEmpty(recipe);
 };
 
 export default scrapper;

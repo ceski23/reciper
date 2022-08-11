@@ -210,6 +210,6 @@ describe('scrapper', () => {
         }
       </script>
     `);
-    expect(recipe.tags).toStrictEqual(['Test1', 'Test2']);
+    expect(recipe.tags).toStrictEqual(['test1', 'test2']);
   });
 });
