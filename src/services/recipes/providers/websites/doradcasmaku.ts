@@ -32,6 +32,16 @@ export const DoradcaSmakuProvider: Provider = (() => {
     return ingredients;
   };
 
+  const parseImages = (doc: Document) => {
+    const imageElements = doc.querySelectorAll('.recipe_item .recipe_gallery img');
+    const images = Array
+      .from(imageElements)
+      .map((elem) => elem.getAttribute('data-src'))
+      .filter(nonNullable);
+
+    return images;
+  };
+
   const scrapper: RecipeScrapper = async (doc) => {
     const data = await jsonldScrapper(doc);
 
@@ -52,11 +62,14 @@ export const DoradcaSmakuProvider: Provider = (() => {
       .filter(nonNullable)
       .map((text) => text.toLocaleLowerCase());
 
+    const uniqueTags = Array.from(new Set([...tags, ...(data.tags ?? [])]));
+
     const partial: Partial<Recipe> = {
       image,
       instructions,
       ingredients: parseIngredients(doc),
-      tags: [...tags, ...(data.tags ?? [])],
+      tags: uniqueTags,
+      gallery: parseImages(doc),
     };
 
     return Object.assign(data, removeEmpty(partial));

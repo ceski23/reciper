@@ -3,26 +3,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable max-len */
 import styled from '@emotion/styled';
-import { VFC, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { VFC } from 'react';
 
 import { Button } from 'components/common/Button';
 import { FluidContainer } from 'components/common/Container';
 import { ScreenHeader } from 'components/common/ScreenHeader';
 import { UserAvatar } from 'components/common/UserAvatar';
 import { CheckboxSetting } from 'components/settings/CheckboxSetting';
-import { RadioGroup } from 'components/settings/RadioGroup';
 
 import { useAccountProvider } from 'hooks/accounts/useAccountProvider';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 
-import { TaskListInfo } from 'services/accounts/AccountProvider';
+// import { TaskListInfo } from 'services/accounts/AccountProvider';
 import { AccountProviders, chooseAccountProvider } from 'services/accounts/providers';
 
 import { syncRecipes } from 'store/recipes';
 import { selectRecipesAutoSync, setAutoRecipesSync } from 'store/settings';
 import {
-  logoutUser, selectAccountInfo, selectShoppingList, selectUserInfo, setShoppingList,
+  logoutUser, selectAccountInfo, selectUserInfo,
 } from 'store/user';
 
 const SettingsContainer = styled.div`
@@ -61,27 +59,27 @@ const PROVIDERS = Object.values(AccountProviders).map((type) => {
 export const AccountSubPage: VFC = () => {
   const dispatch = useAppDispatch();
   const accountInfo = useAppSelector(selectAccountInfo);
-  const [availableLists, setAvailableLists] = useState<TaskListInfo[]>([]);
-  const shoppingList = useAppSelector(selectShoppingList);
+  // const [availableLists, setAvailableLists] = useState<TaskListInfo[]>([]);
+  // const shoppingList = useAppSelector(selectShoppingList);
   const user = useAppSelector(selectUserInfo);
   const accountProvider = useAccountProvider();
   const syncEnabled = useAppSelector(selectRecipesAutoSync);
 
-  useEffect(() => {
-    if (!accountProvider) setAvailableLists([]);
-    else {
-      accountProvider.getTaskLists()
-        .then((lists) => setAvailableLists(lists))
-        .catch((err) => toast.error(err.toString()));
-    }
-  }, [accountProvider]);
+  // useEffect(() => {
+  //   if (!accountProvider) setAvailableLists([]);
+  //   else {
+  //     accountProvider.getTaskLists()
+  //       .then((lists) => setAvailableLists(lists))
+  //       .catch((err) => toast.error(err.toString()));
+  //   }
+  // }, [accountProvider]);
 
-  const handleSelectList = (listId: string) => {
-    const list = availableLists.find((l) => l.id === listId);
+  // const handleSelectList = (listId: string) => {
+  //   const list = availableLists.find((l) => l.id === listId);
 
-    if (list && shoppingList?.id === list.id) dispatch(setShoppingList(undefined));
-    else dispatch(setShoppingList(list));
-  };
+  //   if (list && shoppingList?.id === list.id) dispatch(setShoppingList(undefined));
+  //   else dispatch(setShoppingList(list));
+  // };
 
   const handleLogoutClick = () => {
     dispatch(logoutUser());
@@ -126,7 +124,7 @@ export const AccountSubPage: VFC = () => {
         )}
       </SettingsContainer>
 
-      {availableLists.length > 0 && (
+      {/* {availableLists.length > 0 && (
         <RadioGroup
           title="Wybierz listę zakupów"
           hint="Po wybraniu listy zakupów będzie możliwe szybkie dodanie wszystkich składników do wybranej listy"
@@ -138,7 +136,7 @@ export const AccountSubPage: VFC = () => {
           }))}
           onSelected={handleSelectList}
         />
-      )}
+      )} */}
 
       {accountProvider && (
         <CheckboxSetting

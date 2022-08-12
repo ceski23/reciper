@@ -39,19 +39,53 @@ exports[`InputSetting > should render correctly 1`] = `
 }
 
 .emotion-8 {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+}
+
+.emotion-11 {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #365463;
+  background-color: #fff;
+  color: #365463;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   width: 70px;
   height: 40px;
-  border-radius: 5px;
-  border: 4px solid #f6f8f9;
-  background-color: #f6f8f9;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
-  box-shadow: 0 0 1px rgba(57,66,70,0.3);
+}
+
+.emotion-11::-webkit-input-placeholder {
+  color: #365463;
+  opacity: 1;
+}
+
+.emotion-11::-moz-placeholder {
+  color: #365463;
+  opacity: 1;
+}
+
+.emotion-11:-ms-input-placeholder {
+  color: #365463;
+  opacity: 1;
+}
+
+.emotion-11::placeholder {
+  color: #365463;
+  opacity: 1;
 }
 
 <label
@@ -71,12 +105,21 @@ exports[`InputSetting > should render correctly 1`] = `
         test1
       </p>
     </div>
-    <input
-      class="emotion-8 emotion-9"
-      min="0"
-      type="text"
-      value="test"
-    />
+    <div>
+      <div
+        class="emotion-8 emotion-9"
+      >
+        <input
+          aria-invalid="false"
+          aria-required="false"
+          class="emotion-10 emotion-11 emotion-12"
+          id="test"
+          min="0"
+          type="text"
+          value="test"
+        />
+      </div>
+    </div>
   </label>
 </DocumentFragment>
 `;

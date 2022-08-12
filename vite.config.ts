@@ -61,6 +61,8 @@ const bundleVisualizerPlugin = visualizer({
 });
 
 export default defineConfig(({ mode }) => {
+  const visualizeBundle = false;
+
   return {
     define: {
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
@@ -71,11 +73,11 @@ export default defineConfig(({ mode }) => {
       tsconfigPathsPlugin,
       pwaPlugin,
       mode !== 'test' && checkerPlugin,
-      mode === 'production' && bundleVisualizerPlugin,
+      mode === 'production' && visualizeBundle && bundleVisualizerPlugin,
     ],
     build: {
       outDir: 'build',
-      sourcemap: true,
+      sourcemap: visualizeBundle,
     },
     test: {
       globals: true,

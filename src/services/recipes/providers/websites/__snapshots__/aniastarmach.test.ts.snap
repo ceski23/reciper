@@ -4,6 +4,9 @@ exports[`scrapper > should scrape valid recipe 1`] = `
 {
   "color": "#7f7f7f",
   "description": "Orzeźwiająca i obłędnie cytrynowa. Lemoniada na upalne dni.",
+  "gallery": [
+    "https://aniastarmach.pl/content/uploads/2016/05/najlepsza-lemoniada-5-1200x630.jpg",
+  ],
   "id": "1",
   "image": "https://aniastarmach.pl/content/uploads/2016/05/najlepsza-lemoniada-5-1200x630.jpg",
   "ingredients": [
@@ -56,6 +59,9 @@ exports[`scrapper > should scrape valid recipe with ingredients groups 1`] = `
 {
   "color": "#7f7f7f",
   "description": "Przepyszny tort urodzinowy, który sprawi, że ten dzień będzie naprawdę wyjątkowy :)",
+  "gallery": [
+    "https://aniastarmach.pl/content/uploads/2016/10/tort-urodzinowy-1200x630.png",
+  ],
   "id": "1",
   "image": "https://aniastarmach.pl/content/uploads/2016/10/tort-urodzinowy-1200x630.png",
   "ingredients": [

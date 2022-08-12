@@ -10,6 +10,7 @@ import { BeszamelProvider } from 'services/recipes/providers/websites/beszamel';
 import { DoradcaSmakuProvider } from 'services/recipes/providers/websites/doradcasmaku';
 import { KwestiaSmakuProvider } from 'services/recipes/providers/websites/kwestiasmaku';
 
+import appLogger from 'utils/logger';
 import { baseUrl } from 'utils/url';
 
 // ############################################################################
@@ -38,9 +39,13 @@ export const chooseProvider = (url: string): Provider => {
 
 export class InvalidRecipeError extends Error {}
 
+const log = appLogger.extend('scrapper');
+
 export const scrapeRecipe = async (url: string): Promise<Recipe> => {
   try {
     const recipeUrl = new URL(url);
+    log('scrapping recipe at url: %s', recipeUrl);
+
     const targetUrl = (import.meta.env.VITE_CORS_PROXY as string ?? '') + encodeURIComponent(recipeUrl.toString());
     const data = await fetch(targetUrl).then((res) => res.text());
 
@@ -56,10 +61,15 @@ export const scrapeRecipe = async (url: string): Promise<Recipe> => {
       url,
     };
 
-    if (isValidRecipe(recipe)) return recipe;
+    if (isValidRecipe(recipe)) {
+      log('parsed recipe: %O', recipe);
+      return recipe;
+    }
     throw Error('Invalid recipe');
   } catch (error) {
     const anyError = error as Error;
+
+    log(anyError);
     throw new InvalidRecipeError(anyError.message);
   }
 };

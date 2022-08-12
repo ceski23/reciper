@@ -24,31 +24,31 @@ interface GoogleUserInfoResponse {
   picture: string;
 }
 
-interface GoogleTaskListItem {
-  etag: string,
-  id: string,
-  kind: 'tasks#taskList',
-  selfLink: string,
-  title: string,
-  updated: string,
-}
+// interface GoogleTaskListItem {
+//   etag: string,
+//   id: string,
+//   kind: 'tasks#taskList',
+//   selfLink: string,
+//   title: string,
+//   updated: string,
+// }
 
-interface GoogleTaskItem {
-  etag: string,
-  id: string,
-  kind: 'tasks#taskList',
-  selfLink: string,
-  title: string,
-  updated: string,
-  position: string,
-  status: string;
-}
+// interface GoogleTaskItem {
+//   etag: string,
+//   id: string,
+//   kind: 'tasks#taskList',
+//   selfLink: string,
+//   title: string,
+//   updated: string,
+//   position: string,
+//   status: string;
+// }
 
-interface GoogleTaskListsResponse {
-  etag: string;
-  items: GoogleTaskListItem[];
-  kind: 'tasks#taskLists'
-}
+// interface GoogleTaskListsResponse {
+//   etag: string;
+//   items: GoogleTaskListItem[];
+//   kind: 'tasks#taskLists'
+// }
 
 interface GoogleDriveFileResponse {
   kind: 'drive#file';
@@ -80,9 +80,9 @@ export class GoogleAccountProvider extends AccountProvider {
 
   private static URLS = {
     USER_INFO: 'https://www.googleapis.com/oauth2/v1/userinfo',
-    TASKS_LIST: 'https://tasks.googleapis.com/tasks/v1/users/@me/lists',
+    // TASKS_LIST: 'https://tasks.googleapis.com/tasks/v1/users/@me/lists',
     LOGOUT: 'https://oauth2.googleapis.com/revoke',
-    ADD_TASK: 'https://tasks.googleapis.com/tasks/v1/lists/{tasklist}/tasks',
+    // ADD_TASK: 'https://tasks.googleapis.com/tasks/v1/lists/{tasklist}/tasks',
     FILE_GET: 'https://www.googleapis.com/drive/v3/files',
     FILE_UPLOAD: 'https://www.googleapis.com/upload/drive/v3/files/{fileId}',
     GET_TOKEN: 'https://oauth2.googleapis.com/token',
@@ -115,8 +115,8 @@ export class GoogleAccountProvider extends AccountProvider {
       // code_challenge_method: 'S256',
       // code_challenge: await generateCodeChallenge(code_verifier),
       scope: [
-        'https://www.googleapis.com/auth/tasks',
-        'https://www.googleapis.com/auth/tasks.readonly',
+        // 'https://www.googleapis.com/auth/tasks',
+        // 'https://www.googleapis.com/auth/tasks.readonly',
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/drive.appdata',
       ].join(' '),
@@ -196,17 +196,17 @@ export class GoogleAccountProvider extends AccountProvider {
     };
   }
 
-  async getTaskLists() {
-    const listsResponse = await this.apiClient
-      .get<GoogleTaskListsResponse>(GoogleAccountProvider.URLS.TASKS_LIST)
-      .then(GoogleAccountProvider.handleResponse)
-      .catch(GoogleAccountProvider.handleError);
+  // async getTaskLists() {
+  //   const listsResponse = await this.apiClient
+  //     .get<GoogleTaskListsResponse>(GoogleAccountProvider.URLS.TASKS_LIST)
+  //     .then(GoogleAccountProvider.handleResponse)
+  //     .catch(GoogleAccountProvider.handleError);
 
-    return listsResponse.items.map((list) => ({
-      id: list.id,
-      name: list.title,
-    }));
-  }
+  //   return listsResponse.items.map((list) => ({
+  //     id: list.id,
+  //     name: list.title,
+  //   }));
+  // }
 
   async logout() {
     const body = new FormData();
@@ -215,30 +215,31 @@ export class GoogleAccountProvider extends AccountProvider {
     await this.apiClient.post(GoogleAccountProvider.URLS.LOGOUT, body);
   }
 
-  async addIngredientsToList(listId: string, ingredients: string[], recipeTitle: string) {
-    const rootTask = await this.apiClient
-      .post<GoogleTaskItem>(
-      GoogleAccountProvider.URLS.ADD_TASK.replace('{tasklist}', listId),
-      { title: recipeTitle },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    )
-      .then(GoogleAccountProvider.handleResponse)
-      .catch(GoogleAccountProvider.handleError);
+  // async addIngredientsToList(listId: string, ingredients: string[], recipeTitle: string) {
+  //   const rootTask = await this.apiClient
+  //     .post<GoogleTaskItem>(
+  //     GoogleAccountProvider.URLS.ADD_TASK.replace('{tasklist}', listId),
+  //     { title: recipeTitle },
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     },
+  //   )
+  //     .then(GoogleAccountProvider.handleResponse)
+  //     .catch(GoogleAccountProvider.handleError);
 
-    await Promise.all(ingredients.map((i) => (
-      this.apiClient.post(`${GoogleAccountProvider.URLS.ADD_TASK.replace('{tasklist}', listId)}?parent=${rootTask.id}`, {
-        title: i,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-    ))).catch(GoogleAccountProvider.handleError);
-  }
+  //   await Promise.all(ingredients.map((i) => (
+  // eslint-disable-next-line max-len
+  //     this.apiClient.post(`${GoogleAccountProvider.URLS.ADD_TASK.replace('{tasklist}', listId)}?parent=${rootTask.id}`, {
+  //       title: i,
+  //     }, {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     })
+  //   ))).catch(GoogleAccountProvider.handleError);
+  // }
 
   private async findRecipesFile() {
     return this.apiClient

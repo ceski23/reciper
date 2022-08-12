@@ -19,6 +19,7 @@ import { TagInput } from 'components/forms/inputs/TagInput';
 import {
   fieldOptions, getFieldError, getMultiFieldError,
 } from 'utils/forms';
+import { media } from 'utils/styles/mediaQueries';
 
 const StyledForm = styled.form`
   display: flex;
@@ -59,6 +60,21 @@ const AddButton = styled(Button)`
   ${FieldsWrapper} + & {
     margin-top: 20px;
   }
+`;
+
+const TwoColumns = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+
+  ${media.down('small')} {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const Column = styled.div`
+  display: grid;
+  gap: 30px;
 `;
 
 export const recipeSchema = z.object({
@@ -146,111 +162,121 @@ export const RecipeForm: VFC<Props> = ({ defaultValues, onSubmit, ...props }) =>
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)} {...props}>
-      <Field
-        id="recipe-name"
-        label="Nazwa przepisu"
-        error={errors.name?.message}
-        required={!recipeSchema.shape.name.isOptional()}
-        {...register('name', fieldOptions)}
-      />
+      <TwoColumns>
+        <Column>
+          <Field
+            id="recipe-name"
+            label="Nazwa przepisu"
+            error={errors.name?.message}
+            required={!recipeSchema.shape.name.isOptional()}
+            {...register('name', fieldOptions)}
+          />
 
-      <Field<'textarea'>
-        id="recipe-description"
-        label="Opis przepisu"
-        error={errors.description?.message}
-        required={!recipeSchema.shape.description.isOptional()}
-        {...register('description', fieldOptions)}
-        render={(fieldProps) => <Textarea {...fieldProps} />}
-      />
+          <Field<'textarea'>
+            id="recipe-description"
+            label="Opis przepisu"
+            error={errors.description?.message}
+            required={!recipeSchema.shape.description.isOptional()}
+            {...register('description', fieldOptions)}
+            render={(fieldProps) => <Textarea {...fieldProps} />}
+          />
 
-      <Field
-        id="recipe-url"
-        label="Adres URL przepisu"
-        error={errors.url?.message}
-        required={!recipeSchema.shape.url.isOptional()}
-        {...register('url', fieldOptions)}
-      />
+          <Field
+            id="recipe-url"
+            label="Adres URL przepisu"
+            error={errors.url?.message}
+            required={!recipeSchema.shape.url.isOptional()}
+            {...register('url', fieldOptions)}
+          />
+        </Column>
 
-      <Field
-        id="recipe-image"
-        label="Zdjęcie przepisu"
-        error={errors.image?.message}
-        required={!recipeSchema.shape.image.isOptional()}
-        render={(fieldProps) => (
-          <Controller
-            control={control}
-            name="image"
-            render={({ field }) => (
-              <ImageUpload compress {...fieldProps} {...field} />
+        <Field
+          id="recipe-image"
+          label="Zdjęcie przepisu"
+          error={errors.image?.message}
+          required={!recipeSchema.shape.image.isOptional()}
+          render={(fieldProps) => (
+            <Controller
+              control={control}
+              name="image"
+              render={({ field }) => (
+                <ImageUpload compress {...fieldProps} {...field} />
+              )}
+            />
+          )}
+        />
+      </TwoColumns>
+
+      <TwoColumns>
+        <Column>
+          <Field
+            label="Czas przygotowywania (w minutach)"
+            id="recipe-prepTime"
+            error={errors.prepTime?.message}
+            required={!recipeSchema.shape.prepTime.isOptional()}
+            render={({ step, ...fieldProps }) => (
+              <Controller
+                name="prepTime"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <NumberField {...fieldProps} {...field} />
+                )}
+              />
             )}
           />
-        )}
-      />
 
-      <Field
-        label="Czas przygotowywania (w minutach)"
-        id="recipe-prepTime"
-        error={errors.prepTime?.message}
-        required={!recipeSchema.shape.prepTime.isOptional()}
-        render={({ step, ...fieldProps }) => (
-          <Controller
-            name="prepTime"
-            control={control}
-            render={({ field: { ref, ...field } }) => (
-              <NumberField {...fieldProps} {...field} />
+          <Field
+            id="recipe-tags"
+            label="Tagi"
+            error={getFieldError(errors, 'tags')}
+            required={!recipeSchema.shape.tags.isOptional()}
+            render={(fieldProps) => (
+              <Controller
+                name="tags"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <TagInput {...fieldProps} {...field} />
+                )}
+                defaultValue={[]}
+              />
             )}
           />
-        )}
-      />
+        </Column>
 
-      <Field
-        id="recipe-tags"
-        label="Tagi"
-        error={getFieldError(errors, 'tags')}
-        required={!recipeSchema.shape.tags.isOptional()}
-        render={(fieldProps) => (
-          <Controller
-            name="tags"
-            control={control}
-            render={({ field: { ref, ...field } }) => (
-              <TagInput {...fieldProps} {...field} />
-            )}
-            defaultValue={[]}
-          />
-        )}
-      />
-
-      <Field
-        id="recipe-servings"
-        label="Ilość porcji"
-        error={errors.servings?.message}
-        required={!recipeSchema.shape.servings.isOptional()}
-        render={({ step, ...fieldProps }) => (
-          <Controller
-            name="servings"
-            control={control}
-            render={({ field: { ref, ...field } }) => (
-              <NumberField {...fieldProps} {...field} />
+        <Column>
+          <Field
+            id="recipe-servings"
+            label="Ilość porcji"
+            error={errors.servings?.message}
+            required={!recipeSchema.shape.servings.isOptional()}
+            render={({ step, ...fieldProps }) => (
+              <Controller
+                name="servings"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <NumberField {...fieldProps} {...field} />
+                )}
+              />
             )}
           />
-        )}
-      />
 
-      <Field
-        id="recipe-calories"
-        label="Kalorie"
-        error={errors.calories?.message}
-        required={!recipeSchema.shape.calories.isOptional()}
-        render={({ step, ...fieldProps }) => (
-          <Controller
-            name="calories"
-            control={control}
-            render={({ field: { ref, ...field } }) => (
-              <NumberField {...fieldProps} {...field} />
+          <Field
+            id="recipe-calories"
+            label="Kalorie"
+            error={errors.calories?.message}
+            required={!recipeSchema.shape.calories.isOptional()}
+            render={({ step, ...fieldProps }) => (
+              <Controller
+                name="calories"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <NumberField {...fieldProps} {...field} />
+                )}
+              />
             )}
           />
-        )}
-      />
+        </Column>
+      </TwoColumns>
 
       <FieldsArrayWrapper>
         <h2>Składniki</h2>

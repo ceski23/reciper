@@ -5,18 +5,37 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable prefer-destructuring */
 import dayjs from 'dayjs';
-import { HowToStep, Recipe as SchemaRecipe } from 'schema-dts';
+import { HowToStep, ImageObject, Recipe as SchemaRecipe } from 'schema-dts';
 
 import { Recipe } from 'services/recipes';
 import { RecipeScrapper } from 'services/recipes/providers';
 import { colorExtractor } from 'services/recipes/providers/utils';
 
 import { nonNullable } from 'utils/guards';
+import appLogger from 'utils/logger';
 import { removeEmpty } from 'utils/objects';
+
+const log = appLogger.extend('scrapper:jsonld');
 
 function isHowToStepArray(instructions: SchemaRecipe['recipeInstructions']): instructions is HowToStep[] {
   return Array.isArray(instructions) && instructions[0]['@type'] === 'HowToStep';
 }
+
+function isArrayOf<T>(
+  value: unknown,
+  predicate: (value: unknown) => value is T,
+): value is Array<T> {
+  return Array.isArray(value) && value.every(predicate);
+}
+
+const isString = (val: unknown): val is string => (
+  typeof val === 'string'
+);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isImageObject = (val: any): val is ImageObject => (
+  !!val && typeof val === 'object' && ('@type' in val) && val['@type'] === 'ImageObject'
+);
 
 const parseInstructions = (instructions: SchemaRecipe['recipeInstructions']): string[] | undefined => {
   // eslint-disable-next-line prefer-destructuring, no-param-reassign
@@ -63,12 +82,16 @@ const parseJsons = (elems: NodeListOf<Element>) => {
   for (const elem of elems) {
     if (elem.textContent) {
       const parsed = JSON.parse(elem.textContent);
+      log(parsed);
 
       if ('@graph' in parsed && Array.isArray(parsed['@graph'])) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         jsons.push(...parsed['@graph'].filter((x) => x['@type'] === 'Recipe'));
       } else if (parsed['@type'] === 'Recipe') {
         jsons.push(parsed);
+      } else if (Array.isArray(parsed)) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        jsons.push(...parsed.filter((x) => x['@type'] === 'Recipe'));
       }
     }
   }
@@ -83,12 +106,63 @@ const getRating = (data: SchemaRecipe['aggregateRating']) => {
   return Number.parseFloat(data.ratingValue?.toString());
 };
 
+const parseTags = (schemaRecipe: SchemaRecipe) => {
+  const tags: string[] = [];
+
+  const category = schemaRecipe.recipeCategory?.toString();
+  if (category) tags.push(category.toLocaleLowerCase());
+
+  const cuisine = schemaRecipe.recipeCuisine?.toString();
+  if (cuisine) tags.push(cuisine.toLocaleLowerCase());
+
+  const keywords = schemaRecipe.keywords?.toString();
+  if (keywords) {
+    tags.push(
+      ...keywords.split(',').map((text) => text.toLocaleLowerCase().trim()),
+    );
+  }
+
+  return tags;
+};
+
+const parseGallery = (schemaRecipe: SchemaRecipe): string[] | undefined => {
+  const images = schemaRecipe.image;
+  if (!images) return undefined;
+
+  if (Array.isArray(images)) {
+    // Array of strings
+    if (isArrayOf(images, isString)) return images;
+
+    // Array of ImageObject
+    if (isArrayOf(images, isImageObject)) {
+      return images
+        .map((img) => img.url?.toString())
+        .filter(nonNullable);
+    }
+  } else {
+    // String
+    if (isString(images)) return [images];
+
+    // ImageObject
+    if (isImageObject(images)) return images.url ? [images.url.toString()] : undefined;
+  }
+
+  return undefined;
+};
+
 // eslint-disable-next-line @typescript-eslint/require-await
 const scrapper: RecipeScrapper = async (doc) => {
+  log('scrapping recipe...');
+
   const elems = doc.querySelectorAll('[type="application/ld+json"]');
   const data = parseJsons(elems)[0];
 
-  if (!data) throw Error('No JSON-LD data available');
+  if (!data) {
+    log('no ld+json schema found');
+    throw Error('No JSON-LD data available');
+  }
+
+  log('found ld+json schema %O', data);
 
   const schemaRecipe = data as SchemaRecipe;
 
@@ -140,14 +214,6 @@ const scrapper: RecipeScrapper = async (doc) => {
     color = undefined;
   }
 
-  const tags: string[] = [];
-
-  const category = schemaRecipe.recipeCategory?.toString();
-  if (category) tags.push(category.toLocaleLowerCase());
-
-  const cuisine = schemaRecipe.recipeCuisine?.toString();
-  if (cuisine) tags.push(cuisine.toLocaleLowerCase());
-
   const recipe: Partial<Recipe> = {
     name: name ? name.toString() : undefined,
     description: description?.toString(),
@@ -155,11 +221,12 @@ const scrapper: RecipeScrapper = async (doc) => {
     ingredients: Array.isArray(ingredients) ? ingredients : [ingredients],
     instructions,
     prepTime,
-    tags,
+    tags: parseTags(schemaRecipe),
     servings,
     calories,
     color,
     rating: getRating(schemaRecipe.aggregateRating),
+    gallery: parseGallery(schemaRecipe),
   };
 
   return removeEmpty(recipe);

@@ -2,8 +2,8 @@ import { ThemeProvider, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import IntlMessageFormat from 'intl-messageformat';
-import {
-  VFC, useMemo, MouseEventHandler, useState,
+import React, {
+  VFC, useMemo, MouseEventHandler, useState, Suspense,
 } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
@@ -48,6 +48,8 @@ import { media } from 'utils/styles/mediaQueries';
 import { lightTheme, generateThemeColors, color } from 'utils/styles/theme';
 import { fluidTypography } from 'utils/styles/typography';
 import { normalizeUrl } from 'utils/url';
+
+const ImagesGallery = React.lazy(() => import('components/recipes/ImagesGallery'));
 
 export const ingredientsText = new IntlMessageFormat(`
   {quantity, plural,
@@ -323,13 +325,19 @@ export const Recipe: VFC<Props> = ({ recipe }) => {
                 instructionsGroup={{ group, instructions }}
               />
             ))}
+
+            {recipe.gallery && (
+              <Suspense fallback={null}>
+                <ImagesGallery images={recipe.gallery} />
+              </Suspense>
+            )}
           </div>
 
           <IngredientsSection0>
             {Object.entries(ingredientsGroups).map(([group, ingredients]) => (
               <IngredientsSection
                 key={group}
-                recipeName={recipe.name}
+                // recipeName={recipe.name}
                 ingredientsGroup={{ group, ingredients }}
                 servings={recipe.servings}
                 onIngredientClick={handleIngredientClick}

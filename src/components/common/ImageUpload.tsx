@@ -22,7 +22,8 @@ interface ImageUploadProps extends Omit<ComponentPropsWithRef<'input'>, 'type' |
 const Container = styled.label<{ isOver: boolean }>`
   background-color: ${color('backgroundAlt')};
   border: 2px dashed ${color('textalt')};
-  height: 200px;
+  min-height: 200px;
+  height: 100%;
   position: relative;
   border-radius: 10px;
   display: flex;

@@ -30,6 +30,17 @@ const normalizeQuantity = (quantity: string): number => {
   return Number.parseFloat(quantity);
 };
 
+const replaceWeirdCharacters = (ingredient: string) => {
+  const replacements = {
+    '½': '1/2',
+    '¼': '1/4',
+  };
+
+  return Object
+    .entries(replacements)
+    .reduce((text, [a, b]) => text.replace(a, b), ingredient);
+};
+
 const extractQuantity = (ingredient: string) => {
   const match = quantityWithUnitPattern.exec(ingredient);
   if (!match) return undefined;
@@ -49,7 +60,7 @@ const parseIngredientType = (text: string) => {
 };
 
 export const parseIngredient = (ingredient: string): ParsedIngredient => {
-  const data = extractQuantity(ingredient);
+  const data = extractQuantity(replaceWeirdCharacters(ingredient));
   const ingredientType = parseIngredientType(ingredient);
 
   // Składnik bez liczb, np. sól, pieprz

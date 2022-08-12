@@ -10,7 +10,10 @@ import { colorExtractor } from 'services/recipes/providers/utils';
 
 import { getTextFromNode } from 'utils/dom';
 import { nonNullable } from 'utils/guards';
+import appLogger from 'utils/logger';
 import { removeEmpty } from 'utils/objects';
+
+const log = appLogger.extend('scrapper:kwestiasmaku');
 
 export const KwestiaSmakuProvider: Provider = (() => {
   const name = 'Kwestia Smaku';
@@ -90,6 +93,20 @@ export const KwestiaSmakuProvider: Provider = (() => {
     return recipeInstructions;
   };
 
+  const parseImages = (doc: Document) => {
+    log('looking for images');
+
+    const imageElements = doc.querySelectorAll('.view-zdjecia img');
+    const images = Array
+      .from(imageElements)
+      .map((elem) => elem.getAttribute('src'))
+      .filter(nonNullable);
+
+    log('found images:', images);
+
+    return images;
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const scrapper: RecipeScrapper = async (doc) => {
     const microdata = await microdataScrapper(doc);
@@ -119,6 +136,7 @@ export const KwestiaSmakuProvider: Provider = (() => {
       description,
       tags,
       servings,
+      gallery: parseImages(doc),
     };
 
     return Object.assign(microdata, removeEmpty(partial));

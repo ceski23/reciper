@@ -12,6 +12,8 @@ import App from 'components/app/App';
 import { ServiceWorker } from 'components/app/ServiceWorker';
 import 'configure';
 
+import 'photoswipe/dist/photoswipe.css';
+
 const history = createBrowserHistory();
 
 wrapHistory(history, {

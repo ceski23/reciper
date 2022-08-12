@@ -24,25 +24,25 @@ describe('Recipe', () => {
     url: 'https://test.test/',
   };
 
-  it('should allow to add ingredients to shopping list', () => {
-    renderWithProviders(<Recipe recipe={recipe} />, {
-      preloadedState: {
-        user: {
-          _persist: {
-            rehydrated: true,
-            version: 0,
-          },
-          shoppingList: {
-            id: 'test',
-            name: 'Test',
-          },
-        },
-      },
-    });
+  // it('should allow to add ingredients to shopping list', () => {
+  //   renderWithProviders(<Recipe recipe={recipe} />, {
+  //     preloadedState: {
+  //       user: {
+  //         _persist: {
+  //           rehydrated: true,
+  //           version: 0,
+  //         },
+  //         shoppingList: {
+  //           id: 'test',
+  //           name: 'Test',
+  //         },
+  //       },
+  //     },
+  //   });
 
-    const addToShoppingListButton = screen.getByRole('button', { name: /dodaj do/i });
-    expect(addToShoppingListButton).toBeInTheDocument();
-  });
+  //   const addToShoppingListButton = screen.getByRole('button', { name: /dodaj do/i });
+  //   expect(addToShoppingListButton).toBeInTheDocument();
+  // });
 
   it('should delete recipe', async () => {
     const user = userEvent.setup();

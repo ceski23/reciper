@@ -23,6 +23,7 @@ const StyledInput = styled(Input)`
   border-right: none;
   border-radius: 0;
   text-align: center;
+  width: 100%;
 `;
 
 const InputButton = styled.button`

@@ -93,6 +93,7 @@ export const UnitsSubPage: VFC = () => {
       {useUnitsConversion && (
         <InputSetting
           title="Precyzja konwersji"
+          id="conversion-precision"
           type="number"
           hint="Ilość cyfr po przecinku po konwersji jednostek"
           value={conversionPrecision.toString()}

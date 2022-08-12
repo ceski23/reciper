@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
-import { VFC, useState, useEffect } from 'react';
-import toast from 'react-hot-toast';
-import { useNavigate, useParams } from 'react-router-dom';
+import { VFC, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import usePromise from 'react-use-promise';
 
+import { ReactComponent as BackArrowIcon } from 'assets/common/left-arrow.svg';
+
+import { ErrorInfo } from 'components/common/ErrorInfo';
 import { LinkButton } from 'components/common/LinkButton';
 import { Recipe } from 'components/recipes/Recipe';
 
@@ -10,7 +13,6 @@ import { useWakelock } from 'hooks/recipes/useWakelock';
 
 import { urls } from 'routing/urls';
 
-import { Recipe as RecipeType } from 'services/recipes';
 import { chooseProvider, scrapeRecipe } from 'services/recipes/providers';
 
 const LoadingOverlay = styled.div`
@@ -26,49 +28,41 @@ const LoadingText = styled.p`
   font-size: 22px;
 `;
 
-const CancelButton = styled(LinkButton)`
-  margin-top: 20px;
-`;
-
 export const FindRecipeScreen: VFC = () => {
-  const navigate = useNavigate();
-  const params = useParams();
-  const [recipe, setRecipe] = useState<RecipeType | undefined>();
-
   // Don't fade the screen when recipe screen is mounted
   useWakelock();
 
-  useEffect(() => {
-    if (params.recipeUrl) {
-      try {
-        const provider = chooseProvider(params.recipeUrl);
+  const params = useParams<'recipeUrl'>();
 
-        if (!provider.name) {
-          toast('Próbujesz wczytać przepis z niewspieranej strony, mogą wystąpić błędy.', {
-            icon: '⚠️',
-          });
-        }
-      } catch { /* */ }
-    }
-  }, [params.recipeUrl]);
+  const [recipe, error, state] = usePromise(() => (
+    params.recipeUrl ? scrapeRecipe(params.recipeUrl) : Promise.resolve(undefined)
+  ), [params.recipeUrl]);
 
-  useEffect(() => {
-    scrapeRecipe(params.recipeUrl as string)
-      .then(setRecipe)
-      .catch(() => {
-        toast.error('Wystąpił błąd podczas wczytywania przepisu');
-        navigate(-1);
-      });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.recipeUrl]);
+  const providerName = useMemo(() => (
+    params.recipeUrl ? chooseProvider(params.recipeUrl).name : undefined
+  ), [params.recipeUrl]);
 
   return (
     <>
-      {!recipe && (
+      {state === 'pending' && (
         <LoadingOverlay>
           <LoadingText>Ładowanie przepisu...</LoadingText>
-          <CancelButton to={urls.home()}>Anuluj</CancelButton>
         </LoadingOverlay>
+      )}
+
+      {error && (
+        <ErrorInfo
+          error={`Wystąpił błąd podczas wczytywania przepisu. ${providerName ? '' : 'Strona, z której pochodzi przepis może nie być wspierana'}`}
+          actions={(
+            <LinkButton
+              size="small"
+              to={urls.recipes()}
+              icon={BackArrowIcon}
+            >
+              Powrót do listy przepisów
+            </LinkButton>
+          )}
+        />
       )}
 
       {recipe && <Recipe recipe={recipe} />}

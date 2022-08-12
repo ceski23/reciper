@@ -9,6 +9,7 @@ describe('InputSetting', () => {
   it('should render correctly', () => {
     const { asFragment } = renderWithProviders(
       <InputSetting
+        id="test"
         value="test"
         type="text"
         onChange={vi.fn()}
@@ -26,6 +27,7 @@ describe('InputSetting', () => {
 
     renderWithProviders(
       <InputSetting
+        id="test"
         onChange={handleChange}
         type="text"
         value=""

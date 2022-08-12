@@ -10,12 +10,13 @@ export const RedirectSharedRecipe: VFC = () => {
 
   useEffect(() => {
     const recipeUrl = params.get('url');
-    if (recipeUrl) {
-      const internalUrl = urls.recipes.byUrl({
-        recipeUrl: encodeURIComponent(recipeUrl),
-      });
-      navigate(internalUrl, { replace: true });
-    }
+    if (!recipeUrl) return;
+
+    const internalUrl = urls.recipes.byUrl({
+      recipeUrl: encodeURIComponent(recipeUrl),
+    });
+
+    navigate(internalUrl, { replace: true });
   }, [navigate, params]);
 
   return null;

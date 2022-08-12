@@ -7,19 +7,26 @@ import { colorExtractor } from 'services/recipes/providers/utils';
 
 import { getTextFromNode } from 'utils/dom';
 import { isElementNode, nonNullable } from 'utils/guards';
+import appLogger from 'utils/logger';
 import { removeEmpty } from 'utils/objects';
+
+const log = appLogger.extend('scrapper:aniagotuje');
 
 export const AniaGotujeProvider: Provider = (() => {
   const name = 'AniaGotuje.pl';
   const url = 'https://aniagotuje.pl/';
 
   const parseIngredients = (doc: Document) => {
+    log('parsing ingredients...');
+
     const root = doc.querySelector('[itemprop="recipeInstructions"] > .ads-slot-article + div');
     const ingredientsHeaders = root?.querySelectorAll<HTMLParagraphElement>('.ing-header');
     const ingredients: RecipeIngredient[] = [];
 
     // Single recipe
     if (ingredientsHeaders?.length === 0) {
+      log('found single ingredients group');
+
       const groupItemsElement = root?.querySelectorAll('.recipe-ing-list [itemprop="recipeIngredient"]');
       const groupItems = Array.from(groupItemsElement ?? [])
         .map((item) => item.textContent?.trim())
@@ -30,6 +37,8 @@ export const AniaGotujeProvider: Provider = (() => {
 
       return ingredients;
     }
+
+    log('found multiple ingredients groups');
 
     // Recipe with sub-recipes
     ingredientsHeaders?.forEach((ingHeader) => {
@@ -44,10 +53,14 @@ export const AniaGotujeProvider: Provider = (() => {
       ingredients.push(...groupItems);
     });
 
+    log('parsed ingredients:', ingredients);
+
     return ingredients;
   };
 
   const parseInstructions = (doc: Document) => {
+    log('parsing instructions...');
+
     const instructions: RecipeInstruction[] = [];
     let currentElement: Node | Element | null = doc.querySelector('[itemprop="recipeInstructions"] .recipe-ing-list + h2');
     let header: string | undefined;
@@ -69,12 +82,31 @@ export const AniaGotujeProvider: Provider = (() => {
       currentElement = currentElement.nextSibling;
     }
 
+    log('parsed instructions:', instructions);
+
     return instructions;
+  };
+
+  const parseImages = (doc: Document) => {
+    log('looking for images');
+
+    const imageElements = doc.querySelectorAll('[itemprop="recipeInstructions"] img');
+    const images = Array
+      .from(imageElements)
+      .map((elem) => elem.getAttribute('data-src'))
+      .filter(nonNullable);
+
+    log('found images:', images);
+
+    return images;
   };
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const scrapper: RecipeScrapper = async (doc) => {
+    log('scrapping recipe...');
+
     const data = await microdataScrapper(doc);
+    log('data from microdata:', data);
 
     let color;
     if (data?.image) {
@@ -89,7 +121,10 @@ export const AniaGotujeProvider: Provider = (() => {
       name: recipeName,
       ingredients: parseIngredients(doc),
       instructions: parseInstructions(doc),
+      gallery: parseImages(doc),
     };
+
+    log('additional data:', partial);
 
     return Object.assign(data, removeEmpty(partial));
   };

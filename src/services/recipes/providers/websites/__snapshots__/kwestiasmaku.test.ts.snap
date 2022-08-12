@@ -6,6 +6,10 @@ exports[`scrapper > should scrape valid recipe 1`] = `
   "description": "To sposób na pyszny napój dla całej rodziny. Świetnie sprawdzi się na przyjęciach, ładnie wygląda i każdy zawsze sięga po dokładkę :-)
                       Pomarańcze i cytryny kroję na półplasterki, zasypuję cukrem i odstawiam do lodówki. Dodaję też nasiona kardamonu (wcześniej podprażone aby uwolniły swój aromat) oraz liście mięty. Taką mieszankę trzymam w lodówce do czasu podania lemoniady. Wówczas do cytrusów dolewam zimną wodę, świeżo wyciśnięty sok z cytryny, pomarańczy i limonki. Gotową lemoniadę podaję z kostkami lodu.
                       Lato na szczęście ciągle trwa, zapowiada się słoneczna pogoda na następne dni, warto skorzystać z przepisu i zrobić dobrą lemoniadę; świetnie sprawdzi się na stole np. podczas weekendowego grilla ;-)",
+  "gallery": [
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/lemoniada_01.jpg",
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/lemoniada_02.jpg",
+  ],
   "id": "1",
   "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/lemoniada_00.jpg",
   "ingredients": [
@@ -63,6 +67,11 @@ exports[`scrapper > should scrape valid recipe with sub-recipes 1`] = `
   "color": "#7f7f7f",
   "description": "Ciasto kruche z truskawkami, serem i kruszonką. Tradycyjne ciasto w nowoczesnej odsłonie. Często pytacie o modyfikację tego ulubionego przepisu - czy da się w prosty sposób zamienić rabarbar na truskawki? Jak je przygotować aby ciasto nie namokło od wilgotnych owoców? W tym przepisie rozwiąże Wasze wszelkie wątpliwości.
                      Mocną stroną tego wypieku - oprócz pysznej warstwy serowej i kokosowej kruszonki - jest idealne, kruche i delikatne ciasto z dodatkiem mąki ryżowej lub ziemniaczanej. Mąka ryżowa - kiedyś trudna do kupienia - jest teraz w stałej ofercie większości supermarketów w świetnej cenie. Spróbujcie jej w cieście kruchym a nie będziecie używać już innej :-) Oczywiście możecie użyć też łatwiejszej do dostania mąki ziemniaczanej.",
+  "gallery": [
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/ciasto_kruche_z_truskawkami_i_serem_01.jpg",
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/ciasto_kruche_z_truskawkami_i_serem_02.jpg",
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/ciasto_kruche_z_truskawkami_i_serem_03.jpg",
+  ],
   "id": "1",
   "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/ciasto_kruche_z_truskawkami_i_serem_00.jpg",
   "ingredients": [

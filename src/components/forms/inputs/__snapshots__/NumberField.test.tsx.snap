@@ -63,6 +63,7 @@ exports[`NumberField > should render correctly 1`] = `
   border-right: none;
   border-radius: 0;
   text-align: center;
+  width: 100%;
 }
 
 .emotion-4::-webkit-input-placeholder {

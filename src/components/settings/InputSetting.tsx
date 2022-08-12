@@ -1,5 +1,8 @@
 /* eslint-disable react/require-default-props */
 import styled from '@emotion/styled';
+import { ChangeEvent } from 'react';
+
+import { Field } from 'components/forms/inputs/Field';
 
 import { color } from 'utils/styles/theme';
 
@@ -15,15 +18,10 @@ const Container = styled.label`
   margin-bottom: 30px;
 `;
 
-const Input = styled.input`
-  appearance: none;
+const Input = styled(Field)`
   width: 70px;
   height: 40px;
-  border-radius: 5px;
-  border: 4px solid ${color('background')};
-  background-color: ${color('background')};
   align-self: center;
-  box-shadow: 0 0 1px ${color('shadow')};
 `;
 
 const Hint = styled.p`
@@ -44,21 +42,25 @@ interface Props {
   onChange: (value: string) => void;
   value: string;
   type: string;
+  id: string;
 }
 
 export const InputSetting = ({
-  onChange, value, title, hint, type,
+  onChange, value, title, hint, type, id,
 }: Props) => (
   <Container>
     <InfoContainer>
       {title && <Label>{title}</Label>}
       {hint && <Hint>{hint}</Hint>}
     </InfoContainer>
-    <Input
-      type={type}
-      min={0}
-      value={value}
-      onChange={(event) => onChange(event.currentTarget.value)}
-    />
+    <div>
+      <Input
+        id={id}
+        type={type}
+        min={0}
+        value={value}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => onChange(event.currentTarget.value)}
+      />
+    </div>
   </Container>
 );

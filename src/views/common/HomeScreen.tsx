@@ -45,7 +45,7 @@ const RecipesList = styled(motion.div)`
   column-gap: 40px;
   row-gap: 50px;
   padding-bottom: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
 
   ${media.down('small')} {
     grid-template-columns: repeat(2, 1fr);
@@ -93,7 +93,7 @@ export const HomeScreen: VFC = () => {
         <WelcomeText>
           Witaj, {user ? user.firstName : 'nieznajomy'}!
         </WelcomeText>
-        <Link to={urls.settings()}>
+        <Link to={urls.settings.account()}>
           <UserAvatar src={user?.image} />
         </Link>
       </Header>

@@ -4,6 +4,9 @@ exports[`scrapper > should scrape valid recipe 1`] = `
 {
   "color": "#7f7f7f",
   "description": "Przepis dla wielbicieli grejpfrutów, czyli cytrusowa lemoniada z sokiem grejpfrutowym i szczyptą egzotycznego kardamonu.",
+  "gallery": [
+    "https://pliki.doradcasmaku.pl/grejfrutowa-lemoniada-z-kardamonem0-4.jpg",
+  ],
   "id": "1",
   "image": "https://pliki.doradcasmaku.pl/grejfrutowa-lemoniada-z-kardamonem0-4.jpg",
   "ingredients": [
@@ -57,6 +60,11 @@ exports[`scrapper > should scrape valid recipe with ingredients groups 1`] = `
 {
   "color": "#7f7f7f",
   "description": "Kawa + kawałek ciasta, brzmi jak deser idealny! A co powiecie na połączenie kawy w sezonowej tarcie z malinami? Na sam widok tej słodkości i na myśl o niej aż robi się słodko!",
+  "gallery": [
+    "https://pliki.doradcasmaku.pl/tarta-z-kremem-kawowym-i-malinami0-4.jpg",
+    "https://pliki.doradcasmaku.pl/tarta-z-kremem-kawowym-i-malinami1-4.jpg",
+    "https://pliki.doradcasmaku.pl/tarta-z-kremem-kawowym-i-malinami2-4.jpg",
+  ],
   "id": "1",
   "image": "https://pliki.doradcasmaku.pl/tarta-z-kremem-kawowym-i-malinami0-4.jpg",
   "ingredients": [
@@ -131,6 +139,7 @@ exports[`scrapper > should scrape valid recipe with ingredients groups 1`] = `
   "tags": [
     "przepisy na ciasta z kremem",
     "kuchnia polska",
+    "tarta z kremem kawowym i malinami",
   ],
 }
 `;

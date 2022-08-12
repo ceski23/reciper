@@ -22,6 +22,7 @@ export interface Recipe {
   calories?: number;
   tags: string[];
   servings?: number;
+  gallery?: string[];
 }
 
 // eslint-disable-next-line arrow-body-style

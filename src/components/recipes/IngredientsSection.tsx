@@ -2,22 +2,17 @@
 import styled from '@emotion/styled';
 import IntlMessageFormat from 'intl-messageformat';
 import { FC, useMemo, useState } from 'react';
-import toast from 'react-hot-toast';
 
-import { ReactComponent as ShoppingList } from 'assets/recipes/shopping-list.svg';
+// import { ReactComponent as ShoppingList } from 'assets/recipes/shopping-list.svg';
 
-import { Button } from 'components/common/Button';
 import { IngredientItem } from 'components/recipes/IngredientItem';
 import { Servings } from 'components/recipes/Servings';
-
-import { useAccountProvider } from 'hooks/accounts/useAccountProvider';
-import { useAppSelector } from 'hooks/store';
 
 import { ParsedIngredient } from 'services/ingredients/models';
 import { parseIngredient } from 'services/ingredients/parser';
 import { RecipeIngredient } from 'services/recipes';
 
-import { selectShoppingList } from 'store/user';
+// import { selectShoppingList } from 'store/user';
 
 import { color } from 'utils/styles/theme';
 import { fluidTypography } from 'utils/styles/typography';
@@ -31,7 +26,7 @@ interface IngredientsSectionProps {
   ingredientsGroup: IngredientsGroup;
   servings?: number;
   onIngredientClick?: (ingredient: ParsedIngredient) => void;
-  recipeName: string;
+  // recipeName: string;
 }
 
 export const ingredientsText = new IntlMessageFormat(`
@@ -56,11 +51,11 @@ const adjustIngredientQuantity = (
 };
 
 export const IngredientsSection: FC<IngredientsSectionProps> = ({
-  ingredientsGroup, servings: initialServings, onIngredientClick, recipeName,
+  ingredientsGroup, servings: initialServings, onIngredientClick,
 }) => {
   const [servings, setServings] = useState(initialServings);
-  const shoppingList = useAppSelector(selectShoppingList);
-  const accountProvider = useAccountProvider();
+  // const shoppingList = useAppSelector(selectShoppingList);
+  // const accountProvider = useAccountProvider();
 
   const parsedIngredients = useMemo<ParsedIngredient[]>(() => (
     ingredientsGroup.ingredients
@@ -68,22 +63,22 @@ export const IngredientsSection: FC<IngredientsSectionProps> = ({
       .map((ingredient) => adjustIngredientQuantity(ingredient, servings, initialServings))
   ), [ingredientsGroup.ingredients, initialServings, servings]);
 
-  const handleAddToShoppingList = () => {
-    if (accountProvider && shoppingList && parsedIngredients) {
-      const promise = accountProvider.addIngredientsToList(
-        shoppingList.id,
-        parsedIngredients.map((i) => i.original),
-        ingredientsGroup.group ? `${recipeName} - ${ingredientsGroup.group}` : recipeName,
-      );
+  // const handleAddToShoppingList = () => {
+  //   if (accountProvider && shoppingList && parsedIngredients) {
+  //     const promise = accountProvider.addIngredientsToList(
+  //       shoppingList.id,
+  //       parsedIngredients.map((i) => i.original),
+  //       ingredientsGroup.group ? `${recipeName} - ${ingredientsGroup.group}` : recipeName,
+  //     );
 
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      toast.promise(promise, {
-        loading: 'Dodawanie do listy',
-        success: 'Dodano składniki do listy',
-        error: 'Wystąpił błąd podczas dodawania składników',
-      });
-    }
-  };
+  //     // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  //     toast.promise(promise, {
+  //       loading: 'Dodawanie do listy',
+  //       success: 'Dodano składniki do listy',
+  //       error: 'Wystąpił błąd podczas dodawania składników',
+  //     });
+  //   }
+  // };
 
   return (
     <>
@@ -99,20 +94,21 @@ export const IngredientsSection: FC<IngredientsSectionProps> = ({
         {!!servings && <Servings servings={servings} onServingsChange={setServings} />}
 
         <IngredientsList>
-          {parsedIngredients.map((ingredient) => (
+          {parsedIngredients.map((ingredient, idx) => (
             <IngredientItem
               ingredient={ingredient}
-              key={ingredient.original}
+              // eslint-disable-next-line react/no-array-index-key
+              key={idx}
               onClick={() => onIngredientClick?.(ingredient)}
             />
           ))}
         </IngredientsList>
 
-        {shoppingList && (
-        <AddToListButton icon={ShoppingList} onClick={handleAddToShoppingList}>
-          {`Dodaj do "${shoppingList.name}"`}
-        </AddToListButton>
-        )}
+        {/* {shoppingList && (
+          <AddToListButton icon={ShoppingList} onClick={handleAddToShoppingList}>
+            {`Dodaj do "${shoppingList.name}"`}
+          </AddToListButton>
+        )} */}
       </IngredientsContainer>
     </>
   );
@@ -150,6 +146,6 @@ const IngredientsList = styled.div`
   gap: 10px;
 `;
 
-const AddToListButton = styled(Button)`
-  width: 100%;
-`;
+// const AddToListButton = styled(Button)`
+//   width: 100%;
+// `;

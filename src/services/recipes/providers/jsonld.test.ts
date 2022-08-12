@@ -212,4 +212,68 @@ describe('scrapper', () => {
     `);
     expect(recipe.tags).toStrictEqual(['test1', 'test2']);
   });
+
+  it('should detect recipe\'s images', async () => {
+    let recipe = await scrapeRecipe(/* html */`
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org/",
+          "@type": "Recipe",
+          "image": "test.jpg"
+        }
+      </script>
+    `);
+    expect(recipe.gallery).toStrictEqual(['test.jpg']);
+
+    recipe = await scrapeRecipe(/* html */`
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org/",
+          "@type": "Recipe",
+          "image": {
+            "@type": "ImageObject",
+            "url": "test.jpg",
+            "width": 1,
+            "height": 1
+          }
+        }
+      </script>
+    `);
+    expect(recipe.gallery).toStrictEqual(['test.jpg']);
+
+    recipe = await scrapeRecipe(/* html */`
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org/",
+          "@type": "Recipe",
+          "image": [
+            {
+              "@type": "ImageObject",
+              "url": "test1.jpg",
+              "width": 1,
+              "height": 1
+            },
+            {
+              "@type": "ImageObject",
+              "url": "test2.jpg",
+              "width": 1,
+              "height": 1
+            }
+          ]
+        }
+      </script>
+    `);
+    expect(recipe.gallery).toStrictEqual(['test1.jpg', 'test2.jpg']);
+
+    recipe = await scrapeRecipe(/* html */`
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org/",
+          "@type": "Recipe",
+          "image": ["test1.jpg", "test2.jpg"]
+        }
+      </script>
+    `);
+    expect(recipe.gallery).toStrictEqual(['test1.jpg', 'test2.jpg']);
+  });
 });

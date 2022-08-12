@@ -1,7 +1,10 @@
-import { VFC, useEffect } from 'react';
-import toast from 'react-hot-toast';
-import { useNavigate, useParams } from 'react-router-dom';
+import { VFC } from 'react';
+import { useParams } from 'react-router-dom';
 
+import { ReactComponent as BackArrowIcon } from 'assets/common/left-arrow.svg';
+
+import { ErrorInfo } from 'components/common/ErrorInfo';
+import { LinkButton } from 'components/common/LinkButton';
 import { Recipe } from 'components/recipes/Recipe';
 
 import { useWakelock } from 'hooks/recipes/useWakelock';
@@ -12,7 +15,6 @@ import { urls } from 'routing/urls';
 import { selectRecipes } from 'store/recipes';
 
 export const RecipeScreen: VFC = () => {
-  const navigate = useNavigate();
   const recipes = useAppSelector(selectRecipes);
   const params = useParams();
   const recipe = params.recipeId ? recipes[params.recipeId] : undefined;
@@ -20,13 +22,24 @@ export const RecipeScreen: VFC = () => {
   // Don't fade the screen when recipe screen is mounted
   useWakelock();
 
-  useEffect(() => {
-    if (params.recipeId && !(params.recipeId in recipes)) {
-      toast.error('Przepis o takim ID nie istnieje!');
-      navigate(urls.home());
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.recipeId]);
+  return (
+    <>
+      {params.recipeId && !(params.recipeId in recipes) && (
+        <ErrorInfo
+          error="Nie znaleziono takiego przepisu"
+          actions={(
+            <LinkButton
+              size="small"
+              to={urls.recipes()}
+              icon={BackArrowIcon}
+            >
+              Powrót do listy przepisów
+            </LinkButton>
+          )}
+        />
+      )}
 
-  return recipe ? <Recipe recipe={recipe} /> : null;
+      {recipe && <Recipe recipe={recipe} />}
+    </>
+  );
 };

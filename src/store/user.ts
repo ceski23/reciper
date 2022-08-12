@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 
 import { RootState } from 'store';
 
-import { TaskListInfo, UserInfo } from 'services/accounts/AccountProvider';
+import { UserInfo } from 'services/accounts/AccountProvider';
 import {
   AccountProviders, chooseAccountProvider,
 } from 'services/accounts/providers';
@@ -17,7 +17,7 @@ interface UserState {
     type: AccountProviders;
   };
   userInfo?: UserInfo;
-  shoppingList?: TaskListInfo;
+  // shoppingList?: TaskListInfo;
 }
 
 const initialState: UserState = {};
@@ -46,21 +46,21 @@ const slice = createSlice({
 
       state.accountInfo = undefined;
       state.userInfo = undefined;
-      state.shoppingList = undefined;
+      // state.shoppingList = undefined;
     },
-    setShoppingList: (state, { payload }: PayloadAction<UserState['shoppingList']>) => {
-      state.shoppingList = payload;
-    },
+    // setShoppingList: (state, { payload }: PayloadAction<UserState['shoppingList']>) => {
+    //   state.shoppingList = payload;
+    // },
   },
 });
 
 export const {
-  setAccountProvider, setUserInfo, logoutUser, setShoppingList, setAccessToken,
+  setAccountProvider, setUserInfo, logoutUser, setAccessToken,
 } = slice.actions;
 
 export const selectAccountInfo = (state: RootState) => state.user.accountInfo;
 export const selectUserInfo = (state: RootState) => state.user.userInfo;
-export const selectShoppingList = (state: RootState) => state.user.shoppingList;
+// export const selectShoppingList = (state: RootState) => state.user.shoppingList;
 
 export default persistReducer({
   key: 'user',

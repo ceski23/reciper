@@ -8,10 +8,10 @@ export interface UserInfo {
   image: string;
 }
 
-export interface TaskListInfo {
-  id: string;
-  name: string;
-}
+// export interface TaskListInfo {
+//   id: string;
+//   name: string;
+// }
 
 export abstract class AccountProvider {
   constructor(accessToken: string) {
@@ -30,15 +30,15 @@ export abstract class AccountProvider {
 
   abstract getUserInfo(): Promise<UserInfo>;
 
-  abstract getTaskLists(): Promise<TaskListInfo[]>;
+  // abstract getTaskLists(): Promise<TaskListInfo[]>;
 
   abstract logout(): Promise<void>;
 
-  abstract addIngredientsToList(
-    listId: string,
-    ingredients: string[],
-    recipeTitle: string
-  ): Promise<void>;
+  // abstract addIngredientsToList(
+  //   listId: string,
+  //   ingredients: string[],
+  //   recipeTitle: string
+  // ): Promise<void>;
 
   abstract backupRecipes(recipes: RecipesState & PersistPartial): Promise<void>;
 
