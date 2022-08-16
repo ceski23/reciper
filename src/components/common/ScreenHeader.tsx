@@ -1,12 +1,12 @@
 import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
+import { animated, useSpring } from '@react-spring/web';
 import { VFC } from 'react';
 import { Link, LinkProps, useNavigate } from 'react-router-dom';
 
 import { ReactComponent as BackIcon } from 'assets/common/left-arrow.svg';
 
-const Header = styled(motion.div)`
+const Header = styled(animated.div)`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -36,13 +36,13 @@ interface Props {
 export const ScreenHeader: VFC<Props> = ({ title, backLink, id }) => {
   const navigate = useNavigate();
 
+  const animation = useSpring({
+    from: { opacity: 0, x: 50 },
+    to: { opacity: 1, x: 0 },
+  });
+
   return (
-    <Header
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 50 }}
-      transition={{ duration: 0.2 }}
-    >
+    <Header style={animation}>
       {backLink !== false && backLink ? (
         <BackLink to={backLink}><BackIcon /></BackLink>
       ) : (

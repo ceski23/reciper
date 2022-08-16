@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
-import { AnimatePresence, motion } from 'framer-motion';
+import {
+  animated, config, useSpring, useTransition,
+} from '@react-spring/web';
 import React, { createContext, FC, useMemo } from 'react';
 
 import { ModalBody } from 'components/common/modal/ModalBody';
@@ -27,7 +29,7 @@ interface Subcomponents {
   Footer: typeof ModalFooter;
 }
 
-const Container = styled(motion.div)`
+const Container = styled(animated.div)`
   background-color: ${color('background')};
   color: ${color('text')};
   width: min(500px, 90%);
@@ -41,7 +43,7 @@ const Container = styled(motion.div)`
   z-index: 99;
 `;
 
-const Backdrop = styled(motion.div)`
+const Backdrop = styled(animated.div)`
   background-color: #00000075;
   position: fixed;
   inset: 0;
@@ -50,29 +52,6 @@ const Backdrop = styled(motion.div)`
   cursor: pointer;
   z-index: 99;
 `;
-
-const dropIn = {
-  hidden: {
-    y: '0',
-    x: '50%',
-    opacity: 0,
-  },
-  visible: {
-    y: '-50%',
-    x: '50%',
-    opacity: 1,
-    transition: {
-      duration: 0.1,
-      type: 'spring',
-      damping: 25,
-      stiffness: 500,
-    },
-  },
-  exit: {
-    x: '50%',
-    opacity: 0,
-  },
-};
 
 interface ModalContextData {
   onClose: ModalProps['onClose'];
@@ -89,39 +68,40 @@ const Modal: FC<ModalProps> & Subcomponents = ({
     if (closeOnEscape) onClose();
   });
 
+  const backdropStyles = useSpring({ opacity: isOpen ? 1 : 0 });
+
+  const transition = useTransition(isOpen, {
+    from: { opacity: 0, x: '50%', y: '0%' },
+    enter: { opacity: 1, x: '50%', y: '-50%' },
+    leave: { opacity: 0, x: '50%', y: '0%' },
+    config: config.stiff,
+  });
+
   const data = useMemo(() => ({
     onAccept, onClose, loading,
   }), [loading, onAccept, onClose]);
 
   return (
     <ModalContext.Provider value={data}>
-      <AnimatePresence initial={false} exitBeforeEnter>
-        {isOpen && (
-          <ReactPortal wrapperId="modal">
-            {showBackdrop && (
-              <Backdrop
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                onClick={onClose}
-                data-testid="backdrop"
-              />
-            )}
+      {transition((animation, show) => show && (
+        <ReactPortal wrapperId="modal">
+          {showBackdrop && (
+            <Backdrop
+              onClick={onClose}
+              data-testid="backdrop"
+              style={backdropStyles}
+            />
+          )}
 
-            <Container
-              variants={dropIn}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              role="dialog"
-              aria-modal="true"
-            >
-              {children}
-            </Container>
-          </ReactPortal>
-        )}
-      </AnimatePresence>
+          <Container
+            role="dialog"
+            aria-modal="true"
+            style={animation}
+          >
+            {children}
+          </Container>
+        </ReactPortal>
+      ))}
     </ModalContext.Provider>
   );
 };

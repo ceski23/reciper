@@ -30,7 +30,7 @@ exports[`ScreenHeader > should render header with title and backlink 1`] = `
 
 <div
     class="emotion-0 emotion-1"
-    style="opacity: 0; transform: translateX(50px) translateZ(0);"
+    style="opacity: 0; transform: translate3d(50px,0,0);"
   >
     <button
       class="emotion-2 emotion-3"

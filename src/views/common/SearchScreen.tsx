@@ -1,39 +1,24 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import {
+  useCallback,
   useEffect, useRef, useState, VFC,
 } from 'react';
-import Sheet from 'react-modal-sheet';
 
 import { ReactComponent as FilterIcon } from 'assets/common/filter.svg';
 
+import { BottomSheet, SheetState } from 'components/common/BottomSheet';
 import { FluidContainer } from 'components/common/Container';
 import { RecipesFilters } from 'components/common/RecipesFilters';
 import { ScreenHeader } from 'components/common/ScreenHeader';
 import { Searchbar } from 'components/common/Searchbar';
-import { RecipeTile } from 'components/recipes/RecipeTile';
+import { RecipesList } from 'components/recipes/RecipesList';
 
 import { useRecipesFilters } from 'hooks/recipes/useRecipesFilters';
 import { useAppSelector } from 'hooks/store';
-import { useToggle } from 'hooks/useToggle';
 
 import { searchRecipes } from 'store/recipes';
 
-import { staggeredGrid, slideUp } from 'utils/styles/animations';
-import { media } from 'utils/styles/mediaQueries';
 import { color } from 'utils/styles/theme';
-
-const RecipesList = styled(motion.div)`
-  display: grid;
-  column-gap: 40px;
-  padding-bottom: 20px;
-  row-gap: 50px;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-
-  ${media.down('small')} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`;
 
 const StyledSearchBar = styled(Searchbar)`
   flex: 1;
@@ -61,27 +46,10 @@ const StyledFilterIcon = styled(FilterIcon)`
   fill: ${color('textalt')};
 `;
 
-const StyledSheet = styled(Sheet)`
-  .react-modal-sheet-container {
-    background-color: ${color('background')} !important;
-  }
-
-  .react-modal-sheet-backdrop {
-    border: none;
-  }
-
-  .react-modal-sheet-content {
-    margin: 0 20px;
-    display: flex;
-    flex-direction: column; 
-  }
-`;
-
-const AnimatedRecipeTile = motion(RecipeTile);
-
 export const SearchScreen: VFC = () => {
-  const [filtersExpanded, expandFilters, closeFilters] = useToggle(false);
   const [draggingDisabled, setDraggingDisabled] = useState(false);
+  const [filtersState, setFiltersState] = useState<SheetState>('close');
+  const expandFilters = useCallback(() => setFiltersState('peek'), []);
 
   const {
     duration, ingredients, query, updateFilters,
@@ -119,28 +87,16 @@ export const SearchScreen: VFC = () => {
         </MoreFiltersButton>
       </SearchContainer>
 
-      <RecipesList variants={staggeredGrid} initial="hidden" animate="show">
-        {results.map((recipe) => (
-          <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
-        ))}
-      </RecipesList>
+      <RecipesList recipes={results} />
 
-      <StyledSheet
-        isOpen={filtersExpanded}
-        onClose={closeFilters}
-        snapPoints={[-100, 0.3, 0]}
-        initialSnap={1}
+      <BottomSheet
+        state={filtersState}
+        onStateChange={setFiltersState}
+        disableDrag={draggingDisabled}
       >
-        <Sheet.Container>
-          <Sheet.Header />
-          <Sheet.Content disableDrag={draggingDisabled}>
-            <h2>Filtry</h2>
-            <RecipesFilters onChangingDuration={setDraggingDisabled} />
-          </Sheet.Content>
-        </Sheet.Container>
-
-        <Sheet.Backdrop onTap={closeFilters} />
-      </StyledSheet>
+        <h2>Filtry</h2>
+        <RecipesFilters onChangingDuration={setDraggingDisabled} />
+      </BottomSheet>
     </FluidContainer>
   );
 };

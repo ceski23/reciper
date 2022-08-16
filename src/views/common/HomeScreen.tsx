@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
+import { animated, useSpring } from '@react-spring/web';
 import { VFC } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -8,7 +8,7 @@ import { Link } from 'components/common/Link';
 import { LinkButton } from 'components/common/LinkButton';
 import { Searchbar } from 'components/common/Searchbar';
 import { UserAvatar } from 'components/common/UserAvatar';
-import { RecipeTile } from 'components/recipes/RecipeTile';
+import { RecipesList } from 'components/recipes/RecipesList';
 import { Tag } from 'components/recipes/Tag';
 
 import { useAppSelector } from 'hooks/store';
@@ -18,10 +18,7 @@ import { urls } from 'routing/urls';
 import { selectAllTags, selectRecipes } from 'store/recipes';
 import { selectUserInfo } from 'store/user';
 
-import { staggeredGrid, slideUp } from 'utils/styles/animations';
-import { media } from 'utils/styles/mediaQueries';
-
-const Header = styled(motion.div)`
+const Header = styled(animated.div)`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -40,18 +37,6 @@ const StyledSearchBar = styled(Searchbar)`
   margin-top: 20px;
 `;
 
-const RecipesList = styled(motion.div)`
-  display: grid;
-  column-gap: 40px;
-  row-gap: 50px;
-  padding-bottom: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-
-  ${media.down('small')} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`;
-
 const Tags = styled.div`
   display: flex;
   flex-direction: row;
@@ -67,8 +52,6 @@ const Tags = styled.div`
   }
 `;
 
-const AnimatedRecipeTile = motion(RecipeTile);
-
 // https://www.kwestiasmaku.com/przepis/filety-drobiowe-w-sosie-z-gorgonzoli
 // https://beszamel.se.pl/przepisy/dania-glowne-miesne/prosty-kurczak-w-sosie-slodko-kwasnym-gotowy-w-30-minut-re-iB8s-pmcM-Rz5i.html
 
@@ -82,14 +65,14 @@ export const HomeScreen: VFC = () => {
     navigate(urls.search());
   };
 
+  const animation = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  });
+
   return (
     <FluidContainer>
-      <Header
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.2 }}
-      >
+      <Header style={animation}>
         <WelcomeText>
           Witaj, {user ? user.firstName : 'nieznajomy'}!
         </WelcomeText>
@@ -101,11 +84,7 @@ export const HomeScreen: VFC = () => {
       <StyledSearchBar value="" onClick={handleSearchbarClick} />
 
       <h2 style={{ marginTop: 50 }} id="recently-added">Ostatnio dodane</h2>
-      <RecipesList variants={staggeredGrid} initial="hidden" animate="show" role="list" aria-labelledby="recently-added">
-        {Object.values(recipes).slice(0, 6).reverse().map((recipe) => (
-          <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
-        ))}
-      </RecipesList>
+      <RecipesList recipes={Object.values(recipes).slice(0, 6).reverse()} />
 
       <LinkButton to={urls.recipes()} style={{ marginTop: 30 }}>
         Wszystkie przepisy

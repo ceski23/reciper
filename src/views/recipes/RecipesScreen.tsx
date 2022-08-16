@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import { VFC } from 'react';
 import toast from 'react-hot-toast';
 
@@ -11,7 +10,7 @@ import { FluidContainer } from 'components/common/Container';
 import { LinkButton } from 'components/common/LinkButton';
 import { Modal } from 'components/common/modal/Modal';
 import { ScreenHeader } from 'components/common/ScreenHeader';
-import { RecipeTile } from 'components/recipes/RecipeTile';
+import { RecipesList } from 'components/recipes/RecipesList';
 
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 import { useModal } from 'hooks/useModal';
@@ -23,21 +22,6 @@ import {
 } from 'services/recipes/samples';
 
 import { addMultipleRecipes, removeAllRecipes, selectRecipes } from 'store/recipes';
-
-import { staggeredGrid, slideUp } from 'utils/styles/animations';
-import { media } from 'utils/styles/mediaQueries';
-
-const RecipesList = styled(motion.div)`
-  display: grid;
-  column-gap: 40px;
-  padding-bottom: 20px;
-  row-gap: 50px;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-
-  ${media.down('small')} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`;
 
 const AddRecipeButton = styled(LinkButton)`
   margin-bottom: 50px;
@@ -52,8 +36,6 @@ const SampleRecipesLink = styled.a`
   font-weight: 700;
   cursor: pointer;
 `;
-
-const AnimatedRecipeTile = motion(RecipeTile);
 
 export const RecipesScreen: VFC = () => {
   const recipes = useAppSelector(selectRecipes);
@@ -81,11 +63,7 @@ export const RecipesScreen: VFC = () => {
 
       <AddRecipeButton icon={AddIcon} to={urls.recipes.new()}>Nowy przepis</AddRecipeButton>
 
-      <RecipesList variants={staggeredGrid} initial="hidden" animate="show">
-        {Object.values(recipes).map((recipe) => (
-          <AnimatedRecipeTile recipe={recipe} key={recipe.id} variants={slideUp} />
-        ))}
-      </RecipesList>
+      <RecipesList recipes={Object.values(recipes)} />
 
       {Object.keys(recipes).length === 0 ? (
         <EmptyText>

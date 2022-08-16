@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
+import { animated } from '@react-spring/web';
 import dayjs from 'dayjs';
-import { motion } from 'framer-motion';
 import IntlMessageFormat from 'intl-messageformat';
 import { forwardRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
@@ -26,7 +26,7 @@ export const ingredientsText = new IntlMessageFormat(`
   }
 `, 'pl-PL');
 
-const Tile = styled(motion(Link))`
+const Tile = styled(animated(Link))`
   width: 100%;
   height: min-content;
   overflow: hidden;
@@ -75,7 +75,7 @@ const Placeholder = styled.div`
   padding: 50px;
 `;
 
-export const RecipeTile = forwardRef<HTMLElement, Props>(({ recipe }, ref) => {
+export const RecipeTile = forwardRef<HTMLAnchorElement, Props>(({ recipe }, ref) => {
   const ingredients = useMemo(() => ingredientsText.format({
     quantity: recipe.ingredients.length,
   }), [recipe.ingredients.length]);
@@ -88,7 +88,6 @@ export const RecipeTile = forwardRef<HTMLElement, Props>(({ recipe }, ref) => {
     <Tile
       ref={ref}
       to={urls.recipes.byId({ recipeId: recipe.id })}
-      // variants={recipeItemAnimation}
     >
       {recipe.image
         ? <Image src={recipe.image} alt={recipe.name} />

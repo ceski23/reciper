@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
+import { animated, useTransition } from '@react-spring/web';
 import { FC } from 'react';
+import { useLocation } from 'react-router';
 
 import { ReactComponent as HomeIcon } from 'assets/common/home.svg';
 import { ReactComponent as SearchIcon } from 'assets/common/loupe.svg';
@@ -16,7 +17,7 @@ import { urls } from 'routing/urls';
 import { media } from 'utils/styles/mediaQueries';
 import { color } from 'utils/styles/theme';
 
-const PageBody = styled(motion.div)`
+const PageBody = styled(animated.div)`
   overflow: auto;
   grid-column: 2;
 
@@ -71,29 +72,39 @@ const AppName = styled.p`
   font-weight: 700;
 `;
 
-export const Page: FC = ({ children }) => (
-  <PageContainer>
-    <PageSidebar>
-      <Logo>
-        <AppIcon />
-        <AppName>Reciper</AppName>
-      </Logo>
+export const Page: FC = ({ children }) => {
+  const location = useLocation();
 
-      <NavigationMenu>
-        <NavigationMenuItem title="Główna" icon={HomeIcon} to={urls.home()} />
-        <NavigationMenuItem title="Szukaj" icon={SearchIcon} to={urls.search()} />
-        <NavigationMenuItem title="Przepisy" icon={RecipesIcon} to={urls.recipes()} />
-        <NavigationMenuItem title="Ustawienia" icon={SettingsIcon} to={urls.settings()} />
-      </NavigationMenu>
-    </PageSidebar>
+  const transitions = useTransition(children, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    exitBeforeEnter: true,
+    config: { duration: 200 },
+    keys: () => location.pathname,
+  });
 
-    <PageBody
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-    >
-      {children}
-    </PageBody>
-  </PageContainer>
-);
+  return (
+    <PageContainer>
+      <PageSidebar>
+        <Logo>
+          <AppIcon />
+          <AppName>Reciper</AppName>
+        </Logo>
+
+        <NavigationMenu>
+          <NavigationMenuItem title="Główna" icon={HomeIcon} to={urls.home()} />
+          <NavigationMenuItem title="Szukaj" icon={SearchIcon} to={urls.search()} />
+          <NavigationMenuItem title="Przepisy" icon={RecipesIcon} to={urls.recipes()} />
+          <NavigationMenuItem title="Ustawienia" icon={SettingsIcon} to={urls.settings()} />
+        </NavigationMenu>
+      </PageSidebar>
+
+      {transitions((styles, content) => (
+        <PageBody style={styles}>
+          {content}
+        </PageBody>
+      ))}
+    </PageContainer>
+  );
+};

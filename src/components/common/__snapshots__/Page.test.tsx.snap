@@ -182,17 +182,6 @@ exports[`Page > should render correctly 1`] = `
   }
 }
 
-.emotion-34 {
-  overflow: auto;
-  grid-column: 2;
-}
-
-@media (max-width: 768px) {
-  .emotion-34 {
-    padding-bottom: 70px;
-  }
-}
-
 <div
     class="emotion-0 emotion-1"
   >
@@ -374,10 +363,6 @@ exports[`Page > should render correctly 1`] = `
         </div>
       </nav>
     </aside>
-    <div
-      class="emotion-34 emotion-35"
-      style="opacity: 0;"
-    />
   </div>
 </DocumentFragment>
 `;

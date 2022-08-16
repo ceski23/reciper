@@ -1,7 +1,6 @@
-import { AnimatePresence } from 'framer-motion';
 import { useEffect, VFC } from 'react';
 import toast from 'react-hot-toast';
-import { useLocation, useRoutes } from 'react-router';
+import { useRoutes } from 'react-router';
 
 import { Page } from 'components/common/Page';
 
@@ -21,12 +20,7 @@ export const AuthWrapper: VFC = () => {
   const dispatch = useAppDispatch();
   const accountInfo = useAppSelector(selectAccountInfo);
   const content = useRoutes(routes);
-  const location = useLocation();
   const syncEnabled = useAppSelector(selectRecipesAutoSync);
-
-  const handleExitComplete = () => {
-    window.scrollTo(0, 0);
-  };
 
   useEffect(() => {
     accountProvider?.getUserInfo()
@@ -50,13 +44,10 @@ export const AuthWrapper: VFC = () => {
       });
   }, [accountInfo?.type, accountProvider, dispatch, syncEnabled]);
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
   return (
-    <AnimatePresence exitBeforeEnter onExitComplete={handleExitComplete}>
-      <Page key={location.pathname}>
-        {content}
-      </Page>
-    </AnimatePresence>
+    <Page>
+      {content}
+    </Page>
   );
 };
 

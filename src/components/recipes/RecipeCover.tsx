@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import { VFC } from 'react';
 
 import { Styleable } from 'types';
@@ -13,7 +12,7 @@ interface Props {
   src?: string;
 }
 
-const Image = styled(motion.img)`
+const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -51,15 +50,9 @@ const CoverDecoration = styled.div`
   }
 `;
 
-// eslint-disable-next-line arrow-body-style
-export const RecipeCover: VFC<Props & Styleable> = ({ src, ...props }) => {
-  // const { scrollY } = useViewportScroll();
-  // const y = useTransform(scrollY, (val) => val / 2);
-
-  return (
-    <Container>
-      <Image src={src} style={{/* y */}} {...props} />
-      <CoverDecoration />
-    </Container>
-  );
-};
+export const RecipeCover: VFC<Props & Styleable> = ({ src, ...props }) => (
+  <Container>
+    <Image src={src} {...props} />
+    <CoverDecoration />
+  </Container>
+);
