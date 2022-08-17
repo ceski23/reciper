@@ -1,5 +1,4 @@
 import { createBrowserHistory } from 'history';
-import { wrapHistory } from 'oaf-react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -14,13 +13,7 @@ import 'configure';
 
 import 'photoswipe/dist/photoswipe.css';
 
-const history = createBrowserHistory();
-
-wrapHistory(history, {
-  restorePageStateOnPop: false,
-  repairFocus: false,
-  announcePageNavigation: false,
-});
+export const history = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>

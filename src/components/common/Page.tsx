@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
-import { animated, useTransition } from '@react-spring/web';
-import { FC } from 'react';
+import {
+  animated, AnimationResult, Controller, SpringValue, useTransition,
+} from '@react-spring/web';
+import { FC, ReactNode } from 'react';
 import { useLocation } from 'react-router';
 
 import { ReactComponent as HomeIcon } from 'assets/common/home.svg';
@@ -11,6 +13,8 @@ import { ReactComponent as SettingsIcon } from 'assets/settings/cogwheel.svg';
 
 import { NavigationMenu } from 'components/navigation/NavigationMenu';
 import { NavigationMenuItem } from 'components/navigation/NavigationMenuItem';
+
+import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import { urls } from 'routing/urls';
 
@@ -74,14 +78,19 @@ const AppName = styled.p`
 
 export const Page: FC = ({ children }) => {
   const location = useLocation();
+  const { ref, restoreScroll } = useScrollRestoration<HTMLDivElement>(false);
 
   const transitions = useTransition(children, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
     exitBeforeEnter: true,
-    config: { duration: 200 },
-    keys: () => location.pathname,
+    config: { duration: 100 },
+    key: location.pathname,
+    onStart(_result: AnimationResult, _spring: Controller | SpringValue, item?: ReactNode) {
+      // Manualy restore scroll position when starting enter animation
+      if (item === children) restoreScroll(location.key);
+    },
   });
 
   return (
@@ -101,7 +110,7 @@ export const Page: FC = ({ children }) => {
       </PageSidebar>
 
       {transitions((styles, content) => (
-        <PageBody style={styles}>
+        <PageBody ref={ref} style={styles}>
           {content}
         </PageBody>
       ))}
