@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import styled from '@emotion/styled';
-import { animated, config, useTrail } from '@react-spring/web';
+import { animated, useSpring } from '@react-spring/web';
 import { FC } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import { RecipeTile } from 'components/recipes/RecipeTile';
 
@@ -13,21 +14,28 @@ interface RecipesListProps {
   recipes: Recipe[];
 }
 
-export const RecipesList: FC<RecipesListProps> = ({ recipes }) => {
-  const trail = useTrail(recipes.length, {
-    from: { opacity: 0, y: 50 },
-    to: { opacity: 1, y: 0 },
-    config: { ...config.stiff, clamp: true },
+const AnimatedRecipeTile: FC<{ recipe: Recipe }> = ({ recipe }) => {
+  const { ref, inView } = useInView();
+
+  const styles = useSpring({
+    to: {
+      opacity: inView ? 1 : 0,
+      y: inView ? 0 : 50,
+    },
   });
 
   return (
-    <List role="list">
-      {recipes.map((recipe, idx) => (
-        <AnimatedRecipeTile recipe={recipe} key={recipe.id} style={trail[idx]} />
-      ))}
-    </List>
+    <AnimatedTile ref={ref} style={styles} recipe={recipe} />
   );
 };
+
+export const RecipesList: FC<RecipesListProps> = ({ recipes }) => (
+  <List role="list">
+    {recipes.map((recipe) => (
+      <AnimatedRecipeTile recipe={recipe} key={recipe.id} />
+    ))}
+  </List>
+);
 
 const List = styled(animated.div)`
   display: grid;
@@ -41,4 +49,4 @@ const List = styled(animated.div)`
   }
 `;
 
-const AnimatedRecipeTile = animated(RecipeTile);
+const AnimatedTile = animated(RecipeTile);
