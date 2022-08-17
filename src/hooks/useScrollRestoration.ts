@@ -2,14 +2,13 @@ import QuickLRU from 'quick-lru';
 import {
   useCallback, useEffect, useLayoutEffect, useRef,
 } from 'react';
-import { useLocation } from 'react-router';
-
-import { history } from 'index';
+import { useLocation } from 'react-router-dom';
 
 export const useScrollRestoration = <T extends HTMLElement>(autoRestore = false) => {
   const scrollPositions = useRef(new QuickLRU<string, number>({ maxSize: 10 }));
   const scrollContainer = useRef<T>(null);
   const currentLocation = useLocation();
+  const previousLocation = useRef(currentLocation);
 
   const restoreScroll = useCallback((key: string) => {
     const savedScrollPosition = scrollPositions.current.get(key) ?? 0;
@@ -21,13 +20,11 @@ export const useScrollRestoration = <T extends HTMLElement>(autoRestore = false)
   }, [autoRestore, currentLocation.key, restoreScroll]);
 
   useEffect(() => {
-    const unlisten = history.listen(() => {
-      const currentScrollPosition = scrollContainer.current?.scrollTop ?? 0;
-      scrollPositions.current.set(currentLocation.key, currentScrollPosition);
-    });
+    const currentScrollPosition = scrollContainer.current?.scrollTop ?? 0;
+    scrollPositions.current.set(previousLocation.current.key, currentScrollPosition);
 
-    return () => unlisten();
-  }, [currentLocation.key]);
+    previousLocation.current = currentLocation;
+  }, [currentLocation]);
 
   return {
     ref: scrollContainer,
