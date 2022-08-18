@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as DishIcon } from 'assets/recipes/dish.svg';
 
+import { Image } from 'components/common/Image';
+
 import { urls } from 'routing/urls';
 
 import { Recipe } from 'services/recipes';
@@ -37,7 +39,7 @@ const Tile = styled(animated(Link))`
   flex-direction: column;
 `;
 
-const Image = styled.img`
+const RecipeImage = styled(Image)`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -89,10 +91,15 @@ export const RecipeTile = forwardRef<HTMLAnchorElement, Props>(({ recipe }, ref)
       ref={ref}
       to={urls.recipes.byId({ recipeId: recipe.id })}
     >
-      {recipe.image
-        ? <Image src={recipe.image} alt={recipe.name} />
-        : <Placeholder><DishIcon /></Placeholder>}
-
+      <RecipeImage
+        src={recipe.image}
+        alt={recipe.name}
+        fallback={(
+          <Placeholder>
+            <DishIcon />
+          </Placeholder>
+        )}
+      />
       <Name>{recipe.name}</Name>
       <Info>{ingredients}{duration && ` • ${duration}`}</Info>
     </Tile>
