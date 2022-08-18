@@ -8,11 +8,6 @@ export interface UserInfo {
   image: string;
 }
 
-// export interface TaskListInfo {
-//   id: string;
-//   name: string;
-// }
-
 export abstract class AccountProvider {
   constructor(accessToken: string) {
     this.accessToken = accessToken;
@@ -24,23 +19,12 @@ export abstract class AccountProvider {
 
   static icon: string;
 
-  static startLogin: () => void;
+  static startLogin: (this: void) => void;
+  // static completeLogin: () => Promise<void>;
 
   static refreshAccessToken: (refreshToken: string) => Promise<string>;
-
   abstract getUserInfo(): Promise<UserInfo>;
-
-  // abstract getTaskLists(): Promise<TaskListInfo[]>;
-
   abstract logout(): Promise<void>;
-
-  // abstract addIngredientsToList(
-  //   listId: string,
-  //   ingredients: string[],
-  //   recipeTitle: string
-  // ): Promise<void>;
-
-  abstract backupRecipes(recipes: RecipesState & PersistPartial): Promise<void>;
-
-  abstract restoreRecipes(): Promise<(RecipesState & PersistPartial) | undefined>;
+  abstract uploadRecipes(recipes: RecipesState & PersistPartial): Promise<void>;
+  abstract downloadRecipes(): Promise<(RecipesState & PersistPartial) | undefined>;
 }

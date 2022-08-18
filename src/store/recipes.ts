@@ -12,7 +12,7 @@ import {
   AppDispatch, AppStartListening, RootState,
 } from 'store';
 
-import { chooseAccountProvider } from 'services/accounts/providers';
+import { getAccountProvider } from 'services/accounts/providers';
 import { KnownIngredient } from 'services/ingredients/models';
 import { Recipe } from 'services/recipes';
 import RecipeSearch from 'services/search';
@@ -93,20 +93,21 @@ export const syncRecipes = createAsyncThunk<void, void, {
     const accountInfo = getState().user.accountInfo;
     if (!accountInfo) return;
 
-    const providerType = chooseAccountProvider(accountInfo.type);
-    // eslint-disable-next-line new-cap
-    const accountProvider = new providerType(accountInfo.accessToken);
+    const AccountProvider = getAccountProvider(accountInfo.providerName);
+    if (!AccountProvider) return;
 
-    const remoteData = await accountProvider.restoreRecipes();
+    const accountProvider = new AccountProvider(accountInfo.accessToken);
+
+    const remoteData = await accountProvider.downloadRecipes();
     const localData = getState().recipes;
 
     if (!remoteData) {
-      await accountProvider.backupRecipes(localData);
+      await accountProvider.uploadRecipes(localData);
     } else {
       const newData = await synchronizeRecipes(remoteData, localData);
 
       dispatch(updateRecipesFromBackup(newData));
-      await accountProvider.backupRecipes(newData);
+      await accountProvider.uploadRecipes(newData);
     }
   },
 );

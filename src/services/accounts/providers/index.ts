@@ -3,19 +3,15 @@
 
 import { GoogleAccountProvider } from 'services/accounts/providers/google';
 
-export enum AccountProviders {
-  GOOGLE = 'google',
-}
+export const ACCOUNT_PROVIDERS = [
+  GoogleAccountProvider,
+] as const;
 
-export const chooseAccountProvider = (type: AccountProviders) => {
-  switch (type) {
-    case AccountProviders.GOOGLE:
-      return GoogleAccountProvider;
+export type AccountProviderName = typeof ACCOUNT_PROVIDERS[number]['providerName'];
 
-    default:
-      throw Error('Unknown account provider');
-  }
-};
+export const getAccountProvider = (name: string) => (
+  ACCOUNT_PROVIDERS.find((provider) => provider.providerName === name)
+);
 
 export class AuthError extends Error {
   name = 'AuthError';

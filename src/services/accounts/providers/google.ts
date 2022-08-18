@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/unbound-method */
-/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-underscore-dangle */
+import ky, { HTTPError } from 'ky';
+import { KyInstance } from 'ky/distribution/types/ky';
 import { PersistPartial } from 'redux-persist/es/persistReducer';
 
 import googleIcon from 'assets/accounts/google.svg';
@@ -24,32 +25,6 @@ interface GoogleUserInfoResponse {
   picture: string;
 }
 
-// interface GoogleTaskListItem {
-//   etag: string,
-//   id: string,
-//   kind: 'tasks#taskList',
-//   selfLink: string,
-//   title: string,
-//   updated: string,
-// }
-
-// interface GoogleTaskItem {
-//   etag: string,
-//   id: string,
-//   kind: 'tasks#taskList',
-//   selfLink: string,
-//   title: string,
-//   updated: string,
-//   position: string,
-//   status: string;
-// }
-
-// interface GoogleTaskListsResponse {
-//   etag: string;
-//   items: GoogleTaskListItem[];
-//   kind: 'tasks#taskLists'
-// }
-
 interface GoogleDriveFileResponse {
   kind: 'drive#file';
   id: string;
@@ -62,27 +37,25 @@ interface GoogleDriveFilesResponse {
   files: GoogleDriveFileResponse[];
 }
 
-interface AuthReturnedParams {
-  access_token: string;
-  refresh_token: string;
-  expires_in: string;
-  scope: string;
-  token_type: 'Bearer';
-  state?: string;
-}
+// interface AuthReturnedParams {
+//   access_token: string;
+//   refresh_token: string;
+//   expires_in: string;
+//   scope: string;
+//   token_type: 'Bearer';
+//   state?: string;
+// }
 
 export class GoogleAccountProvider extends AccountProvider {
-  static providerName = 'Google';
+  static providerName = 'Google' as const;
 
   static icon = googleIcon;
 
-  private apiClient: AxiosInstance;
+  private _apiClient: KyInstance;
 
   private static URLS = {
     USER_INFO: 'https://www.googleapis.com/oauth2/v1/userinfo',
-    // TASKS_LIST: 'https://tasks.googleapis.com/tasks/v1/users/@me/lists',
     LOGOUT: 'https://oauth2.googleapis.com/revoke',
-    // ADD_TASK: 'https://tasks.googleapis.com/tasks/v1/lists/{tasklist}/tasks',
     FILE_GET: 'https://www.googleapis.com/drive/v3/files',
     FILE_UPLOAD: 'https://www.googleapis.com/upload/drive/v3/files/{fileId}',
     GET_TOKEN: 'https://oauth2.googleapis.com/token',
@@ -93,14 +66,14 @@ export class GoogleAccountProvider extends AccountProvider {
     super(accessToken);
     this.accessToken = accessToken;
 
-    this.apiClient = axios.create({
+    this._apiClient = ky.create({
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
   }
 
-  static startLogin() {
+  static startLogin(this: void) {
     if (typeof import.meta.env.VITE_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
 
     // const code_verifier = base64url(randomBytes(96));
@@ -115,8 +88,6 @@ export class GoogleAccountProvider extends AccountProvider {
       // code_challenge_method: 'S256',
       // code_challenge: await generateCodeChallenge(code_verifier),
       scope: [
-        // 'https://www.googleapis.com/auth/tasks',
-        // 'https://www.googleapis.com/auth/tasks.readonly',
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/drive.appdata',
       ].join(' '),
@@ -128,33 +99,35 @@ export class GoogleAccountProvider extends AccountProvider {
     window.location.href = authUrl.toString();
   }
 
-  static async completeLogin() {
-    if (typeof import.meta.env.VITE_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
+  // static async completeLogin() {
+  // if (typeof import.meta.env.VITE_GOOGLE_CLIENT_ID !== 'string') {
+  //   throw Error('Google client_id not provided');
+  // }
 
-    const params = new URLSearchParams(window.location.search);
-    const code_verifier = window.sessionStorage.getItem('code_verifier') as string;
+  //   const params = new URLSearchParams(window.location.search);
+  //   const code_verifier = window.sessionStorage.getItem('code_verifier') as string;
 
-    const data = new URLSearchParams({
-      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-      grant_type: 'authorization_code',
-      code: params.get('code') as string,
-      redirect_uri: baseUrl + urls.authRedirect.google(),
-      code_verifier,
-    });
+  //   const data = new URLSearchParams({
+  //     client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+  //     grant_type: 'authorization_code',
+  //     code: params.get('code') as string,
+  //     redirect_uri: baseUrl + urls.authRedirect.google(),
+  //     code_verifier,
+  //   });
 
-    const response = await axios.post<AuthReturnedParams>(
-      GoogleAccountProvider.URLS.GET_TOKEN,
-      data,
+  //   const response = await axios.post<AuthReturnedParams>(
+  //     GoogleAccountProvider.URLS.GET_TOKEN,
+  //     data,
 
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      },
-    );
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/x-www-form-urlencoded',
+  //       },
+  //     },
+  //   );
 
-    return response.data;
-  }
+  //   return response.data;
+  // }
 
   static async refreshAccessToken(refreshToken: string) {
     if (typeof import.meta.env.VITE_GOOGLE_CLIENT_ID !== 'string') throw Error('Google client_id not provided');
@@ -165,29 +138,27 @@ export class GoogleAccountProvider extends AccountProvider {
       refresh_token: refreshToken,
     });
 
-    return axios
-      .post<{ access_token: string }>(GoogleAccountProvider.URLS.GET_TOKEN, data)
-      .then((res) => res.data.access_token);
+    const response = await ky.post(GoogleAccountProvider.URLS.GET_TOKEN, {
+      searchParams: data,
+    }).json<{ access_token: string }>();
+
+    return response.access_token;
   }
 
-  private static handleError<T>(error: AxiosError<T>) {
+  private _handleError(this: void, error: HTTPError) {
     switch (error.response?.status) {
       case 401:
         return Promise.reject(new AuthError());
       default:
-        return Promise.reject(Error(error.message));
+        return Promise.reject(error);
     }
   }
 
-  private static handleResponse<T>(response: AxiosResponse<T>) {
-    return response.data;
-  }
-
   async getUserInfo() {
-    const { family_name, given_name, picture } = await this.apiClient
-      .get<GoogleUserInfoResponse>(GoogleAccountProvider.URLS.USER_INFO)
-      .then(GoogleAccountProvider.handleResponse)
-      .catch(GoogleAccountProvider.handleError);
+    const { family_name, given_name, picture } = await this._apiClient
+      .get(GoogleAccountProvider.URLS.USER_INFO)
+      .then((res) => res.json<GoogleUserInfoResponse>())
+      .catch(this._handleError);
 
     return {
       firstName: given_name,
@@ -196,64 +167,26 @@ export class GoogleAccountProvider extends AccountProvider {
     };
   }
 
-  // async getTaskLists() {
-  //   const listsResponse = await this.apiClient
-  //     .get<GoogleTaskListsResponse>(GoogleAccountProvider.URLS.TASKS_LIST)
-  //     .then(GoogleAccountProvider.handleResponse)
-  //     .catch(GoogleAccountProvider.handleError);
-
-  //   return listsResponse.items.map((list) => ({
-  //     id: list.id,
-  //     name: list.title,
-  //   }));
-  // }
-
   async logout() {
     const body = new FormData();
     body.append('token', this.accessToken);
 
-    await this.apiClient.post(GoogleAccountProvider.URLS.LOGOUT, body);
+    await this._apiClient.post(GoogleAccountProvider.URLS.LOGOUT, { body });
   }
 
-  // async addIngredientsToList(listId: string, ingredients: string[], recipeTitle: string) {
-  //   const rootTask = await this.apiClient
-  //     .post<GoogleTaskItem>(
-  //     GoogleAccountProvider.URLS.ADD_TASK.replace('{tasklist}', listId),
-  //     { title: recipeTitle },
-  //     {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     },
-  //   )
-  //     .then(GoogleAccountProvider.handleResponse)
-  //     .catch(GoogleAccountProvider.handleError);
-
-  //   await Promise.all(ingredients.map((i) => (
-  // eslint-disable-next-line max-len
-  //     this.apiClient.post(`${GoogleAccountProvider.URLS.ADD_TASK.replace('{tasklist}', listId)}?parent=${rootTask.id}`, {
-  //       title: i,
-  //     }, {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     })
-  //   ))).catch(GoogleAccountProvider.handleError);
-  // }
-
-  private async findRecipesFile() {
-    return this.apiClient
-      .get<GoogleDriveFilesResponse>(GoogleAccountProvider.URLS.FILE_GET, {
-      params: {
-        q: "name='recipes.json'",
-        spaces: 'appDataFolder',
-      },
-    })
-      .then(GoogleAccountProvider.handleResponse)
-      .catch(GoogleAccountProvider.handleError);
+  private async _findRecipesFile() {
+    return this._apiClient
+      .get(GoogleAccountProvider.URLS.FILE_GET, {
+        searchParams: {
+          q: "name='recipes.json'",
+          spaces: 'appDataFolder',
+        },
+      })
+      .then((res) => res.json<GoogleDriveFilesResponse>())
+      .catch(this._handleError);
   }
 
-  private async createBackupFile(content: string) {
+  private async _createBackupFile(content: string) {
     const formData = new FormData();
 
     const metadata = new Blob([JSON.stringify({
@@ -270,53 +203,55 @@ export class GoogleAccountProvider extends AccountProvider {
     formData.append('metadata', metadata);
     formData.append('file', file);
 
-    return this.apiClient
-      .post<GoogleDriveFileResponse>(GoogleAccountProvider.URLS.FILE_UPLOAD.replace('{fileId}', ''), formData, {
-      params: {
-        uploadType: 'multipart',
-      },
-    })
-      .then(GoogleAccountProvider.handleResponse)
-      .catch(GoogleAccountProvider.handleError);
+    return this._apiClient
+      .post(GoogleAccountProvider.URLS.FILE_UPLOAD.replace('{fileId}', ''), {
+        searchParams: {
+          uploadType: 'multipart',
+        },
+        body: formData,
+      })
+      .then((res) => res.json<GoogleDriveFileResponse>())
+      .catch(this._handleError);
   }
 
-  async backupRecipes(recipes: RecipesState & PersistPartial) {
-    const searchResponse = await this.findRecipesFile();
+  async uploadRecipes(recipes: RecipesState & PersistPartial) {
+    const searchResponse = await this._findRecipesFile();
     const fileId = searchResponse.files?.[0]?.id;
 
     if (!fileId) {
-      await this.createBackupFile(JSON.stringify(recipes));
+      await this._createBackupFile(JSON.stringify(recipes));
     } else {
-      await this.apiClient
-        .patch(GoogleAccountProvider.URLS.FILE_UPLOAD.replace('{fileId}', fileId), JSON.stringify(recipes), {
+      await this._apiClient
+        .patch(GoogleAccountProvider.URLS.FILE_UPLOAD.replace('{fileId}', fileId), {
           headers: {
             'Content-type': 'application/json',
           },
-          params: {
+          body: JSON.stringify(recipes),
+          searchParams: {
             uploadType: 'media',
           },
         })
-        .then(GoogleAccountProvider.handleResponse)
-        .catch(GoogleAccountProvider.handleError);
+        .then((res) => res.json())
+        .catch(this._handleError);
     }
   }
 
-  async restoreRecipes() {
-    const searchResponse = await this.findRecipesFile();
+  async downloadRecipes() {
+    const searchResponse = await this._findRecipesFile();
     let fileId = searchResponse.files?.[0]?.id;
 
     if (!fileId) {
-      fileId = (await this.createBackupFile('')).id;
+      fileId = (await this._createBackupFile('')).id;
     }
 
-    const fileContent = await this.apiClient
-      .get<(RecipesState & PersistPartial) | undefined>(`${GoogleAccountProvider.URLS.FILE_GET}/${fileId}`, {
-      params: {
-        alt: 'media',
-      },
-    })
-      .then(GoogleAccountProvider.handleResponse)
-      .catch(GoogleAccountProvider.handleError);
+    const fileContent = await this._apiClient
+      .get(`${GoogleAccountProvider.URLS.FILE_GET}/${fileId}`, {
+        searchParams: {
+          alt: 'media',
+        },
+      })
+      .then((res) => res.json<(RecipesState & PersistPartial) | undefined>())
+      .catch(this._handleError);
 
     return fileContent;
   }

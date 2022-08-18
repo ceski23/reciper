@@ -7,17 +7,16 @@ import { RootState } from 'store';
 
 import { UserInfo } from 'services/accounts/AccountProvider';
 import {
-  AccountProviders, chooseAccountProvider,
+  AccountProviderName, getAccountProvider,
 } from 'services/accounts/providers';
 
 interface UserState {
   accountInfo?: {
     accessToken: string;
     // refreshToken: string;
-    type: AccountProviders;
+    providerName: AccountProviderName;
   };
   userInfo?: UserInfo;
-  // shoppingList?: TaskListInfo;
 }
 
 const initialState: UserState = {};
@@ -37,20 +36,17 @@ const slice = createSlice({
     },
     logoutUser: (state) => {
       if (state.accountInfo) {
-        const providerType = chooseAccountProvider(state.accountInfo?.type);
-        // eslint-disable-next-line new-cap
-        const provider = new providerType(state.accountInfo.accessToken);
+        const AccountProvider = getAccountProvider(state.accountInfo.providerName);
+        if (!AccountProvider) return;
+
+        const provider = new AccountProvider(state.accountInfo.accessToken);
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         provider.logout();
       }
 
       state.accountInfo = undefined;
       state.userInfo = undefined;
-      // state.shoppingList = undefined;
     },
-    // setShoppingList: (state, { payload }: PayloadAction<UserState['shoppingList']>) => {
-    //   state.shoppingList = payload;
-    // },
   },
 });
 
@@ -60,7 +56,6 @@ export const {
 
 export const selectAccountInfo = (state: RootState) => state.user.accountInfo;
 export const selectUserInfo = (state: RootState) => state.user.userInfo;
-// export const selectShoppingList = (state: RootState) => state.user.shoppingList;
 
 export default persistReducer({
   key: 'user',

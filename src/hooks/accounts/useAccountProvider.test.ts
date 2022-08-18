@@ -2,8 +2,6 @@ import { renderHookWithProviders } from 'test/utils';
 
 import { useAccountProvider } from 'hooks/accounts/useAccountProvider';
 
-import { AccountProviders } from 'services/accounts/providers';
-
 describe('useAccountProvider', () => {
   it('should not return account provider', () => {
     const { result } = renderHookWithProviders(() => useAccountProvider());
@@ -20,7 +18,7 @@ describe('useAccountProvider', () => {
           },
           accountInfo: {
             accessToken: 'test',
-            type: AccountProviders.GOOGLE,
+            providerName: 'Google',
           },
         },
       },

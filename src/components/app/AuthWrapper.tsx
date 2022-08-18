@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/store';
 
 import routes from 'routing/routes';
 
-import { AuthError, chooseAccountProvider } from 'services/accounts/providers';
+import { AuthError, getAccountProvider } from 'services/accounts/providers';
 
 import { syncRecipes } from 'store/recipes';
 import { selectRecipesAutoSync } from 'store/settings';
@@ -37,12 +37,12 @@ export const AuthWrapper: VFC = () => {
           //   );
           //   dispatch(setAccessToken(accessToken));
           // } else toast(<AuthToast />);
-          if (accountInfo?.type) chooseAccountProvider(accountInfo.type).startLogin();
+          if (accountInfo?.providerName) getAccountProvider(accountInfo.providerName)?.startLogin();
         } else {
           toast.error((err as Error).message);
         }
       });
-  }, [accountInfo?.type, accountProvider, dispatch, syncEnabled]);
+  }, [accountInfo?.providerName, accountProvider, dispatch, syncEnabled]);
 
   return (
     <Page>
