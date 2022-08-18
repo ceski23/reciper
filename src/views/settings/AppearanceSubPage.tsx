@@ -9,7 +9,8 @@ import { RadioGroup } from 'components/settings/RadioGroup';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 
 import {
-  selectCurrentThemeType, selectDynamicPrimaryColor, setDynamicPrimaryColor, setTheme, themeName,
+  selectCurrentThemeType, selectDisableAnimations, selectDynamicPrimaryColor,
+  setDisableAnimations, setDynamicPrimaryColor, setTheme, themeName,
 } from 'store/settings';
 
 const themeOptions = (['light', 'dark', 'system'] as Array<Theme['type'] | 'system'>).map((type) => ({
@@ -21,6 +22,7 @@ export const AppearanceSubPage: VFC = () => {
   const dispatch = useAppDispatch();
   const themeType = useAppSelector(selectCurrentThemeType);
   const dynamicColor = useAppSelector(selectDynamicPrimaryColor);
+  const disableAnimations = useAppSelector(selectDisableAnimations);
 
   const handleSelectTheme = (type: Theme['type'] | 'system') => {
     dispatch(setTheme(type));
@@ -28,6 +30,10 @@ export const AppearanceSubPage: VFC = () => {
 
   const handleChangeDynamicColor = (dynColor: boolean) => {
     dispatch(setDynamicPrimaryColor(dynColor));
+  };
+
+  const handleChangeDisableAnimations = (disable: boolean) => {
+    dispatch(setDisableAnimations(disable));
   };
 
   return (
@@ -50,6 +56,13 @@ export const AppearanceSubPage: VFC = () => {
         onChange={handleChangeDynamicColor}
       />
 
+      <CheckboxSetting
+        title="Wyłącz animacje"
+        hint="Wyłącz wszystkie animacje w aplikacji"
+        name="disableAnimations"
+        checked={disableAnimations}
+        onChange={handleChangeDisableAnimations}
+      />
     </FluidContainer>
   );
 };

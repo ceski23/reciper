@@ -19,6 +19,7 @@ interface SettingsState {
   };
   conversionPrecision: number;
   autoRecipesSync: boolean;
+  disableAnimations: boolean;
 }
 
 export const themeName = (theme: SettingsState['theme']) => {
@@ -38,6 +39,7 @@ const initialState: SettingsState = {
   unitsConversion: {},
   conversionPrecision: 2,
   autoRecipesSync: false,
+  disableAnimations: false,
 };
 
 const slice = createSlice({
@@ -62,12 +64,15 @@ const slice = createSlice({
     setAutoRecipesSync: (state, { payload }: PayloadAction<SettingsState['autoRecipesSync']>) => {
       state.autoRecipesSync = payload;
     },
+    setDisableAnimations: (state, { payload }: PayloadAction<SettingsState['disableAnimations']>) => {
+      state.disableAnimations = payload;
+    },
   },
 });
 
 export const {
   setTheme, setDynamicPrimaryColor, setUseUnitsConversion, setUnitConversion, setConversionPrecision,
-  setAutoRecipesSync,
+  setAutoRecipesSync, setDisableAnimations,
 } = slice.actions;
 
 export const selectCurrentThemeType = (state: RootState) => state.settings.theme;
@@ -81,6 +86,8 @@ export const selectUseUnitsConversion = (state: RootState) => state.settings.use
 export const selectConversionPrecision = (state: RootState) => state.settings.conversionPrecision;
 
 export const selectRecipesAutoSync = (state: RootState) => state.settings.autoRecipesSync;
+
+export const selectDisableAnimations = (state: RootState) => state.settings.disableAnimations;
 
 export default persistReducer({
   key: 'settings',

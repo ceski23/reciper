@@ -1,6 +1,7 @@
 import { Global, ThemeProvider } from '@emotion/react';
+import { Globals } from '@react-spring/web';
 import { useMediaQuery } from 'beautiful-react-hooks';
-import { Suspense, useMemo } from 'react';
+import { Suspense, useEffect, useMemo } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { DefaultToastOptions } from 'react-hot-toast/dist/core/types';
 import { useRoutes } from 'react-router';
@@ -11,7 +12,7 @@ import { useAppSelector } from 'hooks/store';
 
 import authRoutes from 'routing/authRoutes';
 
-import { selectCurrentThemeType } from 'store/settings';
+import { selectCurrentThemeType, selectDisableAnimations } from 'store/settings';
 
 import globalStyles from 'utils/styles/globalStyles';
 import { media, mediaDown } from 'utils/styles/mediaQueries';
@@ -22,6 +23,11 @@ const App = () => {
   const isMobile = useMediaQuery(mediaDown('small'));
   const preffersDark = useMediaQuery(media.colorScheme('dark'));
   const themeType = useAppSelector(selectCurrentThemeType);
+  const disableAnimations = useAppSelector(selectDisableAnimations);
+
+  useEffect(() => {
+    Globals.assign({ skipAnimation: disableAnimations });
+  }, [disableAnimations]);
 
   const theme = useMemo(() => {
     switch (themeType) {
