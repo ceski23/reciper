@@ -5,6 +5,8 @@ import IntlMessageFormat from 'intl-messageformat';
 import { forwardRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Styleable } from 'types';
+
 import { ReactComponent as DishIcon } from 'assets/recipes/dish.svg';
 
 import { Image } from 'components/common/Image';
@@ -15,7 +17,7 @@ import { Recipe } from 'services/recipes';
 
 import { color } from 'utils/styles/theme';
 
-interface Props {
+interface Props extends Styleable {
   recipe: Recipe;
 }
 
@@ -85,6 +87,8 @@ const Color = styled.div<{ color?: string }>`
   margin-bottom: 15px;
   border-radius: 0 0 15px 15px;
 `;
+
+export const RecipeTile = forwardRef<HTMLAnchorElement, Props>(({ recipe, ...props }, ref) => {
   const ingredients = useMemo(() => ingredientsText.format({
     quantity: recipe.ingredients.length,
   }), [recipe.ingredients.length]);
@@ -97,6 +101,7 @@ const Color = styled.div<{ color?: string }>`
     <Tile
       ref={ref}
       to={urls.recipes.byId({ recipeId: recipe.id })}
+      {...props}
     >
       <RecipeImage
         src={recipe.image}

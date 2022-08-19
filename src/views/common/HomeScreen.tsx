@@ -8,6 +8,7 @@ import { Link } from 'components/common/Link';
 import { LinkButton } from 'components/common/LinkButton';
 import { Searchbar } from 'components/common/Searchbar';
 import { UserAvatar } from 'components/common/UserAvatar';
+import { RecipesCarousel } from 'components/recipes/RecipesCarousel';
 import { RecipesList } from 'components/recipes/RecipesList';
 import { Tag } from 'components/recipes/Tag';
 
@@ -15,7 +16,9 @@ import { useAppSelector } from 'hooks/store';
 
 import { urls } from 'routing/urls';
 
-import { selectAllTags, selectRecipes } from 'store/recipes';
+import {
+  selectHighestRatedRecipes, selectLatestRecipes, selectMostFrequentTags,
+} from 'store/recipes';
 import { selectUserInfo } from 'store/user';
 
 const Header = styled(animated.div)`
@@ -52,27 +55,25 @@ const Tags = styled.div`
   }
 `;
 
-// https://www.kwestiasmaku.com/przepis/filety-drobiowe-w-sosie-z-gorgonzoli
-// https://beszamel.se.pl/przepisy/dania-glowne-miesne/prosty-kurczak-w-sosie-slodko-kwasnym-gotowy-w-30-minut-re-iB8s-pmcM-Rz5i.html
+const Container = styled(FluidContainer)`
+  padding-bottom: 50px;
+`;
 
 export const HomeScreen: VFC = () => {
-  const recipes = useAppSelector(selectRecipes);
   const user = useAppSelector(selectUserInfo);
-  const tags = useAppSelector(selectAllTags);
+  const latestRecipes = useAppSelector(selectLatestRecipes);
+  const mostFrequentTags = useAppSelector(selectMostFrequentTags);
+  const highestRatedRecipes = useAppSelector(selectHighestRatedRecipes);
   const navigate = useNavigate();
 
-  const handleSearchbarClick: React.MouseEventHandler<HTMLElement> = () => {
-    navigate(urls.search());
-  };
-
-  const animation = useSpring({
+  const headerAnimation = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
   });
 
   return (
-    <FluidContainer>
-      <Header style={animation}>
+    <Container>
+      <Header style={headerAnimation}>
         <WelcomeText>
           Witaj, {user ? user.firstName : 'nieznajomy'}!
         </WelcomeText>
@@ -81,23 +82,38 @@ export const HomeScreen: VFC = () => {
         </Link>
       </Header>
 
-      <StyledSearchBar value="" onClick={handleSearchbarClick} />
+      <StyledSearchBar value="" onClick={() => navigate(urls.search())} />
 
-      <h2 style={{ marginTop: 50 }} id="recently-added">Ostatnio dodane</h2>
-      <RecipesList recipes={Object.values(recipes).slice(0, 6).reverse()} />
-
-      <LinkButton to={urls.recipes()} style={{ marginTop: 30 }}>
-        Wszystkie przepisy
-      </LinkButton>
-
-      {tags.length > 0 && (
+      {latestRecipes.length > 0 && (
         <>
-          <h2 style={{ marginTop: 50 }}>Tagi</h2>
+          <h2 style={{ marginTop: 50 }} id="recently-added">Ostatnio dodane</h2>
+          <RecipesCarousel recipes={latestRecipes} />
+
+          <LinkButton to={urls.recipes()} style={{ marginTop: 30 }}>
+            Zobacz wszystkie
+          </LinkButton>
+        </>
+      )}
+
+      {mostFrequentTags.length > 0 && (
+        <>
+          <h2 style={{ marginTop: 50 }}>Najczęstsze tagi</h2>
           <Tags>
-            {tags.map((tag) => <Tag key={tag} tag={tag} />)}
+            {mostFrequentTags.map((tag) => <Tag key={tag} tag={tag} />)}
           </Tags>
         </>
       )}
-    </FluidContainer>
+
+      {highestRatedRecipes.length > 0 && (
+      <>
+        <h2 id="highest-rated">Najwyżej oceniane</h2>
+        <RecipesList recipes={highestRatedRecipes} view="list" />
+
+        <LinkButton to={urls.recipes()} style={{ marginTop: 30 }}>
+          Wszystkie przepisy
+        </LinkButton>
+      </>
+      )}
+    </Container>
   );
 };

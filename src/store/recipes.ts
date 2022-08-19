@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-param-reassign */
 import {
   createAsyncThunk, createSelector, createSlice, isAnyOf, PayloadAction,
@@ -194,3 +195,36 @@ export const selectAllTags = createSelector(selectRecipes, (recipes) => {
   const tags = Object.values(recipes).reduce((prev: string[], curr) => [...prev, ...curr.tags], []);
   return Array.from(new Set(tags));
 });
+
+export const selectLatestRecipes = createSelector(selectRecipes, (recipes) => (
+  Object
+    .values(recipes)
+    .reverse()
+    .slice(0, 10)
+));
+
+export const selectMostFrequentTags = createSelector(selectRecipes, (recipes) => {
+  const tagsObject = Object
+    .values(recipes)
+    .flatMap((recipe) => recipe.tags)
+    .reduce((acc, tag) => {
+      const item = (acc[tag] ?? 0) + 1;
+      return { ...acc, [tag]: item };
+    }, {} as Record<string, number>);
+
+  const tags = Object
+    .entries(tagsObject)
+    .sort(([,a], [,b]) => b - a)
+    .map(([tag]) => tag)
+    .slice(0, 20);
+
+  return tags;
+});
+
+export const selectHighestRatedRecipes = createSelector(selectRecipes, (recipes) => (
+  Object
+    .values(recipes)
+    .filter((recipe) => recipe?.rating !== undefined)
+    .sort((a, b) => b.rating! - a.rating!)
+    .slice(0, 10)
+));
