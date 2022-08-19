@@ -7,7 +7,8 @@ import checker from 'vite-plugin-checker';
 import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import GithubActionsReporter from 'vitest-github-actions-reporter'
+import GithubActionsReporter from 'vitest-github-actions-reporter';
+import size from 'rollup-plugin-size';
 
 import manifest from './src/manifest';
 
@@ -60,6 +61,14 @@ const bundleVisualizerPlugin = visualizer({
   open: true,
 });
 
+const reportSizePlugin = size({
+  stripHash(fileName: string) {
+    const regexp = /^(?<fileName>[\w\/]+)(?:\W+\w*\W*?)?(?<extension>\.\w+)$/;
+    const matches = fileName.match(regexp);
+    return matches?.groups ? `${matches.groups.fileName}${matches.groups.extension}` : fileName;
+  },
+})
+
 export default defineConfig(({ mode }) => {
   const visualizeBundle = false;
 
@@ -74,6 +83,7 @@ export default defineConfig(({ mode }) => {
       pwaPlugin,
       mode !== 'test' && checkerPlugin,
       mode === 'production' && visualizeBundle && bundleVisualizerPlugin,
+      reportSizePlugin,
     ],
     build: {
       outDir: 'build',
