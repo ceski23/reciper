@@ -1,8 +1,27 @@
+// eslint-disable-next-line max-classes-per-file
 import { expect } from 'vitest';
 
 import { isValidRecipe } from 'services/recipes';
 import { butterbeer } from 'services/recipes/providers/fixtures/jsonld';
 import scrapper from 'services/recipes/providers/jsonld';
+
+vi.stubGlobal('Image', class {
+  onload: () => void;
+
+  constructor() {
+    this.onload = vi.fn();
+    setTimeout(() => this.onload());
+  }
+});
+
+vi.mock('colorthief', () => ({
+  default: class {
+    // eslint-disable-next-line class-methods-use-this
+    getColor = () => [0, 0, 0];
+
+    getPalette = () => [this.getColor()];
+  },
+}));
 
 const scrapeRecipe = async (data: string) => {
   const parser = new DOMParser();

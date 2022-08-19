@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 import { expect } from 'vitest';
 
 import { isValidRecipe } from 'services/recipes';
@@ -7,6 +8,24 @@ import { AniaStarmachProvider } from 'services/recipes/providers/websites/aniast
 import { BeszamelProvider } from 'services/recipes/providers/websites/beszamel';
 import { DoradcaSmakuProvider } from 'services/recipes/providers/websites/doradcasmaku';
 import { KwestiaSmakuProvider } from 'services/recipes/providers/websites/kwestiasmaku';
+
+vi.stubGlobal('Image', class {
+  onload: () => void;
+
+  constructor() {
+    this.onload = vi.fn();
+    setTimeout(() => this.onload());
+  }
+});
+
+vi.mock('colorthief', () => ({
+  default: class {
+    // eslint-disable-next-line class-methods-use-this
+    getColor = () => [0, 0, 0];
+
+    getPalette = () => [this.getColor()];
+  },
+}));
 
 describe('chooseProvider', () => {
   it('should select AniaStarmach provider', () => {

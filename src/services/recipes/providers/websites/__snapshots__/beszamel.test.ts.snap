@@ -2,7 +2,7 @@
 
 exports[`scrapper > should scrape valid recipe 1`] = `
 {
-  "color": "#7f7f7f",
+  "color": "#000000",
   "description": "Lemoniada z limonek, cytryn i pomarańczy to bardzo prosty w przygotowaniu i niezwykle smaczny napój na upalne dni. Podajemy dobry przepis na lemoniadę cytrusową. Sprawdź, jak ją przygotować.",
   "gallery": [
     "https://cdn.galleries.smcloud.net/t/photos/gf-EQGW-RBcL-arZc_lemoniada-cytrusowa-przepis-na-lemoniade-z-cytryn-limonek-i-pomaranczy.jpg",
@@ -62,7 +62,7 @@ exports[`scrapper > should scrape valid recipe 1`] = `
 
 exports[`scrapper > should scrape valid recipe with ingredients groups 1`] = `
 {
-  "color": "#7f7f7f",
+  "color": "#000000",
   "description": "Samodzielne przygotowanie tortu jest dość czasochłonne, ale wbrew pozorom nie takie trudne. Jeżeli po raz pierwszy zamierzasz zrobić tort - ten prosty i łatwy przepis jest właśnie dla ciebie. To nasz specjalny przepis na tort dla początkujących, który przy odrobinie wysiłku na pewno się uda.",
   "gallery": [
     "https://cdn.galleries.smcloud.net/t/photos/gf-eBME-h8Zw-WmRp_tort-dla-poczatkujacych.jpg",

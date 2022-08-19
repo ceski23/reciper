@@ -6,7 +6,7 @@ import icon from 'assets/providers/kwestia_smaku.png';
 import { Recipe, RecipeIngredient, RecipeInstruction } from 'services/recipes';
 import type { Provider, RecipeScrapper } from 'services/recipes/providers';
 import microdataScrapper from 'services/recipes/providers/microdata';
-import { colorExtractor } from 'services/recipes/providers/utils';
+import { getColorFromImage } from 'services/recipes/providers/utils';
 
 import { getTextFromNode } from 'utils/dom';
 import { nonNullable } from 'utils/guards';
@@ -123,11 +123,7 @@ export const KwestiaSmakuProvider: Provider = (() => {
       ? Number.parseInt(servingsElement.textContent, 10)
       : undefined;
 
-    let color;
-    if (microdata?.image) {
-      const palette = await colorExtractor(microdata.image);
-      color = palette.Vibrant?.hex;
-    }
+    const color = microdata.image ? await getColorFromImage(microdata.image) : undefined;
 
     const partial: Partial<Recipe> = {
       ingredients: parseIngredients(doc),

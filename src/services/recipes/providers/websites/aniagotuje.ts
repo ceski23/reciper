@@ -3,7 +3,7 @@ import icon from 'assets/providers/ania_gotuje.png';
 import { Recipe, RecipeIngredient, RecipeInstruction } from 'services/recipes';
 import type { Provider, RecipeScrapper } from 'services/recipes/providers';
 import microdataScrapper from 'services/recipes/providers/microdata';
-import { colorExtractor } from 'services/recipes/providers/utils';
+import { getColorFromImage } from 'services/recipes/providers/utils';
 
 import { getTextFromNode } from 'utils/dom';
 import { isElementNode, nonNullable } from 'utils/guards';
@@ -108,11 +108,7 @@ export const AniaGotujeProvider: Provider = (() => {
     const data = await microdataScrapper(doc);
     log('data from microdata:', data);
 
-    let color;
-    if (data?.image) {
-      const palette = await colorExtractor(data.image);
-      color = palette.Vibrant?.hex;
-    }
+    const color = data.image ? await getColorFromImage(data.image) : undefined;
 
     const recipeName = doc.querySelector('.article-content [itemprop="name"]')?.textContent?.trim();
 

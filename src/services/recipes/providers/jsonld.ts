@@ -9,7 +9,7 @@ import { HowToStep, ImageObject, Recipe as SchemaRecipe } from 'schema-dts';
 
 import { Recipe } from 'services/recipes';
 import { RecipeScrapper } from 'services/recipes/providers';
-import { colorExtractor } from 'services/recipes/providers/utils';
+import { getColorFromImage } from 'services/recipes/providers/utils';
 
 import { nonNullable } from 'utils/guards';
 import appLogger from 'utils/logger';
@@ -204,15 +204,7 @@ const scrapper: RecipeScrapper = async (doc) => {
   let calories = caloriesText ? Number.parseInt(caloriesText, 10) : undefined;
   if (Number.isNaN(calories)) calories = undefined;
 
-  let color;
-  try {
-    if (image) {
-      const palette = await colorExtractor(image.toString());
-      color = palette.Vibrant?.hex;
-    }
-  } catch (error) {
-    color = undefined;
-  }
+  const color = image ? await getColorFromImage(image.toString()) : undefined;
 
   const recipe: Partial<Recipe> = {
     name: name ? name.toString() : undefined,

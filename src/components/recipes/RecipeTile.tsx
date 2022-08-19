@@ -77,7 +77,14 @@ const Placeholder = styled.div`
   padding: 50px;
 `;
 
-export const RecipeTile = forwardRef<HTMLAnchorElement, Props>(({ recipe }, ref) => {
+const Color = styled.div<{ color?: string }>`
+  background-color: ${(props) => props.color};
+  width: 100%;
+  height: 30px;
+  margin-top: -45px;
+  margin-bottom: 15px;
+  border-radius: 0 0 15px 15px;
+`;
   const ingredients = useMemo(() => ingredientsText.format({
     quantity: recipe.ingredients.length,
   }), [recipe.ingredients.length]);
@@ -100,6 +107,9 @@ export const RecipeTile = forwardRef<HTMLAnchorElement, Props>(({ recipe }, ref)
           </Placeholder>
         )}
       />
+
+      {import.meta.env.VITE_DEBUG_COLORS && <Color color={recipe.color} />}
+
       <Name>{recipe.name}</Name>
       <Info>{ingredients}{duration && ` • ${duration}`}</Info>
     </Tile>
