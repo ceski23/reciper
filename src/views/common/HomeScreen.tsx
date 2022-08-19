@@ -84,16 +84,12 @@ export const HomeScreen: VFC = () => {
 
       <StyledSearchBar value="" onClick={() => navigate(urls.search())} />
 
-      {latestRecipes.length > 0 && (
-        <>
-          <h2 style={{ marginTop: 50 }} id="recently-added">Ostatnio dodane</h2>
-          <RecipesCarousel recipes={latestRecipes} />
+      <h2 style={{ marginTop: 50 }} id="recently-added">Ostatnio dodane</h2>
+      <RecipesCarousel recipes={latestRecipes} />
 
-          <LinkButton to={urls.recipes()} style={{ marginTop: 30 }}>
-            Zobacz wszystkie
-          </LinkButton>
-        </>
-      )}
+      <LinkButton to={urls.recipes()} style={{ marginTop: 30 }}>
+        Zobacz wszystkie
+      </LinkButton>
 
       {mostFrequentTags.length > 0 && (
         <>
@@ -104,16 +100,12 @@ export const HomeScreen: VFC = () => {
         </>
       )}
 
-      {highestRatedRecipes.length > 0 && (
-      <>
-        <h2 id="highest-rated">Najwyżej oceniane</h2>
-        <RecipesList recipes={highestRatedRecipes} view="list" />
+      <h2 id="highest-rated">Najwyżej oceniane</h2>
+      <RecipesList recipes={highestRatedRecipes} view="list" />
 
-        <LinkButton to={urls.recipes()} style={{ marginTop: 30 }}>
-          Wszystkie przepisy
-        </LinkButton>
-      </>
-      )}
+      <LinkButton to={urls.recipes()} style={{ marginTop: 30 }}>
+        Wszystkie przepisy
+      </LinkButton>
     </Container>
   );
 };
