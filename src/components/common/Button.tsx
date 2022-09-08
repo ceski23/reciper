@@ -21,6 +21,7 @@ export const buttonStyles = (
   width: auto;
   cursor: pointer;
   box-shadow: 0px 3px 2px ${theme.colors.shadow};
+  position: relative;
   
   &:disabled {
     opacity: 0.7;
