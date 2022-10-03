@@ -100,7 +100,8 @@
           "../*"
         ]
       }
-    ]
+    ],
+    "import/no-extraneous-dependencies": "off"
   },
   "settings": {
     "import/resolver": {

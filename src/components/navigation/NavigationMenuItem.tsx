@@ -52,7 +52,7 @@ const Text = styled.span`
   }
 `;
 
-const iconStyles = css`
+const ItemIcon = styled.svg`
   width: 25px;
   fill: currentColor;
 `;
@@ -63,9 +63,9 @@ interface Props {
   icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 }
 
-export const NavigationMenuItem: FC<Props> = ({ title, to, icon: Icon }) => (
+export const NavigationMenuItem: FC<Props> = ({ title, to, icon }) => (
   <Item to={to}>
-    {Icon && <Icon css={iconStyles} />}
+    {icon && <ItemIcon as={icon} />}
     <Text>{title}</Text>
   </Item>
 );
