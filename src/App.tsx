@@ -1,6 +1,11 @@
+import { Button } from 'lib/components'
+import { lightThemeClass } from 'lib/styles'
 import { FunctionComponent } from 'react'
-import { lightThemeClass } from 'styles/theme'
 
 export const App: FunctionComponent = () => {
-	return <div className={lightThemeClass}>Hello world</div>
+	return (
+		<div className={lightThemeClass}>
+			<Button type="button">Hello world</Button>
+		</div>
+	)
 }

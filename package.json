@@ -8,7 +8,8 @@
 		"build": "tsc && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"generate-colors": "node generate-colors.mjs"
+		"generate-colors": "node generate-colors.mjs",
+		"prepare": "husky install"
 	},
 	"dependencies": {
 		"@fontsource-variable/roboto-flex": "^5.0.8",
@@ -26,8 +27,16 @@
 		"@vitejs/plugin-react": "^4.0.3",
 		"dprint": "^0.41.0",
 		"eslint": "^8.45.0",
+		"husky": "^8.0.3",
+		"lint-staged": "^15.0.0",
 		"typescript": "^5.0.2",
 		"vite": "^4.4.5",
 		"vite-tsconfig-paths": "^4.2.1"
+	},
+	"lint-staged": {
+		"*": [
+			"eslint",
+			"dprint check"
+		]
 	}
 }

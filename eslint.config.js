@@ -11,4 +11,9 @@ export default [
 		],
 	},
 	...config,
+	{
+		rules: {
+			'import/order': 'off',
+		},
+	},
 ]
