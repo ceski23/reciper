@@ -1,14 +1,14 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { useState } from 'react';
+import { Meta, StoryObj } from '@storybook/react';
+import { ComponentProps, FC, useState } from 'react';
 
 import { TagInput } from 'components/forms/inputs/TagInput';
 
 export default {
   title: 'Components/Form/TagInput',
   component: TagInput,
-} as ComponentMeta<typeof TagInput>;
+} as Meta<typeof TagInput>;
 
-const Template: ComponentStory<typeof TagInput> = ({ value, ...args }) => {
+const InputWithHooks: FC<ComponentProps<typeof TagInput>> = ({ value, ...args }) => {
   const [inputValue, setInputValue] = useState(value);
 
   const handleChange = (newValue: string[]) => {
@@ -19,8 +19,10 @@ const Template: ComponentStory<typeof TagInput> = ({ value, ...args }) => {
   return <TagInput {...args} value={inputValue} onChange={handleChange} />;
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  name: 'test',
-  value: [],
+export const Default: StoryObj<ComponentProps<typeof TagInput>> = {
+  args: {
+    name: 'test',
+    value: [],
+  },
+  render: (args) => <InputWithHooks {...args} />,
 };

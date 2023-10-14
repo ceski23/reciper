@@ -3,10 +3,8 @@ import { Global, ThemeProvider } from '@emotion/react';
 import globalStyles from '../src/utils/styles/globalStyles';
 import { darkTheme, lightTheme } from '../src/utils/styles/theme';
 import { MemoryRouter } from 'react-router';
+import type { DecoratorFn } from '@storybook/react'
 
-/**
- * @type {import('@storybook/react').Parameters}
- **/
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -32,10 +30,7 @@ export const globalTypes = {
   },
 };
 
-/**
- * @type {Array<import('@storybook/react').DecoratorFn>}
- **/
-export const decorators = [
+export const decorators: DecoratorFn[] = [
   (Story, { globals }) => (
     <MemoryRouter>
       <ThemeProvider theme={globals.theme === 'light' ? lightTheme : darkTheme}>

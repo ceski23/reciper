@@ -1,26 +1,26 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
+import { ComponentProps } from 'react';
 
 import { Field } from 'components/forms/inputs/Field';
 
 export default {
   title: 'Components/Form/Field',
   component: Field,
-} as ComponentMeta<typeof Field>;
+} as Meta<typeof Field>;
 
-const Template: ComponentStory<typeof Field> = (args) => <Field {...args} />;
+export const Default: StoryObj<ComponentProps<typeof Field>> = {};
 
-export const Default = Template.bind({});
-Default.args = {};
-
-export const WithLabel = Template.bind({});
-WithLabel.args = {
-  label: 'Field label',
-  required: true,
+export const WithLabel: StoryObj<ComponentProps<typeof Field>> = {
+  args: {
+    label: 'Field label',
+    required: true,
+  },
 };
 
-export const WithError = Template.bind({});
-WithError.args = {
-  label: 'Field label',
-  required: true,
-  error: 'Some error message',
+export const WithError: StoryObj<ComponentProps<typeof Field>> = {
+  args: {
+    label: 'Field label',
+    required: true,
+    error: 'Some error message',
+  },
 };

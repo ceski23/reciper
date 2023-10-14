@@ -1,13 +1,11 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
+import { ComponentProps } from 'react';
 
 import { AuthToast } from 'components/common/AuthToast';
 
 export default {
   title: 'Components/AuthToast',
   component: AuthToast,
-} as ComponentMeta<typeof AuthToast>;
+} as Meta<typeof AuthToast>;
 
-const Template: ComponentStory<typeof AuthToast> = (args) => <AuthToast {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {};
+export const Default: StoryObj<ComponentProps<typeof AuthToast>> = {};

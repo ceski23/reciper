@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 // eslint-disable-next-line no-restricted-imports
 import logoUrl from '../../../public/logo192.png';

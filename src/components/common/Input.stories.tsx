@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { ChangeEventHandler, useState } from 'react';
 
 import { Input } from 'components/common/Input';
