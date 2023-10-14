@@ -1,2 +1,7 @@
 {
+	"editor.defaultFormatter": "dprint.dprint",
+	"editor.formatOnSave": true,
+	"eslint.enable": true,
+	"eslint.experimental.useFlatConfig": true,
+	"eslint.codeActionsOnSave.mode": "all"
 }
