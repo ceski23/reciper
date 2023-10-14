@@ -7,9 +7,15 @@
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"lint": "eslint .",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"generate-colors": "node generate-colors.mjs"
 	},
 	"dependencies": {
+		"@fontsource-variable/roboto-flex": "^5.0.8",
+		"@macaron-css/core": "^1.2.0",
+		"@macaron-css/react": "^1.4.0",
+		"@macaron-css/vite": "^1.4.3",
+		"@material/material-color-utilities": "^0.2.7",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
 	},
@@ -21,6 +27,7 @@
 		"dprint": "^0.41.0",
 		"eslint": "^8.45.0",
 		"typescript": "^5.0.2",
-		"vite": "^4.4.5"
+		"vite": "^4.4.5",
+		"vite-tsconfig-paths": "^4.2.1"
 	}
 }

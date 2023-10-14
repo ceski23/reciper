@@ -10,7 +10,7 @@
     "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node10",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -23,10 +23,12 @@
     "noFallthroughCasesInSwitch": true,
     "types": [
       "vite/client"
-    ]
+    ],
+    "baseUrl": "src"
   },
   "include": [
-    "src"
+    "src",
+    "generate-colors.mjs"
   ],
   "references": [
     {
