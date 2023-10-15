@@ -1,2 +1,5 @@
 export { Button } from './Button'
+export * as Icon from './Icon'
+export { Layout } from './Layout'
+export { NavigationBar } from './navigation/NavigationBar'
 export { Typography } from './Typography'

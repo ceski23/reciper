@@ -3,5 +3,8 @@
 	"editor.formatOnSave": true,
 	"eslint.enable": true,
 	"eslint.experimental.useFlatConfig": true,
-	"eslint.codeActionsOnSave.mode": "all"
+	"eslint.codeActionsOnSave.mode": "all",
+	"[svg]": {
+		"editor.defaultFormatter": "jock.svg"
+	}
 }

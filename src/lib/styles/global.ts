@@ -9,13 +9,10 @@ globalStyle(':root', {
 	WebkitFontSmoothing: 'antialiased',
 	MozOsxFontSmoothing: 'grayscale',
 	textSizeAdjust: '100%',
-	boxSizing: 'border-box',
 })
 
-globalStyle('body', {
+globalStyle('*', {
+	boxSizing: 'border-box',
+	padding: 0,
 	margin: 0,
-	display: 'flex',
-	placeItems: 'center',
-	minWidth: '320px',
-	minHeight: '100vh',
 })

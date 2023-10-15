@@ -2,6 +2,7 @@ import { styled } from '@macaron-css/react'
 
 const DisplayLarge = styled('h1', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 57,
 		fontWeight: 400,
 		lineHeight: '64px',
@@ -11,6 +12,7 @@ const DisplayLarge = styled('h1', {
 
 const DisplayMedium = styled('h2', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 45,
 		fontWeight: 400,
 		lineHeight: '52px',
@@ -20,6 +22,7 @@ const DisplayMedium = styled('h2', {
 
 const DisplaySmall = styled('h3', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 36,
 		fontWeight: 400,
 		lineHeight: '44px',
@@ -29,6 +32,7 @@ const DisplaySmall = styled('h3', {
 
 const HeadlineLarge = styled('h4', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 32,
 		fontWeight: 400,
 		lineHeight: '40px',
@@ -38,6 +42,7 @@ const HeadlineLarge = styled('h4', {
 
 const HeadlineMedium = styled('h5', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 28,
 		fontWeight: 400,
 		lineHeight: '36px',
@@ -47,6 +52,7 @@ const HeadlineMedium = styled('h5', {
 
 const HeadlineSmall = styled('h6', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 24,
 		fontWeight: 400,
 		lineHeight: '32px',
@@ -56,6 +62,7 @@ const HeadlineSmall = styled('h6', {
 
 const TitleLarge = styled('p', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 22,
 		fontWeight: 400,
 		lineHeight: '28px',
@@ -65,6 +72,7 @@ const TitleLarge = styled('p', {
 
 const TitleMedium = styled('p', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 16,
 		fontWeight: 500,
 		lineHeight: '24px',
@@ -74,6 +82,7 @@ const TitleMedium = styled('p', {
 
 const TitleSmall = styled('p', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 14,
 		fontWeight: 500,
 		lineHeight: '20px',
@@ -83,6 +92,7 @@ const TitleSmall = styled('p', {
 
 const LabelLarge = styled('p', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 14,
 		fontWeight: 500,
 		lineHeight: '20px',
@@ -92,6 +102,7 @@ const LabelLarge = styled('p', {
 
 const LabelMedium = styled('p', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 12,
 		fontWeight: 500,
 		lineHeight: '16px',
@@ -101,6 +112,7 @@ const LabelMedium = styled('p', {
 
 const LabelSmall = styled('p', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 11,
 		fontWeight: 500,
 		lineHeight: '16px',
@@ -110,6 +122,7 @@ const LabelSmall = styled('p', {
 
 const BodyLarge = styled('p', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 16,
 		fontWeight: 400,
 		lineHeight: '24px',
@@ -119,6 +132,7 @@ const BodyLarge = styled('p', {
 
 const BodyMedium = styled('p', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 14,
 		fontWeight: 400,
 		lineHeight: '20px',
@@ -128,6 +142,7 @@ const BodyMedium = styled('p', {
 
 const BodySmall = styled('p', {
 	base: {
+		fontFamily: '"Roboto Flex Variable", sans-serif',
 		fontSize: 12,
 		fontWeight: 400,
 		lineHeight: '16px',

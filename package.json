@@ -17,8 +17,11 @@
 		"@macaron-css/react": "^1.4.0",
 		"@macaron-css/vite": "^1.4.3",
 		"@material/material-color-utilities": "^0.2.7",
+		"@radix-ui/react-roving-focus": "^1.0.4",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.16.0",
+		"react-router-typesafe-routes": "^1.2.1"
 	},
 	"devDependencies": {
 		"@ceski23/eslint-config": "github:ceski23/eslint-config#feat/flat-config",
@@ -31,6 +34,7 @@
 		"lint-staged": "^15.0.0",
 		"typescript": "^5.0.2",
 		"vite": "^4.4.5",
+		"vite-plugin-svgr": "^4.1.0",
 		"vite-tsconfig-paths": "^4.2.1"
 	},
 	"lint-staged": {

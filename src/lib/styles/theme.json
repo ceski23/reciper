@@ -95,7 +95,8 @@
 				"95": "#ffecf0",
 				"99": "#fffbff"
 			}
-		}
+		},
+		"surfaceContainer": "#211F26"
 	},
 	"light": {
 		"primary": "#6750a4",
@@ -193,6 +194,7 @@
 				"95": "#ffecf0",
 				"99": "#fffbff"
 			}
-		}
+		},
+		"surfaceContainer": "#F3EDF7"
 	}
 }
