@@ -30,7 +30,8 @@
 	},
 	"include": [
 		"src",
-		"generate-colors.mjs"
+		"generate-colors.mjs",
+		"svg-component.d.ts"
 	],
 	"references": [
 		{

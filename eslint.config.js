@@ -8,6 +8,7 @@ export default [
 		ignores: [
 			'vite.config.ts',
 			'eslint.config.js',
+			'svg-component.d.ts',
 		],
 	},
 	...config,

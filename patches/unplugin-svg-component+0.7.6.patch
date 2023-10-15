@@ -1,0 +1,19 @@
+diff --git a/node_modules/unplugin-svg-component/dist/chunk-NV7UWNQ5.js b/node_modules/unplugin-svg-component/dist/chunk-NV7UWNQ5.js
+index b85cce7..88ef731 100644
+--- a/node_modules/unplugin-svg-component/dist/chunk-NV7UWNQ5.js
++++ b/node_modules/unplugin-svg-component/dist/chunk-NV7UWNQ5.js
+@@ -168,11 +168,12 @@ declare module 'vue' {
+ var reactTemplate = `
+ import React from 'react';
+ 
+-export default function $component_name({name}) {
++export default function $component_name({name, className}) {
+   return React.createElement("svg", {
+     xmlns: "http://www.w3.org/2000/svg",
+     xmlnsXlink: "http://www.w3.org/1999/xlink",
+-    style: $component_style
++    style: $component_style,
++    className
+   }, React.createElement("use", {
+     xlinkHref: "#" + name
+   }));

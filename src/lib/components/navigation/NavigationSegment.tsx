@@ -3,23 +3,20 @@ import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import { Typography } from 'lib/components'
 import { useIsLinkActive } from 'lib/hooks'
 import { styleUtils, theme } from 'lib/styles'
-import React, { FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 import { NavLink } from 'react-router-dom'
+import Icon, { SvgName } from '~virtual/svg-component'
 
 export type NavigationSegmentProps = {
 	label?: string
-	icon: FunctionComponent<
-		React.SVGProps<SVGSVGElement> & {
-			title?: string | undefined
-		}
-	>
+	icon: SvgName
 	badge?: boolean | string
 	to: string
 }
 
 export const NavigationSegment: FunctionComponent<RovingFocusGroup.RovingFocusItemProps & NavigationSegmentProps> = ({
 	label,
-	icon: Icon,
+	icon,
 	badge,
 	to,
 	...props
@@ -34,7 +31,7 @@ export const NavigationSegment: FunctionComponent<RovingFocusGroup.RovingFocusIt
 		>
 			<NavLink to={to}>
 				<IconContainer>
-					<Icon title={label} />
+					<SegmentIcon name={icon} />
 					{badge && (
 						<Badge variant={typeof badge === 'string' ? undefined : 'empty'}>
 							{typeof badge === 'string' && (
@@ -144,5 +141,12 @@ const Badge = styled('div', {
 				right: 20,
 			},
 		},
+	},
+})
+
+const SegmentIcon = styled(Icon, {
+	base: {
+		width: '100%',
+		height: '100%',
 	},
 })

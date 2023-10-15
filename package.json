@@ -9,7 +9,8 @@
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"generate-colors": "node generate-colors.mjs",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"postinstall": "patch-package"
 	},
 	"dependencies": {
 		"@fontsource-variable/roboto-flex": "^5.0.8",
@@ -34,10 +35,11 @@
 		"eslint": "^8.45.0",
 		"husky": "^8.0.3",
 		"lint-staged": "^15.0.0",
+		"patch-package": "^8.0.0",
 		"typescript": "^5.0.2",
+		"unplugin-svg-component": "^0.7.6",
 		"vite": "^4.4.5",
 		"vite-plugin-i18next-loader": "^2.0.4",
-		"vite-plugin-svgr": "^4.1.0",
 		"vite-tsconfig-paths": "^4.2.1"
 	},
 	"lint-staged": {

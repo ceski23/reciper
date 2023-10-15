@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { Icon, NavigationBar } from 'lib/components'
+import { NavigationBar } from 'lib/components'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { PATHS } from 'lib/routing'
 import { darkThemeClass, lightThemeClass, theme } from 'lib/styles'
@@ -19,9 +19,9 @@ export const Layout: FunctionComponent = () => {
 			</MainContent>
 			<NavigationBar
 				segments={[
-					{ icon: Icon.Home, to: PATHS.HOME.buildPath({}), label: t('paths.home') },
-					{ icon: Icon.Recipes, to: PATHS.RECIPES.buildPath({}), label: t('paths.recipes') },
-					{ icon: Icon.Settings, to: PATHS.SETTINGS.buildPath({}), label: t('paths.settings') },
+					{ icon: 'home', to: PATHS.HOME.buildPath({}), label: t('paths.home') },
+					{ icon: 'recipes', to: PATHS.RECIPES.buildPath({}), label: t('paths.recipes') },
+					{ icon: 'settings', to: PATHS.SETTINGS.buildPath({}), label: t('paths.settings') },
 				]}
 			/>
 		</LayoutBase>
