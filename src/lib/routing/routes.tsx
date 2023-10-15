@@ -1,4 +1,5 @@
-import { Layout } from 'lib/components'
+import { Layout, Typography } from 'lib/components'
+import i18n from 'lib/i18n'
 import { RouteObject } from 'react-router-dom'
 import { PATHS } from './paths'
 
@@ -7,15 +8,15 @@ export const routes: Array<RouteObject> = [{
 	children: [
 		{
 			index: true,
-			element: <p>Home</p>,
+			element: <Typography.HeadlineLarge>{i18n.t('paths.home')}</Typography.HeadlineLarge>,
 		},
 		{
 			path: PATHS.RECIPES.path,
-			element: <p>Recipes</p>,
+			element: <Typography.HeadlineLarge>{i18n.t('paths.recipes')}</Typography.HeadlineLarge>,
 		},
 		{
 			path: PATHS.SETTINGS.path,
-			element: <p>Settings</p>,
+			element: <Typography.HeadlineLarge>{i18n.t('paths.settings')}</Typography.HeadlineLarge>,
 		},
 	],
 }]
