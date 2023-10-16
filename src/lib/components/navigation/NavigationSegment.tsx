@@ -1,11 +1,12 @@
 import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
-import { Typography } from 'lib/components'
 import { useIsLinkActive } from 'lib/hooks'
 import { styleUtils, theme } from 'lib/styles'
-import { FunctionComponent } from 'react'
+import type { FunctionComponent } from 'react'
 import { NavLink } from 'react-router-dom'
-import Icon, { SvgName } from '~virtual/svg-component'
+import type { SvgName } from '~virtual/svg-component'
+import Icon from '~virtual/svg-component'
+import { Typography } from '../Typography'
 
 export type NavigationSegmentProps = {
 	label?: string

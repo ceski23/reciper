@@ -15,6 +15,11 @@ export default [
 	{
 		rules: {
 			'import/order': 'off',
+			'@typescript-eslint/consistent-type-imports': ['warn', {
+				prefer: 'type-imports',
+				disallowTypeAnnotations: false,
+				fixStyle: 'inline-type-imports',
+			}],
 		},
 	},
 ]

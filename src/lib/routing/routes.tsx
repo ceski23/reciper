@@ -1,6 +1,7 @@
-import { Layout, Typography } from 'lib/components'
+import { Layout } from 'lib/components/Layout'
+import { Typography } from 'lib/components/Typography'
 import i18n from 'lib/i18n'
-import { RouteObject } from 'react-router-dom'
+import type { RouteObject } from 'react-router-dom'
 import { PATHS } from './paths'
 
 export const routes: Array<RouteObject> = [{
