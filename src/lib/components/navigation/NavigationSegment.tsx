@@ -30,7 +30,10 @@ export const NavigationSegment: FunctionComponent<RovingFocusGroup.RovingFocusIt
 			asChild
 			active={isActive}
 		>
-			<NavLink to={to}>
+			<NavLink
+				to={to}
+				unstable_viewTransition
+			>
 				<IconContainer>
 					<SegmentIcon name={icon} />
 					{badge && (
