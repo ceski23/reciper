@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
-import { styleUtils, theme } from 'lib/styles'
 import type { ComponentProps, FunctionComponent } from 'react'
 import React from 'react'
+import { styleUtils, theme } from 'lib/styles'
 
 type ButtonProps = {
 	leftIcon?: React.ReactNode

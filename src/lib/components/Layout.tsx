@@ -1,12 +1,12 @@
 import { createTheme } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
+import type { FunctionComponent } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Outlet } from 'react-router-dom'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
-import type { FunctionComponent } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Outlet } from 'react-router-dom'
 import { NavigationBar } from './navigation/NavigationBar'
 
 export const lightThemeClass = createTheme(theme, {

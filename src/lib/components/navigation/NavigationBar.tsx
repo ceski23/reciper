@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
-import { theme } from 'lib/styles'
 import { type ComponentProps, type FunctionComponent } from 'react'
+import { theme } from 'lib/styles'
 import { NavigationSegment, type NavigationSegmentProps } from './NavigationSegment'
 
 type NavigationBarProps = {

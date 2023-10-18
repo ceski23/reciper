@@ -4,5 +4,8 @@
 	],
 	"excludes": [
 		"svg-component.d.ts"
-	]
+	],
+	"typescript": {
+		"module.sortImportDeclarations": "maintain"
+	}
 }

@@ -2,8 +2,8 @@ import 'lib/i18n'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 import 'lib/styles/global'
-import { routes } from 'lib/routing/routes'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { routes } from 'lib/routing/routes'
 
 const router = createBrowserRouter(routes)
 

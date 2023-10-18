@@ -14,7 +14,7 @@ export default [
 	...config,
 	{
 		rules: {
-			'import/order': 'off',
+			'import/no-cycle': 'warn',
 			'@typescript-eslint/consistent-type-imports': ['warn', {
 				prefer: 'type-imports',
 				disallowTypeAnnotations: false,
