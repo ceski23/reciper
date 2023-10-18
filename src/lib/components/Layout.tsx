@@ -1,12 +1,14 @@
 import { createTheme } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
-import type { FunctionComponent } from 'react'
+import { useSetAtom } from 'jotai'
+import { type FunctionComponent, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
+import { headerRefAtom } from './HeaderPortal'
 import { NavigationBar } from './navigation/NavigationBar'
 
 export const lightThemeClass = createTheme(theme, {
@@ -20,10 +22,11 @@ export const darkThemeClass = createTheme(theme, {
 export const Layout: FunctionComponent = () => {
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()
+	const setHeaderRef = useSetAtom(headerRefAtom)
 
 	return (
 		<LayoutBase className={isDarkMode ? darkThemeClass : lightThemeClass}>
-			<header />
+			<Header ref={setHeaderRef} />
 			<MainContent>
 				<Outlet />
 			</MainContent>
@@ -54,5 +57,13 @@ const LayoutBase = styled('div', {
 const MainContent = styled('main', {
 	base: {
 		flex: 1,
+	},
+})
+
+const Header = styled('header', {
+	base: {
+		display: 'flex',
+		flexDirection: 'column',
+		width: '100%',
 	},
 })

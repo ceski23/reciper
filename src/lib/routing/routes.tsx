@@ -1,6 +1,7 @@
 import type { RouteObject } from 'react-router-dom'
+import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { Layout } from 'lib/components/Layout'
-import { Typography } from 'lib/components/Typography'
+import { TopAppBar } from 'lib/components/TopAppBar'
 import i18n from 'lib/i18n'
 import { PATHS } from './paths'
 
@@ -9,15 +10,27 @@ export const routes: Array<RouteObject> = [{
 	children: [
 		{
 			index: true,
-			element: <Typography.HeadlineLarge>{i18n.t('paths.home')}</Typography.HeadlineLarge>,
+			element: (
+				<HeaderPortal>
+					<TopAppBar title={i18n.t('paths.home')} />
+				</HeaderPortal>
+			),
 		},
 		{
 			path: PATHS.RECIPES.path,
-			element: <Typography.HeadlineLarge>{i18n.t('paths.recipes')}</Typography.HeadlineLarge>,
+			element: (
+				<HeaderPortal>
+					<TopAppBar title={i18n.t('paths.recipes')} />
+				</HeaderPortal>
+			),
 		},
 		{
 			path: PATHS.SETTINGS.path,
-			element: <Typography.HeadlineLarge>{i18n.t('paths.settings')}</Typography.HeadlineLarge>,
+			element: (
+				<HeaderPortal>
+					<TopAppBar title={i18n.t('paths.settings')} />
+				</HeaderPortal>
+			),
 		},
 	],
 }]

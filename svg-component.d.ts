@@ -1,7 +1,7 @@
 
 declare module '~virtual/svg-component' {
-  const Icon: ({name}: {name: "home" | "recipes" | "settings"})=> JSX.Element;
-  export const svgNames: ["home" , "recipes" , "settings"];
-  export type SvgName = "home" | "recipes" | "settings";
+  const Icon: ({name}: {name: "backArrow" | "home" | "more" | "recipes" | "settings"})=> JSX.Element;
+  export const svgNames: ["backArrow" , "home" , "more" , "recipes" , "settings"];
+  export type SvgName = "backArrow" | "home" | "more" | "recipes" | "settings";
   export default Icon;
 }
