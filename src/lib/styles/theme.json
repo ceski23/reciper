@@ -29,6 +29,11 @@
 		"inverseSurface": "#e6e1e6",
 		"inverseOnSurface": "#313033",
 		"inversePrimary": "#6750a4",
+		"surfaceContainerLowest": "#0f0d13",
+		"surfaceContainerLow": "#1d1b20",
+		"surfaceContainer": "#211f24",
+		"surfaceContainerHigh": "#2b292f",
+		"surfaceContainerHighest": "#36343a",
 		"palette": {
 			"neutral": {
 				"10": "#1c1b1e",
@@ -95,8 +100,7 @@
 				"95": "#ffecf0",
 				"99": "#fffbff"
 			}
-		},
-		"surfaceContainer": "#211F26"
+		}
 	},
 	"light": {
 		"primary": "#6750a4",
@@ -128,6 +132,11 @@
 		"inverseSurface": "#313033",
 		"inverseOnSurface": "#f4eff4",
 		"inversePrimary": "#cfbcff",
+		"surfaceContainerLowest": "#ffffff",
+		"surfaceContainerLow": "#f8f2fa",
+		"surfaceContainer": "#f2ecf4",
+		"surfaceContainerHigh": "#ece6ee",
+		"surfaceContainerHighest": "#e6e0e9",
 		"palette": {
 			"neutral": {
 				"10": "#1c1b1e",
@@ -194,7 +203,6 @@
 				"95": "#ffecf0",
 				"99": "#fffbff"
 			}
-		},
-		"surfaceContainer": "#F3EDF7"
+		}
 	}
 }

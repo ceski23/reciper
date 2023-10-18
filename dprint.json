@@ -3,7 +3,8 @@
 		"https://raw.githubusercontent.com/ceski23/dprint-config/v0.1/dprint.json"
 	],
 	"excludes": [
-		"svg-component.d.ts"
+		"svg-component.d.ts",
+		"src/lib/styles/theme.json"
 	],
 	"typescript": {
 		"module.sortImportDeclarations": "maintain"

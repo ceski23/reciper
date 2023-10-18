@@ -44,20 +44,19 @@ const ButtonBase = styled('button', {
 		variant: {
 			elevated: {
 				color: theme.colors.primary,
-				// TODO: Add missing surface colors https://github.com/material-foundation/material-color-utilities/blob/main/typescript/dynamiccolor/material_dynamic_colors.ts#L145-L236
-				backgroundColor: theme.colors.surface,
+				backgroundColor: theme.colors.surfaceContainerLow,
 				border: 'none',
 				boxShadow: `0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);`,
 				':hover': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.primary, 0.08),
+					backgroundColor: styleUtils.blendWithColor(theme.colors.surfaceContainerLow, theme.colors.primary, 0.08),
 					boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 2px 6px 2px rgba(0, 0, 0, 0.15)',
 				},
 				':focus-visible': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.primary, 0.12),
+					backgroundColor: styleUtils.blendWithColor(theme.colors.surfaceContainerLow, theme.colors.primary, 0.12),
 					boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 1px 3px 1px rgba(0, 0, 0, 0.15)',
 				},
 				':active': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.primary, 0.12),
+					backgroundColor: styleUtils.blendWithColor(theme.colors.surfaceContainerLow, theme.colors.primary, 0.12),
 					boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 1px 3px 1px rgba(0, 0, 0, 0.15)',
 				},
 				':disabled': {
