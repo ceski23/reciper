@@ -1,9 +1,10 @@
 import { styled } from '@macaron-css/react'
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { type FunctionComponent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import { IconButton } from './IconButton'
+import { Menu } from './Menu'
 import { Typography } from './Typography'
 
 type TopAppBarProps = {
@@ -12,40 +13,47 @@ type TopAppBarProps = {
 
 export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title }) => {
 	const navigate = useNavigate()
+	const location = useLocation()
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
+
+	const handleGoBack = () => {
+		if (location.key === 'default') {
+			return navigate(PATHS.HOME.buildPath({}))
+		}
+
+		navigate(-1)
+	}
 
 	return (
 		<AppBarBase>
 			<IconButton
 				icon="backArrow"
 				title="Go back"
-				onClick={() => navigate(-1)}
+				onClick={handleGoBack}
 			/>
 			<PageTitle as="h1">
 				{title}
 			</PageTitle>
 			<OptionsContainer>
-				<DropdownMenu.Root
+				<Menu.Root
 					open={isMoreOpen}
 					onOpenChange={setIsMoreOpen}
 				>
-					<DropdownMenu.Trigger asChild>
+					<Menu.Trigger asChild>
 						<IconButton
 							icon="more"
 							title="More"
 							isSelected={isMoreOpen}
 						/>
-					</DropdownMenu.Trigger>
-					<DropdownMenu.Portal>
-						<DropdownMenu.Content>
-							<DropdownMenu.Item>Test 1</DropdownMenu.Item>
-							<DropdownMenu.Item>Test 2</DropdownMenu.Item>
-							<DropdownMenu.Item>Test 3</DropdownMenu.Item>
-							<DropdownMenu.Item>Test 4</DropdownMenu.Item>
-							<DropdownMenu.Item>Test 5</DropdownMenu.Item>
-						</DropdownMenu.Content>
-					</DropdownMenu.Portal>
-				</DropdownMenu.Root>
+					</Menu.Trigger>
+					<Menu.Content>
+						<Menu.Item text="Test 1" />
+						<Menu.Item text="Test 2" />
+						<Menu.Item text="Test 3" />
+						<Menu.Item text="Test 4" />
+						<Menu.Item text="Test 5" />
+					</Menu.Content>
+				</Menu.Root>
 			</OptionsContainer>
 		</AppBarBase>
 	)

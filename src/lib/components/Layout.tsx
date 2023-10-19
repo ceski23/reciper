@@ -1,7 +1,7 @@
 import { createTheme } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import { useSetAtom } from 'jotai'
-import { type FunctionComponent, useCallback } from 'react'
+import { type FunctionComponent, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
@@ -24,8 +24,13 @@ export const Layout: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const setHeaderRef = useSetAtom(headerRefAtom)
 
+	useEffect(() => {
+		document.body.classList.toggle(lightThemeClass, !isDarkMode)
+		document.body.classList.toggle(darkThemeClass, isDarkMode)
+	}, [isDarkMode])
+
 	return (
-		<LayoutBase className={isDarkMode ? darkThemeClass : lightThemeClass}>
+		<LayoutBase>
 			<Header ref={setHeaderRef} />
 			<MainContent>
 				<Outlet />

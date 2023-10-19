@@ -119,7 +119,6 @@ const ButtonBase = styled('button', {
 		},
 		isSelected: {
 			true: {},
-			false: {},
 		},
 	},
 	defaultVariants: {
@@ -127,6 +126,7 @@ const ButtonBase = styled('button', {
 	},
 	compoundVariants: [
 		{
+			// TODO: Add remaining styles for selected button
 			variants: {
 				variant: 'standard',
 				isSelected: true,
