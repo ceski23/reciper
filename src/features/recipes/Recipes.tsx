@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
-import { isMainScrolledAtom } from 'lib/components/Layout'
+import { isMainScrolledAtom, navigationMenuHeight } from 'lib/components/Layout'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
@@ -72,8 +72,8 @@ export const Recipes: FunctionComponent = () => {
 				variant="primary"
 				size={isMainScrolled ? undefined : 'expanded'}
 				style={{
-					position: 'absolute',
-					bottom: 16,
+					position: 'fixed',
+					bottom: `calc(${navigationMenuHeight} + 16px)`,
 					right: 16,
 				}}
 			/>

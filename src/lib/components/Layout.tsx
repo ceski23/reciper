@@ -1,4 +1,5 @@
-import { createTheme } from '@macaron-css/core'
+import { createTheme, createVar } from '@macaron-css/core'
+import { setElementVars } from '@macaron-css/core/dist/dynamic'
 import { styled } from '@macaron-css/react'
 import { atom, useSetAtom } from 'jotai'
 import { type FunctionComponent, useEffect } from 'react'
@@ -6,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
+import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
@@ -21,6 +23,7 @@ export const darkThemeClass = createTheme(theme, {
 })
 
 export const isMainScrolledAtom = atom(false)
+export const navigationMenuHeight = createVar('navigation-menu-height')
 
 export const Layout: FunctionComponent = () => {
 	const isDarkMode = useIsDarkMode()
@@ -28,6 +31,11 @@ export const Layout: FunctionComponent = () => {
 	const setHeaderRef = useSetAtom(headerRefAtom)
 	const setIsMainScrolled = useSetAtom(isMainScrolledAtom)
 	const renderProbe = useIsContainerScrolled(setIsMainScrolled)
+	const navbarRef = useMeasureHeight<HTMLDivElement>(height => {
+		setElementVars(document.body, {
+			[navigationMenuHeight]: `${height ?? 0}px`,
+		})
+	})
 
 	useEffect(() => {
 		document.body.classList.toggle(lightThemeClass, !isDarkMode)
@@ -42,6 +50,7 @@ export const Layout: FunctionComponent = () => {
 				<Outlet />
 			</MainContent>
 			<NavigationBar
+				ref={navbarRef}
 				segments={[
 					{ icon: 'home', to: PATHS.HOME.buildPath({}), label: t('paths.home') },
 					{ icon: 'recipes', to: PATHS.RECIPES.buildPath({}), label: t('paths.recipes') },
@@ -59,7 +68,7 @@ const LayoutBase = styled('div', {
 		placeItems: 'center',
 		flexDirection: 'column',
 		minWidth: '320px',
-		height: '100vh',
+		height: '100dvh',
 		width: '100vw',
 		backgroundColor: theme.colors.background,
 	},

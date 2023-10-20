@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
-import { type ComponentProps, type FunctionComponent } from 'react'
+import { type ComponentProps, forwardRef } from 'react'
 import { theme } from 'lib/styles'
 import { NavigationSegment, type NavigationSegmentProps } from './NavigationSegment'
 
@@ -8,12 +8,13 @@ type NavigationBarProps = {
 	segments: Array<NavigationSegmentProps>
 }
 
-export const NavigationBar: FunctionComponent<NavigationBarProps & ComponentProps<typeof NavigationBarBase>> = ({
+export const NavigationBar = forwardRef<HTMLDivElement, NavigationBarProps & ComponentProps<typeof NavigationBarBase>>(({
 	segments,
 	...props
-}) => (
+}, ref) => (
 	<NavigationBarBase
 		asChild
+		ref={ref}
 		{...props}
 	>
 		<nav>
@@ -25,7 +26,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps & ComponentProp
 			))}
 		</nav>
 	</NavigationBarBase>
-)
+))
 
 const NavigationBarBase = styled(RovingFocusGroup.Root, {
 	base: {

@@ -9,6 +9,7 @@ globalStyle(':root', {
 	WebkitFontSmoothing: 'antialiased',
 	MozOsxFontSmoothing: 'grayscale',
 	textSizeAdjust: '100%',
+	WebkitTapHighlightColor: 'transparent',
 })
 
 globalStyle('*', {

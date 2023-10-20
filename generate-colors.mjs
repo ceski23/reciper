@@ -51,4 +51,4 @@ export const createSchemes = mainColor => {
 	}
 }
 
-await fs.writeFile('src/lib/styles/theme.json', JSON.stringify(createSchemes('#6750A4'), undefined, '\t'))
+await fs.writeFile('src/lib/styles/theme.json', JSON.stringify(createSchemes('#0088cc'), undefined, '\t'))
