@@ -1,8 +1,8 @@
 import type { RouteObject } from 'react-router-dom'
-import { HeaderPortal } from 'lib/components/HeaderPortal'
+import { Home } from 'features/home/Home'
+import { Recipes } from 'features/recipes/Recipes'
+import { Settings } from 'features/settings/Settings'
 import { Layout } from 'lib/components/Layout'
-import { TopAppBar } from 'lib/components/TopAppBar'
-import i18n from 'lib/i18n'
 import { PATHS } from './paths'
 
 export const routes: Array<RouteObject> = [{
@@ -10,27 +10,15 @@ export const routes: Array<RouteObject> = [{
 	children: [
 		{
 			index: true,
-			element: (
-				<HeaderPortal>
-					<TopAppBar title={i18n.t('paths.home')} />
-				</HeaderPortal>
-			),
+			element: <Home />,
 		},
 		{
 			path: PATHS.RECIPES.path,
-			element: (
-				<HeaderPortal>
-					<TopAppBar title={i18n.t('paths.recipes')} />
-				</HeaderPortal>
-			),
+			element: <Recipes />,
 		},
 		{
 			path: PATHS.SETTINGS.path,
-			element: (
-				<HeaderPortal>
-					<TopAppBar title={i18n.t('paths.settings')} />
-				</HeaderPortal>
-			),
+			element: <Settings />,
 		},
 	],
 }]

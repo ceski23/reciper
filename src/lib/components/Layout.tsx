@@ -1,9 +1,10 @@
 import { createTheme } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
-import { useSetAtom } from 'jotai'
+import { atom, useSetAtom } from 'jotai'
 import { type FunctionComponent, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
+import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
@@ -19,10 +20,14 @@ export const darkThemeClass = createTheme(theme, {
 	colors: schemes.dark,
 })
 
+export const isMainScrolledAtom = atom(false)
+
 export const Layout: FunctionComponent = () => {
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()
 	const setHeaderRef = useSetAtom(headerRefAtom)
+	const setIsMainScrolled = useSetAtom(isMainScrolledAtom)
+	const renderProbe = useIsContainerScrolled(setIsMainScrolled)
 
 	useEffect(() => {
 		document.body.classList.toggle(lightThemeClass, !isDarkMode)
@@ -33,6 +38,7 @@ export const Layout: FunctionComponent = () => {
 		<LayoutBase>
 			<Header ref={setHeaderRef} />
 			<MainContent>
+				{renderProbe}
 				<Outlet />
 			</MainContent>
 			<NavigationBar
@@ -53,7 +59,7 @@ const LayoutBase = styled('div', {
 		placeItems: 'center',
 		flexDirection: 'column',
 		minWidth: '320px',
-		minHeight: '100vh',
+		height: '100vh',
 		width: '100vw',
 		backgroundColor: theme.colors.background,
 	},
@@ -62,6 +68,8 @@ const LayoutBase = styled('div', {
 const MainContent = styled('main', {
 	base: {
 		flex: 1,
+		width: '100%',
+		overflow: 'auto',
 	},
 })
 
