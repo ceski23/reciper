@@ -1,8 +1,11 @@
 import { keyframes } from '@macaron-css/core'
+import { useAtomValue } from 'jotai'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
+import { isMainScrolledAtom } from 'lib/components/Layout'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
@@ -11,6 +14,7 @@ export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+	const isMainScrolled = useAtomValue(isMainScrolledAtom)
 
 	useEffect(() => {
 		if (isLoading) {
@@ -61,6 +65,18 @@ export const Recipes: FunctionComponent = () => {
 					)}
 				/>
 			</HeaderPortal>
+			<FloatingActionButton
+				icon="plus"
+				label="Add recipe"
+				type="button"
+				variant="primary"
+				size={isMainScrolled ? undefined : 'expanded'}
+				style={{
+					position: 'absolute',
+					bottom: 16,
+					right: 16,
+				}}
+			/>
 			<Typography.BodyMedium style={{ marginTop: '110vh' }}>Test</Typography.BodyMedium>
 		</Fragment>
 	)

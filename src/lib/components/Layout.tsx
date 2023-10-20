@@ -72,6 +72,7 @@ const MainContent = styled('main', {
 		overflow: 'auto',
 		display: 'flex',
 		flexDirection: 'column',
+		position: 'relative',
 	},
 })
 
