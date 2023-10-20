@@ -1,23 +1,22 @@
 import { styled } from '@macaron-css/react'
 import { useAtomValue } from 'jotai'
-import { type FunctionComponent, useState } from 'react'
+import { type FunctionComponent, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { isMainScrolledAtom } from 'lib/components/Layout'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import { IconButton } from './IconButton'
-import { Menu } from './Menu'
 import { Typography } from './Typography'
 
 type TopAppBarProps = {
 	configuration: 'small' | 'medium' | 'large'
 	title: string
+	options?: ReactNode
 }
 
-export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configuration }) => {
+export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configuration, options }) => {
 	const navigate = useNavigate()
 	const location = useLocation()
-	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const isMainScrolled = useAtomValue(isMainScrolledAtom)
 
 	const handleGoBack = () => {
@@ -43,25 +42,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configurat
 				)
 				: <span />}
 			<OptionsContainer>
-				<Menu.Root
-					open={isMoreOpen}
-					onOpenChange={setIsMoreOpen}
-				>
-					<Menu.Trigger asChild>
-						<IconButton
-							icon="more"
-							title="More"
-							isSelected={isMoreOpen}
-						/>
-					</Menu.Trigger>
-					<Menu.Content open={isMoreOpen}>
-						<Menu.Item text="Test 1" />
-						<Menu.Item text="Test 2" />
-						<Menu.Item text="Test 3" />
-						<Menu.Item text="Test 4" />
-						<Menu.Item text="Test 5" />
-					</Menu.Content>
-				</Menu.Root>
+				{options}
 			</OptionsContainer>
 			{configuration === 'large' && (
 				<ExtraContent>

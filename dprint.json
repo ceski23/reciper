@@ -4,9 +4,11 @@
 	],
 	"excludes": [
 		"svg-component.d.ts",
-		"src/lib/styles/theme.json"
+		"src/lib/styles/theme.json",
+		"dist"
 	],
 	"typescript": {
-		"module.sortImportDeclarations": "maintain"
+		"module.sortImportDeclarations": "maintain",
+		"jsx.multiLineParens": "always"
 	}
 }
