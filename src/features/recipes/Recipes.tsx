@@ -1,4 +1,5 @@
-import { Fragment, type FunctionComponent, useState } from 'react'
+import { keyframes } from '@macaron-css/core'
+import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
@@ -9,6 +10,15 @@ import { Typography } from 'lib/components/Typography'
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
+
+	useEffect(() => {
+		if (isLoading) {
+			const id = setTimeout(() => setIsLoading(false), 3000)
+
+			return () => clearTimeout(id)
+		}
+	}, [isLoading])
 
 	return (
 		<Fragment>
@@ -16,11 +26,17 @@ export const Recipes: FunctionComponent = () => {
 				<TopAppBar
 					configuration="small"
 					title={t('paths.recipes')}
+					progress={isLoading}
 					options={(
 						<Fragment>
 							<IconButton
 								icon="sync"
 								title="Sync recipes"
+								onClick={() => setIsLoading(true)}
+								isSelected={isLoading}
+								style={{
+									animation: isLoading ? `${spinAnimation} 1s infinite` : undefined,
+								}}
 							/>
 							<Menu.Root
 								open={isMoreOpen}
@@ -49,3 +65,12 @@ export const Recipes: FunctionComponent = () => {
 		</Fragment>
 	)
 }
+
+const spinAnimation = keyframes({
+	from: {
+		rotate: '0deg',
+	},
+	to: {
+		rotate: '-360deg',
+	},
+})

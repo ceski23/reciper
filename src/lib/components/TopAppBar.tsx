@@ -1,8 +1,9 @@
 import { styled } from '@macaron-css/react'
 import { useAtomValue } from 'jotai'
-import { type FunctionComponent, type ReactNode } from 'react'
+import { Fragment, type FunctionComponent, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { isMainScrolledAtom } from 'lib/components/Layout'
+import { ProgressIndicator } from 'lib/components/ProgressIndicator'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import { IconButton } from './IconButton'
@@ -12,9 +13,13 @@ type TopAppBarProps = {
 	configuration: 'small' | 'medium' | 'large'
 	title: string
 	options?: ReactNode
+	progress?: {
+		value?: number | null | undefined
+		max?: number
+	} | boolean
 }
 
-export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configuration, options }) => {
+export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configuration, options, progress }) => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const isMainScrolled = useAtomValue(isMainScrolledAtom)
@@ -28,28 +33,35 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configurat
 	}
 
 	return (
-		<AppBarBase elevation={isMainScrolled ? 'onScroll' : 'flat'}>
-			<IconButton
-				icon="backArrow"
-				title="Go back"
-				onClick={handleGoBack}
-			/>
-			{configuration === 'small'
-				? (
-					<PageTitle as="h1">
-						{title}
-					</PageTitle>
-				)
-				: <span />}
-			<OptionsContainer>
-				{options}
-			</OptionsContainer>
-			{configuration === 'large' && (
-				<ExtraContent>
-					<PageTitleLarge as="h1">{title}</PageTitleLarge>
-				</ExtraContent>
-			)}
-		</AppBarBase>
+		<Fragment>
+			<AppBarBase elevation={isMainScrolled ? 'onScroll' : 'flat'}>
+				<IconButton
+					icon="backArrow"
+					title="Go back"
+					onClick={handleGoBack}
+				/>
+				{configuration === 'small'
+					? (
+						<PageTitle as="h1">
+							{title}
+						</PageTitle>
+					)
+					: <span />}
+				<OptionsContainer>
+					{options}
+				</OptionsContainer>
+				{configuration === 'large' && (
+					<ExtraContent>
+						<PageTitleLarge as="h1">{title}</PageTitleLarge>
+					</ExtraContent>
+				)}
+			</AppBarBase>
+			{progress === true
+				? <ProgressIndicator.Linear />
+				: progress
+				? <ProgressIndicator.Linear {...progress} />
+				: undefined}
+		</Fragment>
 	)
 }
 
