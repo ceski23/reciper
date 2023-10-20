@@ -46,7 +46,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title }) => {
 							isSelected={isMoreOpen}
 						/>
 					</Menu.Trigger>
-					<Menu.Content>
+					<Menu.Content open={isMoreOpen}>
 						<Menu.Item text="Test 1" />
 						<Menu.Item text="Test 2" />
 						<Menu.Item text="Test 3" />
