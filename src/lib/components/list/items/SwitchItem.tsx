@@ -1,13 +1,13 @@
 import { styled } from '@macaron-css/react'
 import * as Label from '@radix-ui/react-label'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
-import * as RadixSwitch from '@radix-ui/react-switch'
 import { type ComponentProps, type FunctionComponent } from 'react'
+import { Switch } from 'lib/components/Switch'
 import { styleUtils, theme } from 'lib/styles'
 import { ListItemBase, MainContent, type MainContentProps } from './MainContent'
 
 type SwitchItemProps = {
-	// TODO: Add Switch types
+	switchProps?: ComponentProps<typeof Switch>
 }
 
 export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> & SwitchItemProps & Omit<MainContentProps, 'hasWrappedText'>> = ({
@@ -15,6 +15,7 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	text,
 	leadingElement,
 	iconColor,
+	switchProps,
 	...props
 }) => (
 	<SwitchItemBase
@@ -33,9 +34,7 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 				hasWrappedText={props.variant === '3line'}
 			/>
 			<RovingFocusGroup.Item asChild>
-				<RadixSwitch.Root>
-					<RadixSwitch.Thumb />
-				</RadixSwitch.Root>
+				<Switch {...switchProps} />
 			</RovingFocusGroup.Item>
 		</Label.Root>
 	</SwitchItemBase>
