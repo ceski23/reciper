@@ -1,5 +1,5 @@
 diff --git a/node_modules/unplugin-svg-component/dist/chunk-NV7UWNQ5.js b/node_modules/unplugin-svg-component/dist/chunk-NV7UWNQ5.js
-index b85cce7..88ef731 100644
+index b85cce7..7478400 100644
 --- a/node_modules/unplugin-svg-component/dist/chunk-NV7UWNQ5.js
 +++ b/node_modules/unplugin-svg-component/dist/chunk-NV7UWNQ5.js
 @@ -168,11 +168,12 @@ declare module 'vue' {
@@ -7,13 +7,22 @@ index b85cce7..88ef731 100644
  import React from 'react';
  
 -export default function $component_name({name}) {
-+export default function $component_name({name, className}) {
++export default function $component_name({name, className, style}) {
    return React.createElement("svg", {
      xmlns: "http://www.w3.org/2000/svg",
      xmlnsXlink: "http://www.w3.org/1999/xlink",
 -    style: $component_style
-+    style: $component_style,
++    style,
 +    className
    }, React.createElement("use", {
      xlinkHref: "#" + name
    }));
+@@ -180,7 +181,7 @@ export default function $component_name({name}) {
+ `;
+ var reactDts = `
+ declare module '${MODULE_NAME}' {
+-  const $component_name: ({name}: {name: "$svg_symbolIds"})=> JSX.Element;
++  const $component_name: ({name, className, style}: {name: "$svg_symbolIds", className?: string, style?: React.CSSProperties})=> JSX.Element;
+   export const svgNames: ["$svg_names"];
+   export type SvgName = "$svg_symbolIds";
+   export default $component_name;
