@@ -17,7 +17,7 @@ export const FloatingActionButton: FunctionComponent<Omit<ComponentProps<typeof 
 	return (
 		<BaseFab {...props}>
 			<FabIcon name={icon} />
-			<ExpandedContainer style={{ gridTemplateColumns: props.size === 'expanded' ? '1fr' : '0fr' }}>
+			<ExpandedContainer isExpanded={props.size === 'expanded'}>
 				<TextContainer>
 					<FabText>
 						{label}
@@ -163,5 +163,18 @@ const ExpandedContainer = styled('div', {
 		display: 'grid',
 		transition: 'grid-template-columns .5s',
 		overflow: 'hidden',
+	},
+	variants: {
+		isExpanded: {
+			false: {
+				gridTemplateColumns: '0fr',
+			},
+			true: {
+				gridTemplateColumns: '1fr',
+			},
+		},
+	},
+	defaultVariants: {
+		isExpanded: false,
 	},
 })
