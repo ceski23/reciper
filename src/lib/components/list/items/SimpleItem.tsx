@@ -21,7 +21,7 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 				text={text}
 				leadingElement={leadingElement}
 				iconColor={iconColor}
-				hasWrappedText={props.variant === '3line'}
+				hasWrappedText={props.size === '3line'}
 			/>
 			{trailingElement}
 		</Fragment>
@@ -30,7 +30,7 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	if (props.onClick !== undefined) {
 		return (
 			<ListItemBase
-				clickable
+				variant="clickable"
 				focusable
 				aria-label={title}
 				{...props}
@@ -45,7 +45,6 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 
 	return (
 		<ListItemBase
-			clickable={false}
 			focusable={false}
 			aria-label={title}
 			{...props}

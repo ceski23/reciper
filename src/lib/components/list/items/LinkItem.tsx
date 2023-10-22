@@ -15,7 +15,7 @@ export const LinkItem: FunctionComponent<ComponentProps<typeof ListItemBase> & L
 	...props
 }) => (
 	<ListItemBase
-		clickable
+		variant="clickable"
 		aria-label={title}
 		{...props}
 		asChild
@@ -26,7 +26,7 @@ export const LinkItem: FunctionComponent<ComponentProps<typeof ListItemBase> & L
 				text={text}
 				leadingElement={leadingElement}
 				iconColor={iconColor}
-				hasWrappedText={props.variant === '3line'}
+				hasWrappedText={props.size === '3line'}
 			/>
 		</RouterLink>
 	</ListItemBase>

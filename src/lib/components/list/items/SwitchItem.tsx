@@ -19,7 +19,7 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	...props
 }) => (
 	<SwitchItemBase
-		clickable
+		variant="clickable"
 		focusable={false}
 		aria-label={title}
 		{...props}
@@ -31,7 +31,7 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 				text={text}
 				leadingElement={leadingElement}
 				iconColor={iconColor}
-				hasWrappedText={props.variant === '3line'}
+				hasWrappedText={props.size === '3line'}
 			/>
 			<RovingFocusGroup.Item asChild>
 				<Switch {...switchProps} />

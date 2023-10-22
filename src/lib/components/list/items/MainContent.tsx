@@ -13,22 +13,26 @@ export type MainContentProps = {
 	hasWrappedText?: boolean
 }
 
-export const MainContent: FunctionComponent<MainContentProps> = ({ title, iconColor, leadingElement, text, hasWrappedText }) => (
-	<Fragment>
-		{typeof leadingElement === 'string'
-			? (
-				<SimpleIcon
-					name={leadingElement}
-					style={{ color: iconColor }}
-				/>
-			)
-			: leadingElement}
-		<Content>
-			<Title>{title}</Title>
-			{text && <Text hasWrappedText={hasWrappedText}>{text}</Text>}
-		</Content>
-	</Fragment>
-)
+export const MainContent: FunctionComponent<MainContentProps> = ({ title, iconColor, leadingElement, text, hasWrappedText }) => {
+	const TextComponent = hasWrappedText ? Text : EllipsedText
+
+	return (
+		<Fragment>
+			{typeof leadingElement === 'string'
+				? (
+					<SimpleIcon
+						name={leadingElement}
+						style={{ color: iconColor }}
+					/>
+				)
+				: leadingElement}
+			<Content>
+				<Title>{title}</Title>
+				{text && <TextComponent>{text}</TextComponent>}
+			</Content>
+		</Fragment>
+	)
+}
 
 export const ListItemBase = styled(RovingFocusGroup.Item, {
 	base: {
@@ -44,14 +48,14 @@ export const ListItemBase = styled(RovingFocusGroup.Item, {
 		textDecoration: 'none',
 	},
 	variants: {
-		variant: {
+		size: {
 			'2line': {
 				alignItems: 'center',
 			},
 			'3line': {},
 		},
-		clickable: {
-			true: {
+		variant: {
+			clickable: {
 				cursor: 'pointer',
 				outline: 'none',
 				':hover': {
@@ -65,11 +69,12 @@ export const ListItemBase = styled(RovingFocusGroup.Item, {
 					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
 				},
 			},
+			nonClickable: {},
 		},
 	},
 	defaultVariants: {
-		variant: '2line',
-		clickable: false,
+		size: '2line',
+		variant: 'nonClickable',
 	},
 })
 
@@ -102,13 +107,13 @@ const Text = styled(Typography.BodyMedium, {
 	base: {
 		color: theme.colors.onSurfaceVariant,
 	},
-	variants: {
-		hasWrappedText: {
-			false: {
-				whiteSpace: 'nowrap',
-				textOverflow: 'ellipsis',
-				overflow: 'hidden',
-			},
-		},
+})
+
+const EllipsedText = styled(Typography.BodyMedium, {
+	base: {
+		color: theme.colors.onSurfaceVariant,
+		whiteSpace: 'nowrap',
+		textOverflow: 'ellipsis',
+		overflow: 'hidden',
 	},
 })
