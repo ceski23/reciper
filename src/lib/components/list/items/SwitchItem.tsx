@@ -42,8 +42,10 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 
 const SwitchItemBase = styled(ListItemBase, {
 	base: {
-		':focus-within': {
-			backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
+		selectors: {
+			'&:focus-within:has(> :focus-visible)': {
+				backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
+			},
 		},
 	},
 })
