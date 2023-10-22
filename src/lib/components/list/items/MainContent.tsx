@@ -26,7 +26,7 @@ export const MainContent: FunctionComponent<MainContentProps> = ({ title, iconCo
 					/>
 				)
 				: leadingElement}
-			<Content>
+			<Content variant={text === undefined ? 'dense' : 'normal'}>
 				<Title>{title}</Title>
 				{text && <TextComponent>{text}</TextComponent>}
 			</Content>
@@ -85,7 +85,16 @@ const Content = styled('div', {
 		justifyContent: 'center',
 		flex: 1,
 		minWidth: 0,
-		minHeight: 56,
+	},
+	variants: {
+		variant: {
+			normal: {
+				minHeight: 56,
+			},
+			dense: {
+				minHeight: 40,
+			},
+		},
 	},
 })
 
