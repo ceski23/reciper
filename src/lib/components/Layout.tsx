@@ -12,6 +12,7 @@ import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
 import { headerRefAtom } from './HeaderPortal'
+import { MetaThemeColor } from './MetaThemeColor'
 import { NavigationBar } from './navigation/NavigationBar'
 
 export const lightThemeClass = createTheme(theme, {
@@ -44,6 +45,7 @@ export const Layout: FunctionComponent = () => {
 
 	return (
 		<LayoutBase>
+			<MetaThemeColor />
 			<Header ref={setHeaderRef} />
 			<MainContent>
 				{renderProbe}
