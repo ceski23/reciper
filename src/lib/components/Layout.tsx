@@ -2,7 +2,7 @@ import { createTheme, createVar } from '@macaron-css/core'
 import { setElementVars } from '@macaron-css/core/dist/dynamic'
 import { styled } from '@macaron-css/react'
 import { atom, useSetAtom } from 'jotai'
-import { type FunctionComponent, useEffect } from 'react'
+import { type FunctionComponent, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
@@ -37,7 +37,7 @@ export const Layout: FunctionComponent = () => {
 		})
 	})
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		document.body.classList.toggle(lightThemeClass, !isDarkMode)
 		document.body.classList.toggle(darkThemeClass, isDarkMode)
 	}, [isDarkMode])

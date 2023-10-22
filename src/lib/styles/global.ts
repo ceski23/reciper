@@ -1,5 +1,5 @@
-import { globalStyle } from '@macaron-css/core'
 import '@fontsource-variable/roboto-flex'
+import { globalStyle } from '@macaron-css/core'
 
 globalStyle(':root', {
 	colorScheme: 'light dark',

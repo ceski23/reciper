@@ -19,6 +19,7 @@ export default defineConfig({
 			dts: true,
 			componentName: 'Icon',
 			componentStyle: ':',
+			scanStrategy: 'text',
 		}),
 	],
 })

@@ -1,7 +1,7 @@
+import 'lib/styles/global'
 import 'lib/i18n'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
-import 'lib/styles/global'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { routes } from 'lib/routing/routes'
 
