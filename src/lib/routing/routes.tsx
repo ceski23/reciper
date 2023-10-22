@@ -2,6 +2,7 @@ import type { RouteObject } from 'react-router-dom'
 import { Home } from 'features/home/Home'
 import { Recipes } from 'features/recipes/Recipes'
 import { Settings } from 'features/settings/Settings'
+import { Theme } from 'features/settings/Theme'
 import { Layout } from 'lib/components/Layout'
 import { PATHS } from './paths'
 
@@ -18,7 +19,16 @@ export const routes: Array<RouteObject> = [{
 		},
 		{
 			path: PATHS.SETTINGS.path,
-			element: <Settings />,
+			children: [
+				{
+					index: true,
+					element: <Settings />,
+				},
+				{
+					path: PATHS.SETTINGS.THEME.path,
+					element: <Theme />,
+				},
+			],
 		},
 	],
 }]

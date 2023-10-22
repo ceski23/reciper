@@ -2,6 +2,7 @@
 	"paths": {
 		"home": "Home",
 		"recipes": "Recipes",
-		"settings": "Settings"
+		"settings": "Settings",
+		"theme": "Theme"
 	}
 }

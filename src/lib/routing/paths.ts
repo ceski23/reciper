@@ -7,5 +7,6 @@ export const PATHS = {
 		ACCOUNT: route('account'),
 		UNITS: route('units'),
 		ABOUT: route('about'),
+		THEME: route('theme'),
 	}),
 }

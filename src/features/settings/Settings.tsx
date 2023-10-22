@@ -19,11 +19,12 @@ export const Settings: FunctionComponent = () => {
 				/>
 			</HeaderPortal>
 			<List>
-				<ListItem.Simple
+				<ListItem.Link
 					leadingElement="palette"
 					iconColor={theme.colors.primary}
 					title="Theme"
 					text="Supporting line text lorem ipsum dolor sit amet, consectetur."
+					to={PATHS.SETTINGS.THEME.buildPath({})}
 				/>
 				<ListItem.Link
 					leadingElement="account"
