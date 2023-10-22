@@ -3,6 +3,8 @@
 		"home": "Home",
 		"recipes": "Recipes",
 		"settings": "Settings",
-		"theme": "Theme"
+		"theme": "Theme",
+		"account": "Account and sync",
+		"units": "Units"
 	}
 }
