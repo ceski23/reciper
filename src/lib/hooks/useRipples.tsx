@@ -67,6 +67,7 @@ export const useRipples = (color: string = 'currentColor') => {
 			onPointerDown: handleAddRipple,
 			onPointerUp: handleRemoveRipple,
 			onMouseLeave: handleRemoveAllRipples,
+			onTouchEnd: handleRemoveAllRipples,
 		},
 		renderRipples,
 	}
