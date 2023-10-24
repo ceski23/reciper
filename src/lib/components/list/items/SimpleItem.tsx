@@ -1,4 +1,7 @@
+import { styled } from '@macaron-css/react'
+import mergeProps from 'merge-props'
 import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode } from 'react'
+import { useRipples } from 'lib/hooks/useRipples'
 import { ListItemBase, MainContent, type MainContentProps } from './MainContent'
 
 type SimpleItemProps = {
@@ -14,6 +17,8 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	trailingElement,
 	...props
 }) => {
+	const { eventHandlers, renderRipples } = useRipples()
+
 	const content = (
 		<Fragment>
 			<MainContent
@@ -33,12 +38,13 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 				variant="clickable"
 				focusable
 				aria-label={title}
-				{...props}
 				asChild
+				{...mergeProps(props, eventHandlers)}
 			>
-				<button type="button">
+				<Button type="button">
+					{renderRipples}
 					{content}
-				</button>
+				</Button>
 			</ListItemBase>
 		)
 	}
@@ -53,3 +59,9 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 		</ListItemBase>
 	)
 }
+
+const Button = styled('button', {
+	base: {
+		position: 'relative',
+	},
+})

@@ -46,6 +46,7 @@ export const ListItemBase = styled(RovingFocusGroup.Item, {
 		transition: 'background-color .2s',
 		textAlign: 'start',
 		textDecoration: 'none',
+		color: theme.colors.onSurface,
 	},
 	variants: {
 		size: {
@@ -62,10 +63,6 @@ export const ListItemBase = styled(RovingFocusGroup.Item, {
 					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.08),
 				},
 				':focus-visible': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
-				},
-				':active': {
-					// TODO: add ripple effect instead
 					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
 				},
 			},

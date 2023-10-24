@@ -1,8 +1,10 @@
 import { styled } from '@macaron-css/react'
 import * as Label from '@radix-ui/react-label'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
+import mergeProps from 'merge-props'
 import { type ComponentProps, type FunctionComponent } from 'react'
 import { Switch } from 'lib/components/Switch'
+import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 import { ListItemBase, MainContent, type MainContentProps } from './MainContent'
 
@@ -17,28 +19,34 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	iconColor,
 	switchProps,
 	...props
-}) => (
-	<SwitchItemBase
-		variant="clickable"
-		focusable={false}
-		aria-label={title}
-		{...props}
-		asChild
-	>
-		<Label.Root>
-			<MainContent
-				title={title}
-				text={text}
-				leadingElement={leadingElement}
-				iconColor={iconColor}
-				hasWrappedText={props.size === '3line'}
-			/>
-			<RovingFocusGroup.Item asChild>
-				<Switch {...switchProps} />
-			</RovingFocusGroup.Item>
-		</Label.Root>
-	</SwitchItemBase>
-)
+}) => {
+	const { eventHandlers, renderRipples } = useRipples()
+
+	return (
+		<SwitchItemBase
+			variant="clickable"
+			focusable={false}
+			aria-label={title}
+			{...props}
+			asChild
+			{...mergeProps(props, eventHandlers)}
+		>
+			<Container>
+				{renderRipples}
+				<MainContent
+					title={title}
+					text={text}
+					leadingElement={leadingElement}
+					iconColor={iconColor}
+					hasWrappedText={props.size === '3line'}
+				/>
+				<RovingFocusGroup.Item asChild>
+					<Switch {...switchProps} />
+				</RovingFocusGroup.Item>
+			</Container>
+		</SwitchItemBase>
+	)
+}
 
 const SwitchItemBase = styled(ListItemBase, {
 	base: {
@@ -47,5 +55,11 @@ const SwitchItemBase = styled(ListItemBase, {
 				backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
 			},
 		},
+	},
+})
+
+const Container = styled(Label.Root, {
+	base: {
+		position: 'relative',
 	},
 })

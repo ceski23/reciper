@@ -1,6 +1,8 @@
 import { styled } from '@macaron-css/react'
+import mergeProps from 'merge-props'
 import type { ComponentProps, FunctionComponent } from 'react'
 import React from 'react'
+import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 
 type ButtonProps = {
@@ -12,8 +14,11 @@ export const Button: FunctionComponent<ComponentProps<typeof ButtonBase> & Butto
 	leftIcon,
 	...props
 }) => {
+	const { eventHandlers, renderRipples } = useRipples()
+
 	return (
-		<ButtonBase {...props}>
+		<ButtonBase {...mergeProps(props, eventHandlers)}>
+			{renderRipples}
 			{leftIcon}
 			{children}
 		</ButtonBase>
@@ -22,6 +27,8 @@ export const Button: FunctionComponent<ComponentProps<typeof ButtonBase> & Butto
 
 const ButtonBase = styled('button', {
 	base: {
+		position: 'relative',
+		overflow: 'hidden',
 		height: 40,
 		borderRadius: 100,
 		padding: '10px 24px',

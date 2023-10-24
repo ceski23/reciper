@@ -1,6 +1,7 @@
 import { styled } from '@macaron-css/react'
 import * as RadixRadioGroup from '@radix-ui/react-radio-group'
 import { type ComponentProps, type FunctionComponent } from 'react'
+import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
 
@@ -11,16 +12,20 @@ type RadioGroupItemProps = {
 export const RadioGroupItem: FunctionComponent<RadioGroupItemProps & ComponentProps<typeof Item>> = ({
 	label,
 	...props
-}) => (
-	<Container>
-		<Item {...props}>
-			<Indicator />
-		</Item>
-		<Typography.BodyLarge>
-			{label}
-		</Typography.BodyLarge>
-	</Container>
-)
+}) => {
+	const { eventHandlers, renderRipples } = useRipples()
+	return (
+		<Container {...eventHandlers}>
+			{renderRipples}
+			<Item {...props}>
+				<Indicator />
+			</Item>
+			<Typography.BodyLarge>
+				{label}
+			</Typography.BodyLarge>
+		</Container>
+	)
+}
 
 const Container = styled('label', {
 	base: {
@@ -33,16 +38,14 @@ const Container = styled('label', {
 		alignItems: 'center',
 		cursor: 'pointer',
 		outline: 'none',
+		position: 'relative',
+		transition: 'background-color .2s',
 		':hover': {
-			backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.08),
-		},
-		':active': {
-			// TODO: add ripple effect instead
-			backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
+			backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.08),
 		},
 		selectors: {
 			'&:focus-within:has(> :focus-visible)': {
-				backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
+				backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.12),
 			},
 		},
 	},

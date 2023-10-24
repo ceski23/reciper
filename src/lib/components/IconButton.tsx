@@ -1,5 +1,7 @@
 import { styled } from '@macaron-css/react'
+import mergeProps from 'merge-props'
 import { type ComponentProps, forwardRef } from 'react'
+import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 import Icon, { type SvgName } from '~virtual/svg-component'
 
@@ -12,15 +14,20 @@ export const IconButton = forwardRef<HTMLButtonElement, ComponentProps<typeof Bu
 	icon,
 	type = 'button',
 	...props
-}, ref) => (
-	<ButtonBase
-		type={type}
-		ref={ref}
-		{...props}
-	>
-		<StyledIcon name={icon} />
-	</ButtonBase>
-))
+}, ref) => {
+	const { eventHandlers, renderRipples } = useRipples()
+
+	return (
+		<ButtonBase
+			type={type}
+			ref={ref}
+			{...mergeProps(props, eventHandlers)}
+		>
+			{renderRipples}
+			<StyledIcon name={icon} />
+		</ButtonBase>
+	)
+})
 
 const ButtonBase = styled('button', {
 	base: {
@@ -33,6 +40,8 @@ const ButtonBase = styled('button', {
 		borderRadius: 100,
 		padding: 8,
 		transition: 'background-color .2s, color .2s',
+		position: 'relative',
+		overflow: 'hidden',
 		cursor: 'pointer',
 		':focus-visible': {
 			outline: 'none',
@@ -50,9 +59,6 @@ const ButtonBase = styled('button', {
 				':focus-visible': {
 					backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.12),
 				},
-				':active': {
-					backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.12),
-				},
 				':disabled': {
 					opacity: 0.38,
 					cursor: 'unset',
@@ -66,9 +72,6 @@ const ButtonBase = styled('button', {
 					backgroundColor: styleUtils.blendWithColor(theme.colors.primary, theme.colors.onSurfaceVariant, 0.08),
 				},
 				':focus-visible': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.primary, theme.colors.onSurfaceVariant, 0.12),
-				},
-				':active': {
 					backgroundColor: styleUtils.blendWithColor(theme.colors.primary, theme.colors.onSurfaceVariant, 0.12),
 				},
 				':disabled': {
@@ -87,9 +90,6 @@ const ButtonBase = styled('button', {
 				':focus-visible': {
 					backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
 				},
-				':active': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
-				},
 				':disabled': {
 					backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.12),
 					color: styleUtils.transparentize(theme.colors.onSurface, 0.38),
@@ -104,9 +104,6 @@ const ButtonBase = styled('button', {
 					backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.08),
 				},
 				':focus-visible': {
-					backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.12),
-				},
-				':active': {
 					backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.12),
 				},
 				':disabled': {
@@ -137,9 +134,6 @@ const ButtonBase = styled('button', {
 					backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.08),
 				},
 				':focus-visible': {
-					backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.12),
-				},
-				':active': {
 					backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.12),
 				},
 			},

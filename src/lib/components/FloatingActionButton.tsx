@@ -1,5 +1,7 @@
 import { styled } from '@macaron-css/react'
+import mergeProps from 'merge-props'
 import { type ComponentProps, type FunctionComponent } from 'react'
+import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
 import Icon, { type SvgName } from '~virtual/svg-component'
@@ -14,8 +16,11 @@ export const FloatingActionButton: FunctionComponent<Omit<ComponentProps<typeof 
 	label,
 	...props
 }) => {
+	const { eventHandlers, renderRipples } = useRipples()
+
 	return (
-		<BaseFab {...props}>
+		<BaseFab {...mergeProps(props, eventHandlers)}>
+			{renderRipples}
 			<FabIcon name={icon} />
 			<ExpandedContainer isExpanded={props.size === 'expanded'}>
 				<TextContainer>
@@ -36,6 +41,8 @@ const BaseFab = styled('button', {
 		width: 'fit-content',
 		alignItems: 'center',
 		cursor: 'pointer',
+		position: 'absolute',
+		overflow: 'hidden',
 	},
 	variants: {
 		size: {
