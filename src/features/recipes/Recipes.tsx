@@ -68,7 +68,7 @@ export const Recipes: FunctionComponent = () => {
 					)}
 				/>
 			</HeaderPortal>
-			<VirtualList>
+			<VirtualList virtualProps={{ overscan: 10 }}>
 				{Array.from({ length: 1000 }, (_, index) => (
 					<ListItem.Simple
 						key={index}
