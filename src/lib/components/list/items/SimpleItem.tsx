@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
-import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode } from 'react'
+import { type ComponentProps, forwardRef, Fragment, type ReactNode } from 'react'
 import { useRipples } from 'lib/hooks/useRipples'
 import { ListItemBase, MainContent, type MainContentProps } from './MainContent'
 
@@ -9,7 +9,10 @@ type SimpleItemProps = {
 	onClick?: VoidFunction
 }
 
-export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> & SimpleItemProps & Omit<MainContentProps, 'hasWrappedText'>> = ({
+export const SimpleItem = forwardRef<
+	HTMLSpanElement,
+	ComponentProps<typeof ListItemBase> & SimpleItemProps & Omit<MainContentProps, 'hasWrappedText'>
+>(({
 	title,
 	text,
 	leadingElement,
@@ -17,7 +20,7 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	trailingElement,
 	overline,
 	...props
-}) => {
+}, ref) => {
 	const { eventHandlers, renderRipples } = useRipples()
 
 	const content = (
@@ -41,6 +44,7 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 				focusable
 				aria-label={title}
 				asChild
+				ref={ref}
 				{...mergeProps(props, eventHandlers)}
 			>
 				<Button type="button">
@@ -53,6 +57,7 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 
 	return (
 		<ListItemBase
+			ref={ref}
 			focusable={false}
 			aria-label={title}
 			{...props}
@@ -60,7 +65,7 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 			{content}
 		</ListItemBase>
 	)
-}
+})
 
 const Button = styled('button', {
 	base: {

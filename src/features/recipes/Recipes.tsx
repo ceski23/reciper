@@ -1,14 +1,12 @@
 import { keyframes } from '@macaron-css/core'
-import { styled } from '@macaron-css/react'
-import chickenSoup from 'assets/images/chicken_soup.png'
 import { useAtomValue } from 'jotai'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { RecipeListItem } from 'features/recipes/RecipeListItem'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
 import { isMainScrolledAtom, navigationMenuHeight } from 'lib/components/Layout'
-import { ListItem } from 'lib/components/list/items'
 import { VirtualList } from 'lib/components/list/VirtualList'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
@@ -69,17 +67,7 @@ export const Recipes: FunctionComponent = () => {
 				/>
 			</HeaderPortal>
 			<VirtualList virtualProps={{ overscan: 10 }}>
-				{Array.from({ length: 1000 }, (_, index) => (
-					<ListItem.Simple
-						key={index}
-						overline="Kwestia smaku"
-						title="Sunday chicken soup"
-						text="12 ingredients  •  30 minutes"
-						leadingElement={<RecipeImage src={chickenSoup} />}
-						size="3line"
-						onClick={() => {}}
-					/>
-				))}
+				{Array.from({ length: 1000 }, (_, index) => <RecipeListItem key={index} />)}
 			</VirtualList>
 			<FloatingActionButton
 				icon="plus"
@@ -103,13 +91,5 @@ const spinAnimation = keyframes({
 	},
 	to: {
 		rotate: '-360deg',
-	},
-})
-
-const RecipeImage = styled('img', {
-	base: {
-		width: 56,
-		height: 56,
-		borderRadius: 8,
 	},
 })
