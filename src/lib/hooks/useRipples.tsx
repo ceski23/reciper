@@ -2,17 +2,17 @@ import { useTransition } from '@react-spring/web'
 import { type KeyboardEvent, type PointerEventHandler, useRef, useState } from 'react'
 import { Ripple, RipplesContainer } from 'lib/components/Ripple'
 
-type Ripple = {
-	element: HTMLElement
+type Ripple<TElement> = {
+	element: TElement
 	top: number
 	left: number
 	width: number
 	height: number
 }
 
-export const useRipples = (color: string = 'currentColor') => {
+export const useRipples = <TElement extends HTMLElement>(color: string = 'currentColor') => {
 	const isKeyHolded = useRef(false)
-	const [ripples, setRipples] = useState<Array<Ripple>>([])
+	const [ripples, setRipples] = useState<Array<Ripple<TElement>>>([])
 	const transitions = useTransition(ripples, {
 		from: { opacity: .12, scale: 0 },
 		enter: { opacity: .12, scale: 1 },
@@ -34,7 +34,7 @@ export const useRipples = (color: string = 'currentColor') => {
 			))}
 		</RipplesContainer>
 	)
-	const addRipple = (element: HTMLElement, clickedX: number, clickedY: number) => {
+	const addRipple = (element: TElement, clickedX: number, clickedY: number) => {
 		const rect = element.getBoundingClientRect()
 		const x = clickedX - rect.left > rect.width / 2 ? 0 : rect.width
 		const y = clickedY - rect.top > rect.height / 2 ? 0 : rect.height
@@ -55,10 +55,10 @@ export const useRipples = (color: string = 'currentColor') => {
 			setRipples([])
 		}
 	}
-	const removeRipple = (element: HTMLElement) => setRipples(r => r.filter(ripple => ripple.element !== element))
+	const removeRipple = (element: TElement) => setRipples(r => r.filter(ripple => ripple.element !== element))
 
-	const handleAddRipple: PointerEventHandler<HTMLSpanElement> = event => addRipple(event.currentTarget, event.clientX, event.clientY)
-	const handleRemoveRipple: PointerEventHandler<HTMLSpanElement> = event => removeRipple(event.currentTarget)
+	const handleAddRipple: PointerEventHandler<TElement> = event => addRipple(event.currentTarget, event.clientX, event.clientY)
+	const handleRemoveRipple: PointerEventHandler<TElement> = event => removeRipple(event.currentTarget)
 
 	return {
 		eventHandlers: {
@@ -66,7 +66,7 @@ export const useRipples = (color: string = 'currentColor') => {
 			onPointerUp: handleRemoveRipple,
 			onMouseLeave: removeAllRipples,
 			onTouchEnd: removeAllRipples,
-			onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => {
+			onKeyDown: (event: KeyboardEvent<TElement>) => {
 				if ((event.code !== 'Enter' && event.code !== 'Space') || isKeyHolded.current) {
 					return
 				}
