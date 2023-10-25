@@ -1,5 +1,5 @@
 import { useTransition } from '@react-spring/web'
-import { type PointerEventHandler, useState } from 'react'
+import { type KeyboardEvent, type PointerEventHandler, useRef, useState } from 'react'
 import { Ripple, RipplesContainer } from 'lib/components/Ripple'
 
 type Ripple = {
@@ -11,6 +11,7 @@ type Ripple = {
 }
 
 export const useRipples = (color: string = 'currentColor') => {
+	const isKeyHolded = useRef(false)
 	const [ripples, setRipples] = useState<Array<Ripple>>([])
 	const transitions = useTransition(ripples, {
 		from: { opacity: .12, scale: 0 },
@@ -33,41 +34,52 @@ export const useRipples = (color: string = 'currentColor') => {
 			))}
 		</RipplesContainer>
 	)
-	const handleAddRipple: PointerEventHandler<HTMLSpanElement> = event => {
-		const clickedElement = event.currentTarget
-		const rect = clickedElement.getBoundingClientRect()
-		const x = event.clientX - rect.left > rect.width / 2 ? 0 : rect.width
-		const y = event.clientY - rect.top > rect.height / 2 ? 0 : rect.height
-		const radius = Math.hypot(x - (event.clientX - rect.left), y - (event.clientY - rect.top))
+	const addRipple = (element: HTMLElement, clickedX: number, clickedY: number) => {
+		const rect = element.getBoundingClientRect()
+		const x = clickedX - rect.left > rect.width / 2 ? 0 : rect.width
+		const y = clickedY - rect.top > rect.height / 2 ? 0 : rect.height
+		const radius = Math.hypot(x - (clickedX - rect.left), y - (clickedY - rect.top))
 
 		setRipples(oldRipples =>
 			oldRipples.concat({
-				element: clickedElement,
-				top: event.clientY - rect.top - radius,
-				left: event.clientX - rect.left - radius,
+				element,
+				top: clickedY - rect.top - radius,
+				left: clickedX - rect.left - radius,
 				width: 2 * radius,
 				height: 2 * radius,
 			})
 		)
 	}
-	const handleRemoveRipple: PointerEventHandler<HTMLSpanElement> = event => {
-		const clickedElement = event.currentTarget
-
-		return setRipples(r => r.filter(ripple => ripple.element !== clickedElement))
-	}
-
-	const handleRemoveAllRipples = () => {
+	const removeAllRipples = () => {
 		if (ripples.length > 0) {
 			setRipples([])
 		}
 	}
+	const removeRipple = (element: HTMLElement) => setRipples(r => r.filter(ripple => ripple.element !== element))
+
+	const handleAddRipple: PointerEventHandler<HTMLSpanElement> = event => addRipple(event.currentTarget, event.clientX, event.clientY)
+	const handleRemoveRipple: PointerEventHandler<HTMLSpanElement> = event => removeRipple(event.currentTarget)
 
 	return {
 		eventHandlers: {
 			onPointerDown: handleAddRipple,
 			onPointerUp: handleRemoveRipple,
-			onMouseLeave: handleRemoveAllRipples,
-			onTouchEnd: handleRemoveAllRipples,
+			onMouseLeave: removeAllRipples,
+			onTouchEnd: removeAllRipples,
+			onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => {
+				if ((event.code !== 'Enter' && event.code !== 'Space') || isKeyHolded.current) {
+					return
+				}
+
+				const rect = event.currentTarget.getBoundingClientRect()
+
+				addRipple(event.currentTarget, rect.x + (rect.width / 2), rect.y + (rect.height / 2))
+				isKeyHolded.current = true
+			},
+			onKeyUp: () => {
+				removeAllRipples()
+				isKeyHolded.current = false
+			},
 		},
 		renderRipples,
 	}
