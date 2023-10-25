@@ -18,6 +18,7 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	leadingElement,
 	iconColor,
 	switchProps,
+	overline,
 	...props
 }) => {
 	const { eventHandlers, renderRipples } = useRipples()
@@ -34,6 +35,7 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 			<Container>
 				{renderRipples}
 				<MainContent
+					overline={overline}
 					title={title}
 					text={text}
 					leadingElement={leadingElement}

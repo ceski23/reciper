@@ -11,9 +11,17 @@ export type MainContentProps = {
 	title: string
 	text?: string
 	hasWrappedText?: boolean
+	overline?: string
 }
 
-export const MainContent: FunctionComponent<MainContentProps> = ({ title, iconColor, leadingElement, text, hasWrappedText }) => {
+export const MainContent: FunctionComponent<MainContentProps> = ({
+	title,
+	iconColor,
+	leadingElement,
+	text,
+	hasWrappedText,
+	overline,
+}) => {
 	const TextComponent = hasWrappedText ? Text : EllipsedText
 
 	return (
@@ -27,6 +35,7 @@ export const MainContent: FunctionComponent<MainContentProps> = ({ title, iconCo
 				)
 				: leadingElement}
 			<Content variant={text === undefined ? 'dense' : 'normal'}>
+				{overline && <Overline>{overline}</Overline>}
 				<Title>{title}</Title>
 				{text && <TextComponent>{text}</TextComponent>}
 			</Content>
@@ -37,7 +46,6 @@ export const MainContent: FunctionComponent<MainContentProps> = ({ title, iconCo
 export const ListItemBase = styled(RovingFocusGroup.Item, {
 	base: {
 		display: 'flex',
-		paddingBlock: 8,
 		paddingLeft: 16,
 		paddingRight: 24,
 		gap: 16,
@@ -47,13 +55,17 @@ export const ListItemBase = styled(RovingFocusGroup.Item, {
 		textAlign: 'start',
 		textDecoration: 'none',
 		color: theme.colors.onSurface,
+		width: '100%',
 	},
 	variants: {
 		size: {
 			'2line': {
 				alignItems: 'center',
+				paddingBlock: 8,
 			},
-			'3line': {},
+			'3line': {
+				paddingBlock: 12,
+			},
 		},
 		variant: {
 			clickable: {
@@ -112,6 +124,12 @@ const Title = styled(Typography.BodyLarge, {
 const Text = styled(Typography.BodyMedium, {
 	base: {
 		color: theme.colors.onSurfaceVariant,
+	},
+})
+
+const Overline = styled(Typography.LabelMedium, {
+	base: {
+		color: theme.colors.primary,
 	},
 })
 

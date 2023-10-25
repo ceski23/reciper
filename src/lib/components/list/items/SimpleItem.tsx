@@ -15,6 +15,7 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	leadingElement,
 	iconColor,
 	trailingElement,
+	overline,
 	...props
 }) => {
 	const { eventHandlers, renderRipples } = useRipples()
@@ -22,6 +23,7 @@ export const SimpleItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	const content = (
 		<Fragment>
 			<MainContent
+				overline={overline}
 				title={title}
 				text={text}
 				leadingElement={leadingElement}
