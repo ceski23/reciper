@@ -15,7 +15,7 @@ export const useIsContainerScrolled = (callback: (isScrolled: boolean) => void) 
 	return (
 		<span
 			ref={probeRef}
-			style={{ display: 'block' }}
+			style={{ display: 'block', height: 1 }}
 		/>
 	)
 }
