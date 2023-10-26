@@ -11,6 +11,5 @@ const ListBase = styled(RovingFocusGroup.Root, {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
-		flex: 1,
 	},
 })

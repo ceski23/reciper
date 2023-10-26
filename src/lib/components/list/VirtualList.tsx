@@ -13,13 +13,19 @@ export const VirtualList: FunctionComponent<
 	...props
 }) => {
 	return (
-		<List {...props}>
+		<StyledList {...props}>
 			<StyledVList {...virtualProps}>
 				{children}
 			</StyledVList>
-		</List>
+		</StyledList>
 	)
 }
+
+const StyledList = styled(List, {
+	base: {
+		flex: 1,
+	},
+})
 
 const StyledVList = styled(VList, {
 	base: {

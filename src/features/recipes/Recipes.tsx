@@ -1,21 +1,22 @@
 import { keyframes } from '@macaron-css/core'
-import { useAtomValue } from 'jotai'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeListItem } from 'features/recipes/RecipeListItem'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
-import { isMainScrolledAtom, navigationMenuHeight } from 'lib/components/Layout'
+import { navigationMenuHeight } from 'lib/components/Layout'
 import { VirtualList } from 'lib/components/list/VirtualList'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
+import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
-	const isMainScrolled = useAtomValue(isMainScrolledAtom)
+	const [isListScrolled, setIsListScrolled] = useState(false)
+	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 
 	useEffect(() => {
 		if (isLoading) {
@@ -32,6 +33,7 @@ export const Recipes: FunctionComponent = () => {
 					configuration="small"
 					title={t('paths.recipes')}
 					progress={isLoading}
+					elevation={isListScrolled ? 'onScroll' : 'flat'}
 					options={(
 						<Fragment>
 							<IconButton
@@ -67,6 +69,7 @@ export const Recipes: FunctionComponent = () => {
 				/>
 			</HeaderPortal>
 			<VirtualList virtualProps={{ overscan: 10 }}>
+				{renderProbe}
 				{Array.from({ length: 1000 }, (_, index) => <RecipeListItem key={index} />)}
 			</VirtualList>
 			<FloatingActionButton
@@ -74,7 +77,7 @@ export const Recipes: FunctionComponent = () => {
 				label="Add recipe"
 				type="button"
 				variant="primary"
-				size={isMainScrolled ? undefined : 'expanded'}
+				size={isListScrolled ? undefined : 'expanded'}
 				style={{
 					position: 'fixed',
 					bottom: `calc(${navigationMenuHeight} + 16px)`,

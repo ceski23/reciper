@@ -1,18 +1,16 @@
 import { createTheme, createVar } from '@macaron-css/core'
 import { setElementVars } from '@macaron-css/core/dist/dynamic'
 import { styled } from '@macaron-css/react'
-import { atom, useSetAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 import { type FunctionComponent, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
-import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
 import { headerRefAtom } from './HeaderPortal'
-import { MetaThemeColor } from './MetaThemeColor'
 import { NavigationBar } from './navigation/NavigationBar'
 
 export const lightThemeClass = createTheme(theme, {
@@ -23,15 +21,12 @@ export const darkThemeClass = createTheme(theme, {
 	colors: schemes.dark,
 })
 
-export const isMainScrolledAtom = atom(false)
 export const navigationMenuHeight = createVar('navigation-menu-height')
 
 export const Layout: FunctionComponent = () => {
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()
 	const setHeaderRef = useSetAtom(headerRefAtom)
-	const setIsMainScrolled = useSetAtom(isMainScrolledAtom)
-	const renderProbe = useIsContainerScrolled(setIsMainScrolled)
 	const navbarRef = useMeasureHeight<HTMLDivElement>(height => {
 		setElementVars(document.body, {
 			[navigationMenuHeight]: `${height ?? 0}px`,
@@ -45,10 +40,8 @@ export const Layout: FunctionComponent = () => {
 
 	return (
 		<LayoutBase>
-			<MetaThemeColor />
 			<Header ref={setHeaderRef} />
 			<MainContent>
-				{renderProbe}
 				<Outlet />
 			</MainContent>
 			<NavigationBar

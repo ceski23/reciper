@@ -1,12 +1,11 @@
 import { styled } from '@macaron-css/react'
-import { useAtomValue } from 'jotai'
-import { Fragment, type FunctionComponent, type ReactNode } from 'react'
+import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { isMainScrolledAtom } from 'lib/components/Layout'
-import { ProgressIndicator } from 'lib/components/ProgressIndicator'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import { IconButton } from './IconButton'
+import { MetaThemeColor } from './MetaThemeColor'
+import { ProgressIndicator } from './ProgressIndicator'
 import { Typography } from './Typography'
 
 type TopAppBarProps = {
@@ -17,12 +16,12 @@ type TopAppBarProps = {
 		value?: number | null | undefined
 		max?: number
 	} | boolean
+	elevation?: ComponentProps<typeof AppBarBase>['elevation']
 }
 
-export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configuration, options, progress }) => {
+export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configuration, options, progress, elevation }) => {
 	const navigate = useNavigate()
 	const location = useLocation()
-	const isMainScrolled = useAtomValue(isMainScrolledAtom)
 
 	const handleGoBack = () => {
 		if (location.key === 'default') {
@@ -34,7 +33,8 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configurat
 
 	return (
 		<Fragment>
-			<AppBarBase elevation={isMainScrolled ? 'onScroll' : 'flat'}>
+			<MetaThemeColor isScrolled={elevation === 'onScroll'} />
+			<AppBarBase elevation={elevation}>
 				<IconButton
 					icon="backArrow"
 					title="Go back"
