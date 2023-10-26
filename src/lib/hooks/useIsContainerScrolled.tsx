@@ -12,5 +12,10 @@ export const useIsContainerScrolled = (callback: (isScrolled: boolean) => void) 
 		intersectionObserver.disconnect()
 	}, [intersectionObserver])
 
-	return <span ref={probeRef} />
+	return (
+		<span
+			ref={probeRef}
+			style={{ display: 'block' }}
+		/>
+	)
 }
