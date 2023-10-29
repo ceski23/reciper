@@ -24,7 +24,7 @@ export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIc
 			{renderRipples}
 			<LeadingIcon name={leadingIcon} />
 			{placeholder && <PlaceholderText>{placeholder}</PlaceholderText>}
-			<Link
+			<AccountLink
 				to={PATHS.SETTINGS.ACCOUNT.buildPath({})}
 				onClick={event => event.stopPropagation()}
 			>
@@ -32,7 +32,7 @@ export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIc
 					alt="Cezary Bober"
 					src="https://thispersondoesnotexist.com/"
 				/>
-			</Link>
+			</AccountLink>
 		</SearchBarBase>
 	)
 }
@@ -78,11 +78,18 @@ const LeadingIcon = styled(Icon, {
 	},
 })
 
+const AccountLink = styled(Link, {
+	base: {
+		padding: 9,
+		width: 48,
+		height: 48,
+	},
+})
+
 const Avatar = styled('img', {
 	base: {
 		width: 30,
 		height: 30,
 		borderRadius: '50%',
-		margin: 9,
 	},
 })
