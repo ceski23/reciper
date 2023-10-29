@@ -9,6 +9,7 @@ export const RipplesContainer = styled('div', {
 		height: '100%',
 		left: 0,
 		top: 0,
+		pointerEvents: 'none',
 	},
 })
 
@@ -17,6 +18,5 @@ export const Ripple = styled(animated.div, {
 		position: 'absolute',
 		borderRadius: '50%',
 		backgroundColor: 'currentColor',
-		pointerEvents: 'none',
 	},
 })

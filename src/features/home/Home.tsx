@@ -1,17 +1,19 @@
+import { styled } from '@macaron-css/react'
 import { type FunctionComponent } from 'react'
-import { useTranslation } from 'react-i18next'
-import { HeaderPortal } from 'lib/components/HeaderPortal'
-import { TopAppBar } from 'lib/components/TopAppBar'
+import { FakeSearchBar } from './components/FakeSearchBar'
 
-export const Home: FunctionComponent = () => {
-	const { t } = useTranslation()
+export const Home: FunctionComponent = () => (
+	<Container>
+		<FakeSearchBar
+			leadingIcon="search"
+			placeholder="What do you want to eat?"
+		/>
+	</Container>
+)
 
-	return (
-		<HeaderPortal>
-			<TopAppBar
-				configuration="small"
-				title={t('paths.home')}
-			/>
-		</HeaderPortal>
-	)
-}
+const Container = styled('div', {
+	base: {
+		padding: 16,
+		gap: 24,
+	},
+})
