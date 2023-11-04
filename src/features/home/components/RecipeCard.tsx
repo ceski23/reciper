@@ -24,21 +24,21 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ details, image,
 			ref={ref}
 		>
 			<RecipeImage src={image} />
-			<Details>
-				<Typography.TitleMedium>
+			<Info>
+				<Name>
 					{name}
-				</Typography.TitleMedium>
-				<Typography.BodyMedium>
+				</Name>
+				<Details>
 					{details.join(' • ')}
-				</Typography.BodyMedium>
-			</Details>
+				</Details>
+			</Info>
 		</Card>
 	)
 }
 
 const Card = styled(animated.div, {
 	base: {
-		width: 200,
+		width: 220,
 		height: 250,
 		backgroundColor: theme.colors.surfaceContainerHighest,
 		display: 'flex',
@@ -59,11 +59,23 @@ const RecipeImage = styled('img', {
 	},
 })
 
-const Details = styled('div', {
+const Info = styled('div', {
 	base: {
 		display: 'flex',
 		flexDirection: 'column',
 		gap: 4,
 		padding: 16,
+	},
+})
+
+const Name = styled(Typography.TitleMedium, {
+	base: {
+		color: theme.colors.onSurface,
+	},
+})
+
+const Details = styled(Typography.BodyMedium, {
+	base: {
+		color: theme.colors.onSurfaceVariant,
 	},
 })

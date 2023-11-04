@@ -113,10 +113,6 @@ const Section = styled('div', {
 
 const FullbleedSection = styled(Section, {
 	base: {
-		display: 'flex',
-		flexDirection: 'column',
-		gap: 16,
-		color: theme.colors.onBackground,
 		gridColumn: '1 / -1',
 	},
 })
