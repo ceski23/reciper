@@ -1,9 +1,11 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
+import chickenSoup from 'assets/images/chicken_soup.png'
 import { type FunctionComponent } from 'react'
-import { RecipeListItem } from 'features/recipes/RecipeListItem'
+import { RecipeCard } from 'features/home/components/RecipeCard'
 import { Chip } from 'lib/components/Chip'
 import { List } from 'lib/components/list/List'
+import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 import { FakeSearchBar } from './components/FakeSearchBar'
@@ -29,6 +31,21 @@ export const Home: FunctionComponent = () => (
 			placeholder="What do you want to eat?"
 			style={{ gridColumn: '2' }}
 		/>
+		<FullbleedSection>
+			<Typography.TitleMedium style={{ paddingInline: 16 }}>
+				Recently added
+			</Typography.TitleMedium>
+			<CardsList>
+				{Array.from({ length: 10 }, (_, index) => (
+					<RecipeCard
+						key={index}
+						name="Sunday chicken soup"
+						details={['6 ingredients', '2 hours']}
+						image={chickenSoup}
+					/>
+				))}
+			</CardsList>
+		</FullbleedSection>
 		<Section>
 			<Typography.TitleMedium>
 				Most common tags
@@ -101,5 +118,16 @@ const FullbleedSection = styled(Section, {
 		gap: 16,
 		color: theme.colors.onBackground,
 		gridColumn: '1 / -1',
+	},
+})
+
+const CardsList = styled('div', {
+	base: {
+		display: 'flex',
+		flexDirection: 'row',
+		gap: 16,
+		paddingInline: 16,
+		overflowX: 'scroll',
+		scrollSnapType: 'x mandatory',
 	},
 })
