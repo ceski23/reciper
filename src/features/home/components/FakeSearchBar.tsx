@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { type FunctionComponent } from 'react'
+import { type CSSProperties, type FunctionComponent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Typography } from 'lib/components/Typography'
 import { useRipples } from 'lib/hooks/useRipples'
@@ -10,9 +10,10 @@ import Icon, { type SvgName } from '~virtual/svg-component'
 type FakeSearchBarProps = {
 	leadingIcon: SvgName
 	placeholder?: string
+	style?: CSSProperties
 }
 
-export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIcon, placeholder }) => {
+export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIcon, placeholder, style }) => {
 	const { eventHandlers, renderRipples } = useRipples()
 	const navigate = useNavigate()
 
@@ -20,6 +21,7 @@ export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIc
 		<SearchBarBase
 			{...eventHandlers}
 			onClick={() => navigate(PATHS.RECIPES.SEARCH.path)}
+			style={style}
 		>
 			{renderRipples}
 			<LeadingIcon name={leadingIcon} />
