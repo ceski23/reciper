@@ -1,7 +1,9 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
 import { type FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 import { Typography } from 'lib/components/Typography'
+import { useRipples } from 'lib/hooks/useRipples'
 import { theme } from 'lib/styles'
 
 type RecipeCardProps = {
@@ -11,6 +13,7 @@ type RecipeCardProps = {
 }
 
 export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ details, image, name }) => {
+	const { eventHandlers, renderRipples } = useRipples()
 	const [ref, inView] = useInView()
 	const style = useSpring({
 		to: {
@@ -22,7 +25,10 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ details, image,
 		<Card
 			style={style}
 			ref={ref}
+			to=""
+			{...eventHandlers}
 		>
+			{renderRipples}
 			<RecipeImage src={image} />
 			<Info>
 				<Name>
@@ -36,17 +42,20 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ details, image,
 	)
 }
 
-const Card = styled(animated.div, {
+const Card = styled(animated(Link), {
 	base: {
 		width: 220,
 		height: 250,
 		backgroundColor: theme.colors.surfaceContainerHighest,
+		color: theme.colors.onSurface,
 		display: 'flex',
 		flexDirection: 'column',
 		borderRadius: 12,
 		overflow: 'hidden',
 		flexShrink: 0,
 		scrollSnapAlign: 'center',
+		textDecoration: 'unset',
+		position: 'relative',
 	},
 })
 
