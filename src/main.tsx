@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 	(
 		<React.StrictMode>
 			<HelmetProvider>
-				<Toast.Provider swipeThreshold={Infinity}>
+				<Toast.Provider swipeThreshold={100}>
 					<Tooltip.Provider disableHoverableContent>
 						<RouterProvider router={router} />
 					</Tooltip.Provider>

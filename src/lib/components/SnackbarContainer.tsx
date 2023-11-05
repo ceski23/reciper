@@ -1,6 +1,5 @@
 import { styled } from '@macaron-css/react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
-import { useTransition } from '@react-spring/web'
 import { type ComponentProps, type CSSProperties, type FunctionComponent } from 'react'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { Snackbar } from './Snackbar'
@@ -15,22 +14,12 @@ export const SnackbarContainer: FunctionComponent<SnackbarContainerProps & Compo
 	...props
 }) => {
 	const { notifications, hide } = useNotifications()
-	const transitions = useTransition(notifications.slice(0, limit), {
-		from: { opacity: 0, y: 10 },
-		enter: { opacity: 1, y: 0 },
-		leave: { opacity: 0 },
-		exitBeforeEnter: true,
-		config: {
-			duration: 200,
-		},
-	})
 
 	return (
 		<Container {...props}>
-			{transitions((style, { content, duration, id, action, dismissable }) => (
+			{notifications.slice(0, limit).map(({ content, duration, id, action, dismissable }) => (
 				<Snackbar
 					key={id}
-					style={style}
 					text={content}
 					dismissable={dismissable}
 					duration={duration}

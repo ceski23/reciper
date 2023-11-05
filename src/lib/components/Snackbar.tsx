@@ -1,7 +1,8 @@
+import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import { animated } from '@react-spring/web'
-import { type ComponentProps, type FunctionComponent } from 'react'
+import { type ComponentProps, type FunctionComponent, useRef } from 'react'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
 import Icon from '~virtual/svg-component'
@@ -19,11 +20,37 @@ export const Snackbar: FunctionComponent<SnackbarProps & ComponentProps<typeof S
 	action,
 	dismissable,
 	text,
+	onOpenChange,
 	...props
 }) => {
+	const ref = useRef<HTMLLIElement>(null)
+
 	return (
 		<SnackbarBase
 			variant={(action !== undefined || dismissable) ? 'withAction' : 'textOnly'}
+			onAnimationEnd={event => event.animationName === slideRight && onOpenChange?.(false)}
+			onOpenChange={() => {
+				if (ref.current?.dataset.swipe === 'end') {
+					return
+				}
+
+				const animation = ref.current?.animate([
+					{
+						opacity: 1,
+						transform: 'translateY(0px)',
+					},
+					{
+						opacity: 0,
+						transform: 'translateY(10px)',
+					},
+				], {
+					duration: 200,
+					fill: 'forwards',
+				})
+
+				animation?.addEventListener('finish', () => onOpenChange?.(false))
+			}}
+			ref={ref}
 			{...props}
 		>
 			<ToastPrimitive.Description asChild>
@@ -48,15 +75,25 @@ export const Snackbar: FunctionComponent<SnackbarProps & ComponentProps<typeof S
 	)
 }
 
-// TODO: Add swipe to close
-// const slideRight = keyframes({
-// 	from: {
-// 		transform: 'translateX(var(--radix-toast-swipe-end-x))',
-// 	},
-// 	to: {
-// 		transform: 'translateX(100%)',
-// 	},
-// })
+const slideRight = keyframes({
+	from: {
+		transform: 'translateX(var(--radix-toast-swipe-end-x))',
+	},
+	to: {
+		transform: 'translateX(100%)',
+	},
+})
+
+const show = keyframes({
+	from: {
+		opacity: 0,
+		transform: 'translateY(10px)',
+	},
+	to: {
+		opacity: 1,
+		transform: 'translateY(0px)',
+	},
+})
 
 const SnackbarBase = styled(animated(ToastPrimitive.Root), {
 	base: {
@@ -70,18 +107,18 @@ const SnackbarBase = styled(animated(ToastPrimitive.Root), {
 		gap: 4,
 		alignItems: 'center',
 		paddingBlock: 4,
+		animation: `${show} 200ms ease-out`,
 		selectors: {
-			// TODO: Add swipe to close
-			// '&[data-swipe="move"]': {
-			// 	transform: 'translateX(var(--radix-toast-swipe-move-x))',
-			// },
-			// '&[data-swipe="cancel"]': {
-			// 	transform: 'translateX(0)',
-			// 	transition: 'transform 200ms ease-out',
-			// },
-			// '&[data-swipe="end"]': {
-			// 	animation: `${slideRight} 200ms ease-out`,
-			// },
+			'&[data-swipe="move"]': {
+				transform: 'translateX(var(--radix-toast-swipe-move-x))',
+			},
+			'&[data-swipe="cancel"]': {
+				transform: 'translateX(0)',
+				transition: 'transform 200ms ease-out',
+			},
+			'&[data-swipe="end"]': {
+				animation: `${slideRight} 200ms ease-out forwards`,
+			},
 		},
 	},
 	variants: {
