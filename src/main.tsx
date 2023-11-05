@@ -1,5 +1,6 @@
 import 'lib/styles/global'
 import 'lib/i18n'
+import * as Tooltip from '@radix-ui/react-tooltip'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
@@ -12,7 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 	(
 		<React.StrictMode>
 			<HelmetProvider>
-				<RouterProvider router={router} />
+				<Tooltip.Provider disableHoverableContent>
+					<RouterProvider router={router} />
+				</Tooltip.Provider>
 			</HelmetProvider>
 		</React.StrictMode>
 	),

@@ -1,6 +1,8 @@
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
-import { type ComponentProps, forwardRef } from 'react'
+import { type ComponentProps, forwardRef, useState } from 'react'
+import { Tooltip } from 'lib/components/Tooltip'
+import { useLongPress } from 'lib/hooks/useLongPress'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 import Icon, { type SvgName } from '~virtual/svg-component'
@@ -13,19 +15,30 @@ type IconButtonProps = {
 export const IconButton = forwardRef<HTMLButtonElement, ComponentProps<typeof ButtonBase> & IconButtonProps>(({
 	icon,
 	type = 'button',
+	title,
 	...props
 }, ref) => {
+	const [isTooltipOpen, setIsTooltipOpen] = useState(false)
 	const { eventHandlers, renderRipples } = useRipples()
+	const longPressHandlers = useLongPress(() => setIsTooltipOpen(true), 700)
 
 	return (
-		<ButtonBase
-			type={type}
-			ref={ref}
-			{...mergeProps(props, eventHandlers)}
+		<Tooltip
+			content={title}
+			sideOffset={4}
+			open={isTooltipOpen}
+			onOpenChange={setIsTooltipOpen}
 		>
-			{renderRipples}
-			<StyledIcon name={icon} />
-		</ButtonBase>
+			<ButtonBase
+				type={type}
+				ref={ref}
+				aria-label={title}
+				{...mergeProps(props, eventHandlers, longPressHandlers)}
+			>
+				{renderRipples}
+				<StyledIcon name={icon} />
+			</ButtonBase>
+		</Tooltip>
 	)
 })
 

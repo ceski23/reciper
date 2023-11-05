@@ -17,7 +17,7 @@ const Content: FunctionComponent<ComponentProps<typeof MenuBase> & ContentProps>
 	...props
 }) => {
 	const transitions = useTransition(open, {
-		initial: { opacity: 0 },
+		from: { opacity: 0 },
 		enter: { opacity: 1 },
 		leave: { opacity: 0 },
 		config: config.stiff,
