@@ -12,6 +12,7 @@ import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
 import { headerRefAtom } from './HeaderPortal'
 import { NavigationBar } from './navigation/NavigationBar'
+import { SnackbarContainer } from './SnackbarContainer'
 
 export const lightThemeClass = createTheme(theme, {
 	colors: schemes.light,
@@ -43,6 +44,7 @@ export const Layout: FunctionComponent = () => {
 			<Header ref={setHeaderRef} />
 			<MainContent>
 				<Outlet />
+				<StyledSnackbarContainer style={{ bottom: navigationMenuHeight }} />
 			</MainContent>
 			<NavigationBar
 				ref={navbarRef}
@@ -85,5 +87,11 @@ const Header = styled('header', {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
+	},
+})
+
+const StyledSnackbarContainer = styled(SnackbarContainer, {
+	base: {
+		position: 'fixed',
 	},
 })

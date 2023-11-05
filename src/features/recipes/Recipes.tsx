@@ -10,6 +10,7 @@ import { Menu } from 'lib/components/Menu'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
+import { useNotifications } from 'lib/hooks/useNotifications'
 
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
@@ -17,14 +18,22 @@ export const Recipes: FunctionComponent = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
+	const { notify } = useNotifications()
 
 	useEffect(() => {
 		if (isLoading) {
-			const id = setTimeout(() => setIsLoading(false), 3000)
+			const id = setTimeout(() => {
+				setIsLoading(false)
+				notify('Error while syncing recipes', {
+					action: {
+						label: 'OK',
+					},
+				})
+			}, 3000)
 
 			return () => clearTimeout(id)
 		}
-	}, [isLoading])
+	}, [isLoading, notify])
 
 	return (
 		<Fragment>

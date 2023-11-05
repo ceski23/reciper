@@ -14,6 +14,7 @@ export const Tooltip: FunctionComponent<ComponentProps<typeof TooltipPrimitive.C
 	side = 'top',
 	align = 'center',
 	sideOffset = 8,
+	collisionPadding = 8,
 	...props
 }) => {
 	const [internalOpen, setInternalOpen] = useState(defaultOpen)
@@ -48,6 +49,7 @@ export const Tooltip: FunctionComponent<ComponentProps<typeof TooltipPrimitive.C
 							align={align}
 							sideOffset={sideOffset}
 							style={styles}
+							collisionPadding={collisionPadding}
 							{...props}
 						>
 							<Typography.BodySmall>
