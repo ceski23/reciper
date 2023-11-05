@@ -4,6 +4,7 @@ import { animated, config, useTransition } from '@react-spring/web'
 import { type ComponentProps, type FunctionComponent } from 'react'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
+import Icon, { type SvgName } from '~virtual/svg-component'
 
 type ContentProps = {
 	open: boolean
@@ -44,13 +45,16 @@ const Content: FunctionComponent<ComponentProps<typeof MenuBase> & ContentProps>
 
 type MenuItemProps = {
 	text: string
+	icon?: SvgName
 }
 
 const Item: FunctionComponent<Omit<ComponentProps<typeof MenuItemBase>, 'children'> & MenuItemProps> = ({
 	text,
+	icon,
 	...props
 }) => (
 	<MenuItemBase {...props}>
+		{icon && <ItemIcon name={icon} />}
 		<Typography.BodyLarge>{text}</Typography.BodyLarge>
 	</MenuItemBase>
 )
@@ -77,6 +81,7 @@ const MenuItemBase = styled(DropdownMenu.Item, {
 		alignItems: 'center',
 		paddingBlock: 8,
 		paddingInline: 12,
+		gap: 12,
 		height: 56,
 		color: theme.colors.onSurface,
 		transition: 'background-color .2s, color .2s',
@@ -98,6 +103,13 @@ const MenuItemBase = styled(DropdownMenu.Item, {
 				color: theme.colors.onSurfaceVariant,
 			},
 		},
+	},
+})
+
+const ItemIcon = styled(Icon, {
+	base: {
+		width: 24,
+		height: 24,
 	},
 })
 
