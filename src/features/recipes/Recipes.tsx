@@ -1,10 +1,11 @@
 import { keyframes } from '@macaron-css/core'
+import { styled } from '@macaron-css/react'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
-import { navigationMenuHeight } from 'lib/components/Layout'
 import { VirtualList } from 'lib/components/list/VirtualList'
 import { Menu } from 'lib/components/Menu'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
@@ -81,18 +82,17 @@ export const Recipes: FunctionComponent = () => {
 				{renderProbe}
 				{Array.from({ length: 1000 }, (_, index) => <RecipeListItem key={index} />)}
 			</VirtualList>
-			<FloatingActionButton
-				icon="plus"
-				label="Add recipe"
-				type="button"
-				variant="primary"
-				size={isListScrolled ? undefined : 'expanded'}
-				style={{
-					position: 'fixed',
-					bottom: `calc(${navigationMenuHeight} + 16px)`,
-					right: 16,
-				}}
-			/>
+			<ContentOverlayPortal>
+				<FabContainer>
+					<FloatingActionButton
+						icon="plus"
+						label="Add recipe"
+						type="button"
+						variant="primary"
+						size={isListScrolled ? undefined : 'expanded'}
+					/>
+				</FabContainer>
+			</ContentOverlayPortal>
 		</Fragment>
 	)
 }
@@ -103,5 +103,14 @@ const spinAnimation = keyframes({
 	},
 	to: {
 		rotate: '-360deg',
+	},
+})
+
+const FabContainer = styled('div', {
+	base: {
+		display: 'flex',
+		paddingInline: 16,
+		paddingBottom: 16,
+		justifyContent: 'flex-end',
 	},
 })

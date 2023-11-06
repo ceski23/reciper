@@ -10,6 +10,7 @@ import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
+import { overlayContainerRefAtom } from './ContentOverlayPortal'
 import { headerRefAtom } from './HeaderPortal'
 import { NavigationBar } from './navigation/NavigationBar'
 import { SnackbarContainer } from './SnackbarContainer'
@@ -28,6 +29,7 @@ export const Layout: FunctionComponent = () => {
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()
 	const setHeaderRef = useSetAtom(headerRefAtom)
+	const setOverlayContainerRef = useSetAtom(overlayContainerRefAtom)
 	const navbarRef = useMeasureHeight<HTMLDivElement>(height => {
 		setElementVars(document.body, {
 			[navigationMenuHeight]: `${height ?? 0}px`,
@@ -44,7 +46,10 @@ export const Layout: FunctionComponent = () => {
 			<Header ref={setHeaderRef} />
 			<MainContent>
 				<Outlet />
-				<StyledSnackbarContainer style={{ bottom: navigationMenuHeight }} />
+				<ContentOverlayContainer style={{ bottom: navigationMenuHeight }}>
+					<SnackbarContainer />
+					<div ref={setOverlayContainerRef} />
+				</ContentOverlayContainer>
 			</MainContent>
 			<NavigationBar
 				ref={navbarRef}
@@ -90,8 +95,12 @@ const Header = styled('header', {
 	},
 })
 
-const StyledSnackbarContainer = styled(SnackbarContainer, {
+const ContentOverlayContainer = styled('div', {
 	base: {
 		position: 'fixed',
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		pointerEvents: 'none',
 	},
 })

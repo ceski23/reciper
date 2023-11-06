@@ -1,11 +1,10 @@
 import { styled } from '@macaron-css/react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
-import { type ComponentProps, type CSSProperties, type FunctionComponent } from 'react'
+import { type ComponentProps, type FunctionComponent } from 'react'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { Snackbar } from './Snackbar'
 
 type SnackbarContainerProps = {
-	style?: CSSProperties
 	limit?: number
 }
 

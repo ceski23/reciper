@@ -41,8 +41,9 @@ const BaseFab = styled('button', {
 		width: 'fit-content',
 		alignItems: 'center',
 		cursor: 'pointer',
-		position: 'absolute',
+		position: 'relative',
 		overflow: 'hidden',
+		pointerEvents: 'auto',
 	},
 	variants: {
 		size: {

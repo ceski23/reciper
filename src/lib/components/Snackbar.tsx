@@ -108,6 +108,7 @@ const SnackbarBase = styled(animated(ToastPrimitive.Root), {
 		alignItems: 'center',
 		paddingBlock: 4,
 		animation: `${show} 200ms ease-out`,
+		pointerEvents: 'auto',
 		selectors: {
 			'&[data-swipe="move"]': {
 				transform: 'translateX(var(--radix-toast-swipe-move-x))',
