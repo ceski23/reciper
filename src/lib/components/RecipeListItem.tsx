@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
-import chickenSoup from 'assets/images/chicken_soup.png'
+import chickenSoup from 'assets/images/chicken_soup.jpg'
 import { ListItem } from './list/items'
 
 export const RecipeListItem = () => {

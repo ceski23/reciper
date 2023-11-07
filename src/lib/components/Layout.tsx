@@ -10,6 +10,7 @@ import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
+import { AppUpdatePrompt } from './AppUpdatePrompt'
 import { overlayContainerRefAtom } from './ContentOverlayPortal'
 import { headerRefAtom } from './HeaderPortal'
 import { NavigationBar } from './navigation/NavigationBar'
@@ -59,6 +60,7 @@ export const Layout: FunctionComponent = () => {
 					{ icon: 'settings', to: PATHS.SETTINGS.buildPath({}), label: t('paths.settings') },
 				]}
 			/>
+			<AppUpdatePrompt />
 		</LayoutBase>
 	)
 }

@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import chickenSoup from 'assets/images/chicken_soup.png'
+import chickenSoup from 'assets/images/chicken_soup.jpg'
 import { type FunctionComponent } from 'react'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { Chip } from 'lib/components/Chip'
