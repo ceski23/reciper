@@ -36,6 +36,16 @@ const pwaManifest: Partial<ManifestOptions> = {
 }
 
 export default defineConfig({
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks: id => {
+					if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'react'
+					if (id.includes('node_modules/@radix-ui/')) return 'radix'
+				},
+			},
+		},
+	},
 	plugins: [
 		tsconfigPaths(),
 		macaronVitePlugin(),
