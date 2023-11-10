@@ -1,0 +1,13 @@
+diff --git a/node_modules/@macaron-css/react/dist/runtime.mjs b/node_modules/@macaron-css/react/dist/runtime.mjs
+index ea29e11..9b660c8 100644
+--- a/node_modules/@macaron-css/react/dist/runtime.mjs
++++ b/node_modules/@macaron-css/react/dist/runtime.mjs
+@@ -21,7 +21,7 @@ function $$styled(Comp, styles) {
+     if (typeof CompToRender === "string") {
+       return createElement(CompToRender, { ...others, className, ref });
+     }
+-    return createElement(CompToRender, { ...props, className, ref });
++    return createElement(CompToRender, { ...others, className, ref });
+   });
+   StyledComponent.displayName = `Macaron(${Comp})`;
+   StyledComponent.toString = () => StyledComponent.selector(null);
