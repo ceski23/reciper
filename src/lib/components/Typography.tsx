@@ -1,169 +1,148 @@
-import { styled } from '@macaron-css/react'
+/* eslint-disable react/function-component-definition */
+import { style } from '@macaron-css/core'
+import { type ComponentProps, createElement, type FunctionComponent } from 'react'
+import { styleUtils } from 'lib/styles'
 
-const DisplayLarge = styled('h1', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 57,
-		fontWeight: 400,
-		lineHeight: '64px',
-		letterSpacing: -0.25,
-	},
+const typographyComponent =
+	<TElement extends keyof JSX.IntrinsicElements>(element: TElement, typographyClassName: string): FunctionComponent<ComponentProps<TElement>> =>
+	({
+		className,
+		...props
+	}) => createElement(element, { className: styleUtils.mergeClassNames([typographyClassName, className]), ...props })
+
+export const displayLarge = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 57,
+	fontWeight: 400,
+	lineHeight: '64px',
+	letterSpacing: -0.25,
 })
 
-const DisplayMedium = styled('h2', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 45,
-		fontWeight: 400,
-		lineHeight: '52px',
-		letterSpacing: 0,
-	},
+export const displayMedium = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 45,
+	fontWeight: 400,
+	lineHeight: '52px',
+	letterSpacing: 0,
 })
 
-const DisplaySmall = styled('h3', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 36,
-		fontWeight: 400,
-		lineHeight: '44px',
-		letterSpacing: 0,
-	},
+export const displaySmall = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 36,
+	fontWeight: 400,
+	lineHeight: '44px',
+	letterSpacing: 0,
 })
 
-const HeadlineLarge = styled('h4', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 32,
-		fontWeight: 400,
-		lineHeight: '40px',
-		letterSpacing: 0,
-	},
+export const headlineLarge = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 32,
+	fontWeight: 400,
+	lineHeight: '40px',
+	letterSpacing: 0,
 })
 
-const HeadlineMedium = styled('h5', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 28,
-		fontWeight: 400,
-		lineHeight: '36px',
-		letterSpacing: 0,
-	},
+export const headlineMedium = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 28,
+	fontWeight: 400,
+	lineHeight: '36px',
+	letterSpacing: 0,
 })
 
-const HeadlineSmall = styled('h6', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 24,
-		fontWeight: 400,
-		lineHeight: '32px',
-		letterSpacing: 0,
-	},
+export const headlineSmall = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 24,
+	fontWeight: 400,
+	lineHeight: '32px',
+	letterSpacing: 0,
+})
+export const titleLarge = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 22,
+	fontWeight: 400,
+	lineHeight: '28px',
+	letterSpacing: 0,
 })
 
-const TitleLarge = styled('p', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 22,
-		fontWeight: 400,
-		lineHeight: '28px',
-		letterSpacing: 0,
-	},
+export const titleMedium = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 16,
+	fontWeight: 500,
+	lineHeight: '24px',
+	letterSpacing: 0.15,
 })
 
-const TitleMedium = styled('p', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 16,
-		fontWeight: 500,
-		lineHeight: '24px',
-		letterSpacing: 0.15,
-	},
+export const titleSmall = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 14,
+	fontWeight: 500,
+	lineHeight: '20px',
+	letterSpacing: 0.1,
 })
 
-const TitleSmall = styled('p', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 14,
-		fontWeight: 500,
-		lineHeight: '20px',
-		letterSpacing: 0.1,
-	},
+export const labelLarge = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 14,
+	fontWeight: 500,
+	lineHeight: '20px',
+	letterSpacing: 0.1,
 })
 
-const LabelLarge = styled('p', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 14,
-		fontWeight: 500,
-		lineHeight: '20px',
-		letterSpacing: 0.1,
-	},
+export const labelMedium = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 12,
+	fontWeight: 500,
+	lineHeight: '16px',
+	letterSpacing: 0.5,
 })
 
-const LabelMedium = styled('p', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 12,
-		fontWeight: 500,
-		lineHeight: '16px',
-		letterSpacing: 0.5,
-	},
+export const labelSmall = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 11,
+	fontWeight: 500,
+	lineHeight: '16px',
+	letterSpacing: 0.5,
 })
 
-const LabelSmall = styled('p', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 11,
-		fontWeight: 500,
-		lineHeight: '16px',
-		letterSpacing: 0.5,
-	},
+export const bodyLarge = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 16,
+	fontWeight: 400,
+	lineHeight: '24px',
+	letterSpacing: 0.5,
 })
 
-const BodyLarge = styled('p', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 16,
-		fontWeight: 400,
-		lineHeight: '24px',
-		letterSpacing: 0.5,
-	},
+export const bodyMedium = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 14,
+	fontWeight: 400,
+	lineHeight: '20px',
+	letterSpacing: 0.25,
 })
 
-const BodyMedium = styled('p', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 14,
-		fontWeight: 400,
-		lineHeight: '20px',
-		letterSpacing: 0.25,
-	},
-})
-
-const BodySmall = styled('p', {
-	base: {
-		fontFamily: '"Roboto Flex Variable", sans-serif',
-		fontSize: 12,
-		fontWeight: 400,
-		lineHeight: '16px',
-		letterSpacing: 0.4,
-	},
+export const bodySmall = style({
+	fontFamily: '"Roboto Flex Variable", sans-serif',
+	fontSize: 12,
+	fontWeight: 400,
+	lineHeight: '16px',
+	letterSpacing: 0.4,
 })
 
 export const Typography = {
-	DisplayLarge,
-	DisplayMedium,
-	DisplaySmall,
-	HeadlineLarge,
-	HeadlineMedium,
-	HeadlineSmall,
-	TitleLarge,
-	TitleMedium,
-	TitleSmall,
-	LabelLarge,
-	LabelMedium,
-	LabelSmall,
-	BodyLarge,
-	BodyMedium,
-	BodySmall,
+	DisplayLarge: typographyComponent('h1', displayLarge),
+	DisplayMedium: typographyComponent('h2', displayMedium),
+	DisplaySmall: typographyComponent('h3', displaySmall),
+	HeadlineLarge: typographyComponent('h4', headlineLarge),
+	HeadlineMedium: typographyComponent('h5', headlineMedium),
+	HeadlineSmall: typographyComponent('h6', headlineSmall),
+	TitleLarge: typographyComponent('p', titleLarge),
+	TitleMedium: typographyComponent('p', titleMedium),
+	TitleSmall: typographyComponent('p', titleSmall),
+	LabelLarge: typographyComponent('p', labelLarge),
+	LabelMedium: typographyComponent('p', labelMedium),
+	LabelSmall: typographyComponent('p', labelSmall),
+	BodyLarge: typographyComponent('p', bodyLarge),
+	BodyMedium: typographyComponent('p', bodyMedium),
+	BodySmall: typographyComponent('p', bodySmall),
 }
