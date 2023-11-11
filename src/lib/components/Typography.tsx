@@ -1,14 +1,33 @@
 /* eslint-disable react/function-component-definition */
 import { style } from '@macaron-css/core'
-import { type ComponentProps, createElement, type FunctionComponent } from 'react'
+import { Slot } from '@radix-ui/react-slot'
+import { type ComponentPropsWithoutRef, type FunctionComponent } from 'react'
 import { styleUtils } from 'lib/styles'
 
-const typographyComponent =
-	<TElement extends keyof JSX.IntrinsicElements>(element: TElement, typographyClassName: string): FunctionComponent<ComponentProps<TElement>> =>
-	({
-		className,
-		...props
-	}) => createElement(element, { className: styleUtils.mergeClassNames([typographyClassName, className]), ...props })
+type TypographyParagraphProps = {
+	asChild?: undefined
+} & ComponentPropsWithoutRef<'p'>
+
+type TypographyAsChildProps = {
+	asChild: true
+	className?: string
+}
+
+const typographyComponent = (typographyClassName: string): FunctionComponent<TypographyParagraphProps | TypographyAsChildProps> =>
+({
+	className,
+	asChild,
+	...props
+}) => {
+	const Component = asChild ? Slot : 'p'
+
+	return (
+		<Component
+			className={styleUtils.mergeClassNames([typographyClassName, className])}
+			{...props}
+		/>
+	)
+}
 
 export const displayLarge = style({
 	fontFamily: '"Roboto Flex Variable", sans-serif',
@@ -130,19 +149,19 @@ export const bodySmall = style({
 })
 
 export const Typography = {
-	DisplayLarge: typographyComponent('h1', displayLarge),
-	DisplayMedium: typographyComponent('h2', displayMedium),
-	DisplaySmall: typographyComponent('h3', displaySmall),
-	HeadlineLarge: typographyComponent('h4', headlineLarge),
-	HeadlineMedium: typographyComponent('h5', headlineMedium),
-	HeadlineSmall: typographyComponent('h6', headlineSmall),
-	TitleLarge: typographyComponent('p', titleLarge),
-	TitleMedium: typographyComponent('p', titleMedium),
-	TitleSmall: typographyComponent('p', titleSmall),
-	LabelLarge: typographyComponent('p', labelLarge),
-	LabelMedium: typographyComponent('p', labelMedium),
-	LabelSmall: typographyComponent('p', labelSmall),
-	BodyLarge: typographyComponent('p', bodyLarge),
-	BodyMedium: typographyComponent('p', bodyMedium),
-	BodySmall: typographyComponent('p', bodySmall),
+	DisplayLarge: typographyComponent(displayLarge),
+	DisplayMedium: typographyComponent(displayMedium),
+	DisplaySmall: typographyComponent(displaySmall),
+	HeadlineLarge: typographyComponent(headlineLarge),
+	HeadlineMedium: typographyComponent(headlineMedium),
+	HeadlineSmall: typographyComponent(headlineSmall),
+	TitleLarge: typographyComponent(titleLarge),
+	TitleMedium: typographyComponent(titleMedium),
+	TitleSmall: typographyComponent(titleSmall),
+	LabelLarge: typographyComponent(labelLarge),
+	LabelMedium: typographyComponent(labelMedium),
+	LabelSmall: typographyComponent(labelSmall),
+	BodyLarge: typographyComponent(bodyLarge),
+	BodyMedium: typographyComponent(bodyMedium),
+	BodySmall: typographyComponent(bodySmall),
 }

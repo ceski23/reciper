@@ -42,8 +42,8 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configurat
 				/>
 				{configuration === 'small'
 					? (
-						<PageTitle as="h1">
-							{title}
+						<PageTitle asChild>
+							<h1>{title}</h1>
 						</PageTitle>
 					)
 					: <span />}
@@ -52,7 +52,9 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configurat
 				</OptionsContainer>
 				{configuration === 'large' && (
 					<ExtraContent>
-						<PageTitleLarge as="h1">{title}</PageTitleLarge>
+						<PageTitleLarge asChild>
+							<h1>{title}</h1>
+						</PageTitleLarge>
 					</ExtraContent>
 				)}
 			</AppBarBase>
