@@ -8,15 +8,18 @@ import Icon, { type SvgName } from '~virtual/svg-component'
 type ChipProps = {
 	text: string
 	icon?: SvgName
+	onClose?: VoidFunction
 }
 
 export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase> & ChipProps>(({
 	text,
 	icon,
+	onClose,
 	...props
 }, ref) => (
 	<ChipBase
-		withIcon={icon !== undefined}
+		withLeadingIcon={icon !== undefined}
+		withCloseIcon={onClose !== undefined}
 		ref={ref}
 		{...props}
 	>
@@ -29,6 +32,15 @@ export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase
 		<Label>
 			{text}
 		</Label>
+		{onClose && (
+			<CloseIcon
+				name="close"
+				onClick={event => {
+					event.stopPropagation()
+					onClose()
+				}}
+			/>
+		)}
 	</ChipBase>
 ))
 
@@ -50,25 +62,7 @@ export const ChipBase = styled(Toggle.Root, {
 	},
 	variants: {
 		variant: {
-			suggestion: {},
-		},
-		styleVariant: {
-			outlined: {},
-			elevated: {},
-		},
-		withIcon: {
-			true: {
-				paddingLeft: 8,
-			},
-		},
-	},
-	compoundVariants: [
-		{
-			variants: {
-				styleVariant: 'outlined',
-				variant: 'suggestion',
-			},
-			style: {
+			outlined: {
 				color: theme.colors.onSurfaceVariant,
 				border: `1px solid ${theme.colors.outline}`,
 				':hover': {
@@ -117,13 +111,7 @@ export const ChipBase = styled(Toggle.Root, {
 					},
 				},
 			},
-		},
-		{
-			variants: {
-				styleVariant: 'elevated',
-				variant: 'suggestion',
-			},
-			style: {
+			elevated: {
 				backgroundColor: theme.colors.surfaceContainerLow,
 				boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
 				color: theme.colors.onSurfaceVariant,
@@ -167,11 +155,19 @@ export const ChipBase = styled(Toggle.Root, {
 				},
 			},
 		},
-	],
+		withLeadingIcon: {
+			true: {
+				paddingLeft: 8,
+			},
+		},
+		withCloseIcon: {
+			true: {
+				paddingRight: 8,
+			},
+		},
+	},
 	defaultVariants: {
-		withIcon: false,
-		variant: 'suggestion',
-		styleVariant: 'outlined',
+		variant: 'outlined',
 	},
 })
 
@@ -198,5 +194,12 @@ const ChipIcon = styled(Icon, {
 	},
 	defaultVariants: {
 		variant: 'primary',
+	},
+})
+
+const CloseIcon = styled(Icon, {
+	base: {
+		width: 18,
+		height: 18,
 	},
 })

@@ -59,8 +59,7 @@ export const Home: FunctionComponent = () => (
 					>
 						<StyledChip
 							text={tag}
-							variant="suggestion"
-							styleVariant="outlined"
+							variant="outlined"
 						/>
 					</ToggleGroup.Item>
 				))}
