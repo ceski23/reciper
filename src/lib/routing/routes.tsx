@@ -1,5 +1,6 @@
 import type { RouteObject } from 'react-router-dom'
 import { Home } from 'features/home/Home'
+import { NewRecipe } from 'features/recipes/NewRecipe'
 import { Recipes } from 'features/recipes/Recipes'
 import { Account } from 'features/settings/Account'
 import { Settings } from 'features/settings/Settings'
@@ -17,7 +18,16 @@ export const routes: Array<RouteObject> = [{
 		},
 		{
 			path: PATHS.RECIPES.path,
-			element: <Recipes />,
+			children: [
+				{
+					index: true,
+					element: <Recipes />,
+				},
+				{
+					path: PATHS.RECIPES.NEW.path,
+					element: <NewRecipe />,
+				},
+			],
 		},
 		{
 			path: PATHS.SETTINGS.path,

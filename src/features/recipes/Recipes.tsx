@@ -2,6 +2,7 @@ import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
@@ -12,6 +13,7 @@ import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
+import { PATHS } from 'lib/routing/paths'
 
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
@@ -20,6 +22,7 @@ export const Recipes: FunctionComponent = () => {
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { notify } = useNotifications()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (isLoading) {
@@ -90,6 +93,10 @@ export const Recipes: FunctionComponent = () => {
 						type="button"
 						variant="primary"
 						size={isListScrolled ? undefined : 'expanded'}
+						onClick={() =>
+							navigate(PATHS.RECIPES.NEW.buildPath({}), {
+								unstable_viewTransition: true,
+							})}
 					/>
 				</FabContainer>
 			</ContentOverlayPortal>

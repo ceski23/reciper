@@ -8,7 +8,6 @@ import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
-import Icon from '~virtual/svg-component'
 
 export const Account: FunctionComponent = () => {
 	const { t } = useTranslation()
@@ -45,10 +44,10 @@ export const Account: FunctionComponent = () => {
 					Quick actions
 				</Typography.TitleMedium>
 				<ImportExportContainer>
-					<Button leftIcon={<ButtonIcon name="fileUpload" />}>Import from file</Button>
-					<Button leftIcon={<ButtonIcon name="fileDownload" />}>Export to file</Button>
+					<Button leftIcon="fileUpload">Import from file</Button>
+					<Button leftIcon="fileDownload">Export to file</Button>
 				</ImportExportContainer>
-				<Button leftIcon={<ButtonIcon name="link" />}>Export recipes urls</Button>
+				<Button leftIcon="link">Export recipes urls</Button>
 			</QuickActionsSection>
 		</Fragment>
 	)
@@ -77,12 +76,5 @@ const ImportExportContainer = styled('div', {
 		display: 'grid',
 		gridTemplateColumns: '1fr 1fr',
 		gap: 16,
-	},
-})
-
-const ButtonIcon = styled(Icon, {
-	base: {
-		width: 18,
-		height: 18,
 	},
 })

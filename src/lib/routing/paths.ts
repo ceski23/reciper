@@ -4,6 +4,7 @@ export const PATHS = {
 	HOME: route(''),
 	RECIPES: route('recipes', {}, {
 		SEARCH: route('search'),
+		NEW: route('new'),
 	}),
 	SETTINGS: route('settings', {}, {
 		ACCOUNT: route('account'),

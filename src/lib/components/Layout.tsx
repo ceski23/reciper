@@ -47,7 +47,7 @@ export const Layout: FunctionComponent = () => {
 			<Header ref={setHeaderRef} />
 			<MainContent>
 				<Outlet />
-				<ContentOverlayContainer style={{ bottom: navigationMenuHeight }}>
+				<ContentOverlayContainer>
 					<SnackbarContainer />
 					<div ref={setOverlayContainerRef} />
 				</ContentOverlayContainer>
@@ -104,5 +104,6 @@ const ContentOverlayContainer = styled('div', {
 		display: 'flex',
 		flexDirection: 'column',
 		pointerEvents: 'none',
+		bottom: navigationMenuHeight,
 	},
 })

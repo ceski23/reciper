@@ -1,12 +1,12 @@
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
 import type { ComponentProps, FunctionComponent } from 'react'
-import React from 'react'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
+import Icon, { type SvgName } from '~virtual/svg-component'
 
 type ButtonProps = {
-	leftIcon?: React.ReactNode
+	leftIcon?: SvgName
 }
 
 export const Button: FunctionComponent<ComponentProps<typeof ButtonBase> & ButtonProps> = ({
@@ -19,7 +19,7 @@ export const Button: FunctionComponent<ComponentProps<typeof ButtonBase> & Butto
 	return (
 		<ButtonBase {...mergeProps(props, eventHandlers)}>
 			{renderRipples}
-			{leftIcon}
+			{leftIcon && <ButtonIcon name={leftIcon} />}
 			{children}
 		</ButtonBase>
 	)
@@ -164,5 +164,12 @@ const ButtonBase = styled('button', {
 	},
 	defaultVariants: {
 		variant: 'tonal',
+	},
+})
+
+const ButtonIcon = styled(Icon, {
+	base: {
+		width: 18,
+		height: 18,
 	},
 })

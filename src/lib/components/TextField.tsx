@@ -9,13 +9,14 @@ type TextFieldProps = {
 	label: string
 	placeholder?: string
 	value: string
-	onValueChange: (value: string) => void
+	onValueChange?: (value: string) => void
 	error?: string
 	disabled?: boolean
 	required?: boolean
 	leadingIcon?: SvgName
 	trailingAddon?: ReactNode
 	inputProps?: ComponentProps<'input'>
+	className?: string
 }
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
@@ -29,28 +30,31 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
 	leadingIcon,
 	trailingAddon,
 	inputProps,
+	className,
 }, ref) => {
 	const fieldId = useId()
 	const supportingTextId = useId()
 	const hasError = error !== undefined
 	const shouldShrinkLabel = placeholder !== undefined || value.length > 0
 
-	const renderTrailingAddon = (
-		<FieldAddon className={bodyLarge}>
-			{trailingAddon}
-		</FieldAddon>
-	)
+	const renderTrailingAddon = typeof trailingAddon === 'string'
+		? (
+			<FieldAddon className={bodyLarge}>
+				{trailingAddon}
+			</FieldAddon>
+		)
+		: trailingAddon
 	const renderErrorAddon = <ErrorIcon name="error" />
 	const renderClearAddon = (
 		<ClearButton
 			title="Clear"
 			icon="cancel"
-			onClick={() => onValueChange('')}
+			onClick={() => onValueChange?.('')}
 		/>
 	)
 
 	return (
-		<FieldContainer>
+		<FieldContainer className={className}>
 			<FieldInnerContainer
 				hasError={hasError}
 				disabled={disabled}
@@ -63,7 +67,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
 				<FieldInput
 					ref={ref}
 					value={value}
-					onChange={event => onValueChange(event.currentTarget.value)}
+					onChange={event => onValueChange?.(event.currentTarget.value)}
 					placeholder={placeholder}
 					id={fieldId}
 					disabled={disabled}
@@ -107,6 +111,8 @@ const FieldContainer = styled('div', {
 	base: {
 		display: 'flex',
 		flexDirection: 'column',
+		flex: 1,
+		overflowX: 'clip',
 	},
 })
 
@@ -122,6 +128,7 @@ const FieldInnerContainer = styled('div', {
 		transition: 'border-color .2s, outline .2s',
 		outline: `2px solid transparent`,
 		outlineOffset: -2,
+		width: '100%',
 		':hover': {
 			borderColor: theme.colors.onSurface,
 		},
@@ -152,7 +159,8 @@ const FieldInnerContainer = styled('div', {
 
 const FieldInput = styled('input', {
 	base: {
-		color: theme.colors.onSurfaceVariant,
+		display: 'block',
+		color: theme.colors.onSurface,
 		border: 'none',
 		background: 'none',
 		paddingBlock: 8,
