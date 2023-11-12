@@ -9,6 +9,7 @@ export default [
 			'vite.config.ts',
 			'eslint.config.js',
 			'svg-component.d.ts',
+			'generate-colors.ts',
 		],
 	},
 	...config,
