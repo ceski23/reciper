@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
-import { type ComponentProps, forwardRef, useState } from 'react'
+import { type ComponentProps, forwardRef, useCallback, useState } from 'react'
 import { Tooltip } from 'lib/components/Tooltip'
 import { useLongPress } from 'lib/hooks/useLongPress'
 import { useRipples } from 'lib/hooks/useRipples'
@@ -20,7 +20,11 @@ export const IconButton = forwardRef<HTMLButtonElement, ComponentProps<typeof Bu
 }, ref) => {
 	const [isTooltipOpen, setIsTooltipOpen] = useState(false)
 	const { eventHandlers, renderRipples } = useRipples()
-	const longPressHandlers = useLongPress(() => setIsTooltipOpen(true), 700)
+	const handleLongPress = useCallback(() => {
+		setIsTooltipOpen(true)
+		navigator.vibrate(50)
+	}, [])
+	const longPressHandlers = useLongPress(handleLongPress, 700)
 
 	return (
 		<Tooltip
