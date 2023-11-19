@@ -3,6 +3,7 @@ import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import chickenSoup from 'assets/images/chicken_soup.jpg'
 import { type FunctionComponent } from 'react'
 import { RecipeCard } from 'features/home/components/RecipeCard'
+import { Gallery } from 'features/recipes/components/Gallery'
 import { Chip } from 'lib/components/Chip'
 import { List } from 'lib/components/list/List'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
@@ -32,6 +33,7 @@ export const Home: FunctionComponent = () => (
 			style={{ gridColumn: '2' }}
 		/>
 		<FullbleedSection>
+			<Gallery />
 			<Typography.TitleMedium style={{ paddingInline: 16 }}>
 				Recently added
 			</Typography.TitleMedium>
