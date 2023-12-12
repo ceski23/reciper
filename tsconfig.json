@@ -10,6 +10,7 @@
 		"module": "ESNext",
 		"skipLibCheck": true,
 		/* Bundler mode */
+		// TODO: Change to Bundler when @macaron-css fixes types
 		"moduleResolution": "Node10",
 		"allowImportingTsExtensions": true,
 		"allowSyntheticDefaultImports": true,
