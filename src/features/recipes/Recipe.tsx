@@ -37,10 +37,7 @@ export const Recipe: FunctionComponent = () => {
 	const { notify } = useNotifications()
 
 	const handleShareRecipe = () => {
-		navigator.share({
-			title: 'Rosół z kury',
-			url: 'https://aniagotuje.pl/przepis/rosol-z-kury',
-		}).catch((error: DOMException | TypeError) => {
+		navigator.share({ url: 'https://aniagotuje.pl/przepis/rosol-z-kury' }).catch((error: DOMException | TypeError) => {
 			error.name !== 'AbortError' && notify('There was an error while sharing recipe, try again')
 		})
 	}
