@@ -30,7 +30,7 @@ const Container = styled('div', {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		backgroundColor: theme.colors.secondaryContainer,
+		backgroundColor: theme.colors.surfaceContainerHigh,
 		borderRadius: 12,
 		paddingBlock: 16,
 		paddingInline: 32,
