@@ -1,6 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
 import chickenSoup from 'assets/images/chicken_soup.jpg'
+import { PATHS } from 'lib/routing/paths'
 import { ListItem } from './list/items'
 
 export const RecipeListItem = () => {
@@ -21,7 +22,7 @@ export const RecipeListItem = () => {
 			text="12 ingredients  •  30 minutes"
 			leadingElement={<RecipeImage src={chickenSoup} />}
 			size="3line"
-			onClick={() => {}}
+			to={PATHS.RECIPES.RECIPE.buildPath({ id: 'rosół' })}
 		/>
 	)
 }
@@ -34,4 +35,4 @@ const RecipeImage = styled('img', {
 	},
 })
 
-const AnimatedListItem = animated(ListItem.Simple)
+const AnimatedListItem = animated(ListItem.Link)

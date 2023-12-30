@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
-import { type ComponentProps, type FunctionComponent } from 'react'
+import { type ComponentProps, forwardRef } from 'react'
 import { Link, type To } from 'react-router-dom'
 import { useRipples } from 'lib/hooks/useRipples'
 import { ListItemBase, MainContent, type MainContentProps } from './MainContent'
@@ -9,7 +9,10 @@ type LinkItemProps = {
 	to: To
 }
 
-export const LinkItem: FunctionComponent<ComponentProps<typeof ListItemBase> & LinkItemProps & Omit<MainContentProps, 'hasWrappedText'>> = ({
+export const LinkItem = forwardRef<
+	HTMLAnchorElement,
+	ComponentProps<typeof ListItemBase> & LinkItemProps & Omit<MainContentProps, 'hasWrappedText'>
+>(({
 	title,
 	text,
 	leadingElement,
@@ -17,7 +20,7 @@ export const LinkItem: FunctionComponent<ComponentProps<typeof ListItemBase> & L
 	to,
 	overline,
 	...props
-}) => {
+}, ref) => {
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
@@ -27,7 +30,11 @@ export const LinkItem: FunctionComponent<ComponentProps<typeof ListItemBase> & L
 			asChild
 			{...mergeProps(props, eventHandlers)}
 		>
-			<Container to={to}>
+			<Container
+				ref={ref}
+				to={to}
+				unstable_viewTransition
+			>
 				{renderRipples}
 				<MainContent
 					overline={overline}
@@ -40,7 +47,7 @@ export const LinkItem: FunctionComponent<ComponentProps<typeof ListItemBase> & L
 			</Container>
 		</ListItemBase>
 	)
-}
+})
 
 const Container = styled(Link, {
 	base: {

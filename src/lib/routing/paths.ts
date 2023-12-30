@@ -5,6 +5,7 @@ export const PATHS = {
 	RECIPES: route('recipes', {}, {
 		SEARCH: route('search'),
 		NEW: route('new'),
+		RECIPE: route(':id'),
 	}),
 	SETTINGS: route('settings', {}, {
 		ACCOUNT: route('account'),

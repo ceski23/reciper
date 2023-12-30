@@ -112,7 +112,6 @@ const ImagesGrid = styled(RovingFocusGroup.Root, {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
 		gap: 16,
-		padding: 16,
 	},
 })
 
