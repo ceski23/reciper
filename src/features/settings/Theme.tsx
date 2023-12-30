@@ -1,17 +1,18 @@
+import { useAtom } from 'jotai'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/Dialog'
+import { ColorSchemeDialog } from 'features/settings/ColorSchemeDialog'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
-import { RadioGroup } from 'lib/components/RadioGroup'
 import { TopAppBar } from 'lib/components/TopAppBar'
+import { settingsAtom } from 'lib/stores/settings'
 import { theme } from 'lib/styles'
 
 export const Theme: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const [isColorSchemeDialogOpen, setIsColorSchemeDialogOpen] = useState(false)
+	const [settings, setSettings] = useAtom(settingsAtom)
 
 	return (
 		<Fragment>
@@ -35,58 +36,37 @@ export const Theme: FunctionComponent = () => {
 					title="Dynamic colors"
 					text="Use dynamic color scheme based on recipe’s image colors"
 					size="3line"
+					switchProps={{
+						checked: settings.theme.dynamicColor,
+						onCheckedChange: dynamicColor => setSettings(prev => ({ ...prev, theme: { ...prev.theme, dynamicColor } })),
+					}}
 				/>
 				<ListItem.Switch
 					leadingElement="animation"
 					iconColor={theme.colors.primary}
 					title="Disable animations"
 					text="Disable all animations inside app"
+					switchProps={{
+						checked: settings.theme.disabledAnimations,
+						onCheckedChange: disabledAnimations => setSettings(prev => ({ ...prev, theme: { ...prev.theme, disabledAnimations } })),
+					}}
 				/>
 			</List>
-			<SimpleDialog
-				open={isColorSchemeDialogOpen}
-				onOpenChange={setIsColorSchemeDialogOpen}
-				icon="brightness"
-				title="Color scheme"
-				description="Select app's color scheme"
-				closeOnClickOutside={false}
-				content={(
-					<RadioGroup.Root name="test">
-						<RadioGroup.Item
-							label="Light"
-							value="light"
-						/>
-						<RadioGroup.Item
-							label="Dark"
-							value="dark"
-						/>
-						<RadioGroup.Item
-							label="System"
-							value="system"
-						/>
-					</RadioGroup.Root>
-				)}
-				actions={[
-					(
-						<Button
-							key="cancel"
-							variant="text"
-							onClick={() => setIsColorSchemeDialogOpen(false)}
-						>
-							Cancel
-						</Button>
-					),
-					(
-						<Button
-							key="save"
-							variant="filled"
-							onClick={() => setIsColorSchemeDialogOpen(false)}
-						>
-							Save
-						</Button>
-					),
-				]}
-			/>
+			{isColorSchemeDialogOpen && (
+				<ColorSchemeDialog
+					onCancel={() => setIsColorSchemeDialogOpen(false)}
+					onSave={colorScheme => {
+						setIsColorSchemeDialogOpen(false)
+						setSettings(prev => ({
+							...prev,
+							theme: {
+								...prev.theme,
+								colorScheme,
+							},
+						}))
+					}}
+				/>
+			)}
 		</Fragment>
 	)
 }

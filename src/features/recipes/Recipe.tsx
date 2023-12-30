@@ -12,6 +12,7 @@ import { IconButton } from 'lib/components/IconButton'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
+import { useDynamicTheme, useImageColor } from 'lib/hooks'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { theme } from 'lib/styles'
@@ -35,6 +36,8 @@ export const Recipe: FunctionComponent = () => {
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { notify } = useNotifications()
+	const color = useImageColor('https://cdn.aniagotuje.com/pictures/articles/2020/01/1968774-v-1080x1080.jpg')
+	const styles = useDynamicTheme(color)
 
 	const handleShareRecipe = () => {
 		navigator.share({ url: 'https://aniagotuje.pl/przepis/rosol-z-kury' }).catch((error: DOMException | TypeError) => {
@@ -49,6 +52,7 @@ export const Recipe: FunctionComponent = () => {
 					configuration="large"
 					title="Rosół z kury"
 					elevation={isListScrolled ? 'onScroll' : 'flat'}
+					style={styles}
 					options={(
 						<Menu.Root
 							open={isMoreOpen}
@@ -83,7 +87,7 @@ export const Recipe: FunctionComponent = () => {
 				/>
 			</HeaderPortal>
 			{renderProbe}
-			<ContentContainer>
+			<ContentContainer style={styles}>
 				<Cover src={chickenSoup} />
 				<RecipeInsights
 					items={[

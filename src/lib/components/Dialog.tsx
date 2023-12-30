@@ -93,6 +93,7 @@ const DialogContent = styled(RadixDialog.Content, {
 		gridAutoFlow: 'row',
 		borderRadius: 28,
 		backgroundColor: theme.colors.surfaceContainerHigh,
+		color: theme.colors.onSurface,
 		position: 'fixed',
 		top: '50%',
 		left: '50%',

@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode } from 'react'
+import { type ComponentProps, type CSSProperties, Fragment, type FunctionComponent, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
@@ -17,9 +17,17 @@ type TopAppBarProps = {
 		max?: number
 	} | boolean
 	elevation?: ComponentProps<typeof AppBarBase>['elevation']
+	style?: CSSProperties
 }
 
-export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configuration, options, progress, elevation }) => {
+export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
+	title,
+	configuration,
+	options,
+	progress,
+	elevation,
+	style,
+}) => {
 	const navigate = useNavigate()
 	const location = useLocation()
 
@@ -34,7 +42,10 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({ title, configurat
 	return (
 		<Fragment>
 			<MetaThemeColor isScrolled={elevation === 'onScroll'} />
-			<AppBarBase elevation={elevation}>
+			<AppBarBase
+				elevation={elevation}
+				style={style}
+			>
 				<IconButton
 					icon="backArrow"
 					title="Go back"
