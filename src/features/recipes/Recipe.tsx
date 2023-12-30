@@ -13,6 +13,7 @@ import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
+import { useNotifications } from 'lib/hooks/useNotifications'
 import { theme } from 'lib/styles'
 
 const mockedTags = [
@@ -33,6 +34,16 @@ export const Recipe: FunctionComponent = () => {
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
+	const { notify } = useNotifications()
+
+	const handleShareRecipe = () => {
+		navigator.share({
+			title: 'Rosół z kury',
+			text:
+				'Cudownie aromatyczny, pyszny i bardzo zdrowy rosół z kury lub też rosół z kurczaka. To przepis uniwersalny. Rosół możesz podać z makaronem, zacierkami lub też wykorzystać bulion jako baza do innych zup i sosów.',
+			url: 'https://aniagotuje.pl/przepis/rosol-z-kury',
+		}).catch(() => notify('There was an error while sharing recipe, try again'))
+	}
 
 	return (
 		<Fragment>
@@ -58,10 +69,13 @@ export const Recipe: FunctionComponent = () => {
 									text="Edit recipe"
 									icon="pencil"
 								/>
-								<Menu.Item
-									text="Share recipe"
-									icon="share"
-								/>
+								{navigator.share !== undefined && (
+									<Menu.Item
+										text="Share recipe"
+										icon="share"
+										onClick={handleShareRecipe}
+									/>
+								)}
 								<Menu.Item
 									text="Delete recipe"
 									icon="delete"
