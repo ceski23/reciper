@@ -39,8 +39,6 @@ export const Recipe: FunctionComponent = () => {
 	const handleShareRecipe = () => {
 		navigator.share({
 			title: 'Rosół z kury',
-			text:
-				'Cudownie aromatyczny, pyszny i bardzo zdrowy rosół z kury lub też rosół z kurczaka. To przepis uniwersalny. Rosół możesz podać z makaronem, zacierkami lub też wykorzystać bulion jako baza do innych zup i sosów.',
 			url: 'https://aniagotuje.pl/przepis/rosol-z-kury',
 		}).catch((error: DOMException | TypeError) => {
 			error.name !== 'AbortError' && notify('There was an error while sharing recipe, try again')
