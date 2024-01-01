@@ -1,3 +1,4 @@
+import { useReducedMotion } from '@react-spring/web'
 import { useAtom } from 'jotai'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +14,7 @@ export const Theme: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const [isColorSchemeDialogOpen, setIsColorSchemeDialogOpen] = useState(false)
 	const [settings, setSettings] = useAtom(settingsAtom)
+	const isReducedMotion = useReducedMotion() ?? false
 
 	return (
 		<Fragment>
@@ -45,11 +47,12 @@ export const Theme: FunctionComponent = () => {
 					leadingElement="animation"
 					iconColor={theme.colors.primary}
 					title="Disable animations"
-					text="Disable all animations inside app"
+					text={isReducedMotion ? 'Forced by system settings' : 'Disable all animations inside app'}
 					switchProps={{
-						checked: settings.theme.disabledAnimations,
+						checked: isReducedMotion ? true : settings.theme.disabledAnimations,
 						onCheckedChange: disabledAnimations => setSettings(prev => ({ ...prev, theme: { ...prev.theme, disabledAnimations } })),
 					}}
+					isDisabled={isReducedMotion}
 				/>
 			</List>
 			{isColorSchemeDialogOpen && (

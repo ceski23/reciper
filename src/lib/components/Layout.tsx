@@ -5,6 +5,7 @@ import { useSetAtom } from 'jotai'
 import { type FunctionComponent, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
+import { useDisableAnimations } from 'lib/hooks/useDisableAnimations'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { useScreenNavigationAnimations } from 'lib/hooks/useScreenNavigationAnimations'
@@ -29,6 +30,7 @@ export const navigationMenuHeight = createVar('navigation-menu-height')
 
 export const Layout: FunctionComponent = () => {
 	useScreenNavigationAnimations()
+	useDisableAnimations()
 
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()

@@ -10,6 +10,7 @@ import { ListItemBase, MainContent, type MainContentProps } from './MainContent'
 
 type SwitchItemProps = {
 	switchProps?: ComponentProps<typeof Switch>
+	isDisabled?: boolean
 }
 
 export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> & SwitchItemProps & Omit<MainContentProps, 'hasWrappedText'>> = ({
@@ -19,6 +20,7 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	iconColor,
 	switchProps,
 	overline,
+	isDisabled,
 	...props
 }) => {
 	const { eventHandlers, renderRipples } = useRipples()
@@ -26,6 +28,7 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	return (
 		<SwitchItemBase
 			variant="clickable"
+			isDisabled={isDisabled}
 			focusable={false}
 			aria-label={title}
 			{...props}
@@ -33,7 +36,7 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 			{...mergeProps(props, eventHandlers)}
 		>
 			<Container>
-				{renderRipples}
+				{!isDisabled && renderRipples}
 				<MainContent
 					overline={overline}
 					title={title}
@@ -43,7 +46,10 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 					hasWrappedText={props.size === '3line'}
 				/>
 				<RovingFocusGroup.Item asChild>
-					<Switch {...switchProps} />
+					<Switch
+						{...switchProps}
+						disabled={isDisabled}
+					/>
 				</RovingFocusGroup.Item>
 			</Container>
 		</SwitchItemBase>
@@ -55,6 +61,13 @@ const SwitchItemBase = styled(ListItemBase, {
 		selectors: {
 			'&:focus-within:has(> :focus-visible)': {
 				backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
+			},
+		},
+	},
+	variants: {
+		isDisabled: {
+			true: {
+				opacity: 0.3,
 			},
 		},
 	},
