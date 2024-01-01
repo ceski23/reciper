@@ -5,18 +5,22 @@ import { PATHS } from 'lib/routing/paths'
 import { ListItem } from './list/items'
 
 export const RecipeListItem = () => {
-	const [ref /* inView */] = useInView()
-	// TODO: Fix inifinite loop
-	// const style = useSpring({
-	// 	to: {
-	// 		opacity: inView ? 1 : 0,
-	// 		y: inView ? 0 : 50,
-	// 	},
-	// })
+	const [ref, style] = useInView(() => ({
+		from: {
+			opacity: 0,
+			y: 50,
+		},
+		to: {
+			opacity: 1,
+			y: 0,
+		},
+	}), {
+		once: true,
+	})
 
 	return (
 		<AnimatedListItem
-			// style={style}
+			style={style}
 			ref={ref}
 			overline="Kwestia smaku"
 			title="Sunday chicken soup"
