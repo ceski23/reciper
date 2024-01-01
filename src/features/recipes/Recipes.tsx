@@ -1,8 +1,11 @@
 import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
+import { useQuery } from '@tanstack/react-query'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { recipesQuery, useAddRecipes } from 'features/recipes/recipes'
+import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
@@ -23,6 +26,25 @@ export const Recipes: FunctionComponent = () => {
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { notify } = useNotifications()
 	const navigate = useNavigate()
+	const recipes = useQuery(recipesQuery())
+	const addRecipes = useAddRecipes()
+
+	useEffect(() => {
+		if (recipes.data?.length === 0) {
+			const id = setTimeout(() => {
+				notify('You have no recipes saved. Do you want to add some sample recipes?', {
+					id: 'samples',
+					duration: Infinity,
+					action: {
+						label: 'Add',
+						onClick: () => addRecipes.mutate(sampleRecipes),
+					},
+				})
+			}, 2000)
+
+			return () => clearTimeout(id)
+		}
+	}, [recipes.data?.length])
 
 	useEffect(() => {
 		if (isLoading) {
@@ -83,7 +105,12 @@ export const Recipes: FunctionComponent = () => {
 			</HeaderPortal>
 			<VirtualList virtualProps={{ overscan: 10 }}>
 				{renderProbe}
-				{Array.from({ length: 1000 }, (_, index) => <RecipeListItem key={index} />)}
+				{recipes.data?.map(recipe => (
+					<RecipeListItem
+						key={recipe.id}
+						recipe={recipe}
+					/>
+				))}
 			</VirtualList>
 			<ContentOverlayPortal>
 				<FabContainer>

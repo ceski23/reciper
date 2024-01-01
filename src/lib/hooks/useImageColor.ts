@@ -9,7 +9,7 @@ type WorkerResponse = {
 	color: string
 }
 
-export const useImageColor = (imageUrl: string, resizedImageSize = 128) => {
+export const useImageColor = (imageUrl?: string, resizedImageSize = 128) => {
 	const [color, setColor] = useState<string>()
 
 	useEffect(() => {
@@ -23,6 +23,8 @@ export const useImageColor = (imageUrl: string, resizedImageSize = 128) => {
 	}, [imageUrl])
 
 	useEffect(() => {
+		if (!imageUrl) return
+
 		const handleImageLoad = () => {
 			const sizeRatio = image.width / image.height
 			const { targetWidth, targetHeight } = image.width > image.height

@@ -1,11 +1,13 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import chickenSoup from 'assets/images/chicken_soup.jpg'
+import { useQuery } from '@tanstack/react-query'
 import { Fragment, type FunctionComponent, useState } from 'react'
+import { useTypedParams } from 'react-router-typesafe-routes/dom'
 import { Gallery } from 'features/recipes/components/Gallery'
 import { IngredientsSection } from 'features/recipes/components/IngredientsSection'
-import { RecipeInsights } from 'features/recipes/components/RecipeInsights'
+import { type InsightItem, RecipeInsights } from 'features/recipes/components/RecipeInsights'
 import { StepsSection } from 'features/recipes/components/StepsSection'
+import { recipeQuery } from 'features/recipes/recipes'
 import { Chip } from 'lib/components/Chip'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
@@ -15,42 +17,61 @@ import { Typography } from 'lib/components/Typography'
 import { useDynamicTheme, useImageColor } from 'lib/hooks'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
+import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
-
-const mockedTags = [
-	'Girls dinner',
-	'Polish cuisine',
-	'Pork',
-	'Fit',
-	'Italian',
-	'Dessert',
-	'For kids',
-	'Chicken',
-	'New Year\'s Eve',
-	'Quick breakfast',
-	'Dinner',
-]
+import { isDefined } from 'lib/utils'
 
 export const Recipe: FunctionComponent = () => {
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { notify } = useNotifications()
-	const color = useImageColor('https://cdn.aniagotuje.com/pictures/articles/2020/01/1968774-v-1080x1080.jpg')
+	const { id } = useTypedParams(PATHS.RECIPES.RECIPE)
+	const { data: recipe } = useQuery(recipeQuery(id))
+	const color = useImageColor(recipe?.image)
 	const styles = useDynamicTheme(color)
 
 	const handleShareRecipe = () => {
-		navigator.share({ url: 'https://aniagotuje.pl/przepis/rosol-z-kury' }).catch((error: DOMException | TypeError) => {
+		navigator.share({ url: recipe?.url }).catch((error: DOMException | TypeError) => {
 			error.name !== 'AbortError' && notify('There was an error while sharing recipe, try again')
 		})
 	}
+
+	if (!recipe) {
+		return null
+	}
+
+	const prepTime: InsightItem | undefined = recipe.prepTime
+		? {
+			icon: 'timer',
+			text: `${recipe.prepTime} hours`,
+		}
+		: undefined
+	const calories: InsightItem | undefined = recipe.calories
+		? {
+			icon: 'fire',
+			text: `${recipe.calories} kcal`,
+		}
+		: undefined
+	const rating: InsightItem | undefined = recipe.rating
+		? {
+			icon: 'star',
+			text: recipe.rating.toFixed(1),
+		}
+		: undefined
+	const servings: InsightItem | undefined = recipe.servings
+		? {
+			icon: 'utensils',
+			text: `${recipe.servings} servings`,
+		}
+		: undefined
 
 	return (
 		<Fragment>
 			<HeaderPortal>
 				<TopAppBar
 					configuration="large"
-					title="Rosół z kury"
+					title={recipe.name}
 					elevation={isListScrolled ? 'onScroll' : 'flat'}
 					style={styles}
 					options={(
@@ -88,19 +109,13 @@ export const Recipe: FunctionComponent = () => {
 			</HeaderPortal>
 			{renderProbe}
 			<ContentContainer style={styles}>
-				<Cover src={chickenSoup} />
-				<RecipeInsights
-					items={[
-						{ icon: 'timer', text: '2 hours' },
-						{ icon: 'fire', text: '1500 kcal' },
-						{ icon: 'star', text: '4.9' },
-						{ icon: 'utensils', text: '2 servings' },
-					]}
-				/>
-				<Description>
-					Cudownie aromatyczny, pyszny i bardzo zdrowy rosół z kury lub też rosół z kurczaka. To przepis uniwersalny. Rosół możesz podać z
-					makaronem, zacierkami lub też wykorzystać bulion jako baza do innych zup i sosów.
-				</Description>
+				<Cover src={recipe.image} />
+				<RecipeInsights items={[prepTime, calories, rating, servings].filter(isDefined)} />
+				{recipe.description && (
+					<Description>
+						{recipe.description}
+					</Description>
+				)}
 				<Section>
 					<Typography.TitleLarge>
 						Most common tags
@@ -109,7 +124,7 @@ export const Recipe: FunctionComponent = () => {
 						type="multiple"
 						value={[]}
 					>
-						{mockedTags.map(tag => (
+						{recipe.tags.map(tag => (
 							<ToggleGroup.Item
 								key={tag}
 								value={tag}
@@ -123,8 +138,11 @@ export const Recipe: FunctionComponent = () => {
 						))}
 					</TagsContainer>
 				</Section>
-				<IngredientsSection />
-				<StepsSection />
+				<IngredientsSection
+					ingredients={recipe.ingredients}
+					initialServingsCount={recipe.servings}
+				/>
+				<StepsSection steps={recipe.instructions} />
 				<Section>
 					<Typography.TitleLarge>
 						Gallery

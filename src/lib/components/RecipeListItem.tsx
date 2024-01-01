@@ -1,10 +1,15 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
-import chickenSoup from 'assets/images/chicken_soup.jpg'
+import { type FunctionComponent } from 'react'
+import { type Recipe } from 'features/recipes/samples'
 import { PATHS } from 'lib/routing/paths'
 import { ListItem } from './list/items'
 
-export const RecipeListItem = () => {
+type RecipeListItemProps = {
+	recipe: Recipe
+}
+
+export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe }) => {
 	const [ref, style] = useInView(() => ({
 		from: {
 			opacity: 0,
@@ -18,16 +23,21 @@ export const RecipeListItem = () => {
 		once: true,
 	})
 
+	const details = [
+		`${recipe.ingredients.length} ingredients`,
+		recipe.prepTime ? `${recipe.prepTime} minutes` : undefined,
+	].filter(item => item !== undefined).join('  •  ')
+
 	return (
 		<AnimatedListItem
 			style={style}
 			ref={ref}
-			overline="Kwestia smaku"
-			title="Sunday chicken soup"
-			text="12 ingredients  •  30 minutes"
-			leadingElement={<RecipeImage src={chickenSoup} />}
+			overline={recipe.url ? new URL(recipe.url).host : undefined}
+			title={recipe.name}
+			text={details}
+			leadingElement={<RecipeImage src={recipe.image} />}
 			size="3line"
-			to={PATHS.RECIPES.RECIPE.buildPath({ id: 'rosół' })}
+			to={PATHS.RECIPES.RECIPE.buildPath({ id: recipe.id })}
 		/>
 	)
 }
@@ -37,6 +47,7 @@ const RecipeImage = styled('img', {
 		width: 56,
 		height: 56,
 		borderRadius: 8,
+		objectFit: 'cover',
 	},
 })
 

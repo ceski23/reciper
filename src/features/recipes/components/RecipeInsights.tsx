@@ -4,7 +4,7 @@ import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 import Icon, { type SvgName } from '~virtual/svg-component'
 
-type InsightItem = {
+export type InsightItem = {
 	text: string
 	icon: SvgName
 }
@@ -28,7 +28,7 @@ const Container = styled('div', {
 	base: {
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-between',
+		justifyContent: 'space-evenly',
 		alignItems: 'center',
 		backgroundColor: theme.colors.surfaceContainerHigh,
 		borderRadius: 12,

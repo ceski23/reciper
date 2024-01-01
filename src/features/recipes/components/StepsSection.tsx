@@ -2,28 +2,31 @@ import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { type FunctionComponent } from 'react'
 import { RecipeStep } from 'features/recipes/components/RecipeStep'
+import { type Recipe } from 'features/recipes/samples'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 
-export const StepsSection: FunctionComponent = () => (
+type StepsSectionProps = {
+	steps: Recipe['instructions']
+}
+
+// TODO: Handle steps's groups
+export const StepsSection: FunctionComponent<StepsSectionProps> = ({ steps }) => (
 	<Container>
 		<Typography.TitleLarge>
 			Steps
 		</Typography.TitleLarge>
 		<StepsList type="multiple">
-			<RecipeStep number={1}>
-				<Typography.BodyMedium>
-					W garnku zagotuj dwa litry wody. Kurczaka o wadze około 1,5 kg (lub też kurę o wadze minimum 1,5 kg) umieść w garnku z wrzątkiem.
-					Ponownie zagotuj wodę z kurczakiem. Po dwóch minutach wylej całą wodę. Wylewasz wówczas mętną wodę ze ściętym białkiem
-					(szumowiny).
-				</Typography.BodyMedium>
-			</RecipeStep>
-			<RecipeStep number={2}>
-				<Typography.BodyMedium>
-					Dodaj też dwa listki laurowe, trzy ziarna ziela angielskiego oraz łyżeczkę ziaren czarnego pieprzu. Na koniec wlej dwa litry
-					świeżej, zimnej wody.
-				</Typography.BodyMedium>
-			</RecipeStep>
+			{steps.map((step, index) => (
+				<RecipeStep
+					number={index + 1}
+					key={index}
+				>
+					<Typography.BodyMedium>
+						{step.text}
+					</Typography.BodyMedium>
+				</RecipeStep>
+			))}
 		</StepsList>
 	</Container>
 )

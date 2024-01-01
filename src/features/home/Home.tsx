@@ -1,8 +1,9 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import chickenSoup from 'assets/images/chicken_soup.jpg'
+import { useQuery } from '@tanstack/react-query'
 import { type FunctionComponent } from 'react'
 import { RecipeCard } from 'features/home/components/RecipeCard'
+import { recipesQuery } from 'features/recipes/recipes'
 import { Chip } from 'lib/components/Chip'
 import { List } from 'lib/components/list/List'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
@@ -24,57 +25,66 @@ const mockedTags = [
 	'Dinner',
 ]
 
-export const Home: FunctionComponent = () => (
-	<Container>
-		<FakeSearchBar
-			leadingIcon="search"
-			placeholder="What do you want to eat?"
-			style={{ gridColumn: '2' }}
-		/>
-		<FullbleedSection>
-			<Typography.TitleMedium style={{ paddingInline: 16 }}>
-				Recently added
-			</Typography.TitleMedium>
-			<CardsList>
-				{Array.from({ length: 10 }, (_, index) => (
-					<RecipeCard
-						key={index}
-						name="Sunday chicken soup"
-						details={['6 ingredients', '2 hours']}
-						image={chickenSoup}
-					/>
-				))}
-			</CardsList>
-		</FullbleedSection>
-		<Section>
-			<Typography.TitleMedium>
-				Most common tags
-			</Typography.TitleMedium>
-			<TagsContainer type="single">
-				{mockedTags.map(tag => (
-					<ToggleGroup.Item
-						key={tag}
-						value={tag}
-						asChild
-					>
-						<StyledChip
-							text={tag}
-							variant="outlined"
+export const Home: FunctionComponent = () => {
+	const recipes = useQuery(recipesQuery())
+
+	return (
+		<Container>
+			<FakeSearchBar
+				leadingIcon="search"
+				placeholder="What do you want to eat?"
+				style={{ gridColumn: '2' }}
+			/>
+			{recipes.data?.length && (
+				<FullbleedSection>
+					<Typography.TitleMedium style={{ paddingInline: 16 }}>
+						Recently added
+					</Typography.TitleMedium>
+					<CardsList>
+						{recipes.data.slice(0, 10).map(recipe => (
+							<RecipeCard
+								key={recipe.id}
+								recipe={recipe}
+							/>
+						))}
+					</CardsList>
+				</FullbleedSection>
+			)}
+			<Section>
+				<Typography.TitleMedium>
+					Most common tags
+				</Typography.TitleMedium>
+				<TagsContainer type="single">
+					{mockedTags.map(tag => (
+						<ToggleGroup.Item
+							key={tag}
+							value={tag}
+							asChild
+						>
+							<StyledChip
+								text={tag}
+								variant="outlined"
+							/>
+						</ToggleGroup.Item>
+					))}
+				</TagsContainer>
+			</Section>
+			<FullbleedSection>
+				<Typography.TitleMedium style={{ paddingInline: 16 }}>
+					Top rated
+				</Typography.TitleMedium>
+				<List>
+					{recipes.data?.map(recipe => (
+						<RecipeListItem
+							key={recipe.id}
+							recipe={recipe}
 						/>
-					</ToggleGroup.Item>
-				))}
-			</TagsContainer>
-		</Section>
-		<FullbleedSection>
-			<Typography.TitleMedium style={{ paddingInline: 16 }}>
-				Top rated
-			</Typography.TitleMedium>
-			<List>
-				{Array.from({ length: 10 }, (_, index) => <RecipeListItem key={index} />)}
-			</List>
-		</FullbleedSection>
-	</Container>
-)
+					))}
+				</List>
+			</FullbleedSection>
+		</Container>
+	)
+}
 
 const Container = styled('div', {
 	base: {

@@ -2,17 +2,17 @@ import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
 import { type FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
+import { type Recipe } from 'features/recipes/samples'
 import { Typography } from 'lib/components/Typography'
 import { useRipples } from 'lib/hooks/useRipples'
+import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 
 type RecipeCardProps = {
-	name: string
-	details: Array<string>
-	image: string
+	recipe: Recipe
 }
 
-export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ details, image, name }) => {
+export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe }) => {
 	const { eventHandlers, renderRipples } = useRipples()
 	const [ref, inView] = useInView()
 	const style = useSpring({
@@ -21,21 +21,27 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ details, image,
 		},
 	})
 
+	const details = [
+		`${recipe.ingredients.length} ingredients`,
+		recipe.prepTime ? `${recipe.prepTime} minutes` : undefined,
+	].filter(item => item !== undefined).join('  •  ')
+
 	return (
 		<Card
 			style={style}
 			ref={ref}
-			to=""
+			to={PATHS.RECIPES.RECIPE.buildPath({ id: recipe.id })}
+			unstable_viewTransition
 			{...eventHandlers}
 		>
 			{renderRipples}
-			<RecipeImage src={image} />
+			<RecipeImage src={recipe.image} />
 			<Info>
 				<Name>
-					{name}
+					{recipe.name}
 				</Name>
 				<Details>
-					{details.join(' • ')}
+					{details}
 				</Details>
 			</Info>
 		</Card>
@@ -80,6 +86,9 @@ const Info = styled('div', {
 const Name = styled(Typography.TitleMedium, {
 	base: {
 		color: theme.colors.onSurface,
+		whiteSpace: 'nowrap',
+		textOverflow: 'ellipsis',
+		overflow: 'hidden',
 	},
 })
 

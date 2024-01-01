@@ -1,55 +1,50 @@
 import { styled } from '@macaron-css/react'
-import { type FunctionComponent } from 'react'
+import { type FunctionComponent, useState } from 'react'
+import { type Recipe } from 'features/recipes/samples'
 import { IconButton } from 'lib/components/IconButton'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 import Icon from '~virtual/svg-component'
 
-export const IngredientsSection: FunctionComponent = () => {
+type IngredientsSectionProps = {
+	ingredients: Recipe['ingredients']
+	initialServingsCount?: number
+}
+
+// TODO: Handle ingredient's groups
+export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({ ingredients, initialServingsCount }) => {
+	const [servingsCount, setServingsCount] = useState(initialServingsCount ?? 1)
+
 	return (
 		<Container>
 			<Header>
 				<Typography.TitleLarge>
 					Ingredients
 				</Typography.TitleLarge>
-				<HeaderCount>4 products</HeaderCount>
+				<HeaderCount>{ingredients.length} products</HeaderCount>
 			</Header>
 			<Spinbox>
 				<IconButton
 					icon="minus"
 					title="Decrease servings"
+					onClick={() => setServingsCount(prev => Math.max(prev - 1, 1))}
 				/>
-				<Typography.LabelLarge>2 servings</Typography.LabelLarge>
+				<Typography.LabelLarge>{servingsCount} servings</Typography.LabelLarge>
 				<IconButton
 					icon="plus"
 					title="Increase servings"
+					onClick={() => setServingsCount(prev => prev + 1)}
 				/>
 			</Spinbox>
 			<IngredientsList>
-				<IngredientItem>
-					<IngredientIcon name="ingredient" />
-					<Typography.BodyMedium>
-						<Grammage>700g</Grammage> mięsa wołowego z kością
-					</Typography.BodyMedium>
-				</IngredientItem>
-				<IngredientItem>
-					<IngredientIcon name="ingredient" />
-					<Typography.BodyMedium>
-						<Grammage>700g</Grammage> mięsa wołowego z kością
-					</Typography.BodyMedium>
-				</IngredientItem>
-				<IngredientItem>
-					<IngredientIcon name="ingredient" />
-					<Typography.BodyMedium>
-						<Grammage>700g</Grammage> mięsa wołowego z kością
-					</Typography.BodyMedium>
-				</IngredientItem>
-				<IngredientItem>
-					<IngredientIcon name="ingredient" />
-					<Typography.BodyMedium>
-						<Grammage>700g</Grammage> mięsa wołowego z kością
-					</Typography.BodyMedium>
-				</IngredientItem>
+				{ingredients.map((ingredient, index) => (
+					<IngredientItem key={index}>
+						<IngredientIcon name="ingredient" />
+						<IngredientText>
+							{ingredient.text}
+						</IngredientText>
+					</IngredientItem>
+				))}
 			</IngredientsList>
 		</Container>
 	)
@@ -113,11 +108,17 @@ const IngredientIcon = styled(Icon, {
 	},
 })
 
-const Grammage = styled('span', {
+const IngredientText = styled(Typography.BodyMedium, {
 	base: {
-		fontWeight: 'bold',
+		flex: 1,
 	},
 })
+
+// const Grammage = styled('span', {
+// 	base: {
+// 		fontWeight: 'bold',
+// 	},
+// })
 
 const IngredientsList = styled('div', {
 	base: {
