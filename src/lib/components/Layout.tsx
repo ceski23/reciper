@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
+import { useScreenNavigationAnimations } from 'lib/hooks/useScreenNavigationAnimations'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
@@ -27,6 +28,8 @@ export const darkThemeClass = createTheme(theme, {
 export const navigationMenuHeight = createVar('navigation-menu-height')
 
 export const Layout: FunctionComponent = () => {
+	useScreenNavigationAnimations()
+
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()
 	const setHeaderRef = useSetAtom(headerRefAtom)
