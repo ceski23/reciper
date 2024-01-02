@@ -112,7 +112,6 @@ const PageTitle = styled(Typography.TitleLarge, {
 		gridColumn: 'title',
 		color: theme.colors.onSurface,
 		viewTransitionName: 'app-bar-title',
-		minHeight: 36,
 	},
 })
 
@@ -137,7 +136,6 @@ const PageTitleLarge = styled(Typography.HeadlineMedium, {
 		color: theme.colors.onSurface,
 		paddingInline: 16,
 		viewTransitionName: 'app-bar-title',
-		minHeight: 36,
 	},
 })
 
