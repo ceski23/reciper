@@ -1,4 +1,5 @@
 import { styled } from '@macaron-css/react'
+import { groupBy } from 'ramda'
 import { type FunctionComponent, useState } from 'react'
 import { type Recipe } from 'features/recipes/samples'
 import { IconButton } from 'lib/components/IconButton'
@@ -11,42 +12,47 @@ type IngredientsSectionProps = {
 	initialServingsCount?: number
 }
 
-// TODO: Handle ingredient's groups
 export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({ ingredients, initialServingsCount }) => {
 	const [servingsCount, setServingsCount] = useState(initialServingsCount ?? 1)
 
-	return (
-		<Container>
-			<Header>
-				<Typography.TitleLarge>
-					Ingredients
-				</Typography.TitleLarge>
-				<HeaderCount>{ingredients.length} products</HeaderCount>
-			</Header>
-			<Spinbox>
-				<IconButton
-					icon="minus"
-					title="Decrease servings"
-					onClick={() => setServingsCount(prev => Math.max(prev - 1, 1))}
-				/>
-				<Typography.LabelLarge>{servingsCount} servings</Typography.LabelLarge>
-				<IconButton
-					icon="plus"
-					title="Increase servings"
-					onClick={() => setServingsCount(prev => prev + 1)}
-				/>
-			</Spinbox>
-			<IngredientsList>
-				{ingredients.map((ingredient, index) => (
-					<IngredientItem key={index}>
-						<IngredientIcon name="ingredient" />
-						<IngredientText>
-							{ingredient.text}
-						</IngredientText>
-					</IngredientItem>
-				))}
-			</IngredientsList>
-		</Container>
+	const groups = groupBy(item => item.group ?? '', ingredients)
+
+	return Object.entries(groups).map(([name, ingredients]) =>
+		ingredients
+			? (
+				<Container key={name}>
+					<Header>
+						<Typography.TitleLarge>
+							{name || 'Ingredients'}
+						</Typography.TitleLarge>
+						<HeaderCount>{ingredients.length} products</HeaderCount>
+					</Header>
+					<Spinbox>
+						<IconButton
+							icon="minus"
+							title="Decrease servings"
+							onClick={() => setServingsCount(prev => Math.max(prev - 1, 1))}
+						/>
+						<Typography.LabelLarge>{servingsCount} servings</Typography.LabelLarge>
+						<IconButton
+							icon="plus"
+							title="Increase servings"
+							onClick={() => setServingsCount(prev => prev + 1)}
+						/>
+					</Spinbox>
+					<IngredientsList>
+						{ingredients.map((ingredient, index) => (
+							<IngredientItem key={index}>
+								<IngredientIcon name="ingredient" />
+								<IngredientText>
+									{ingredient.text}
+								</IngredientText>
+							</IngredientItem>
+						))}
+					</IngredientsList>
+				</Container>
+			)
+			: undefined
 	)
 }
 

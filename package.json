@@ -38,6 +38,7 @@
 		"jotai": "^2.6.0",
 		"merge-props": "^6.0.0",
 		"nanoid": "^5.0.4",
+		"ramda": "^0.29.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-helmet-async": "^2.0.3",
@@ -48,6 +49,7 @@
 	},
 	"devDependencies": {
 		"@ceski23/eslint-config": "github:ceski23/eslint-config#feat/flat-config",
+		"@types/ramda": "^0.29.9",
 		"@types/react": "^18.2.15",
 		"@types/react-dom": "^18.2.7",
 		"@vite-pwa/assets-generator": "^0.2.0",
