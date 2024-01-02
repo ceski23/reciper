@@ -1,6 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { type ComponentProps, type CSSProperties, Fragment, type FunctionComponent, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { Skeleton } from 'lib/components/Skeleton'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import { IconButton } from './IconButton'
@@ -10,7 +11,7 @@ import { Typography } from './Typography'
 
 type TopAppBarProps = {
 	configuration: 'small' | 'medium' | 'large'
-	title: string
+	title?: string
 	options?: ReactNode
 	progress?: {
 		value?: number | null | undefined
@@ -63,9 +64,11 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 				</OptionsContainer>
 				{configuration === 'large' && (
 					<ExtraContent>
-						<PageTitleLarge asChild>
-							<h1>{title}</h1>
-						</PageTitleLarge>
+						{title === undefined ? <TitleSkeleton /> : (
+							<PageTitleLarge asChild>
+								<h1>{title}</h1>
+							</PageTitleLarge>
+						)}
 					</ExtraContent>
 				)}
 			</AppBarBase>
@@ -109,6 +112,7 @@ const PageTitle = styled(Typography.TitleLarge, {
 		gridColumn: 'title',
 		color: theme.colors.onSurface,
 		viewTransitionName: 'app-bar-title',
+		minHeight: 36,
 	},
 })
 
@@ -133,5 +137,14 @@ const PageTitleLarge = styled(Typography.HeadlineMedium, {
 		color: theme.colors.onSurface,
 		paddingInline: 16,
 		viewTransitionName: 'app-bar-title',
+		minHeight: 36,
+	},
+})
+
+const TitleSkeleton = styled(Skeleton, {
+	base: {
+		marginInline: 16,
+		minHeight: 36,
+		width: '50%',
 	},
 })
