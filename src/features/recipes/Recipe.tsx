@@ -2,19 +2,23 @@ import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useQuery } from '@tanstack/react-query'
 import { Fragment, type FunctionComponent, useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useTypedParams } from 'react-router-typesafe-routes/dom'
 import { Gallery } from 'features/recipes/components/Gallery'
 import { IngredientsSection } from 'features/recipes/components/IngredientsSection'
 import { type InsightItem, RecipeInsights } from 'features/recipes/components/RecipeInsights'
 import { StepsSection } from 'features/recipes/components/StepsSection'
-import { recipeQuery } from 'features/recipes/recipes'
+import { recipeQuery, useDeleteRecipe } from 'features/recipes/recipes'
+import { Button } from 'lib/components/Button'
 import { Chip } from 'lib/components/Chip'
+import { SimpleDialog } from 'lib/components/Dialog'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
 import { useDynamicTheme, useImageColor } from 'lib/hooks'
+import { useDialogState } from 'lib/hooks/useDialogState'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { PATHS } from 'lib/routing/paths'
@@ -27,9 +31,12 @@ export const Recipe: FunctionComponent = () => {
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { notify } = useNotifications()
 	const { id } = useTypedParams(PATHS.RECIPES.RECIPE)
-	const { data: recipe } = useQuery(recipeQuery(id))
+	const { data: recipe, status } = useQuery(recipeQuery(id))
 	const color = useImageColor(recipe?.image)
 	const styles = useDynamicTheme(color)
+	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
+	const deleteRecipeMutation = useDeleteRecipe()
+	const navigate = useNavigate()
 
 	const handleShareRecipe = () => {
 		navigator.share({ url: recipe?.url }).catch((error: DOMException | TypeError) => {
@@ -37,8 +44,14 @@ export const Recipe: FunctionComponent = () => {
 		})
 	}
 
-	if (!recipe) {
-		return null
+	if (status === 'pending') {
+		return 'Loading...'
+	}
+
+	if (status === 'error') {
+		notify('Couldn\'t load this recipe', { id: 'recipeError' })
+
+		return <Navigate to={PATHS.RECIPES.buildPath({})} />
 	}
 
 	const prepTime: InsightItem | undefined = recipe.prepTime
@@ -101,6 +114,7 @@ export const Recipe: FunctionComponent = () => {
 								<Menu.Item
 									text="Delete recipe"
 									icon="delete"
+									onClick={() => setIsDeleteDialogOpen(true)}
 								/>
 							</Menu.Content>
 						</Menu.Root>
@@ -150,6 +164,37 @@ export const Recipe: FunctionComponent = () => {
 					<Gallery />
 				</Section>
 			</ContentContainer>
+			<AnimateDialog>
+				<SimpleDialog
+					title="Delete recipe"
+					description={`Do you really want to delete recipe ${recipe.name}?`}
+					onOpenChange={() => setIsDeleteDialogOpen(false)}
+					actions={[
+						(
+							<Button
+								key="cancel"
+								variant="text"
+								onClick={() => setIsDeleteDialogOpen(false)}
+							>
+								Cancel
+							</Button>
+						),
+						(
+							<Button
+								key="delete"
+								variant="filled"
+								onClick={() => {
+									deleteRecipeMutation.mutate(recipe.id, {
+										onSuccess: () => navigate(PATHS.RECIPES.buildPath({})),
+									})
+								}}
+							>
+								Delete
+							</Button>
+						),
+					]}
+				/>
+			</AnimateDialog>
 		</Fragment>
 	)
 }

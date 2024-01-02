@@ -93,6 +93,7 @@ const DialogContent = styled(animated(RadixDialog.Content), {
 	base: {
 		minWidth: 280,
 		maxWidth: 560,
+		width: '80%',
 		display: 'grid',
 		gridTemplateColumns: '24px 1fr 24px',
 		gridAutoFlow: 'row',
@@ -104,7 +105,7 @@ const DialogContent = styled(animated(RadixDialog.Content), {
 		left: '50%',
 		translate: '-50% -50%',
 		paddingBlock: 24,
-		gap: 16,
+		rowGap: 16,
 	},
 	variants: {
 		variant: {

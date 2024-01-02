@@ -7,7 +7,7 @@ import { RadioGroup } from 'lib/components/RadioGroup'
 import { type Settings, settingsAtom } from 'lib/stores/settings'
 
 type ColorSchemeDialogProps = {
-	isOpen?: boolean
+	open?: boolean
 	styles?: {
 		opacity: SpringValue<number>
 	}
@@ -15,7 +15,7 @@ type ColorSchemeDialogProps = {
 	onCancel: () => void
 }
 
-export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ onCancel, onSave, isOpen, styles }) => {
+export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ onCancel, onSave, open, styles }) => {
 	const settings = useAtomValue(settingsAtom)
 	const [selectedColorScheme, setSelectedColorScheme] = useState<Settings['theme']['colorScheme']>(settings.theme.colorScheme)
 
@@ -33,7 +33,7 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ o
 	return (
 		<SimpleDialog
 			styles={styles}
-			open={isOpen}
+			open={open}
 			icon="brightness"
 			title="Color scheme"
 			description="Select app's color scheme"

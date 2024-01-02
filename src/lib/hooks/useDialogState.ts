@@ -11,7 +11,7 @@ export const useDialogState = (initialState: boolean) => {
 		config: config.stiff,
 	})
 	const AnimateDialog: FunctionComponent<{ children: ReactElement }> = ({ children }) =>
-		transition((styles, isOpen) => React.cloneElement(children, { styles, isOpen }))
+		transition((styles, open) => React.cloneElement(children, { styles, open }))
 
 	return {
 		AnimateDialog,

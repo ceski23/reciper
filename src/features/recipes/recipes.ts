@@ -1,5 +1,5 @@
 import { queryOptions, useMutation, useQueryClient } from '@tanstack/react-query'
-import { createStore, get, setMany, values } from 'idb-keyval'
+import { createStore, del, get, setMany, values } from 'idb-keyval'
 import { type Recipe } from 'features/recipes/samples'
 
 const recipesStore = createStore('reciperRecipes', 'reciperRecipesStore')
@@ -7,13 +7,19 @@ const recipesStore = createStore('reciperRecipes', 'reciperRecipesStore')
 export const recipesQuery = () =>
 	queryOptions({
 		queryKey: ['recipes'],
+		retry: false,
 		queryFn: () => values<Recipe>(recipesStore),
 	})
 
 export const recipeQuery = (id: string) =>
 	queryOptions({
 		queryKey: ['recipes', id],
-		queryFn: () => get<Recipe>(id, recipesStore),
+		retry: false,
+		queryFn: () =>
+			get<Recipe>(id, recipesStore).then(recipe => {
+				if (recipe === undefined) throw new Error('No recipe found')
+				return recipe
+			}),
 	})
 
 export const useAddRecipes = () => {
@@ -24,3 +30,8 @@ export const useAddRecipes = () => {
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['recipes'] }),
 	})
 }
+
+export const useDeleteRecipe = () =>
+	useMutation({
+		mutationFn: (id: string) => del(id, recipesStore),
+	})

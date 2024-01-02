@@ -1,7 +1,8 @@
 import { styled } from '@macaron-css/react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
+import { useAtomValue } from 'jotai'
 import { type ComponentProps, type FunctionComponent } from 'react'
-import { useNotifications } from 'lib/hooks/useNotifications'
+import { notificationsAtom, useNotifications } from 'lib/hooks/useNotifications'
 import { Snackbar } from './Snackbar'
 
 type SnackbarContainerProps = {
@@ -12,7 +13,8 @@ export const SnackbarContainer: FunctionComponent<SnackbarContainerProps & Compo
 	limit = 1,
 	...props
 }) => {
-	const { notifications, hide } = useNotifications()
+	const { hide } = useNotifications()
+	const notifications = useAtomValue(notificationsAtom)
 
 	return (
 		<Container {...props}>
@@ -38,5 +40,6 @@ const Container = styled(ToastPrimitive.Viewport, {
 		width: '100%',
 		padding: 16,
 		gap: 8,
+		viewTransitionName: 'notifications',
 	},
 })
