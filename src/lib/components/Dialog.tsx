@@ -1,7 +1,8 @@
 import { styled } from '@macaron-css/react'
 import * as RadixDialog from '@radix-ui/react-dialog'
+import { animated, type SpringValue } from '@react-spring/web'
 import { type ComponentProps, type FunctionComponent, isValidElement, type ReactElement, type ReactNode } from 'react'
-import { theme } from 'lib/styles'
+import { styleUtils, theme } from 'lib/styles'
 import { Button } from './Button'
 import { Typography } from './Typography'
 import Icon, { type SvgName } from '~virtual/svg-component'
@@ -18,6 +19,9 @@ type SimpleDialogProps = {
 	actions: Array<DialogActionItem | ReactElement>
 	content?: ReactNode
 	closeOnClickOutside?: boolean
+	styles?: {
+		opacity: SpringValue<number>
+	}
 }
 
 export const SimpleDialog: FunctionComponent<SimpleDialogProps & ComponentProps<typeof RadixDialog.Root>> = ({
@@ -27,12 +31,14 @@ export const SimpleDialog: FunctionComponent<SimpleDialogProps & ComponentProps<
 	actions,
 	content,
 	closeOnClickOutside = true,
+	styles,
 	...props
 }) => (
 	<RadixDialog.Root {...props}>
 		<Dialog.Portal>
-			<DialogOverlay />
+			<DialogOverlay style={{ opacity: styles?.opacity }} />
 			<Dialog.Content
+				style={styles}
 				variant={icon ? 'withIcon' : 'simple'}
 				onInteractOutside={event => {
 					if (!closeOnClickOutside) {
@@ -73,18 +79,17 @@ export const SimpleDialog: FunctionComponent<SimpleDialogProps & ComponentProps<
 	</RadixDialog.Root>
 )
 
-const DialogOverlay = styled(RadixDialog.Overlay, {
+const DialogOverlay = styled(animated(RadixDialog.Overlay), {
 	base: {
 		width: '100vw',
 		height: '100vh',
-		backgroundColor: theme.colors.scrim,
-		opacity: 0.32,
+		backgroundColor: styleUtils.transparentize(theme.colors.scrim, 0.32),
 		position: 'fixed',
 		inset: 0,
 	},
 })
 
-const DialogContent = styled(RadixDialog.Content, {
+const DialogContent = styled(animated(RadixDialog.Content), {
 	base: {
 		minWidth: 280,
 		maxWidth: 560,
@@ -97,7 +102,7 @@ const DialogContent = styled(RadixDialog.Content, {
 		position: 'fixed',
 		top: '50%',
 		left: '50%',
-		transform: 'translate(-50%, -50%)',
+		translate: '-50% -50%',
 		paddingBlock: 24,
 		gap: 16,
 	},

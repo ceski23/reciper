@@ -1,3 +1,4 @@
+import { type SpringValue } from '@react-spring/web'
 import { useAtomValue } from 'jotai'
 import { type FunctionComponent, useState } from 'react'
 import { Button } from 'lib/components/Button'
@@ -6,11 +7,15 @@ import { RadioGroup } from 'lib/components/RadioGroup'
 import { type Settings, settingsAtom } from 'lib/stores/settings'
 
 type ColorSchemeDialogProps = {
+	isOpen?: boolean
+	styles?: {
+		opacity: SpringValue<number>
+	}
 	onSave: (colorScheme: Settings['theme']['colorScheme']) => void
 	onCancel: () => void
 }
 
-export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ onCancel, onSave }) => {
+export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ onCancel, onSave, isOpen, styles }) => {
 	const settings = useAtomValue(settingsAtom)
 	const [selectedColorScheme, setSelectedColorScheme] = useState<Settings['theme']['colorScheme']>(settings.theme.colorScheme)
 
@@ -27,7 +32,8 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ o
 
 	return (
 		<SimpleDialog
-			open
+			styles={styles}
+			open={isOpen}
 			icon="brightness"
 			title="Color scheme"
 			description="Select app's color scheme"

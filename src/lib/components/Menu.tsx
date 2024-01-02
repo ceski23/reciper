@@ -17,9 +17,9 @@ const Content: FunctionComponent<ComponentProps<typeof MenuBase> & ContentProps>
 	...props
 }) => {
 	const transitions = useTransition(open, {
-		from: { opacity: 0 },
-		enter: { opacity: 1 },
-		leave: { opacity: 0 },
+		from: { opacity: 0, y: -20, scaleY: 0.9 },
+		enter: { opacity: 1, y: 0, scaleY: 1 },
+		leave: { opacity: 0, y: -20, scaleY: 0.9 },
 		config: config.stiff,
 	})
 
@@ -33,9 +33,9 @@ const Content: FunctionComponent<ComponentProps<typeof MenuBase> & ContentProps>
 						asChild
 						{...props}
 					>
-						<animated.div style={styles}>
+						<MenuItemsContainer style={styles}>
 							{children}
-						</animated.div>
+						</MenuItemsContainer>
 					</MenuBase>
 				</DropdownMenu.Portal>
 			)
@@ -71,6 +71,12 @@ const MenuBase = styled(DropdownMenu.Content, {
 		paddingInline: 0,
 		// TODO: Declare shadow variants in theme
 		boxShadow: '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
+	},
+})
+
+const MenuItemsContainer = styled(animated.div, {
+	base: {
+		transformOrigin: 'top',
 	},
 })
 
