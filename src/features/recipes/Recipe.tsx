@@ -51,7 +51,12 @@ export const Recipe: FunctionComponent = () => {
 	if (status === 'error') {
 		notify('Couldn\'t load this recipe', { id: 'recipeError' })
 
-		return <Navigate to={PATHS.RECIPES.buildPath({})} />
+		return (
+			<Navigate
+				to={PATHS.RECIPES.buildPath({})}
+				replace
+			/>
+		)
 	}
 
 	const prepTime: InsightItem | undefined = recipe.prepTime
@@ -185,7 +190,7 @@ export const Recipe: FunctionComponent = () => {
 								variant="filled"
 								onClick={() => {
 									deleteRecipeMutation.mutate(recipe.id, {
-										onSuccess: () => navigate(PATHS.RECIPES.buildPath({})),
+										onSuccess: () => navigate(PATHS.RECIPES.buildPath({}), { replace: true, unstable_viewTransition: true }),
 									})
 								}}
 							>
