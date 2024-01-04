@@ -18,9 +18,9 @@ export const recipeScheme = z.object({
 	url: z.string().min(1).optional(),
 	rating: z.number().min(0).max(5).optional(),
 	calories: z.number().positive().optional(),
-	tags: z.array(z.string().min(1)),
+	tags: z.array(z.string().min(1)).default([]),
 	servings: z.number().positive().optional(),
-	gallery: z.array(z.string().min(1)),
+	gallery: z.array(z.string().min(1)).default([]),
 })
 
 export type Recipe = z.infer<typeof recipeScheme>

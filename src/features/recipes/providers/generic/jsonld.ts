@@ -171,7 +171,7 @@ export const extractJsonLD = async (doc: Document) => {
 
 	const color = image ? await getColorFromImage(image.toString()) : undefined
 
-	return recipeScheme.partial().parse({
+	return recipeScheme.partial().parseAsync({
 		name: name ? name.toString() : undefined,
 		description: description?.toString(),
 		image: image?.toString(),
