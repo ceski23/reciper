@@ -3,7 +3,7 @@ import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { groupBy } from 'ramda'
 import { type FunctionComponent } from 'react'
 import { RecipeStep } from 'features/recipes/components/RecipeStep'
-import { type Recipe } from 'features/recipes/samples'
+import { type Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 

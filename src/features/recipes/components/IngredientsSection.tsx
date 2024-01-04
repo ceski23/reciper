@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { groupBy } from 'ramda'
 import { type FunctionComponent, useState } from 'react'
-import { type Recipe } from 'features/recipes/samples'
+import { type Recipe } from 'features/recipes/types'
 import { IconButton } from 'lib/components/IconButton'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'

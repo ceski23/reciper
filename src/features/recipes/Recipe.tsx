@@ -11,7 +11,7 @@ import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
-import { useDynamicTheme, useImageColor } from 'lib/hooks'
+import { useDynamicTheme } from 'lib/hooks'
 import { useDialogState } from 'lib/hooks/useDialogState'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
@@ -24,8 +24,7 @@ export const Recipe: FunctionComponent = () => {
 	const { notify } = useNotifications()
 	const { id } = useTypedParams(PATHS.RECIPES.RECIPE)
 	const { data: recipe, status } = useQuery(recipeQuery(id))
-	const color = useImageColor(recipe?.image)
-	const style = useDynamicTheme(color)
+	const style = useDynamicTheme(recipe?.color)
 	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const navigate = useNavigate()

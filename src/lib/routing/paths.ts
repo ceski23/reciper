@@ -1,10 +1,15 @@
-import { route } from 'react-router-typesafe-routes/dom'
+import { route, string } from 'react-router-typesafe-routes/dom'
 
 export const PATHS = {
 	HOME: route(''),
 	RECIPES: route('recipes', {}, {
 		SEARCH: route('search'),
 		NEW: route('new'),
+		SCRAPE: route('scrape', {
+			searchParams: {
+				url: string(),
+			},
+		}),
 		RECIPE: route(':id'),
 	}),
 	SETTINGS: route('settings', {}, {

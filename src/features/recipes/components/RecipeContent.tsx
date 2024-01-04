@@ -5,7 +5,7 @@ import { Gallery } from 'features/recipes/components/Gallery'
 import { IngredientsSection } from 'features/recipes/components/IngredientsSection'
 import { type InsightItem, RecipeInsights } from 'features/recipes/components/RecipeInsights'
 import { StepsSection } from 'features/recipes/components/StepsSection'
-import { type Recipe } from 'features/recipes/samples'
+import { type Recipe } from 'features/recipes/types'
 import { Chip } from 'lib/components/Chip'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
@@ -51,28 +51,30 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 					{recipe.description}
 				</Description>
 			)}
-			<Section>
-				<Typography.TitleLarge>
-					Most common tags
-				</Typography.TitleLarge>
-				<TagsContainer
-					type="multiple"
-					value={[]}
-				>
-					{recipe.tags.map(tag => (
-						<ToggleGroup.Item
-							key={tag}
-							value={tag}
-							asChild
-						>
-							<StyledChip
-								text={tag}
-								variant="outlined"
-							/>
-						</ToggleGroup.Item>
-					))}
-				</TagsContainer>
-			</Section>
+			{recipe.tags.length > 0 && (
+				<Section>
+					<Typography.TitleLarge>
+						Most common tags
+					</Typography.TitleLarge>
+					<TagsContainer
+						type="multiple"
+						value={[]}
+					>
+						{recipe.tags.map(tag => (
+							<ToggleGroup.Item
+								key={tag}
+								value={tag}
+								asChild
+							>
+								<StyledChip
+									text={tag}
+									variant="outlined"
+								/>
+							</ToggleGroup.Item>
+						))}
+					</TagsContainer>
+				</Section>
+			)}
 			<IngredientsSection
 				ingredients={recipe.ingredients}
 				initialServingsCount={recipe.servings}

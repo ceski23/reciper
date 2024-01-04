@@ -1,31 +1,5 @@
 import { nanoid } from 'nanoid'
-
-export type RecipeIngredient = {
-	text: string
-	group?: string
-}
-
-export type RecipeInstruction = {
-	text: string
-	group?: string
-}
-
-export type Recipe = {
-	id: string
-	name: string
-	image?: string
-	description?: string
-	ingredients: Array<RecipeIngredient>
-	instructions: Array<RecipeInstruction>
-	prepTime?: number
-	color?: string
-	url?: string
-	rating?: number
-	calories?: number
-	tags: Array<string>
-	servings?: number
-	gallery?: Array<string>
-}
+import { type Recipe } from 'features/recipes/types'
 
 const pancakes: Recipe = {
 	id: nanoid(),

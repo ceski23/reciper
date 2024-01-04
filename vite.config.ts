@@ -33,6 +33,15 @@ const pwaManifest: Partial<ManifestOptions> = {
 			purpose: 'maskable',
 		},
 	],
+	share_target: {
+		action: '/recipes/scrape',
+		method: 'GET',
+		enctype: 'application/x-www-form-urlencoded',
+		params: {
+			text: 'url',
+			url: 'url',
+		},
+	},
 }
 
 export default defineConfig({

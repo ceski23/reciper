@@ -35,6 +35,7 @@
 		"@tanstack/react-query": "^5.17.0",
 		"i18next": "^23.7.1",
 		"idb-keyval": "^6.2.1",
+		"iso8601-duration": "^2.1.2",
 		"jotai": "^2.6.0",
 		"merge-props": "^6.0.0",
 		"nanoid": "^5.0.4",
@@ -45,7 +46,9 @@
 		"react-i18next": "^13.5.0",
 		"react-router-dom": "^6.20.1",
 		"react-router-typesafe-routes": "^1.2.1",
-		"virtua": "^0.16.2"
+		"schema-dts": "^1.1.2",
+		"virtua": "^0.16.2",
+		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@ceski23/eslint-config": "github:ceski23/eslint-config#feat/flat-config",

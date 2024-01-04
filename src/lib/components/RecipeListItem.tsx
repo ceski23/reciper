@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
 import { type FunctionComponent } from 'react'
-import { type Recipe } from 'features/recipes/samples'
+import { type Recipe } from 'features/recipes/types'
 import { PATHS } from 'lib/routing/paths'
 import { ListItem } from './list/items'
 
