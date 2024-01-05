@@ -1,6 +1,5 @@
 import { parse, toSeconds } from 'iso8601-duration'
 import { type HowToStep, type ImageObject, type Recipe as SchemaRecipe } from 'schema-dts'
-import { recipeScheme } from 'features/recipes/types'
 import { isArrayOf, isDefined, isString } from 'lib/utils'
 import { getColorFromImage } from 'lib/utils/images'
 
@@ -171,7 +170,7 @@ export const extractJsonLD = async (doc: Document) => {
 
 	const color = image ? await getColorFromImage(image.toString()) : undefined
 
-	return recipeScheme.partial().parseAsync({
+	return {
 		name: name ? name.toString() : undefined,
 		description: description?.toString(),
 		image: image?.toString(),
@@ -184,5 +183,5 @@ export const extractJsonLD = async (doc: Document) => {
 		color,
 		rating: getRating(schemaRecipe.aggregateRating),
 		gallery: parseGallery(schemaRecipe),
-	})
+	}
 }

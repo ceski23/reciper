@@ -1,5 +1,4 @@
 import { parse, toSeconds } from 'iso8601-duration'
-import { recipeScheme } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
 import { getTextFromNode } from 'lib/utils/dom'
 
@@ -59,7 +58,7 @@ export const extractMicrodata = async (doc: Document) => {
 	const servingsText = getMetaData(servingsElement)
 	const servings = servingsText ? Number.parseInt(servingsText, 10) : undefined
 
-	return recipeScheme.partial().parseAsync({
+	return {
 		name: name ?? undefined,
 		ingredients,
 		description,
@@ -70,5 +69,5 @@ export const extractMicrodata = async (doc: Document) => {
 		calories,
 		tags,
 		servings,
-	})
+	}
 }

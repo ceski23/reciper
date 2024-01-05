@@ -97,13 +97,7 @@ export const Recipes: FunctionComponent = () => {
 						type="button"
 						variant="primary"
 						size={isListScrolled ? undefined : 'expanded'}
-						onClick={() =>
-							navigate(
-								PATHS.RECIPES.SCRAPE.buildPath({}, { url: 'https://aniastarmach.pl/przepis/tarta-z-truskawkami/' }),
-								{
-									unstable_viewTransition: true,
-								},
-							)}
+						onClick={() => navigate(PATHS.RECIPES.NEW.buildPath({}), { unstable_viewTransition: true })}
 					/>
 				</FabContainer>
 			</ContentOverlayPortal>
