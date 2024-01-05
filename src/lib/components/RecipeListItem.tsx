@@ -1,6 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
 import { type FunctionComponent } from 'react'
+import { PROVIDERS } from 'features/recipes/providers/scrapper'
 import { type Recipe } from 'features/recipes/types'
 import { PATHS } from 'lib/routing/paths'
 import { ListItem } from './list/items'
@@ -23,6 +24,8 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe 
 		once: true,
 	})
 
+	const provider = PROVIDERS.find(provider => provider.matcher.test(String(recipe.url)))
+
 	const details = [
 		`${recipe.ingredients.length} ingredients`,
 		recipe.prepTime ? `${recipe.prepTime} minutes` : undefined,
@@ -32,7 +35,7 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe 
 		<AnimatedListItem
 			style={style}
 			ref={ref}
-			overline={recipe.url ? new URL(recipe.url).host : undefined}
+			overline={provider?.name}
 			title={recipe.name}
 			text={details}
 			leadingElement={<RecipeImage src={recipe.image} />}
