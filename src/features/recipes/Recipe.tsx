@@ -15,6 +15,7 @@ import { useDynamicTheme } from 'lib/hooks'
 import { useDialogState } from 'lib/hooks/useDialogState'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
+import { useWakelock } from 'lib/hooks/useWakelock'
 import { PATHS } from 'lib/routing/paths'
 
 export const Recipe: FunctionComponent = () => {
@@ -28,6 +29,8 @@ export const Recipe: FunctionComponent = () => {
 	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const navigate = useNavigate()
+
+	useWakelock()
 
 	const handleShareRecipe = () => {
 		navigator.share({ url: recipe?.url }).catch((error: DOMException | TypeError) => {

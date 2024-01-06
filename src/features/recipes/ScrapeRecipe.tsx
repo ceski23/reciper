@@ -14,6 +14,7 @@ import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
+import { useWakelock } from 'lib/hooks/useWakelock'
 import { PATHS } from 'lib/routing/paths'
 import { isValidUrl } from 'lib/utils/urls'
 
@@ -30,6 +31,8 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	})
 	const style = useDynamicTheme(recipe?.color)
 	const addRecipe = useAddRecipe()
+
+	useWakelock()
 
 	if (status === 'error') {
 		queueMicrotask(() => navigate(PATHS.HOME.buildPath({})))
