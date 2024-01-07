@@ -3,6 +3,7 @@ import { styled } from '@macaron-css/react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import { animated } from '@react-spring/web'
 import { type ComponentProps, type FunctionComponent, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
 import Icon from '~virtual/svg-component'
@@ -24,6 +25,7 @@ export const Snackbar: FunctionComponent<SnackbarProps & ComponentProps<typeof S
 	...props
 }) => {
 	const ref = useRef<HTMLLIElement>(null)
+	const { t } = useTranslation()
 
 	return (
 		<SnackbarBase
@@ -67,7 +69,7 @@ export const Snackbar: FunctionComponent<SnackbarProps & ComponentProps<typeof S
 				</ActionButton>
 			)}
 			{dismissable && (
-				<DismissButton aria-label="Close snackbar">
+				<DismissButton aria-label={t('notifications.close')}>
 					<DismissIcon name="close" />
 				</DismissButton>
 			)}

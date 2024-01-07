@@ -1,6 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { groupBy } from 'ramda'
 import { type FunctionComponent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { type Recipe } from 'features/recipes/types'
 import { IconButton } from 'lib/components/IconButton'
 import { Typography } from 'lib/components/Typography'
@@ -13,6 +14,7 @@ type IngredientsSectionProps = {
 }
 
 export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({ ingredients, initialServingsCount }) => {
+	const { t } = useTranslation()
 	const [servingsCount, setServingsCount] = useState(initialServingsCount ?? 1)
 
 	const groups = groupBy(item => item.group ?? '', ingredients)
@@ -23,20 +25,22 @@ export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({
 				<Container key={name}>
 					<Header>
 						<Typography.TitleLarge>
-							{name || 'Ingredients'}
+							{name || t('recipes.ingredients.title')}
 						</Typography.TitleLarge>
-						<HeaderCount>{ingredients.length} products</HeaderCount>
+						<HeaderCount>{t('recipes.ingredients.amount', { count: ingredients.length })}</HeaderCount>
 					</Header>
 					<Spinbox>
 						<IconButton
 							icon="minus"
-							title="Decrease servings"
+							title={t('recipes.ingredients.decrease')}
 							onClick={() => setServingsCount(prev => Math.max(prev - 1, 1))}
 						/>
-						<Typography.LabelLarge>{servingsCount} servings</Typography.LabelLarge>
+						<Typography.LabelLarge>
+							{t('recipes.ingredients.servings', { count: servingsCount })}
+						</Typography.LabelLarge>
 						<IconButton
 							icon="plus"
-							title="Increase servings"
+							title={t('recipes.ingredients.increase')}
 							onClick={() => setServingsCount(prev => prev + 1)}
 						/>
 					</Spinbox>

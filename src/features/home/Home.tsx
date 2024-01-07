@@ -3,6 +3,7 @@ import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useQuery } from '@tanstack/react-query'
 import { countBy, identity } from 'ramda'
 import { Fragment, type FunctionComponent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { recipesQuery } from 'features/recipes/recipes'
 import { type Recipe } from 'features/recipes/types'
@@ -18,6 +19,7 @@ import Icon from '~virtual/svg-component'
 const recipeHasRating = (recipe: Recipe): recipe is Recipe & Required<Pick<Recipe, 'rating'>> => isDefined(recipe.rating)
 
 export const Home: FunctionComponent = () => {
+	const { t } = useTranslation()
 	const recipes = useQuery(recipesQuery())
 	const getRecentRecipes = (recipes: Array<Recipe>, amount: number) =>
 		[...recipes]
@@ -39,14 +41,14 @@ export const Home: FunctionComponent = () => {
 		<Container>
 			<FakeSearchBar
 				leadingIcon="search"
-				placeholder="What do you want to eat?"
+				placeholder={t('home.searchBarPlaceholder')}
 				style={{ gridColumn: '2' }}
 			/>
-			{recipes.data === undefined || recipes.data.length === 0 ? 'No recipes' : (
+			{recipes.data === undefined || recipes.data.length === 0 ? t('home.emptyMessage') : (
 				<Fragment>
 					<FullbleedSection>
 						<Typography.TitleMedium style={{ paddingInline: 16 }}>
-							Recently added
+							{t('home.recentRecipes')}
 						</Typography.TitleMedium>
 						<CardsList>
 							{getRecentRecipes(recipes.data, 10).map(recipe => (
@@ -59,7 +61,7 @@ export const Home: FunctionComponent = () => {
 					</FullbleedSection>
 					<Section>
 						<Typography.TitleMedium>
-							Most common tags
+							{t('home.mostCommonTags')}
 						</Typography.TitleMedium>
 						<TagsContainer
 							type="multiple"
@@ -81,7 +83,7 @@ export const Home: FunctionComponent = () => {
 					</Section>
 					<FullbleedSection>
 						<Typography.TitleMedium style={{ paddingInline: 16 }}>
-							Top rated
+							{t('home.topRecipes')}
 						</Typography.TitleMedium>
 						<List>
 							{getTopRecipes(recipes.data, 10).map(recipe => (

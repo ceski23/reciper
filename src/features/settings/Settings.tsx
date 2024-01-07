@@ -22,29 +22,25 @@ export const Settings: FunctionComponent = () => {
 				<ListItem.Link
 					leadingElement="palette"
 					iconColor={theme.colors.primary}
-					title="Theme"
-					text="Supporting line text lorem ipsum dolor sit amet, consectetur."
+					title={t('settings.theme.title')}
 					to={PATHS.SETTINGS.THEME.buildPath({})}
 				/>
 				<ListItem.Link
 					leadingElement="account"
 					iconColor={theme.colors.primary}
-					title="Account and sync"
-					text="Supporting line text lorem ipsum dolor sit amet, consectetur."
+					title={t('settings.account.title')}
 					to={PATHS.SETTINGS.ACCOUNT.buildPath({})}
 				/>
 				<ListItem.Link
 					leadingElement="scale"
 					iconColor={theme.colors.primary}
-					title="Units"
-					text="Supporting line text lorem ipsum dolor sit amet, consectetur."
+					title={t('settings.units.title')}
 					to={PATHS.SETTINGS.UNITS.buildPath({})}
 				/>
 				<ListItem.Link
 					leadingElement="info"
 					iconColor={theme.colors.primary}
-					title="About app"
-					text="Supporting line text lorem ipsum dolor sit amet, consectetur."
+					title={t('settings.about.title')}
 					to={PATHS.SETTINGS.ABOUT.buildPath({})}
 				/>
 			</List>

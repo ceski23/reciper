@@ -2,6 +2,7 @@ import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { groupBy } from 'ramda'
 import { type FunctionComponent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { RecipeStep } from 'features/recipes/components/RecipeStep'
 import { type Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
@@ -12,6 +13,7 @@ type StepsSectionProps = {
 }
 
 export const StepsSection: FunctionComponent<StepsSectionProps> = ({ steps }) => {
+	const { t } = useTranslation()
 	const groups = groupBy(item => item.group ?? '', steps)
 
 	return Object.entries(groups).map(([name, steps]) =>
@@ -19,7 +21,7 @@ export const StepsSection: FunctionComponent<StepsSectionProps> = ({ steps }) =>
 			? (
 				<Container key={name}>
 					<Typography.TitleLarge>
-						{name || 'Steps'}
+						{name || t('recipes.steps.title')}
 					</Typography.TitleLarge>
 					<StepsList type="multiple">
 						{steps.map((step, index) => (

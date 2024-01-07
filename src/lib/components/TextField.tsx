@@ -1,5 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { type ComponentProps, forwardRef, type ReactNode, useId } from 'react'
+import { useTranslation } from 'react-i18next'
 import { styleUtils, theme } from 'lib/styles'
 import { IconButton } from './IconButton'
 import { bodyLarge, bodySmall, Typography } from './Typography'
@@ -32,6 +33,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
 	inputProps,
 	className,
 }, ref) => {
+	const { t } = useTranslation()
 	const fieldId = useId()
 	const supportingTextId = useId()
 	const hasError = error !== undefined
@@ -47,7 +49,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
 	const renderErrorAddon = <ErrorIcon name="error" />
 	const renderClearAddon = (
 		<ClearButton
-			title="Clear"
+			title={t('forms.clearField')}
 			icon="cancel"
 			onClick={() => onValueChange?.('')}
 		/>

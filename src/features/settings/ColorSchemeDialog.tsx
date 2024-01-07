@@ -1,6 +1,7 @@
 import { type SpringValue } from '@react-spring/web'
 import { useAtomValue } from 'jotai'
 import { type FunctionComponent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/Dialog'
 import { RadioGroup } from 'lib/components/RadioGroup'
@@ -16,6 +17,7 @@ type ColorSchemeDialogProps = {
 }
 
 export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ onCancel, onSave, open, styles }) => {
+	const { t } = useTranslation()
 	const settings = useAtomValue(settingsAtom)
 	const [selectedColorScheme, setSelectedColorScheme] = useState<Settings['theme']['colorScheme']>(settings.theme.colorScheme)
 
@@ -35,8 +37,8 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ o
 			styles={styles}
 			open={open}
 			icon="brightness"
-			title="Color scheme"
-			description="Select app's color scheme"
+			title={t('settings.theme.colorScheme.dialog.title')}
+			description={t('settings.theme.colorScheme.dialog.description')}
 			closeOnClickOutside={false}
 			content={(
 				<RadioGroup.Root
@@ -44,15 +46,15 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ o
 					value={selectedColorScheme ?? 'system'}
 				>
 					<RadioGroup.Item
-						label="Light"
+						label={t('settings.theme.colorScheme.dialog.options.light')}
 						value="light"
 					/>
 					<RadioGroup.Item
-						label="Dark"
+						label={t('settings.theme.colorScheme.dialog.options.dark')}
 						value="dark"
 					/>
 					<RadioGroup.Item
-						label="System"
+						label={t('settings.theme.colorScheme.dialog.options.system')}
 						value="system"
 					/>
 				</RadioGroup.Root>
@@ -64,7 +66,7 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ o
 						variant="text"
 						onClick={onCancel}
 					>
-						Cancel
+						{t('settings.theme.colorScheme.dialog.cancel')}
 					</Button>
 				),
 				(
@@ -73,7 +75,7 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ o
 						variant="filled"
 						onClick={() => onSave(selectedColorScheme)}
 					>
-						Save
+						{t('settings.theme.colorScheme.dialog.save')}
 					</Button>
 				),
 			]}

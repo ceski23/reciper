@@ -24,25 +24,25 @@ export const Units: FunctionComponent = () => {
 				<ListItem.Switch
 					leadingElement="scale"
 					iconColor={theme.colors.primary}
-					title="Units conversion"
-					text="Convert units to preferred ones"
+					title={t('settings.units.conversion.title')}
+					text={t('settings.units.conversion.text')}
 				/>
 				<ListItem.Simple
 					leadingElement="numbers"
 					iconColor={theme.colors.primary}
-					title="Conversion precision"
-					text="Round up to 2 decimal digits"
+					title={t('settings.units.precision.title')}
+					text={t('settings.units.precision.text')}
 				/>
 			</List>
 			<PreferredUnitsSection>
 				<Typography.TitleMedium>
-					Ingredients preferred units
+					{t('settings.units.preferred.title')}
 				</Typography.TitleMedium>
 			</PreferredUnitsSection>
 			<List>
 				<ListItem.Simple
 					title="Eggs"
-					text="Preferred unit: kilogram"
+					text={t('settings.units.preferred.preferred', { unit: 'kilogram' })}
 					leadingElement={(
 						<IngredientImage
 							alt="Eggs"

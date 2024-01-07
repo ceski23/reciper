@@ -29,15 +29,14 @@ export const Theme: FunctionComponent = () => {
 				<ListItem.Simple
 					leadingElement="brightness"
 					iconColor={theme.colors.primary}
-					title="Color scheme"
-					text="Supporting line text lorem ipsum dolor sit amet, consectetur."
+					title={t('settings.theme.colorScheme.title')}
 					onClick={() => setIsColorSchemeDialogOpen(true)}
 				/>
 				<ListItem.Switch
 					leadingElement="palette"
 					iconColor={theme.colors.primary}
-					title="Dynamic colors"
-					text="Use dynamic color scheme based on recipe’s image colors"
+					title={t('settings.theme.dynamicColors.title')}
+					text={t('settings.theme.dynamicColors.text')}
 					size="3line"
 					switchProps={{
 						checked: settings.theme.dynamicColor,
@@ -47,8 +46,8 @@ export const Theme: FunctionComponent = () => {
 				<ListItem.Switch
 					leadingElement="animation"
 					iconColor={theme.colors.primary}
-					title="Disable animations"
-					text={isReducedMotion ? 'Forced by system settings' : 'Disable all animations inside app'}
+					title={t('settings.theme.disableAnimations.title')}
+					text={isReducedMotion ? t('settings.theme.disableAnimations.forcedText') : t('settings.theme.disableAnimations.text')}
 					switchProps={{
 						checked: isReducedMotion ? true : settings.theme.disabledAnimations,
 						onCheckedChange: disabledAnimations => setSettings(prev => ({ ...prev, theme: { ...prev.theme, disabledAnimations } })),

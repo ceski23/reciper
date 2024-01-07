@@ -29,25 +29,25 @@ export const Account: FunctionComponent = () => {
 						/>
 					)}
 					title="Cezary Bober"
-					text="You are logged in to your Google account"
-					trailingElement={<Button>Logout</Button>}
+					text={t('settings.account.loggedInText')}
+					trailingElement={<Button>{t('settings.account.logout')}</Button>}
 				/>
 				<ListItem.Switch
 					leadingElement="sync"
 					iconColor={theme.colors.primary}
-					title="Recipes synchronization"
-					text="Automatically synchronize your recipes"
+					title={t('settings.account.sync.title')}
+					text={t('settings.account.sync.text')}
 				/>
 			</List>
 			<QuickActionsSection>
 				<Typography.TitleMedium>
-					Quick actions
+					{t('settings.account.quickActions.title')}
 				</Typography.TitleMedium>
 				<ImportExportContainer>
-					<Button leftIcon="fileUpload">Import from file</Button>
-					<Button leftIcon="fileDownload">Export to file</Button>
+					<Button leftIcon="fileUpload">{t('settings.account.quickActions.importFile')}</Button>
+					<Button leftIcon="fileDownload">{t('settings.account.quickActions.exportFile')}</Button>
 				</ImportExportContainer>
-				<Button leftIcon="link">Export recipes urls</Button>
+				<Button leftIcon="link">{t('settings.account.quickActions.exportUrls')}</Button>
 			</QuickActionsSection>
 		</Fragment>
 	)

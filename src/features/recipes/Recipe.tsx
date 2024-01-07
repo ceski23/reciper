@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Fragment, type FunctionComponent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useTypedParams } from 'react-router-typesafe-routes/dom'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
@@ -19,6 +20,7 @@ import { useWakelock } from 'lib/hooks/useWakelock'
 import { PATHS } from 'lib/routing/paths'
 
 export const Recipe: FunctionComponent = () => {
+	const { t } = useTranslation()
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
@@ -34,12 +36,12 @@ export const Recipe: FunctionComponent = () => {
 
 	const handleShareRecipe = () => {
 		navigator.share({ url: recipe?.url }).catch((error: DOMException | TypeError) => {
-			error.name !== 'AbortError' && notify('There was an error while sharing recipe, try again')
+			error.name !== 'AbortError' && notify(t('recipes.sharing.error'))
 		})
 	}
 
 	if (status === 'error') {
-		notify('Couldn\'t load this recipe', { id: 'recipeError' })
+		notify(t('recipes.loadError'), { id: 'recipeError' })
 		navigate(-1)
 
 		return
@@ -61,26 +63,26 @@ export const Recipe: FunctionComponent = () => {
 							<Menu.Trigger asChild>
 								<IconButton
 									icon="more"
-									title="More"
+									title={t('recipes.moreOptions')}
 									isSelected={isMoreOpen}
 								/>
 							</Menu.Trigger>
 							<Menu.Content open={isMoreOpen}>
 								<Menu.Item
-									text="Edit recipe"
+									text={t('recipes.edit')}
 									icon="pencil"
 									disabled
 								/>
 								{navigator.share !== undefined && (
 									<Menu.Item
-										text="Share recipe"
+										text={t('recipes.sharing.menuItem')}
 										icon="share"
 										onSelect={handleShareRecipe}
 										disabled={status !== 'success'}
 									/>
 								)}
 								<Menu.Item
-									text="Delete recipe"
+									text={t('recipes.delete.menuItem')}
 									icon="delete"
 									onSelect={() => setIsDeleteDialogOpen(true)}
 								/>
@@ -91,8 +93,8 @@ export const Recipe: FunctionComponent = () => {
 				{status === 'success' && (
 					<AnimateDialog>
 						<SimpleDialog
-							title="Delete recipe"
-							description={`Do you really want to delete recipe ${recipe.name}?`}
+							title={t('recipes.delete.title')}
+							description={t('recipes.delete.confirmation', { name: recipe.name })}
 							onOpenChange={() => setIsDeleteDialogOpen(false)}
 							actions={[
 								(
@@ -101,7 +103,7 @@ export const Recipe: FunctionComponent = () => {
 										variant="text"
 										onClick={() => setIsDeleteDialogOpen(false)}
 									>
-										Cancel
+										{t('recipes.delete.cancel')}
 									</Button>
 								),
 								(
@@ -114,7 +116,7 @@ export const Recipe: FunctionComponent = () => {
 											})
 										}}
 									>
-										Delete
+										{t('recipes.delete.delete')}
 									</Button>
 								),
 							]}

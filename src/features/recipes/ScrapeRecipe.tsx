@@ -1,6 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
 import { Fragment, type FunctionComponent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useTypedSearchParams } from 'react-router-typesafe-routes/dom'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
@@ -19,6 +20,7 @@ import { PATHS } from 'lib/routing/paths'
 import { isValidUrl } from 'lib/utils/urls'
 
 export const ScrapeRecipe: FunctionComponent = () => {
+	const { t } = useTranslation()
 	const { notify } = useNotifications()
 	const navigate = useNavigate()
 	const [isListScrolled, setIsListScrolled] = useState(false)
@@ -36,7 +38,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 
 	if (status === 'error') {
 		queueMicrotask(() => navigate(PATHS.HOME.buildPath({})))
-		notify(`Couldn\'t scrape this recipe. Website ${isValidUrl(url) ? new URL(url).host : ''} might not be supported.`, {
+		notify(t('scraping.error', { website: isValidUrl(url) ? new URL(url).host : undefined }), {
 			id: 'recipeScrapeError',
 			duration: Infinity,
 		})
@@ -65,7 +67,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 						<FabContainer>
 							<FloatingActionButton
 								icon="save"
-								label="Save recipe"
+								label={t('scraping.save')}
 								type="button"
 								variant="primary"
 								size={isListScrolled ? undefined : 'expanded'}

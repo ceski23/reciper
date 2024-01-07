@@ -1,6 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
 import { type FunctionComponent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { type Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
@@ -13,6 +14,7 @@ type RecipeCardProps = {
 }
 
 export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe }) => {
+	const { t } = useTranslation()
 	const { eventHandlers, renderRipples } = useRipples()
 	const [ref, inView] = useInView()
 	const style = useSpring({
@@ -22,8 +24,8 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe }) => {
 	})
 
 	const details = [
-		`${recipe.ingredients.length} ingredients`,
-		recipe.prepTime ? `${recipe.prepTime} minutes` : undefined,
+		t('recipes.details.ingredients', { count: recipe.ingredients.length }),
+		recipe.prepTime ? t('recipes.details.prepTime', { count: recipe.prepTime }) : undefined,
 	].filter(item => item !== undefined).join('  •  ')
 
 	return (

@@ -1,6 +1,7 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { type FunctionComponent, type ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Typography } from 'lib/components/Typography'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
@@ -11,6 +12,7 @@ type RecipeStepProps = {
 }
 
 export const RecipeStep: FunctionComponent<RecipeStepProps> = ({ number, children }) => {
+	const { t } = useTranslation()
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
@@ -20,7 +22,7 @@ export const RecipeStep: FunctionComponent<RecipeStepProps> = ({ number, childre
 		>
 			{renderRipples}
 			<Number>
-				Step {number}
+				{t('recipes.steps.step', { step: number })}
 			</Number>
 			{children}
 		</Item>

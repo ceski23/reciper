@@ -1,5 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { Fragment, type FunctionComponent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { Chip } from 'lib/components/Chip'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
@@ -12,6 +13,7 @@ import { Typography } from 'lib/components/Typography'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 
 export const NewRecipe: FunctionComponent = () => {
+	const { t } = useTranslation()
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
 
@@ -20,7 +22,7 @@ export const NewRecipe: FunctionComponent = () => {
 			<HeaderPortal>
 				<TopAppBar
 					configuration="small"
-					title="New recipe"
+					title={t('newRecipe.title')}
 					elevation={isContentScrolled ? 'onScroll' : 'flat'}
 				/>
 			</HeaderPortal>
@@ -28,35 +30,35 @@ export const NewRecipe: FunctionComponent = () => {
 			<Container>
 				<FormSection>
 					<TextField
-						label="Cover image"
+						label={t('newRecipe.fields.cover')}
 						leadingIcon="image"
 						value=""
 					/>
 					<TextField
-						label="Recipe name"
+						label={t('newRecipe.fields.name')}
 						value="Sunday chicken soup"
 					/>
 					<TextField
-						label="Recipe description"
+						label={t('newRecipe.fields.description')}
 						value=""
 					/>
 					<TextField
-						label="Recipe url"
+						label={t('newRecipe.fields.url')}
 						leadingIcon="link"
 						value=""
 					/>
 					<TextField
-						label="Preparation time"
+						label={t('newRecipe.fields.prepTime.label')}
 						value="10"
-						trailingAddon="minutes"
+						trailingAddon={t('newRecipe.fields.prepTime.unit', { count: 10 })}
 					/>
 					<Horizontal>
 						<TextField
-							label="Servings"
+							label={t('newRecipe.fields.servings')}
 							value="7"
 						/>
 						<TextField
-							label="Calories"
+							label={t('newRecipe.fields.calories')}
 							value="1500"
 							trailingAddon="kcal"
 						/>
@@ -64,7 +66,7 @@ export const NewRecipe: FunctionComponent = () => {
 				</FormSection>
 				<FormSection>
 					<Typography.TitleMedium>
-						Tags
+						{t('newRecipe.fields.tags.title')}
 					</Typography.TitleMedium>
 					<TagsContainer>
 						<Chip
@@ -83,46 +85,46 @@ export const NewRecipe: FunctionComponent = () => {
 							onClose={() => {}}
 						/>
 					</TagsContainer>
-					<AddButton leftIcon="plus">Add tag</AddButton>
+					<AddButton leftIcon="plus">{t('newRecipe.fields.tags.addTag')}</AddButton>
 				</FormSection>
 				<FormSection>
 					<Typography.TitleMedium>
-						Ingredients
+						{t('newRecipe.fields.ingredients.title')}
 					</Typography.TitleMedium>
 					<TextField
-						label="Ingredient no. 1"
+						label={t('newRecipe.fields.ingredients.ingredient', { index: 1 })}
 						value="2 cups of milk"
 						trailingAddon={(
 							<DeleteButton
 								icon="delete"
-								title="Delete ingredeint"
+								title={t('newRecipe.fields.ingredients.delete')}
 							/>
 						)}
 					/>
-					<AddButton leftIcon="plus">Add ingredient</AddButton>
+					<AddButton leftIcon="plus">{t('newRecipe.fields.ingredients.add')}</AddButton>
 				</FormSection>
 				<FormSection>
 					<Typography.TitleMedium>
-						Steps
+						{t('newRecipe.fields.steps.title')}
 					</Typography.TitleMedium>
 					<TextField
-						label="Step no. 1"
+						label={t('newRecipe.fields.steps.step', { index: 1 })}
 						value="Put ingredients inside bowl"
 						trailingAddon={(
 							<DeleteButton
 								icon="delete"
-								title="Delete step"
+								title={t('newRecipe.fields.steps.delete')}
 							/>
 						)}
 					/>
-					<AddButton leftIcon="plus">Add step</AddButton>
+					<AddButton leftIcon="plus">{t('newRecipe.fields.steps.add')}</AddButton>
 				</FormSection>
 			</Container>
 			<ContentOverlayPortal>
 				<FabContainer>
 					<FloatingActionButton
 						icon="save"
-						label="Save recipe"
+						label={t('newRecipe.fields.save')}
 						type="button"
 						variant="primary"
 						size={isContentScrolled ? undefined : 'expanded'}

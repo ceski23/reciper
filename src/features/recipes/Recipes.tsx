@@ -30,11 +30,11 @@ export const Recipes: FunctionComponent = () => {
 	useEffect(() => {
 		if (recipes.data?.length === 0) {
 			const id = setTimeout(() => {
-				notify('You have no recipes saved. Do you want to add some sample recipes?', {
+				notify(t('recipes.sampleRecipes.text'), {
 					id: 'samples',
 					duration: Infinity,
 					action: {
-						label: 'Add',
+						label: t('recipes.sampleRecipes.add'),
 						onClick: () => addRecipes.mutate(sampleRecipes),
 					},
 				})
@@ -48,9 +48,9 @@ export const Recipes: FunctionComponent = () => {
 		if (isLoading) {
 			const id = setTimeout(() => {
 				setIsLoading(false)
-				notify('Error while syncing recipes', {
+				notify(t('recipes.sync.error'), {
 					action: {
-						label: 'OK',
+						label: t('recipes.sync.ok'),
 					},
 				})
 			}, 3000)
@@ -70,7 +70,7 @@ export const Recipes: FunctionComponent = () => {
 					options={(
 						<IconButton
 							icon="sync"
-							title="Sync recipes"
+							title={t('recipes.sync.menuItem')}
 							onClick={() => setIsLoading(true)}
 							isSelected={isLoading}
 							style={{
@@ -93,7 +93,7 @@ export const Recipes: FunctionComponent = () => {
 				<FabContainer>
 					<FloatingActionButton
 						icon="plus"
-						label="Add recipe"
+						label={t('recipes.addRecipe')}
 						type="button"
 						variant="primary"
 						size={isListScrolled ? undefined : 'expanded'}

@@ -1,5 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { type ComponentProps, type CSSProperties, Fragment, type FunctionComponent, type ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Skeleton } from 'lib/components/Skeleton'
 import { PATHS } from 'lib/routing/paths'
@@ -29,6 +30,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	elevation,
 	style,
 }) => {
+	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const location = useLocation()
 
@@ -49,7 +51,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 			>
 				<IconButton
 					icon="backArrow"
-					title="Go back"
+					title={t('navigation.goBack')}
 					onClick={handleGoBack}
 				/>
 				{configuration === 'small'
