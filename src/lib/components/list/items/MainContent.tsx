@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
-import { Fragment, type FunctionComponent, type ReactElement } from 'react'
+import { Fragment, type FunctionComponent, type ReactElement, type ReactNode } from 'react'
 import { Typography } from 'lib/components/Typography'
 import { styleUtils, theme } from 'lib/styles'
 import Icon, { type SvgName } from '~virtual/svg-component'
@@ -9,7 +9,7 @@ export type MainContentProps = {
 	leadingElement?: SvgName | ReactElement
 	iconColor?: string
 	title: string
-	text?: string
+	text?: ReactNode
 	hasWrappedText?: boolean
 	overline?: string
 }

@@ -36,6 +36,7 @@ export const scrapeRecipe = async (url?: string): Promise<Recipe> => {
 	return recipeScheme.parseAsync({
 		id: nanoid(),
 		url: recipeUrl.toString(),
+		addedDate: new Date().getTime(),
 		...recipe,
 	})
 }

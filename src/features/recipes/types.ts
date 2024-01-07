@@ -21,6 +21,7 @@ export const recipeScheme = z.object({
 	tags: z.array(z.string().min(1)).default([]),
 	servings: z.number().positive().optional(),
 	gallery: z.array(z.string().min(1)).default([]),
+	addedDate: z.number(),
 })
 
 export type Recipe = z.infer<typeof recipeScheme>

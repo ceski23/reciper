@@ -3,6 +3,7 @@ import { type Recipe } from 'features/recipes/types'
 
 const pancakes: Recipe = {
 	id: nanoid(),
+	addedDate: new Date().getTime(),
 	name: 'Oryginalne Amerykańskie Pancakes\'y',
 	description:
 		'Oryginalny przepis na amerykańskie placuszki zwane Pancakes\'ami . Delikatne, złociste, rozpływające się w ustach danie serwowane głównie na śniadanie. Pancakes\'y przeważają w wersji na słodko, jako deser, a w Polsce myślę, że nieraz wystąpią na stole jako smaczny i szybki obiad.',
@@ -142,6 +143,7 @@ const pierniczki: Recipe = {
 	],
 	id: nanoid(),
 	url: 'https://aniastarmach.pl/przepis/pierniczki-z-lukrem/',
+	addedDate: new Date().getTime(),
 }
 
 const kurczak: Recipe = {
@@ -209,6 +211,7 @@ const kurczak: Recipe = {
 	],
 	id: nanoid(),
 	url: 'https://www.kwestiasmaku.com/przepis/filety-drobiowe-w-sosie-z-gorgonzoli',
+	addedDate: new Date().getTime(),
 }
 
 const ramen: Recipe = {
@@ -357,6 +360,7 @@ const ramen: Recipe = {
 	],
 	id: nanoid(),
 	url: 'https://www.kwestiasmaku.com/przepis/ramen-shoyu-z-wieprzowina',
+	addedDate: new Date().getTime(),
 }
 
 export const sampleRecipes = [pancakes, pierniczki, kurczak, ramen]

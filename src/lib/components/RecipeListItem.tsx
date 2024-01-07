@@ -1,16 +1,22 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
-import { type FunctionComponent } from 'react'
+import { type FunctionComponent, type ReactNode } from 'react'
 import { PROVIDERS } from 'features/recipes/providers/scrapper'
 import { type Recipe } from 'features/recipes/types'
 import { PATHS } from 'lib/routing/paths'
+import { isDefined } from 'lib/utils'
 import { ListItem } from './list/items'
 
 type RecipeListItemProps = {
 	recipe: Recipe
+	details?: ReactNode
 }
 
-export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe }) => {
+export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe, details }) => {
+	const defaultDetails = [
+		`${recipe.ingredients.length} ingredients`,
+		recipe.prepTime ? `${recipe.prepTime} minutes` : undefined,
+	].filter(isDefined).join('  •  ')
 	const [ref, style] = useInView(() => ({
 		from: {
 			opacity: 0,
@@ -23,13 +29,7 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe 
 	}), {
 		once: true,
 	})
-
 	const provider = PROVIDERS.find(provider => provider.matcher.test(String(recipe.url)))
-
-	const details = [
-		`${recipe.ingredients.length} ingredients`,
-		recipe.prepTime ? `${recipe.prepTime} minutes` : undefined,
-	].filter(item => item !== undefined).join('  •  ')
 
 	return (
 		<AnimatedListItem
@@ -37,7 +37,7 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe 
 			ref={ref}
 			overline={provider?.name}
 			title={recipe.name}
-			text={details}
+			text={details ?? defaultDetails}
 			leadingElement={<RecipeImage src={recipe.image} />}
 			size="3line"
 			to={PATHS.RECIPES.RECIPE.buildPath({ id: recipe.id })}
