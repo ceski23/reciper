@@ -176,6 +176,10 @@
 		},
 		"about": {
 			"title": "About app"
+		},
+		"language": {
+			"title": "Language",
+			"text": "Select app's language"
 		}
 	}
 }
