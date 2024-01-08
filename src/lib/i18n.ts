@@ -30,4 +30,5 @@ export const initI18n = () => {
 
 export const LANGUAGES = {
 	en: 'English',
+	pl: 'Polski',
 }

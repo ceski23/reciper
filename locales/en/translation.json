@@ -46,7 +46,7 @@
 			"step": "Step {{step}}"
 		},
 		"sharing": {
-			"menuItem": "",
+			"menuItem": "Share recipe",
 			"error": "There was an error while sharing recipe, try again"
 		},
 		"loadError": "Couldn't load this recipe",
@@ -167,7 +167,8 @@
 			},
 			"precision": {
 				"title": "Conversion precision",
-				"text": "Round up to 2 decimal digits"
+				"text_one": "Round up to {{count}} decimal digit",
+				"text_other": "Round up to {{count}} decimal digits"
 			},
 			"preferred": {
 				"title": "Ingredients preferred units",

@@ -31,7 +31,7 @@ export const Units: FunctionComponent = () => {
 					leadingElement="numbers"
 					iconColor={theme.colors.primary}
 					title={t('settings.units.precision.title')}
-					text={t('settings.units.precision.text')}
+					text={t('settings.units.precision.text', { count: 2 })}
 				/>
 			</List>
 			<PreferredUnitsSection>
