@@ -164,7 +164,7 @@ const ListItemIcon = styled(Icon, {
 	},
 })
 
-const ListItemDetail = styled('div', {
+const ListItemDetail = styled('span', {
 	base: {
 		display: 'flex',
 		alignItems: 'center',
