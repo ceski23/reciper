@@ -117,6 +117,7 @@
 	"settings": {
 		"account": {
 			"title": "Account and sync",
+			"text": "Settings related to recipes synchronization",
 			"loggedInText": "You are logged in to your Google account",
 			"logout": "Logout",
 			"sync": {
@@ -132,6 +133,7 @@
 		},
 		"theme": {
 			"title": "Theme",
+			"text": "Select your preferred theme",
 			"colorScheme": {
 				"title": "Color scheme",
 				"dialog": {
@@ -158,6 +160,7 @@
 		},
 		"units": {
 			"title": "Units",
+			"text": "Units conversion settings",
 			"conversion": {
 				"title": "Units conversion",
 				"text": "Convert units to preferred ones"
