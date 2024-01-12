@@ -11,9 +11,10 @@ export const TemperatureSegment: FunctionComponent<TemperatureSegmentProps> = ({
 	const [isConvertedValueShown, setIsConvertedValueShown] = useState(false)
 
 	const temperature = match.groups?.temp ? Number(match.groups.temp) : 0
-	const convertedTemperature = match.groups?.unit === 'F'
+	const convertedTemperature = (match.groups?.unit === 'F'
 		? fahrenheitToCelsius(temperature)
-		: celsiusToFahrenheit(temperature)
+		: celsiusToFahrenheit(temperature))
+		.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 1 })
 	const convertedUnit = match.groups?.unit === 'F' ? 'C' : 'F'
 
 	return (
