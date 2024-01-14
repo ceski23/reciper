@@ -1,4 +1,5 @@
 import { styled } from '@macaron-css/react'
+import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,42 +10,32 @@ import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContent
 import { scrapeRecipe } from 'features/recipes/providers/scrapper'
 import { useAddRecipe } from 'features/recipes/recipes'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
+import { DIALOG_ANIMATION, SimpleDialog } from 'lib/components/Dialog'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
-import { useNotifications } from 'lib/hooks/useNotifications'
 import { useWakelock } from 'lib/hooks/useWakelock'
 import { PATHS } from 'lib/routing/paths'
 import { isValidUrl } from 'lib/utils/urls'
 
 export const ScrapeRecipe: FunctionComponent = () => {
 	const { t } = useTranslation()
-	const { notify } = useNotifications()
 	const navigate = useNavigate()
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const [{ url }] = useTypedSearchParams(PATHS.RECIPES.SCRAPE)
-	const { data: recipe, status } = useQuery({
+	const { data: recipe, status, isError } = useQuery({
 		queryKey: ['scraped', url],
 		queryFn: () => scrapeRecipe(url).catch(),
 		retry: false,
 	})
 	const style = useDynamicTheme(recipe?.color)
 	const addRecipe = useAddRecipe()
+	const transition = useTransition(isError, DIALOG_ANIMATION)
 
 	useWakelock()
-
-	if (status === 'error') {
-		queueMicrotask(() => navigate(PATHS.HOME.buildPath({})))
-		notify(t('scraping.error', { website: isValidUrl(url) ? new URL(url).host : undefined }), {
-			id: 'recipeScrapeError',
-			duration: Infinity,
-		})
-
-		return
-	}
 
 	return (
 		<Fragment>
@@ -57,7 +48,8 @@ export const ScrapeRecipe: FunctionComponent = () => {
 				/>
 			</HeaderPortal>
 			{renderProbe}
-			{status === 'pending' ? <RecipeContentSkeleton /> : (
+			{status !== 'success' && <RecipeContentSkeleton />}
+			{status === 'success' && (
 				<Fragment>
 					<RecipeContent
 						recipe={recipe}
@@ -84,6 +76,18 @@ export const ScrapeRecipe: FunctionComponent = () => {
 					</ContentOverlayPortal>
 				</Fragment>
 			)}
+			{transition((styles, open) => (
+				<SimpleDialog
+					title="Scraping error"
+					description={t('scraping.error', { website: isValidUrl(url) ? new URL(url).host : undefined })}
+					onOpenChange={() => navigate(-1)}
+					actions={[
+						{ label: t('scraping.close'), onClick: () => navigate(-1) },
+					]}
+					styles={styles}
+					open={open}
+				/>
+			))}
 		</Fragment>
 	)
 }

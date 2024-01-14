@@ -1,15 +1,11 @@
-import { config, useTransition } from '@react-spring/web'
+import { useTransition } from '@react-spring/web'
 import React, { type FunctionComponent, type ReactElement } from 'react'
 import { useState } from 'react'
+import { DIALOG_ANIMATION } from 'lib/components/Dialog'
 
 export const useDialogState = (initialState: boolean) => {
 	const [isOpen, setIsOpen] = useState(initialState)
-	const transition = useTransition(isOpen, {
-		from: { opacity: 0, y: 100 },
-		enter: { opacity: 1, y: 0 },
-		leave: { opacity: 0, y: 100 },
-		config: config.stiff,
-	})
+	const transition = useTransition(isOpen, DIALOG_ANIMATION)
 	const AnimateDialog: FunctionComponent<{ children: ReactElement }> = ({ children }) =>
 		transition((styles, open) => React.cloneElement(children, { styles, open }))
 

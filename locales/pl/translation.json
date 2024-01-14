@@ -111,7 +111,8 @@
 	},
 	"scraping": {
 		"error": "Nie można pobrać tego przepisu. Strona {{website}} może nie być obsługiwana.",
-		"save": "Zapisz przepis"
+		"save": "Zapisz przepis",
+		"close": "Zamknij"
 	},
 	"home": {
 		"searchBarPlaceholder": "Na co masz ochotę?",

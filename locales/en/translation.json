@@ -105,7 +105,8 @@
 	},
 	"scraping": {
 		"error": "Couldn't scrape this recipe. Website {{website}} might not be supported.",
-		"save": "Save recipe"
+		"save": "Save recipe",
+		"close": "Close"
 	},
 	"home": {
 		"searchBarPlaceholder": "What do you want to eat?",
