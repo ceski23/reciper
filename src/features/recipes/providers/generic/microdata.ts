@@ -1,3 +1,4 @@
+import { decodeHTML5Strict } from 'entities'
 import { parse, toSeconds } from 'iso8601-duration'
 import { isDefined } from 'lib/utils'
 import { getTextFromNode } from 'lib/utils/dom'
@@ -25,7 +26,7 @@ export const extractMicrodata = async (doc: Document) => {
 	const instructionsElements = root.querySelectorAll('[itemprop="recipeInstructions"]')
 	const instructions = Array
 		.from(instructionsElements)
-		.map(elem => (elem.textContent ? ({ text: elem.textContent?.trim() }) : undefined))
+		.map(elem => (elem.textContent ? ({ text: decodeHTML5Strict(elem.textContent.trim()) }) : undefined))
 		.filter(isDefined)
 
 	const prepTimeISO = root.querySelector('[itemprop="prepTime"]')?.getAttribute('content') ?? undefined

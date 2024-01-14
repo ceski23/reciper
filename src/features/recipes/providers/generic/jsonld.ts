@@ -1,3 +1,4 @@
+import { decodeHTML5Strict } from 'entities'
 import { parse, toSeconds } from 'iso8601-duration'
 import { type HowToStep, type ImageObject, type Recipe as SchemaRecipe } from 'schema-dts'
 import { isArrayOf, isDefined, isString } from 'lib/utils'
@@ -148,7 +149,7 @@ export const extractJsonLD = async (doc: Document) => {
 
 	// FIXME: Better instructions parsing
 	const instructions = parseInstructions(schemaRecipe.recipeInstructions)
-		?.map(i => ({ text: i.trim() }))
+		?.map(i => ({ text: decodeHTML5Strict(i.trim()) }))
 	// if (!instructions) throw Error('Couldn\'t find or parse instructions');
 
 	let prepTimeISO = schemaRecipe.totalTime ?? schemaRecipe.prepTime
@@ -172,7 +173,7 @@ export const extractJsonLD = async (doc: Document) => {
 
 	return {
 		name: name ? name.toString() : undefined,
-		description: description?.toString(),
+		description: description ? decodeHTML5Strict(description.toString()) : undefined,
 		image: image?.toString(),
 		ingredients: Array.isArray(ingredients) ? ingredients : [ingredients],
 		instructions,
