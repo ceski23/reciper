@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { type Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
+import { useDynamicTheme } from 'lib/hooks'
 import { useRipples } from 'lib/hooks/useRipples'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
@@ -17,6 +18,7 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe }) => {
 	const { t } = useTranslation()
 	const { eventHandlers, renderRipples } = useRipples()
 	const [ref, inView] = useInView()
+	const dynamicStyles = useDynamicTheme(recipe.color)
 	const style = useSpring({
 		to: {
 			opacity: inView ? 1 : 0,
@@ -30,7 +32,10 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe }) => {
 
 	return (
 		<Card
-			style={style}
+			style={{
+				...dynamicStyles,
+				...style,
+			}}
 			ref={ref}
 			to={PATHS.RECIPES.RECIPE.buildPath({ id: recipe.id })}
 			unstable_viewTransition
