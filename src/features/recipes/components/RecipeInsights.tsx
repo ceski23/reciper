@@ -14,7 +14,7 @@ type RecipeInsightsProps = {
 }
 
 export const RecipeInsights: FunctionComponent<RecipeInsightsProps> = ({ items }) => (
-	<Container>
+	<Container items={items.length < 3 ? 'few' : 'many'}>
 		{items.map(item => (
 			<Item key={item.text}>
 				<StyledIcon name={item.icon} />
@@ -28,12 +28,21 @@ const Container = styled('div', {
 	base: {
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-evenly',
 		alignItems: 'center',
 		backgroundColor: theme.colors.surfaceContainerHigh,
 		borderRadius: 12,
 		paddingBlock: 16,
 		paddingInline: 32,
+	},
+	variants: {
+		items: {
+			few: {
+				justifyContent: 'space-evenly',
+			},
+			many: {
+				justifyContent: 'space-between',
+			},
+		},
 	},
 })
 
