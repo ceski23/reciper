@@ -31,7 +31,8 @@
 	},
 	"include": [
 		"src",
-		"svg-component.d.ts"
+		"svg-component.d.ts",
+		"vite-env.d.ts"
 	],
 	"references": [
 		{

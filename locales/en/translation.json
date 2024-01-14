@@ -177,7 +177,8 @@
 			}
 		},
 		"about": {
-			"title": "About app"
+			"title": "About app",
+			"version": "Version {{version}}"
 		},
 		"language": {
 			"title": "Language",

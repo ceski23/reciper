@@ -1,3 +1,4 @@
+import packageConfig from './package.json'
 import { macaronVitePlugin } from '@macaron-css/vite'
 import react from '@vitejs/plugin-react'
 import unpluginSvgComponent from 'unplugin-svg-component/vite'
@@ -5,6 +6,7 @@ import { defineConfig } from 'vite'
 import i18nextLoader from 'vite-plugin-i18next-loader'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { ManifestOptions, VitePWA } from 'vite-plugin-pwa'
+import child from 'node:child_process'
 
 const pwaManifest: Partial<ManifestOptions> = {
 	short_name: 'Reciper',
@@ -54,6 +56,10 @@ export default defineConfig({
 				},
 			},
 		},
+	},
+	define: {
+		__APP_VERSION__: JSON.stringify(packageConfig.version),
+		__COMMIT_HASH__: JSON.stringify(child.execSync('git rev-parse --short HEAD').toString()),
 	},
 	plugins: [
 		tsconfigPaths(),

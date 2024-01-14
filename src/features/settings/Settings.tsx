@@ -58,6 +58,7 @@ export const Settings: FunctionComponent = () => {
 					iconColor={theme.colors.primary}
 					title={t('settings.about.title')}
 					to={PATHS.SETTINGS.ABOUT.buildPath({})}
+					text={t('settings.about.version', { version: `${__APP_VERSION__}-${__COMMIT_HASH__}` })}
 				/>
 			</List>
 			<AnimateDialog>

@@ -184,7 +184,8 @@
 			}
 		},
 		"about": {
-			"title": "O aplikacji"
+			"title": "O aplikacji",
+			"version": "Wersja {{version}}"
 		},
 		"language": {
 			"title": "Język",

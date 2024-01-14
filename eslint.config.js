@@ -10,6 +10,7 @@ export default [
 			'eslint.config.js',
 			'svg-component.d.ts',
 			'generate-colors.ts',
+			'vite-env.d.ts',
 		],
 	},
 	...config,
