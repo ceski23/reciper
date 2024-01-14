@@ -1,8 +1,8 @@
 import { nanoid } from 'nanoid'
 import { extractJsonLD } from 'features/recipes/providers/generic/jsonld'
 import { extractMicrodata } from 'features/recipes/providers/generic/microdata'
-import { kwestiasmaku } from 'features/recipes/providers/kwestiasmaku'
 import { type Recipe, recipeScheme } from 'features/recipes/types'
+import * as providers from './websites'
 
 export type RecipesProvider = {
 	name: string
@@ -13,10 +13,6 @@ export type RecipesProvider = {
 
 export class InvalidRecipeError extends Error {}
 
-export const PROVIDERS = [
-	kwestiasmaku,
-]
-
 export const scrapeRecipe = async (url?: string): Promise<Recipe> => {
 	if (url === undefined) throw new Error('Invalid url')
 
@@ -25,7 +21,7 @@ export const scrapeRecipe = async (url?: string): Promise<Recipe> => {
 		? import.meta.env.VITE_CORS_PROXY + encodeURIComponent(recipeUrl.toString())
 		: recipeUrl.toString()
 	const doc = new DOMParser().parseFromString(await fetch(targetUrl).then(res => res.text()), 'text/html')
-	const provider = PROVIDERS.find(provider => provider.matcher.test(String(recipeUrl)))
+	const provider = Object.values(providers).find(provider => provider.matcher.test(String(recipeUrl)))
 	const recipe = provider
 		? await provider.scrape(doc)
 		: await Promise.any([

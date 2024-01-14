@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
 import { type FunctionComponent, type ReactNode } from 'react'
-import { PROVIDERS } from 'features/recipes/providers/scrapper'
+import * as providers from 'features/recipes/providers/websites'
 import { type Recipe } from 'features/recipes/types'
 import { PATHS } from 'lib/routing/paths'
 import { isDefined } from 'lib/utils'
@@ -29,7 +29,7 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe,
 	}), {
 		once: true,
 	})
-	const provider = PROVIDERS.find(provider => provider.matcher.test(String(recipe.url)))
+	const provider = Object.values(providers).find(provider => provider.matcher.test(String(recipe.url)))
 
 	return (
 		<AnimatedListItem

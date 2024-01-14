@@ -52,7 +52,7 @@ export const extractMicrodata = async (doc: Document) => {
 	const image = ((imageElement?.tagName === 'META') ? imageElement.getAttribute('content') : imageElement?.getAttribute('src')) ?? undefined
 
 	const instructionSections = Array.from(root.querySelectorAll('[itemprop="recipeInstructions"][itemtype="http://schema.org/HowToSection"]'))
-	const instructions = instructionSections.length > 0
+	const instructions: Recipe['instructions'] = instructionSections.length > 0
 		? instructionSections.flatMap(sectionElement => {
 			const sectionTitle = sectionElement.querySelector('[itemprop="name"]')?.getAttribute('content') ?? undefined
 
