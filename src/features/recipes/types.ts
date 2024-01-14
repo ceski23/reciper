@@ -12,6 +12,7 @@ export const recipeScheme = z.object({
 	instructions: z.array(z.object({
 		text: z.string().min(1),
 		group: z.string().min(1).optional(),
+		image: z.string().min(1).optional(),
 	})).min(1),
 	prepTime: z.number().positive().optional(),
 	color: z.string().min(1).optional(),

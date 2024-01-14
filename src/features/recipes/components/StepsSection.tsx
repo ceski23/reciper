@@ -4,12 +4,9 @@ import { groupBy } from 'ramda'
 import { type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeStep } from 'features/recipes/components/RecipeStep'
-import { TemperatureSegment } from 'features/recipes/components/TemperatureSegment'
 import { type Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
-import { TEMPERATURE_PATTERN } from 'lib/utils/temperature'
-import { segmentizeText } from 'lib/utils/text'
 
 type StepsSectionProps = {
 	steps: Recipe['instructions']
@@ -30,17 +27,9 @@ export const StepsSection: FunctionComponent<StepsSectionProps> = ({ steps }) =>
 						{steps.map((step, index) => (
 							<RecipeStep
 								number={index + 1}
+								step={step}
 								key={index}
-							>
-								<Typography.BodyMedium>
-									{segmentizeText(step.text, TEMPERATURE_PATTERN, (match, index) => (
-										<TemperatureSegment
-											match={match}
-											key={index}
-										/>
-									))}
-								</Typography.BodyMedium>
-							</RecipeStep>
+							/>
 						))}
 					</StepsList>
 				</Container>

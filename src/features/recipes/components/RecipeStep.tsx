@@ -1,17 +1,21 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import { type FunctionComponent, type ReactNode } from 'react'
+import { type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { TemperatureSegment } from 'features/recipes/components/TemperatureSegment'
+import { type Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
+import { TEMPERATURE_PATTERN } from 'lib/utils/temperature'
+import { segmentizeText } from 'lib/utils/text'
 
 type RecipeStepProps = {
 	number: number
-	children: ReactNode
+	step: Recipe['instructions'][number]
 }
 
-export const RecipeStep: FunctionComponent<RecipeStepProps> = ({ number, children }) => {
+export const RecipeStep: FunctionComponent<RecipeStepProps> = ({ number, step }) => {
 	const { t } = useTranslation()
 	const { eventHandlers, renderRipples } = useRipples()
 
@@ -24,7 +28,20 @@ export const RecipeStep: FunctionComponent<RecipeStepProps> = ({ number, childre
 			<Number>
 				{t('recipes.steps.step', { step: number })}
 			</Number>
-			{children}
+			<Typography.BodyMedium>
+				{segmentizeText(step.text, TEMPERATURE_PATTERN, (match, index) => (
+					<TemperatureSegment
+						match={match}
+						key={index}
+					/>
+				))}
+			</Typography.BodyMedium>
+			{step.image && (
+				<StepImage
+					src={step.image}
+					alt={step.text}
+				/>
+			)}
 		</Item>
 	)
 }
@@ -64,5 +81,14 @@ const Item = styled(ToggleGroup.Item, {
 const Number = styled(Typography.LabelMedium, {
 	base: {
 		color: theme.colors.primary,
+	},
+})
+
+const StepImage = styled('img', {
+	base: {
+		display: 'block',
+		width: '100%',
+		borderRadius: 8,
+		marginTop: 8,
 	},
 })
