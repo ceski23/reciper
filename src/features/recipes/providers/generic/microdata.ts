@@ -66,6 +66,9 @@ export const extractMicrodata = async (doc: Document) => {
 	const prepTimeISO = root.querySelector('[itemprop="prepTime"]')?.getAttribute('content') ?? undefined
 	const prepTime = prepTimeISO ? Math.round(toSeconds(parse(prepTimeISO)) / 60) : undefined
 
+	const totalTimeISO = root.querySelector('[itemprop="totalTime"]')?.getAttribute('content') ?? undefined
+	const totalTime = totalTimeISO ? Math.round(toSeconds(parse(totalTimeISO)) / 60) : undefined
+
 	// Rating
 	const ratingElement = root.querySelector('[itemprop="ratingValue"]')
 	const rating = (ratingElement?.textContent)
@@ -99,7 +102,7 @@ export const extractMicrodata = async (doc: Document) => {
 		ingredients,
 		description,
 		image,
-		prepTime,
+		prepTime: prepTime ?? totalTime,
 		instructions,
 		rating,
 		calories,
