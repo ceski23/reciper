@@ -82,7 +82,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 					description={t('scraping.error', { website: isValidUrl(url) ? new URL(url).host : undefined })}
 					onOpenChange={() => navigate(-1)}
 					actions={[
-						{ label: t('scraping.close'), onClick: () => navigate(-1) },
+						{ label: t('scraping.close'), onClick: () => window.close() },
 					]}
 					styles={styles}
 					open={open}
