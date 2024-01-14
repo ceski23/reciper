@@ -1,14 +1,42 @@
 import { decodeHTML5Strict } from 'entities'
 import { parse, toSeconds } from 'iso8601-duration'
+import { type Recipe } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
 import { getTextFromNode } from 'lib/utils/dom'
+import { getColorFromImage } from 'lib/utils/images'
 
 const getMetaData = (element: Element | null) => {
 	if (element === null) return undefined
-	if (element.tagName === 'META') return element.getAttribute('content')
+	if (element.tagName === 'META') return element.getAttribute('content') ?? undefined
 
 	return getTextFromNode(element)
 }
+
+const getTags = (root: Element) => {
+	const tags = getMetaData(root.querySelector('[itemprop="keywords"]'))?.split(',')
+	const category = getMetaData(root.querySelector('[itemprop="recipeCategory"]'))?.split(',')
+
+	return [tags, category]
+		.filter(isDefined)
+		.flatMap(texts => texts.map(text => text.toLocaleLowerCase().trim()))
+}
+
+const getInstructions = (element: Element) =>
+	Array
+		.from(element.querySelectorAll('[itemprop="recipeInstructions"], [itemprop="itemListElement"][itemtype="http://schema.org/HowToStep"]'))
+		.map(elem => {
+			const text = elem.querySelector('[itemprop=text]')?.textContent?.trim()
+			const image = elem.querySelector('[itemprop="image"]')?.getAttribute('src')
+				?? elem.querySelector('[itemprop="image"]')?.getAttribute('data-src') ?? undefined
+
+			return (text
+				? ({
+					text: decodeHTML5Strict(text),
+					image,
+				})
+				: undefined)
+		})
+		.filter(isDefined)
 
 export const extractMicrodata = async (doc: Document) => {
 	const root = doc.querySelector('[itemscope][itemtype="https://schema.org/Recipe"], [itemscope][itemtype="http://schema.org/Recipe"]')
@@ -23,11 +51,17 @@ export const extractMicrodata = async (doc: Document) => {
 	const imageElement = root.querySelector('[itemprop="image"]')
 	const image = ((imageElement?.tagName === 'META') ? imageElement.getAttribute('content') : imageElement?.getAttribute('src')) ?? undefined
 
-	const instructionsElements = root.querySelectorAll('[itemprop="recipeInstructions"]')
-	const instructions = Array
-		.from(instructionsElements)
-		.map(elem => (elem.textContent ? ({ text: decodeHTML5Strict(elem.textContent.trim()) }) : undefined))
-		.filter(isDefined)
+	const instructionSections = Array.from(root.querySelectorAll('[itemprop="recipeInstructions"][itemtype="http://schema.org/HowToSection"]'))
+	const instructions = instructionSections.length > 0
+		? instructionSections.flatMap(sectionElement => {
+			const sectionTitle = sectionElement.querySelector('[itemprop="name"]')?.getAttribute('content') ?? undefined
+
+			return getInstructions(sectionElement).map(data => ({
+				...data,
+				group: sectionTitle,
+			}))
+		})
+		: getInstructions(root)
 
 	const prepTimeISO = root.querySelector('[itemprop="prepTime"]')?.getAttribute('content') ?? undefined
 	const prepTime = prepTimeISO ? Math.round(toSeconds(parse(prepTimeISO)) / 60) : undefined
@@ -52,12 +86,13 @@ export const extractMicrodata = async (doc: Document) => {
 		.map(elem => (elem.textContent ? ({ text: elem.textContent?.trim() }) : undefined))
 		.filter(isDefined)
 
-	const tagsElement = root.querySelector('[itemprop="keywords"]')
-	const tags = getMetaData(tagsElement)?.split(',').map(text => text.toLocaleLowerCase().trim())
+	const tags = getTags(root)
 
 	const servingsElement = root.querySelector('[itemprop="recipeYield"]')
 	const servingsText = getMetaData(servingsElement)
 	const servings = servingsText ? Number.parseInt(servingsText, 10) : undefined
+
+	const color = image ? await getColorFromImage(image.toString()) : undefined
 
 	return {
 		name: name ?? undefined,
@@ -70,5 +105,6 @@ export const extractMicrodata = async (doc: Document) => {
 		calories,
 		tags,
 		servings,
-	}
+		color,
+	} satisfies Partial<Recipe>
 }
