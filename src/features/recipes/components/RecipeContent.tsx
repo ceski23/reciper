@@ -83,12 +83,14 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 				initialServingsCount={recipe.servings}
 			/>
 			<StepsSection steps={recipe.instructions} />
-			<Section>
-				<Typography.TitleLarge>
-					{t('recipes.gallery')}
-				</Typography.TitleLarge>
-				<Gallery />
-			</Section>
+			{recipe.gallery.length > 0 && (
+				<Section>
+					<Typography.TitleLarge>
+						{t('recipes.gallery')}
+					</Typography.TitleLarge>
+					<Gallery />
+				</Section>
+			)}
 		</ContentContainer>
 	)
 }
