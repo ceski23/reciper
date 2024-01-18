@@ -1,5 +1,6 @@
 import { queryOptions, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createStore, del, get, set, setMany, values } from 'idb-keyval'
+import * as v from 'valibot'
 import { type Recipe, recipeScheme } from 'features/recipes/types'
 
 const recipesStore = createStore('reciperRecipes', 'reciperRecipesStore')
@@ -7,7 +8,7 @@ const recipesStore = createStore('reciperRecipes', 'reciperRecipesStore')
 const getSingleRecipe = (id: string) =>
 	get(id, recipesStore).then(recipe => {
 		if (recipe === undefined) throw new Error('No recipe found')
-		return recipeScheme.parse(recipe)
+		return v.parse(recipeScheme, recipe)
 	})
 
 export const recipesQuery = () =>

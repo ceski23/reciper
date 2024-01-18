@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid'
+import * as v from 'valibot'
 import { extractJsonLD } from 'features/recipes/providers/generic/jsonld'
 import { extractMicrodata } from 'features/recipes/providers/generic/microdata'
 import { type Recipe, recipeScheme } from 'features/recipes/types'
@@ -29,7 +30,7 @@ export const scrapeRecipe = async (url?: string): Promise<Recipe> => {
 			extractMicrodata(doc),
 		])
 
-	return recipeScheme.parseAsync({
+	return v.parseAsync(recipeScheme, {
 		id: nanoid(),
 		url: recipeUrl.toString(),
 		addedDate: new Date().getTime(),
