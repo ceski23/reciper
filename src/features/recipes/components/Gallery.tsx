@@ -33,8 +33,8 @@ export const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
 	return (
 		<PhotoSwipeGallery
 			plugins={photoswipe => galleryRef.current = photoswipe.pswp}
-			options={{ escKey: CloseWatcher === undefined }}
-			onOpen={handleGalleryOpen}
+			options={{ escKey: !('CloseWatcher' in globalThis) }}
+			onOpen={'CloseWatcher' in globalThis ? handleGalleryOpen : undefined}
 		>
 			<ImagesGrid>
 				{images.map(image => (
