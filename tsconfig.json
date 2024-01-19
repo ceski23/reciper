@@ -25,7 +25,8 @@
 		"noFallthroughCasesInSwitch": true,
 		"types": [
 			"vite/client",
-			"vite-plugin-pwa/react"
+			"vite-plugin-pwa/react",
+			"dom-close-watcher"
 		],
 		"baseUrl": "src"
 	},
