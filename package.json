@@ -9,7 +9,7 @@
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"generate-colors": "tsx generate-colors.ts",
-		"prepare": "husky install",
+		"prepare": "husky",
 		"postinstall": "patch-package",
 		"detect-circular-deps": "dpdm src/main.tsx",
 		"generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg"
@@ -48,12 +48,12 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-helmet-async": "^2.0.3",
-		"react-i18next": "^13.5.0",
+		"react-i18next": "^14.0.1",
 		"react-photoswipe-gallery": "^3.0.1",
-		"react-router-dom": "^6.20.1",
+		"react-router-dom": "^6.21.3",
 		"react-router-typesafe-routes": "^1.2.1",
 		"schema-dts": "^1.1.2",
-		"valibot": "^0.26.0",
+		"valibot": "^0.27.0",
 		"virtua": "^0.16.2"
 	},
 	"devDependencies": {
@@ -67,17 +67,17 @@
 		"@vitejs/plugin-react": "^4.2.1",
 		"dpdm": "^3.14.0",
 		"dprint": "^0.42.3",
-		"eslint": "^8.55.0",
-		"husky": "^8.0.3",
+		"eslint": "^8.56.0",
+		"husky": "^9.0.6",
 		"lint-staged": "^15.2.0",
 		"patch-package": "^8.0.0",
-		"svg-sprite": "^2.0.2",
-		"tsx": "^4.6.2",
+		"svg-sprite": "^3.0.0-beta3",
+		"tsx": "^4.7.0",
 		"typescript": "^5.3.3",
-		"vite": "^5.0.8",
+		"vite": "^5.0.12",
 		"vite-plugin-i18next-loader": "^2.0.4",
 		"vite-plugin-pwa": "^0.17.4",
-		"vite-tsconfig-paths": "^4.2.1"
+		"vite-tsconfig-paths": "^4.3.1"
 	},
 	"lint-staged": {
 		"*": [
