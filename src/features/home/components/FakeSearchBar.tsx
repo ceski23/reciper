@@ -1,14 +1,15 @@
 import { styled } from '@macaron-css/react'
 import { type CSSProperties, type FunctionComponent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
 import { useRipples } from 'lib/hooks/useRipples'
 import { PATHS } from 'lib/routing/paths'
 import { styleUtils, theme } from 'lib/styles'
-import Icon, { type SvgName } from '~virtual/svg-component'
 
 type FakeSearchBarProps = {
-	leadingIcon: SvgName
+	leadingIcon: SvgSpriteIconName
 	placeholder?: string
 	style?: CSSProperties
 }

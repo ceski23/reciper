@@ -8,13 +8,13 @@ import { RecipeCard } from 'features/home/components/RecipeCard'
 import { recipesQuery } from 'features/recipes/recipes'
 import { type Recipe } from 'features/recipes/types'
 import { Chip } from 'lib/components/Chip'
+import { Icon } from 'lib/components/Icon'
 import { List } from 'lib/components/list/List'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
 import { FakeSearchBar } from './components/FakeSearchBar'
-import Icon from '~virtual/svg-component'
 
 const recipeHasRating = (recipe: Recipe): recipe is Recipe & Required<Pick<Recipe, 'rating'>> => isDefined(recipe.rating)
 

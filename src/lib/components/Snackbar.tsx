@@ -4,9 +4,9 @@ import * as ToastPrimitive from '@radix-ui/react-toast'
 import { animated } from '@react-spring/web'
 import { type ComponentProps, type FunctionComponent, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
-import Icon from '~virtual/svg-component'
 
 type SnackbarProps = {
 	text: string

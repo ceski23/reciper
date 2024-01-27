@@ -1,12 +1,13 @@
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
 import type { ComponentProps, FunctionComponent } from 'react'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
-import Icon, { type SvgName } from '~virtual/svg-component'
 
 type ButtonProps = {
-	leftIcon?: SvgName
+	leftIcon?: SvgSpriteIconName
 }
 
 export const Button: FunctionComponent<ComponentProps<typeof ButtonBase> & ButtonProps> = ({

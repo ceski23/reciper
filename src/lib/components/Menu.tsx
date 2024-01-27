@@ -2,9 +2,10 @@ import { styled } from '@macaron-css/react'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { animated, config, useTransition } from '@react-spring/web'
 import { type ComponentProps, type FunctionComponent } from 'react'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
-import Icon, { type SvgName } from '~virtual/svg-component'
 
 type ContentProps = {
 	open: boolean
@@ -45,7 +46,7 @@ const Content: FunctionComponent<ComponentProps<typeof MenuBase> & ContentProps>
 
 type MenuItemProps = {
 	text: string
-	icon?: SvgName
+	icon?: SvgSpriteIconName
 }
 
 const Item: FunctionComponent<Omit<ComponentProps<typeof MenuItemBase>, 'children'> & MenuItemProps> = ({

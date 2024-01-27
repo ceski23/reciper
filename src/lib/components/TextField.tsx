@@ -1,10 +1,11 @@
 import { styled } from '@macaron-css/react'
 import { type ComponentProps, forwardRef, type ReactNode, useId } from 'react'
 import { useTranslation } from 'react-i18next'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
 import { IconButton } from './IconButton'
 import { bodyLarge, bodySmall, Typography } from './Typography'
-import Icon, { type SvgName } from '~virtual/svg-component'
 
 type TextFieldProps = {
 	label: string
@@ -14,7 +15,7 @@ type TextFieldProps = {
 	error?: string
 	disabled?: boolean
 	required?: boolean
-	leadingIcon?: SvgName
+	leadingIcon?: SvgSpriteIconName
 	trailingAddon?: ReactNode
 	inputProps?: ComponentProps<'input'>
 	className?: string

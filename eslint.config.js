@@ -11,6 +11,8 @@ export default [
 			'svg-component.d.ts',
 			'generate-colors.ts',
 			'vite-env.d.ts',
+			'svgSpritePlugin.d.ts',
+			'svgSpritePlugin.ts',
 		],
 	},
 	...config,

@@ -1,13 +1,14 @@
 import { styled } from '@macaron-css/react'
 import * as Toggle from '@radix-ui/react-toggle'
 import { type ComponentProps, forwardRef } from 'react'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
 import { styleUtils, theme } from 'lib/styles'
-import Icon, { type SvgName } from '~virtual/svg-component'
 
 type ChipProps = {
 	text: string
-	icon?: SvgName
+	icon?: SvgSpriteIconName
 	onClose?: VoidFunction
 }
 

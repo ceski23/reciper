@@ -1,13 +1,14 @@
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
 import { type ComponentProps, type FunctionComponent } from 'react'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
-import Icon, { type SvgName } from '~virtual/svg-component'
 
 type FloatingActionButtonProps = {
-	icon: SvgName
+	icon: SvgSpriteIconName
 	label: string
 }
 

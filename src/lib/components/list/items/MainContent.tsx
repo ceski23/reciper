@@ -1,12 +1,13 @@
 import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import { Fragment, type FunctionComponent, type ReactElement, type ReactNode } from 'react'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
 import { styleUtils, theme } from 'lib/styles'
-import Icon, { type SvgName } from '~virtual/svg-component'
 
 export type MainContentProps = {
-	leadingElement?: SvgName | ReactElement
+	leadingElement?: SvgSpriteIconName | ReactElement
 	iconColor?: string
 	title: string
 	text?: ReactNode

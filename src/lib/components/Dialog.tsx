@@ -2,10 +2,11 @@ import { styled } from '@macaron-css/react'
 import * as RadixDialog from '@radix-ui/react-dialog'
 import { animated, config, type SpringValue, type UseTransitionProps } from '@react-spring/web'
 import { type ComponentProps, type FunctionComponent, isValidElement, type ReactElement, type ReactNode } from 'react'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
 import { Button } from './Button'
 import { Typography } from './Typography'
-import Icon, { type SvgName } from '~virtual/svg-component'
 
 type DialogActionItem = {
 	label: string
@@ -15,7 +16,7 @@ type DialogActionItem = {
 type SimpleDialogProps = {
 	title: string
 	description: string
-	icon?: SvgName
+	icon?: SvgSpriteIconName
 	actions: Array<DialogActionItem | ReactElement>
 	content?: ReactNode
 	closeOnClickOutside?: boolean

@@ -2,15 +2,15 @@ import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import type { FunctionComponent } from 'react'
 import { NavLink } from 'react-router-dom'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { useIsLinkActive } from 'lib/hooks'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from '../Typography'
-import type { SvgName } from '~virtual/svg-component'
-import Icon from '~virtual/svg-component'
 
 export type NavigationSegmentProps = {
 	label?: string
-	icon: SvgName
+	icon: SvgSpriteIconName
 	badge?: boolean | string
 	to: string
 }

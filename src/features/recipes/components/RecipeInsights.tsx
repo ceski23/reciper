@@ -1,12 +1,13 @@
 import { styled } from '@macaron-css/react'
 import { type FunctionComponent } from 'react'
+import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
-import Icon, { type SvgName } from '~virtual/svg-component'
 
 export type InsightItem = {
 	text: string
-	icon: SvgName
+	icon: SvgSpriteIconName
 }
 
 type RecipeInsightsProps = {

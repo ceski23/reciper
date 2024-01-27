@@ -3,10 +3,10 @@ import { groupBy } from 'ramda'
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type Recipe } from 'features/recipes/types'
+import { Icon } from 'lib/components/Icon'
 import { IconButton } from 'lib/components/IconButton'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
-import Icon from '~virtual/svg-component'
 
 type IngredientsSectionProps = {
 	ingredients: Recipe['ingredients']
