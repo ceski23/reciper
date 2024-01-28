@@ -5,6 +5,7 @@ import { type Recipe } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
 import { getTextFromNode } from 'lib/utils/dom'
 import { getColorFromImage } from 'lib/utils/images'
+import { parseValidNumber } from 'lib/utils/numbers'
 
 export const kwestiasmaku: RecipesProvider = {
 	name: 'Kwestia Smaku',
@@ -21,9 +22,7 @@ export const kwestiasmaku: RecipesProvider = {
 			.filter(isDefined)
 
 		const servingsElement = doc.querySelector('.field-name-field-ilosc-porcji')
-		const servings = servingsElement?.textContent
-			? Number.parseInt(servingsElement.textContent, 10)
-			: undefined
+		const servings = parseValidNumber(servingsElement?.textContent)
 
 		return {
 			...partialRecipe,
