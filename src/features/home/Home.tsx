@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useQuery } from '@tanstack/react-query'
-import { countBy, identity } from 'ramda'
+import { counting } from 'radash'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeCard } from 'features/home/components/RecipeCard'
@@ -32,7 +32,7 @@ export const Home: FunctionComponent = () => {
 			.slice(0, amount)
 	const getMostCommonTags = (recipes: Array<Recipe>, amount: number) =>
 		Object
-			.entries(countBy<string>(identity)(recipes.flatMap(recipe => recipe.tags)))
+			.entries(counting(recipes.flatMap(recipe => recipe.tags), tag => tag))
 			.sort(([, a], [, b]) => b - a)
 			.slice(0, amount)
 			.map(([key]) => key)

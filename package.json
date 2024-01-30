@@ -44,7 +44,7 @@
 		"nanoid": "^5.0.4",
 		"optics-ts": "^2.4.1",
 		"photoswipe": "^5.4.3",
-		"ramda": "^0.29.1",
+		"radash": "^11.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-helmet-async": "^2.0.3",
@@ -59,7 +59,6 @@
 	"devDependencies": {
 		"@ceski23/eslint-config": "github:ceski23/eslint-config#feat/flat-config",
 		"@types/dom-close-watcher": "^1.0.0",
-		"@types/ramda": "^0.29.9",
 		"@types/react": "^18.2.15",
 		"@types/react-dom": "^18.2.7",
 		"@types/svg-sprite": "^0.0.38",
