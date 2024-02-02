@@ -63,6 +63,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = ({ onClose
 						label={t('recipes.addRecipe.addByUrl.label')}
 						value={url}
 						onValueChange={setUrl}
+						inputProps={{ type: 'url' }}
 					/>
 				</UrlFieldForm>
 			)}
