@@ -3,7 +3,7 @@ import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useTypedSearchParams } from 'react-router-typesafe-routes/dom'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
@@ -34,6 +34,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	const style = useDynamicTheme(recipe?.color)
 	const addRecipe = useAddRecipe()
 	const transition = useTransition(isError, DIALOG_ANIMATION)
+	const location = useLocation()
 
 	useWakelock()
 
@@ -81,7 +82,13 @@ export const ScrapeRecipe: FunctionComponent = () => {
 					title="Scraping error"
 					description={t('scraping.error', { website: isValidUrl(url) ? new URL(url).host : undefined })}
 					actions={[
-						{ label: t('scraping.close'), onClick: () => window.close() },
+						{
+							label: t('scraping.close'),
+							onClick: () => {
+								if (location.key === 'default') return window.close()
+								navigate(-1)
+							},
+						},
 					]}
 					styles={styles}
 					open={open}

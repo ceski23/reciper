@@ -73,7 +73,19 @@
 			"error": "Wystąpił błąd podczas synchronizacji przepisów",
 			"ok": "OK"
 		},
-		"addRecipe": "Dodaj przepis"
+		"addRecipe": {
+			"cta": "Dodaj przepis",
+			"title": "Dodaj przepis",
+			"description": "Dodaj nowy przepis ręcznie lub zaimportuj go za pomocą adresu URL",
+			"close": "Zamknij",
+			"addManually": "Dodaj ręcznie",
+			"addByUrl": {
+				"title": "Import z adresu URL",
+				"description": "Wklej adres URL przepisu, który chcesz zaimportować.",
+				"import": "Importuj",
+				"label": "Adres URL"
+			}
+		}
 	},
 	"newRecipe": {
 		"title": "Nowy przepis",

@@ -50,7 +50,7 @@ export const ListItemBase = styled(RovingFocusGroup.Item, {
 		paddingLeft: 16,
 		paddingRight: 24,
 		gap: 16,
-		backgroundColor: theme.colors.surface,
+		backgroundColor: 'unset',
 		border: 'none',
 		transition: 'background-color .2s',
 		textAlign: 'start',

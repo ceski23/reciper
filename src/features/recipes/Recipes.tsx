@@ -3,7 +3,8 @@ import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
+import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
 import { recipesQuery, useAddRecipes } from 'features/recipes/recipes'
 import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
@@ -13,9 +14,9 @@ import { IconButton } from 'lib/components/IconButton'
 import { VirtualList } from 'lib/components/list/VirtualList'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopAppBar } from 'lib/components/TopAppBar'
+import { useDialogState } from 'lib/hooks/useDialogState'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
-import { PATHS } from 'lib/routing/paths'
 
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
@@ -23,9 +24,10 @@ export const Recipes: FunctionComponent = () => {
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { notify } = useNotifications()
-	const navigate = useNavigate()
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
+	const { AnimateDialog: AnimateAddDialog, state: [, setIsAddDialogOpen] } = useDialogState(false)
+	const { AnimateDialog: AnimateUrlDialog, state: [, setIsUrlDialogOpen] } = useDialogState(false)
 
 	useEffect(() => {
 		if (recipes.data?.length === 0) {
@@ -93,14 +95,26 @@ export const Recipes: FunctionComponent = () => {
 				<FabContainer>
 					<FloatingActionButton
 						icon="plus"
-						label={t('recipes.addRecipe')}
+						label={t('recipes.addRecipe.cta')}
 						type="button"
 						variant="primary"
 						size={isListScrolled ? undefined : 'expanded'}
-						onClick={() => navigate(PATHS.RECIPES.NEW.buildPath({}), { unstable_viewTransition: true })}
+						onClick={() => setIsAddDialogOpen(true)}
 					/>
 				</FabContainer>
 			</ContentOverlayPortal>
+			<AnimateUrlDialog>
+				<AddByUrlDialog onClose={() => setIsUrlDialogOpen(false)} />
+			</AnimateUrlDialog>
+			<AnimateAddDialog>
+				<AddRecipeDialog
+					onAddByUrl={() => {
+						setIsUrlDialogOpen(true)
+						setIsAddDialogOpen(false)
+					}}
+					onClose={() => setIsAddDialogOpen(false)}
+				/>
+			</AnimateAddDialog>
 		</Fragment>
 	)
 }

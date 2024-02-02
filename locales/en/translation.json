@@ -68,7 +68,19 @@
 			"error": "Error while syncing recipes",
 			"ok": "OK"
 		},
-		"addRecipe": "Add recipe"
+		"addRecipe": {
+			"cta": "Add recipe",
+			"title": "Add recipe",
+			"description": "Add a new recipe manually or import using the URL",
+			"close": "Close",
+			"addManually": "Add manually",
+			"addByUrl": {
+				"title": "Import from URL",
+				"description": "Paste URL address to recipe that you want to import",
+				"import": "Import",
+				"label": "URL address"
+			}
+		}
 	},
 	"newRecipe": {
 		"title": "New recipe",
