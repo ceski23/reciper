@@ -3,10 +3,10 @@ import { group } from 'radash'
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type Recipe } from 'features/recipes/types'
-import { Icon } from 'lib/components/Icon'
 import { IconButton } from 'lib/components/IconButton'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
+import { IngredientItem } from './IngredientItem'
 
 type IngredientsSectionProps = {
 	ingredients: Recipe['ingredients']
@@ -46,12 +46,10 @@ export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({
 					</Spinbox>
 					<IngredientsList>
 						{ingredients.map((ingredient, index) => (
-							<IngredientItem key={index}>
-								<IngredientIcon name="ingredient" />
-								<IngredientText>
-									{ingredient.text}
-								</IngredientText>
-							</IngredientItem>
+							<IngredientItem
+								ingredient={ingredient}
+								key={index}
+							/>
 						))}
 					</IngredientsList>
 				</Container>
@@ -95,32 +93,6 @@ const Spinbox = styled('div', {
 		paddingInline: 16,
 		paddingBlock: 8,
 		gap: 16,
-	},
-})
-
-const IngredientItem = styled('div', {
-	base: {
-		display: 'flex',
-		flexDirection: 'row',
-		gap: 16,
-		alignItems: 'center',
-	},
-})
-
-const IngredientIcon = styled(Icon, {
-	base: {
-		width: 48,
-		height: 48,
-		borderRadius: 12,
-		padding: 12,
-		backgroundColor: theme.colors.secondaryContainer,
-		color: theme.colors.onPrimaryContainer,
-	},
-})
-
-const IngredientText = styled(Typography.BodyMedium, {
-	base: {
-		flex: 1,
 	},
 })
 
