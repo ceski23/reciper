@@ -6,7 +6,7 @@ import i18nextLoader from 'vite-plugin-i18next-loader'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { ManifestOptions, VitePWA } from 'vite-plugin-pwa'
 import child from 'node:child_process'
-import { svgSprite } from './svgSpritePlugin'
+import svgSprite from '@ceski23/vite-plugin-svg-sprite'
 
 const pwaManifest: Partial<ManifestOptions> = {
 	short_name: 'Reciper',
