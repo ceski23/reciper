@@ -139,6 +139,9 @@
 			"text": "Ustawienia związane z synchronizacją przepisów",
 			"loggedInText": "Jesteś zalogowany do swojego konta Google",
 			"logout": "Wyloguj",
+			"login": "Zaloguj",
+			"loggedOutTitle": "Konto",
+			"loggedOutText": "Zaloguj się na swoje konto Google",
 			"sync": {
 				"title": "Synchronizacja przepisów",
 				"text": "Automatycznie synchronizuj swoje przepisy"

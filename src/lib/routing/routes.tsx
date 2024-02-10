@@ -1,4 +1,5 @@
 import type { RouteObject } from 'react-router-dom'
+import { Google } from 'features/auth/providers'
 import { Home } from 'features/home/Home'
 import { NewRecipe } from 'features/recipes/NewRecipe'
 import { Recipe } from 'features/recipes/Recipe'
@@ -57,6 +58,15 @@ export const routes: Array<RouteObject> = [{
 				{
 					path: PATHS.SETTINGS.UNITS.path,
 					element: <Units />,
+				},
+			],
+		},
+		{
+			path: PATHS.AUTH.path,
+			children: [
+				{
+					path: PATHS.AUTH.GOOGLE.path,
+					element: <Google />,
 				},
 			],
 		},

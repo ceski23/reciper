@@ -133,6 +133,9 @@
 			"text": "Settings related to recipes synchronization",
 			"loggedInText": "You are logged in to your Google account",
 			"logout": "Logout",
+			"login": "Login",
+			"loggedOutTitle": "Account",
+			"loggedOutText": "Log in to your Google account",
 			"sync": {
 				"title": "Recipes synchronization",
 				"text": "Automatically synchronize your recipes"
@@ -195,6 +198,15 @@
 		"language": {
 			"title": "Language",
 			"text": "Select app's language"
+		}
+	},
+	"auth": {
+		"google": {
+			"error": {
+				"title": "Login error",
+				"description": "Error when logging in, there may have been an error in the account or not all the necessary permissions were granted.",
+				"close": "Close"
+			}
 		}
 	}
 }

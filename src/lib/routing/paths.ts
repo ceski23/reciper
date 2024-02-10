@@ -18,4 +18,7 @@ export const PATHS = {
 		ABOUT: route('about'),
 		THEME: route('theme'),
 	}),
+	AUTH: route('auth', {}, {
+		GOOGLE: route('google'),
+	}),
 }
