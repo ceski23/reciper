@@ -6,7 +6,7 @@ export const useLongPress = (callback: VoidFunction, threshold = 300) => {
 
 	useEffect(() => {
 		if (isPressed) {
-			timerId.current = setTimeout(callback, threshold)
+			timerId.current = window.setTimeout(callback, threshold)
 
 			return () => {
 				clearTimeout(timerId.current)
