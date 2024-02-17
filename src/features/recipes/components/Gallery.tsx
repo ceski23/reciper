@@ -61,6 +61,8 @@ export const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
 	)
 }
 
+export default Gallery
+
 const ImagesGrid = styled(RovingFocusGroup.Root, {
 	base: {
 		display: 'grid',
