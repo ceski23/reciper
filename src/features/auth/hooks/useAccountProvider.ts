@@ -1,16 +1,17 @@
 import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
-import { GoogleProvider } from 'features/auth/providers'
 import { accountDataAtom } from 'lib/stores/account'
+import { GoogleProvider } from '../providers/google/provider'
 
-export const useAccountProvider = (onUnauthorized?: VoidFunction) => {
+export const useAccountProvider = () => {
 	const accountData = useAtomValue(accountDataAtom)
 
 	return useMemo(() => {
 		switch (accountData.provider) {
-			case GoogleProvider.PROVIDER_NAME:
+			case GoogleProvider.providerName:
+				return new GoogleProvider()
 			default:
-				return GoogleProvider(accountData.accessToken, onUnauthorized)
+				return undefined
 		}
-	}, [accountData.accessToken, accountData.provider, onUnauthorized])
+	}, [accountData.provider])
 }

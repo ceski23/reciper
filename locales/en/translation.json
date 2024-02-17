@@ -201,6 +201,10 @@
 		}
 	},
 	"auth": {
+		"logoutError": {
+			"text": "The session could not be renewed. You have been logged out",
+			"action": "OK"
+		},
 		"google": {
 			"error": {
 				"title": "Login error",

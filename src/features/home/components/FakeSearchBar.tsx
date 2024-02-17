@@ -1,13 +1,12 @@
 import { styled } from '@macaron-css/react'
-import { useAtomValue } from 'jotai'
 import { type CSSProperties, type FunctionComponent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import { useUserInfo } from 'features/auth/hooks'
 import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
 import { useRipples } from 'lib/hooks/useRipples'
 import { PATHS } from 'lib/routing/paths'
-import { accountDataAtom } from 'lib/stores/account'
 import { styleUtils, theme } from 'lib/styles'
 
 type FakeSearchBarProps = {
@@ -19,7 +18,7 @@ type FakeSearchBarProps = {
 export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIcon, placeholder, style }) => {
 	const { eventHandlers, renderRipples } = useRipples()
 	const navigate = useNavigate()
-	const userAccountData = useAtomValue(accountDataAtom)
+	const userInfo = useUserInfo()
 
 	return (
 		<SearchBarBase
@@ -30,14 +29,14 @@ export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIc
 			{renderRipples}
 			<LeadingIcon name={leadingIcon} />
 			{placeholder && <PlaceholderText>{placeholder}</PlaceholderText>}
-			{userAccountData.user && (
+			{userInfo && (
 				<AccountLink
 					to={PATHS.SETTINGS.ACCOUNT.buildPath({})}
 					onClick={event => event.stopPropagation()}
 				>
 					<Avatar
-						alt={userAccountData.user.name}
-						src={userAccountData.user.avatar}
+						alt={userInfo.name}
+						src={userInfo.avatar}
 					/>
 				</AccountLink>
 			)}

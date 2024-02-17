@@ -1,20 +1,15 @@
 import { createTheme, createVar } from '@macaron-css/core'
 import { setElementVars } from '@macaron-css/core/dist/dynamic'
 import { styled } from '@macaron-css/react'
-import { useQuery } from '@tanstack/react-query'
 import { useSetAtom } from 'jotai'
-import { useResetAtom } from 'jotai/utils'
-import { type FunctionComponent, useEffect, useLayoutEffect } from 'react'
+import { type FunctionComponent, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
-import { useAccountProvider } from 'features/auth/hooks'
-import { userInfoQuery } from 'features/auth/queries'
 import { useDisableAnimations } from 'lib/hooks/useDisableAnimations'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { useScreenNavigationAnimations } from 'lib/hooks/useScreenNavigationAnimations'
 import { PATHS } from 'lib/routing/paths'
-import { accountDataAtom } from 'lib/stores/account'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
 import { AppUpdatePrompt } from './AppUpdatePrompt'
@@ -46,21 +41,6 @@ export const Layout: FunctionComponent = () => {
 			[navigationMenuHeight]: `${height ?? 0}px`,
 		})
 	})
-	const resetAccountData = useResetAtom(accountDataAtom)
-	const { data, status } = useQuery(userInfoQuery(useAccountProvider(resetAccountData)))
-	const setAccountData = useSetAtom(accountDataAtom)
-
-	useEffect(() => {
-		if (status === 'success') {
-			setAccountData(prev => ({
-				...prev,
-				user: {
-					name: data.name,
-					avatar: data.avatar,
-				},
-			}))
-		}
-	}, [data, setAccountData, status])
 
 	useLayoutEffect(() => {
 		document.body.classList.toggle(lightThemeClass, !isDarkMode)

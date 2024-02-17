@@ -4,7 +4,8 @@ import { useAtomValue } from 'jotai'
 import { useResetAtom } from 'jotai/utils'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAccountProvider } from 'features/auth/hooks'
+import { useAccountProvider, useUserInfo } from 'features/auth/hooks'
+import { GoogleProvider } from 'features/auth/providers/google/provider'
 import { logoutMutation } from 'features/auth/queries'
 import { Button } from 'lib/components/Button'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
@@ -17,14 +18,12 @@ import { theme } from 'lib/styles'
 
 export const Account: FunctionComponent = () => {
 	const { t } = useTranslation()
-	const accountData = useAtomValue(accountDataAtom)
+	const userInfo = useUserInfo()
 	const resetAccountData = useResetAtom(accountDataAtom)
 	const accountProvider = useAccountProvider()
 	const logout = useMutation({
 		...logoutMutation(accountProvider),
-		onSuccess: () => {
-			resetAccountData()
-		},
+		onSuccess: resetAccountData,
 	})
 
 	return (
@@ -36,12 +35,12 @@ export const Account: FunctionComponent = () => {
 				/>
 			</HeaderPortal>
 			<List>
-				{accountData.user === undefined
+				{userInfo === undefined
 					? (
 						<ListItem.Simple
 							title={t('settings.account.loggedOutTitle')}
 							text={t('settings.account.loggedOutText')}
-							trailingElement={<Button onClick={accountProvider.login}>{t('settings.account.login')}</Button>}
+							trailingElement={<Button onClick={GoogleProvider.startLogin}>{t('settings.account.login')}</Button>}
 							leadingElement="google_color"
 							iconColor={theme.colors.primary}
 						/>
@@ -50,11 +49,11 @@ export const Account: FunctionComponent = () => {
 						<ListItem.Simple
 							leadingElement={(
 								<Avatar
-									alt={accountData.user.name}
-									src={accountData.user.avatar}
+									alt={userInfo.name}
+									src={userInfo.avatar}
 								/>
 							)}
-							title={accountData.user.name}
+							title={userInfo.name}
 							text={t('settings.account.loggedInText')}
 							trailingElement={(
 								<Button
@@ -71,6 +70,7 @@ export const Account: FunctionComponent = () => {
 					iconColor={theme.colors.primary}
 					title={t('settings.account.sync.title')}
 					text={t('settings.account.sync.text')}
+					isDisabled
 				/>
 			</List>
 			<QuickActionsSection>
@@ -78,10 +78,25 @@ export const Account: FunctionComponent = () => {
 					{t('settings.account.quickActions.title')}
 				</Typography.TitleMedium>
 				<ImportExportContainer>
-					<Button leftIcon="fileUpload">{t('settings.account.quickActions.importFile')}</Button>
-					<Button leftIcon="fileDownload">{t('settings.account.quickActions.exportFile')}</Button>
+					<Button
+						leftIcon="fileUpload"
+						disabled
+					>
+						{t('settings.account.quickActions.importFile')}
+					</Button>
+					<Button
+						leftIcon="fileDownload"
+						disabled
+					>
+						{t('settings.account.quickActions.exportFile')}
+					</Button>
 				</ImportExportContainer>
-				<Button leftIcon="link">{t('settings.account.quickActions.exportUrls')}</Button>
+				<Button
+					leftIcon="link"
+					disabled
+				>
+					{t('settings.account.quickActions.exportUrls')}
+				</Button>
 			</QuickActionsSection>
 		</Fragment>
 	)

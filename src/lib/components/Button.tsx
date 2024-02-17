@@ -19,7 +19,7 @@ export const Button: FunctionComponent<ComponentProps<typeof ButtonBase> & Butto
 
 	return (
 		<ButtonBase {...mergeProps(props, eventHandlers)}>
-			{renderRipples}
+			{!props.disabled && renderRipples}
 			{leftIcon && <ButtonIcon name={leftIcon} />}
 			{children}
 		</ButtonBase>

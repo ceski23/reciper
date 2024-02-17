@@ -206,5 +206,18 @@
 			"title": "Język",
 			"text": "Wybierz język aplikacji"
 		}
+	},
+	"auth": {
+		"logoutError": {
+			"text": "Nie udało się odnowić sesji. Zostałeś wylogowany",
+			"action": "OK"
+		},
+		"google": {
+			"error": {
+				"title": "Błąd logowania",
+				"description": "Błąd podczas logowania, mógł wystąpić błąd na koncie lub nie wszystkie niezbędne uprawnienia zostały przyznane.",
+				"close": "Zamknij"
+			}
+		}
 	}
 }

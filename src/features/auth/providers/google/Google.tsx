@@ -1,31 +1,40 @@
 import { useTransition } from '@react-spring/web'
+import { useQuery } from '@tanstack/react-query'
 import { useSetAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { DIALOG_ANIMATION, SimpleDialog } from 'lib/components/Dialog'
 import { PATHS } from 'lib/routing/paths'
-import { accessTokenAtom, accountDataAtom } from 'lib/stores/account'
-import { GoogleProvider, requiredScopes } from './provider'
+import { accountDataAtom } from 'lib/stores/account'
+import { GoogleProvider } from './provider'
 
 export const Google = () => {
 	const { t } = useTranslation()
 	const location = useLocation()
 	const navigate = useNavigate()
-	const params = Object.fromEntries(new URLSearchParams(location.hash.substring(1)))
+	const params = Object.fromEntries(new URLSearchParams(location.search))
 	const grantedScopes = params.scope.split(' ')
-	const areRequiredScopesGranted = requiredScopes.every(scope => grantedScopes.includes(scope))
-	const isError = 'error' in params || !areRequiredScopesGranted
-	const transition = useTransition(isError, DIALOG_ANIMATION)
-	const setAccessToken = useSetAtom(accessTokenAtom)
+	const areRequiredScopesGranted = GoogleProvider.requiredScopes.every(scope => grantedScopes.includes(scope))
 	const setAccountData = useSetAtom(accountDataAtom)
+	const { isSuccess, data, isError: isCompleteLoginError } = useQuery({
+		queryKey: ['code'],
+		queryFn: GoogleProvider.completeLogin,
+		retry: false,
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
+	})
+	const isError = 'error' in params || !areRequiredScopesGranted || isCompleteLoginError
+	const transition = useTransition(isError, DIALOG_ANIMATION)
 
-	if (!isError && params.access_token) {
-		setAccessToken(params.access_token)
-		setAccountData(prev => ({
-			...prev,
-			accessToken: params.access_token,
-			provider: GoogleProvider.PROVIDER_NAME,
-		}))
+	if (isSuccess) {
+		queueMicrotask(() => {
+			setAccountData({
+				accessToken: data.accessToken,
+				refreshToken: data.refreshToken,
+				provider: GoogleProvider.providerName,
+				user: data.user,
+			})
+		})
 
 		return (
 			<Navigate
