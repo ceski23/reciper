@@ -26,7 +26,7 @@ export const Google = () => {
 	const isError = 'error' in params || !areRequiredScopesGranted || isCompleteLoginError
 	const transition = useTransition(isError, DIALOG_ANIMATION)
 
-	if (isSuccess) {
+	if (isSuccess && !isError) {
 		queueMicrotask(() => {
 			setAccountData({
 				accessToken: data.accessToken,
