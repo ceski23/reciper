@@ -1,6 +1,5 @@
 import { styled } from '@macaron-css/react'
 import { useMutation } from '@tanstack/react-query'
-import { useAtomValue } from 'jotai'
 import { useResetAtom } from 'jotai/utils'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
