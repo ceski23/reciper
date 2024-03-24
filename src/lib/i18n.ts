@@ -3,16 +3,16 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 // @ts-expect-error no types for vite virtual modules
 import resources from 'virtual:i18next-loader'
-import { languageAtom, settingsAtom, store } from 'lib/stores/settings'
+import { settingsStore } from 'lib/stores/settings'
 
 export const initI18n = () => {
 	const languageDetector = new LanguageDetector()
 	languageDetector.addDetector({
 		name: 'settings',
-		lookup: () => store.get(settingsAtom).language,
+		lookup: () => settingsStore.getState().language,
 	})
 
-	store.sub(languageAtom, () => i18n.changeLanguage())
+	settingsStore.effect(() => i18n.isInitialized && i18n.changeLanguage(), ['language'])
 
 	i18n
 		.use(initReactI18next)

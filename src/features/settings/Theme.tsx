@@ -1,5 +1,4 @@
 import { useReducedMotion } from '@react-spring/web'
-import { useAtom } from 'jotai'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ColorSchemeDialog } from 'features/settings/ColorSchemeDialog'
@@ -8,13 +7,13 @@ import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDialogState } from 'lib/hooks/useDialogState'
-import { settingsAtom } from 'lib/stores/settings'
+import { settingsStore } from 'lib/stores/settings'
 import { theme } from 'lib/styles'
 
 export const Theme: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const { AnimateDialog, state: [, setIsColorSchemeDialogOpen] } = useDialogState(false)
-	const [settings, setSettings] = useAtom(settingsAtom)
+	const { state: settings, actions: { setTheme } } = settingsStore.useStore('theme')
 	const isReducedMotion = useReducedMotion() ?? false
 
 	return (
@@ -40,7 +39,7 @@ export const Theme: FunctionComponent = () => {
 					size="3line"
 					switchProps={{
 						checked: settings.theme.dynamicColor,
-						onCheckedChange: dynamicColor => setSettings(prev => ({ ...prev, theme: { ...prev.theme, dynamicColor } })),
+						onCheckedChange: dynamicColor => setTheme(prev => ({ ...prev, dynamicColor })),
 					}}
 				/>
 				<ListItem.Switch
@@ -50,7 +49,7 @@ export const Theme: FunctionComponent = () => {
 					text={isReducedMotion ? t('settings.theme.disableAnimations.forcedText') : t('settings.theme.disableAnimations.text')}
 					switchProps={{
 						checked: isReducedMotion ? true : settings.theme.disabledAnimations,
-						onCheckedChange: disabledAnimations => setSettings(prev => ({ ...prev, theme: { ...prev.theme, disabledAnimations } })),
+						onCheckedChange: disabledAnimations => setTheme(prev => ({ ...prev, disabledAnimations })),
 					}}
 					isDisabled={isReducedMotion}
 				/>
@@ -60,13 +59,7 @@ export const Theme: FunctionComponent = () => {
 					onCancel={() => setIsColorSchemeDialogOpen(false)}
 					onSave={colorScheme => {
 						setIsColorSchemeDialogOpen(false)
-						setSettings(prev => ({
-							...prev,
-							theme: {
-								...prev.theme,
-								colorScheme,
-							},
-						}))
+						setTheme(prev => ({ ...prev, colorScheme }))
 					}}
 				/>
 			</AnimateDialog>

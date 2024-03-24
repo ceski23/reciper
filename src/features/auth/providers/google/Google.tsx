@@ -1,11 +1,10 @@
 import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
-import { useSetAtom } from 'jotai'
 import { useTranslation } from 'react-i18next'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { DIALOG_ANIMATION, SimpleDialog } from 'lib/components/Dialog'
 import { PATHS } from 'lib/routing/paths'
-import { accountDataAtom } from 'lib/stores/account'
+import { accountStore } from 'lib/stores/account'
 import { GoogleProvider } from './provider'
 
 export const Google = () => {
@@ -15,7 +14,7 @@ export const Google = () => {
 	const params = Object.fromEntries(new URLSearchParams(location.search))
 	const grantedScopes = params.scope.split(' ')
 	const areRequiredScopesGranted = GoogleProvider.requiredScopes.every(scope => grantedScopes.includes(scope))
-	const setAccountData = useSetAtom(accountDataAtom)
+	const { actions: { setAccessToken, setProvider, setRefreshToken, setUser } } = accountStore.useStore()
 	const { isSuccess, data, isError: isCompleteLoginError } = useQuery({
 		queryKey: ['code'],
 		queryFn: GoogleProvider.completeLogin,
@@ -28,12 +27,10 @@ export const Google = () => {
 
 	if (isSuccess && !isError) {
 		queueMicrotask(() => {
-			setAccountData({
-				accessToken: data.accessToken,
-				refreshToken: data.refreshToken,
-				provider: GoogleProvider.providerName,
-				user: data.user,
-			})
+			setAccessToken(data.accessToken)
+			setRefreshToken(data.refreshToken)
+			setProvider(GoogleProvider.providerName)
+			setUser(data.user)
 		})
 
 		return (

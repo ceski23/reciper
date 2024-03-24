@@ -1,7 +1,6 @@
 import ky from 'ky'
 import { PATHS } from 'lib/routing/paths'
-import { accessTokenAtom, refreshTokenAtom } from 'lib/stores/account'
-import { store } from 'lib/stores/settings'
+import { accountStore } from 'lib/stores/account'
 import { base64url, generateCodeChallenge, randomBytes } from 'lib/utils/oauth'
 import { AccountProvider } from '../provider'
 
@@ -99,7 +98,7 @@ export class GoogleProvider extends AccountProvider {
 	}
 
 	async logout() {
-		const accessToken = store.get(accessTokenAtom)
+		const accessToken = accountStore.getState().accessToken
 		const body = new FormData()
 
 		if (accessToken) {
@@ -110,7 +109,7 @@ export class GoogleProvider extends AccountProvider {
 	}
 
 	async refreshAccessToken() {
-		const refreshToken = store.get(refreshTokenAtom)
+		const refreshToken = accountStore.getState().refreshToken
 
 		if (!refreshToken) {
 			throw Error('No refresh token available')

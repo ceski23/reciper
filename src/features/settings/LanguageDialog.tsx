@@ -1,12 +1,11 @@
 import { type SpringValue } from '@react-spring/web'
-import { useAtomValue } from 'jotai'
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/Dialog'
 import { RadioGroup } from 'lib/components/RadioGroup'
 import { LANGUAGES } from 'lib/i18n'
-import { languageAtom, type Settings } from 'lib/stores/settings'
+import { type Settings, settingsStore } from 'lib/stores/settings'
 
 type LanguageDialogProps = {
 	open?: boolean
@@ -19,7 +18,7 @@ type LanguageDialogProps = {
 
 export const LanguageDialog: FunctionComponent<LanguageDialogProps> = ({ onCancel, onSave, open, styles }) => {
 	const { t } = useTranslation()
-	const language = useAtomValue(languageAtom)
+	const { state: { language } } = settingsStore.useStore('language')
 	const [selectedLanguage, setSelectedLanguage] = useState<Settings['language']>(language)
 
 	return (

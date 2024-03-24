@@ -1,20 +1,7 @@
-import { atom, useSetAtom } from 'jotai'
-
-export type Notification = {
-	id: string
-	content: string
-	duration: number
-	dismissable?: boolean
-	action?: {
-		label: string
-		onClick?: VoidFunction
-	}
-}
-
-export const notificationsAtom = atom<Array<Notification>>([])
+import { type Notification, notificationsStore } from 'lib/stores/notifications'
 
 export const useNotifications = () => {
-	const setNotifications = useSetAtom(notificationsAtom)
+	const { actions: { setNotifications } } = notificationsStore.useStore('notifications')
 	const notify = (content: string, {
 		id = crypto.randomUUID(),
 		duration = 5000,

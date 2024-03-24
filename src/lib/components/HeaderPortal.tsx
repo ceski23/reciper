@@ -1,15 +1,13 @@
-import { atom, useAtomValue } from 'jotai'
 import { type FunctionComponent, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { uiStore } from 'lib/stores/ui'
 
 type HeaderPortalProps = {
 	children?: ReactNode
 }
 
-export const headerRefAtom = atom<HTMLElement | null>(null)
-
 export const HeaderPortal: FunctionComponent<HeaderPortalProps> = ({ children }) => {
-	const headerRef = useAtomValue(headerRefAtom)
+	const { state: { header } } = uiStore.useStore('header')
 
-	return headerRef ? createPortal(children, headerRef) : null
+	return header ? createPortal(children, header) : null
 }

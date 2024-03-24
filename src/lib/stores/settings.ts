@@ -1,8 +1,4 @@
-import { createStore } from 'jotai'
-import { atomWithStorage } from 'jotai/utils'
-import { focusAtom } from 'jotai-optics'
-
-export const store = createStore()
+import { createStore, storage } from '@codemaskinc/store'
 
 export type Settings = {
 	theme: {
@@ -13,13 +9,11 @@ export type Settings = {
 	language?: string
 }
 
-export const settingsAtom = atomWithStorage<Settings>('reciperSettings', {
-	theme: {
+export const settingsStore = createStore({
+	theme: storage<Settings['theme']>({
 		colorScheme: undefined,
 		dynamicColor: true,
 		disabledAnimations: false,
-	},
-	language: undefined,
+	}),
+	language: storage<Settings['language']>(undefined),
 })
-
-export const languageAtom = focusAtom(settingsAtom, optic => optic.prop('language'))

@@ -1,5 +1,4 @@
-import { atomWithStorage } from 'jotai/utils'
-import { focusAtom } from 'jotai-optics'
+import { createStore, storage } from '@codemaskinc/store'
 import { type UserInfo } from 'features/auth/providers'
 
 export type AccountData = {
@@ -9,11 +8,9 @@ export type AccountData = {
 	user?: UserInfo
 }
 
-export const accountDataAtom = atomWithStorage<AccountData>('accountData', {
-	accessToken: undefined,
-	refreshToken: undefined,
-	user: undefined,
+export const accountStore = createStore({
+	provider: storage<AccountData['provider']>(),
+	accessToken: storage<AccountData['accessToken']>(),
+	refreshToken: storage<AccountData['refreshToken']>(),
+	user: storage<AccountData['user']>(),
 })
-
-export const accessTokenAtom = focusAtom(accountDataAtom, optic => optic.prop('accessToken'))
-export const refreshTokenAtom = focusAtom(accountDataAtom, optic => optic.prop('refreshToken'))

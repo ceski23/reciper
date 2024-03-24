@@ -1,7 +1,6 @@
 import { createTheme, createVar } from '@macaron-css/core'
 import { setElementVars } from '@macaron-css/core/dist/dynamic'
 import { styled } from '@macaron-css/react'
-import { useSetAtom } from 'jotai'
 import { type FunctionComponent, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
@@ -10,11 +9,10 @@ import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { useScreenNavigationAnimations } from 'lib/hooks/useScreenNavigationAnimations'
 import { PATHS } from 'lib/routing/paths'
+import { uiStore } from 'lib/stores/ui'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
 import { AppUpdatePrompt } from './AppUpdatePrompt'
-import { overlayContainerRefAtom } from './ContentOverlayPortal'
-import { headerRefAtom } from './HeaderPortal'
 import { NavigationBar } from './navigation/NavigationBar'
 import { SnackbarContainer } from './SnackbarContainer'
 
@@ -34,8 +32,6 @@ export const Layout: FunctionComponent = () => {
 
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()
-	const setHeaderRef = useSetAtom(headerRefAtom)
-	const setOverlayContainerRef = useSetAtom(overlayContainerRefAtom)
 	const navbarRef = useMeasureHeight<HTMLDivElement>(height => {
 		setElementVars(document.body, {
 			[navigationMenuHeight]: `${height ?? 0}px`,
@@ -49,12 +45,12 @@ export const Layout: FunctionComponent = () => {
 
 	return (
 		<LayoutBase>
-			<Header ref={setHeaderRef} />
+			<Header ref={uiStore.actions.setHeader} />
 			<MainContent>
 				<Outlet />
 				<ContentOverlayContainer>
 					<SnackbarContainer />
-					<div ref={setOverlayContainerRef} />
+					<div ref={uiStore.actions.setOverlayContainer} />
 				</ContentOverlayContainer>
 			</MainContent>
 			<NavigationBar

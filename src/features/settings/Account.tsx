@@ -1,6 +1,5 @@
 import { styled } from '@macaron-css/react'
 import { useMutation } from '@tanstack/react-query'
-import { useResetAtom } from 'jotai/utils'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAccountProvider, useUserInfo } from 'features/auth/hooks'
@@ -12,17 +11,16 @@ import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
-import { accountDataAtom } from 'lib/stores/account'
+import { accountStore } from 'lib/stores/account'
 import { theme } from 'lib/styles'
 
 export const Account: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const userInfo = useUserInfo()
-	const resetAccountData = useResetAtom(accountDataAtom)
 	const accountProvider = useAccountProvider()
 	const logout = useMutation({
 		...logoutMutation(accountProvider),
-		onSuccess: resetAccountData,
+		onSuccess: () => accountStore.reset(),
 	})
 
 	return (

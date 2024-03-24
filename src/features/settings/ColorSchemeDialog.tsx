@@ -1,11 +1,10 @@
 import { type SpringValue } from '@react-spring/web'
-import { useAtomValue } from 'jotai'
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/Dialog'
 import { RadioGroup } from 'lib/components/RadioGroup'
-import { type Settings, settingsAtom } from 'lib/stores/settings'
+import { type Settings, settingsStore } from 'lib/stores/settings'
 
 type ColorSchemeDialogProps = {
 	open?: boolean
@@ -18,8 +17,8 @@ type ColorSchemeDialogProps = {
 
 export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ onCancel, onSave, open, styles }) => {
 	const { t } = useTranslation()
-	const settings = useAtomValue(settingsAtom)
-	const [selectedColorScheme, setSelectedColorScheme] = useState<Settings['theme']['colorScheme']>(settings.theme.colorScheme)
+	const { state: { theme } } = settingsStore.useStore('theme')
+	const [selectedColorScheme, setSelectedColorScheme] = useState<Settings['theme']['colorScheme']>(theme.colorScheme)
 
 	const handleRadioChange = (value: string) => {
 		switch (value) {

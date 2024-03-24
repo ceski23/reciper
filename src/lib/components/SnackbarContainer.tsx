@@ -1,8 +1,8 @@
 import { styled } from '@macaron-css/react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
-import { useAtomValue } from 'jotai'
 import { type ComponentProps, type FunctionComponent } from 'react'
-import { notificationsAtom, useNotifications } from 'lib/hooks/useNotifications'
+import { useNotifications } from 'lib/hooks/useNotifications'
+import { notificationsStore } from 'lib/stores/notifications'
 import { Snackbar } from './Snackbar'
 
 type SnackbarContainerProps = {
@@ -14,7 +14,7 @@ export const SnackbarContainer: FunctionComponent<SnackbarContainerProps & Compo
 	...props
 }) => {
 	const { hide } = useNotifications()
-	const notifications = useAtomValue(notificationsAtom)
+	const { state: { notifications } } = notificationsStore.useStore('notifications')
 
 	return (
 		<Container {...props}>

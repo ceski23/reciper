@@ -1,8 +1,7 @@
 import i18next from 'i18next'
 import ky from 'ky'
-import { notificationsAtom } from 'lib/hooks/useNotifications'
-import { accessTokenAtom, accountDataAtom } from 'lib/stores/account'
-import { store } from 'lib/stores/settings'
+import { accountStore } from 'lib/stores/account'
+import { notificationsStore } from 'lib/stores/notifications'
 
 export type UserInfo = {
 	name: string
@@ -31,7 +30,7 @@ export abstract class AccountProvider {
 		hooks: {
 			beforeRequest: [
 				request => {
-					const accessToken = store.get(accessTokenAtom)
+					const accessToken = accountStore.getState().accessToken
 
 					if (accessToken) {
 						request.headers.set('Authorization', `Bearer ${accessToken}`)
@@ -44,19 +43,20 @@ export abstract class AccountProvider {
 						try {
 							const newAccessToken = await this.refreshAccessToken()
 
-							store.set(accessTokenAtom, newAccessToken)
+							accountStore.actions.setAccessToken(newAccessToken)
 							input.headers.set('Authorization', `Bearer ${newAccessToken}`)
 
 							return ky(input)
 						} catch (error) {
-							store.set(accountDataAtom, {})
-							store.set(notificationsAtom, prev =>
+							accountStore.reset()
+							notificationsStore.actions.setNotifications(prev =>
 								prev.concat({
 									id: 'errorLogout',
 									content: i18next.t('auth.logoutError.text'),
 									duration: Infinity,
 									action: { label: i18next.t('auth.logoutError.action') },
-								}))
+								})
+							)
 
 							return response
 						}

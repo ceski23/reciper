@@ -1,4 +1,3 @@
-import { useSetAtom } from 'jotai'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LanguageDialog } from 'features/settings/LanguageDialog'
@@ -8,13 +7,12 @@ import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDialogState } from 'lib/hooks/useDialogState'
 import { PATHS } from 'lib/routing/paths'
-import { languageAtom } from 'lib/stores/settings'
+import { settingsStore } from 'lib/stores/settings'
 import { theme } from 'lib/styles'
 
 export const Settings: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const { AnimateDialog, state: [, setIsLanguageDialogOpen] } = useDialogState(false)
-	const setLanguage = useSetAtom(languageAtom)
 
 	return (
 		<Fragment>
@@ -66,7 +64,7 @@ export const Settings: FunctionComponent = () => {
 					onCancel={() => setIsLanguageDialogOpen(false)}
 					onSave={language => {
 						setIsLanguageDialogOpen(false)
-						setLanguage(language)
+						settingsStore.actions.setLanguage(language)
 					}}
 				/>
 			</AnimateDialog>

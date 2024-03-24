@@ -15,6 +15,7 @@
 		"generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg"
 	},
 	"dependencies": {
+		"@codemaskinc/store": "^0.2.0",
 		"@fontsource-variable/roboto-flex": "^5.0.8",
 		"@macaron-css/core": "^1.2.0",
 		"@macaron-css/react": "^1.4.0",
@@ -38,8 +39,6 @@
 		"i18next-browser-languagedetector": "^7.2.0",
 		"idb-keyval": "^6.2.1",
 		"iso8601-duration": "^2.1.2",
-		"jotai": "^2.6.0",
-		"jotai-optics": "^0.3.1",
 		"ky": "^1.2.0",
 		"merge-props": "^6.0.0",
 		"nanoid": "^5.0.4",

@@ -1,23 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
-import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 import { useAccountProvider } from 'features/auth/hooks'
 import { userInfoQuery } from 'features/auth/queries'
-import { accountDataAtom } from 'lib/stores/account'
+import { accountStore } from 'lib/stores/account'
 
 export const useUserInfo = () => {
-	const [accountData, setAccountData] = useAtom(accountDataAtom)
-	const { data: user, status } = useQuery({
+	const { state: { user }, actions: { setUser } } = accountStore.useStore('user')
+	const { data, status } = useQuery({
 		...userInfoQuery(useAccountProvider()),
-		placeholderData: accountData.user,
+		placeholderData: user,
 		staleTime: 1000 * 60,
 	})
 
 	useEffect(() => {
 		if (status === 'success') {
-			setAccountData(prev => ({ ...prev, user }))
+			setUser(data)
 		}
-	}, [setAccountData, status, user])
+	}, [status, data, setUser])
 
-	return user
+	return data
 }

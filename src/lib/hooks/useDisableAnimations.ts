@@ -1,8 +1,7 @@
 import { style } from '@macaron-css/core'
 import { Globals, useReducedMotion } from '@react-spring/web'
-import { useAtomValue } from 'jotai'
 import { useLayoutEffect } from 'react'
-import { settingsAtom } from 'lib/stores/settings'
+import { settingsStore } from 'lib/stores/settings'
 
 const disabledAnimationsClass = style({
 	selectors: {
@@ -13,7 +12,8 @@ const disabledAnimationsClass = style({
 })
 
 export const useDisableAnimations = () => {
-	const areDisabledAnimations = useAtomValue(settingsAtom).theme.disabledAnimations
+	const { state: { theme } } = settingsStore.useStore('theme')
+	const areDisabledAnimations = theme.disabledAnimations
 	const isReducedMotion = useReducedMotion() ?? false
 	const shouldDisableAnimations = areDisabledAnimations || isReducedMotion
 
