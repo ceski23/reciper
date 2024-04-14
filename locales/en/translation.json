@@ -144,7 +144,12 @@
 				"title": "Quick actions",
 				"importFile": "Import from file",
 				"exportFile": "Export to file",
-				"exportUrls": "Export recipes urls"
+				"exportUrls": "Export recipes urls",
+				"import": {
+					"success_one": "Successfully imported {{count}} recipe",
+					"success_other": "Successfully imported {{count}} recipes",
+					"error": "An error occurred while importing recipes"
+				}
 			}
 		},
 		"theme": {

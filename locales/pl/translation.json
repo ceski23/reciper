@@ -151,6 +151,12 @@
 				"importFile": "Import z pliku",
 				"exportFile": "Eksport do pliku",
 				"exportUrls": "Eksportuj adresy URL przepisów"
+			},
+			"import": {
+				"success_one": "Pomyślnie zaimportowano {{count}} przepis",
+				"success_few": "Pomyślnie zaimportowano {{count}} przepisy",
+				"success_many": "Pomyślnie zaimportowano {{count}} przepisów",
+				"error": "Wystąpił błąd podczas importowania przepisów"
 			}
 		},
 		"theme": {
