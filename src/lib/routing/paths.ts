@@ -3,7 +3,11 @@ import { route, string } from 'react-router-typesafe-routes/dom'
 export const PATHS = {
 	HOME: route(''),
 	RECIPES: route('recipes', {}, {
-		SEARCH: route('search'),
+		SEARCH: route('search', {
+			searchParams: {
+				query: string(),
+			},
+		}),
 		NEW: route('new'),
 		SCRAPE: route('scrape', {
 			searchParams: {

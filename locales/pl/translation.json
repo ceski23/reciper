@@ -219,5 +219,13 @@
 				"close": "Zamknij"
 			}
 		}
+	},
+	"search": {
+		"placeholder": "Szukaj przepisów...",
+		"noResults": "Brak wyników",
+		"clear": "Wyczyść",
+		"filters": {
+			"title": "Filtry"
+		}
 	}
 }

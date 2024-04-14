@@ -5,6 +5,7 @@ import { NewRecipe } from 'features/recipes/NewRecipe'
 import { Recipe } from 'features/recipes/Recipe'
 import { Recipes } from 'features/recipes/Recipes'
 import { ScrapeRecipe } from 'features/recipes/ScrapeRecipe'
+import { Search } from 'features/search/Search'
 import { Account } from 'features/settings/Account'
 import { Settings } from 'features/settings/Settings'
 import { Theme } from 'features/settings/Theme'
@@ -69,6 +70,10 @@ export const routes: Array<RouteObject> = [{
 					element: <Google />,
 				},
 			],
+		},
+		{
+			path: PATHS.RECIPES.SEARCH.path,
+			element: <Search />,
 		},
 	],
 }]

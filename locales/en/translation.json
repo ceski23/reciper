@@ -212,5 +212,13 @@
 				"close": "Close"
 			}
 		}
+	},
+	"search": {
+		"placeholder": "Search recipes...",
+		"noResults": "No results",
+		"clear": "Clear",
+		"filters": {
+			"title": "Filters"
+		}
 	}
 }
