@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
-import { Fragment, type FunctionComponent, useState } from 'react'
+import { Fragment, type FunctionComponent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTypedSearchParams } from 'react-router-typesafe-routes/dom'
@@ -12,7 +12,7 @@ import { useAddRecipe } from 'features/recipes/recipes'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { DIALOG_ANIMATION, SimpleDialog } from 'lib/components/Dialog'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
-import { HeaderPortal } from 'lib/components/HeaderPortal'
+import { MainContent } from 'lib/components/Layout'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
@@ -35,19 +35,18 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	const addRecipe = useAddRecipe()
 	const transition = useTransition(isError, DIALOG_ANIMATION)
 	const location = useLocation()
+	const contentRef = useRef<HTMLElement>(null!)
 
 	useWakelock()
 
 	return (
-		<Fragment>
-			<HeaderPortal>
-				<TopAppBar
-					configuration="large"
-					title={recipe?.name}
-					elevation={isListScrolled ? 'onScroll' : 'flat'}
-					style={style}
-				/>
-			</HeaderPortal>
+		<MainContent ref={contentRef}>
+			<TopAppBar
+				configuration="large"
+				title={recipe?.name}
+				container={contentRef}
+				style={style}
+			/>
 			{renderProbe}
 			{status !== 'success' && <RecipeContentSkeleton />}
 			{status === 'success' && (
@@ -94,7 +93,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 					open={open}
 				/>
 			))}
-		</Fragment>
+		</MainContent>
 	)
 }
 

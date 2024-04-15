@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Fragment, type FunctionComponent, useState } from 'react'
+import { type FunctionComponent, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useTypedParams } from 'react-router-typesafe-routes/dom'
@@ -8,13 +8,12 @@ import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContent
 import { recipeQuery, useDeleteRecipe } from 'features/recipes/recipes'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/Dialog'
-import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
+import { MainContent } from 'lib/components/Layout'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
 import { useDialogState } from 'lib/hooks/useDialogState'
-import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { useWakelock } from 'lib/hooks/useWakelock'
 import { PATHS } from 'lib/routing/paths'
@@ -22,8 +21,6 @@ import { PATHS } from 'lib/routing/paths'
 export const Recipe: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
-	const [isListScrolled, setIsListScrolled] = useState(false)
-	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { notify } = useNotifications()
 	const { id } = useTypedParams(PATHS.RECIPES.RECIPE)
 	const { data: recipe, status } = useQuery(recipeQuery(id))
@@ -31,6 +28,7 @@ export const Recipe: FunctionComponent = () => {
 	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const navigate = useNavigate()
+	const contentRef = useRef<HTMLElement>(null!)
 
 	useWakelock()
 
@@ -40,6 +38,12 @@ export const Recipe: FunctionComponent = () => {
 		})
 	}
 
+	useEffect(() => {
+		document.getElementById('root')?.setAttribute('style', String(style))
+
+		return () => document.getElementById('root')?.removeAttribute('style')
+	}, [style])
+
 	if (status === 'error') {
 		notify(t('recipes.loadError'), { id: 'recipeError' })
 		navigate(-1)
@@ -48,89 +52,80 @@ export const Recipe: FunctionComponent = () => {
 	}
 
 	return (
-		<Fragment>
-			<HeaderPortal>
-				<TopAppBar
-					configuration="large"
-					title={recipe?.name}
-					elevation={isListScrolled ? 'onScroll' : 'flat'}
-					style={style}
-					options={(
-						<Menu.Root
-							open={isMoreOpen}
-							onOpenChange={setIsMoreOpen}
-						>
-							<Menu.Trigger asChild>
-								<IconButton
-									icon="more"
-									title={t('recipes.moreOptions')}
-									isSelected={isMoreOpen}
-								/>
-							</Menu.Trigger>
-							<Menu.Content open={isMoreOpen}>
+		<MainContent ref={contentRef}>
+			<TopAppBar
+				configuration="large"
+				title={recipe?.name}
+				container={contentRef}
+				options={(
+					<Menu.Root
+						open={isMoreOpen}
+						onOpenChange={setIsMoreOpen}
+					>
+						<Menu.Trigger asChild>
+							<IconButton
+								icon="more"
+								title={t('recipes.moreOptions')}
+								isSelected={isMoreOpen}
+							/>
+						</Menu.Trigger>
+						<Menu.Content open={isMoreOpen}>
+							<Menu.Item
+								text={t('recipes.edit')}
+								icon="pencil"
+								disabled
+							/>
+							{navigator.share !== undefined && (
 								<Menu.Item
-									text={t('recipes.edit')}
-									icon="pencil"
-									disabled
+									text={t('recipes.sharing.menuItem')}
+									icon="share"
+									onSelect={handleShareRecipe}
+									disabled={status !== 'success'}
 								/>
-								{navigator.share !== undefined && (
-									<Menu.Item
-										text={t('recipes.sharing.menuItem')}
-										icon="share"
-										onSelect={handleShareRecipe}
-										disabled={status !== 'success'}
-									/>
-								)}
-								<Menu.Item
-									text={t('recipes.delete.menuItem')}
-									icon="delete"
-									onSelect={() => setIsDeleteDialogOpen(true)}
-								/>
-							</Menu.Content>
-						</Menu.Root>
-					)}
-				/>
-				{status === 'success' && (
-					<AnimateDialog>
-						<SimpleDialog
-							title={t('recipes.delete.title')}
-							description={t('recipes.delete.confirmation', { name: recipe.name })}
-							onOpenChange={() => setIsDeleteDialogOpen(false)}
-							actions={[
-								(
-									<Button
-										key="cancel"
-										variant="text"
-										onClick={() => setIsDeleteDialogOpen(false)}
-									>
-										{t('recipes.delete.cancel')}
-									</Button>
-								),
-								(
-									<Button
-										key="delete"
-										variant="filled"
-										onClick={() => {
-											deleteRecipeMutation.mutate(recipe.id, {
-												onSuccess: () => navigate(-1),
-											})
-										}}
-									>
-										{t('recipes.delete.delete')}
-									</Button>
-								),
-							]}
-						/>
-					</AnimateDialog>
+							)}
+							<Menu.Item
+								text={t('recipes.delete.menuItem')}
+								icon="delete"
+								onSelect={() => setIsDeleteDialogOpen(true)}
+							/>
+						</Menu.Content>
+					</Menu.Root>
 				)}
-			</HeaderPortal>
-			{renderProbe}
-			{status === 'pending' ? <RecipeContentSkeleton /> : (
-				<RecipeContent
-					recipe={recipe}
-					style={style}
-				/>
+			/>
+			{status === 'success' && (
+				<AnimateDialog>
+					<SimpleDialog
+						title={t('recipes.delete.title')}
+						description={t('recipes.delete.confirmation', { name: recipe.name })}
+						onOpenChange={() => setIsDeleteDialogOpen(false)}
+						actions={[
+							(
+								<Button
+									key="cancel"
+									variant="text"
+									onClick={() => setIsDeleteDialogOpen(false)}
+								>
+									{t('recipes.delete.cancel')}
+								</Button>
+							),
+							(
+								<Button
+									key="delete"
+									variant="filled"
+									onClick={() => {
+										deleteRecipeMutation.mutate(recipe.id, {
+											onSuccess: () => navigate(-1),
+										})
+									}}
+								>
+									{t('recipes.delete.delete')}
+								</Button>
+							),
+						]}
+					/>
+				</AnimateDialog>
 			)}
-		</Fragment>
+			{status === 'pending' ? <RecipeContentSkeleton /> : <RecipeContent recipe={recipe} />}
+		</MainContent>
 	)
 }

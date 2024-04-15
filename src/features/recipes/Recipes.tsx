@@ -1,7 +1,7 @@
 import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
-import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
+import { type FunctionComponent, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
@@ -9,8 +9,8 @@ import { recipesQuery, useAddRecipes } from 'features/recipes/recipes'
 import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
-import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { IconButton } from 'lib/components/IconButton'
+import { MainContent } from 'lib/components/Layout'
 import { VirtualList } from 'lib/components/list/VirtualList'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopAppBar } from 'lib/components/TopAppBar'
@@ -26,6 +26,7 @@ export const Recipes: FunctionComponent = () => {
 	const { notify } = useNotifications()
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
+	const contentRef = useRef<HTMLElement>(null!)
 	const { AnimateDialog: AnimateAddDialog, state: [, setIsAddDialogOpen] } = useDialogState(false)
 	const { AnimateDialog: AnimateUrlDialog, state: [, setIsUrlDialogOpen] } = useDialogState(false)
 
@@ -62,26 +63,24 @@ export const Recipes: FunctionComponent = () => {
 	}, [isLoading, notify])
 
 	return (
-		<Fragment>
-			<HeaderPortal>
-				<TopAppBar
-					configuration="small"
-					title={t('paths.recipes')}
-					progress={isLoading}
-					elevation={isListScrolled ? 'onScroll' : 'flat'}
-					options={(
-						<IconButton
-							icon="sync"
-							title={t('recipes.sync.menuItem')}
-							onClick={() => setIsLoading(true)}
-							isSelected={isLoading}
-							style={{
-								animation: isLoading ? `${spinAnimation} 1s infinite` : undefined,
-							}}
-						/>
-					)}
-				/>
-			</HeaderPortal>
+		<MainContent ref={contentRef}>
+			<TopAppBar
+				configuration="small"
+				title={t('paths.recipes')}
+				progress={isLoading}
+				container={contentRef}
+				options={(
+					<IconButton
+						icon="sync"
+						title={t('recipes.sync.menuItem')}
+						onClick={() => setIsLoading(true)}
+						isSelected={isLoading}
+						style={{
+							animation: isLoading ? `${spinAnimation} 1s infinite` : undefined,
+						}}
+					/>
+				)}
+			/>
 			<VirtualList virtualProps={{ overscan: 10 }}>
 				{renderProbe}
 				{recipes.data?.map(recipe => (
@@ -115,7 +114,7 @@ export const Recipes: FunctionComponent = () => {
 					onClose={() => setIsAddDialogOpen(false)}
 				/>
 			</AnimateAddDialog>
-		</Fragment>
+		</MainContent>
 	)
 }
 

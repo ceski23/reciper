@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { type ChangeEventHandler, Fragment, type FunctionComponent } from 'react'
+import { type ChangeEventHandler, type FunctionComponent, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as v from 'valibot'
 import { useAccountProvider, useUserInfo } from 'features/auth/hooks'
@@ -9,7 +9,7 @@ import { logoutMutation } from 'features/auth/queries'
 import { recipesQuery, useAddRecipes } from 'features/recipes/recipes'
 import { recipeScheme } from 'features/recipes/types'
 import { Button } from 'lib/components/Button'
-import { HeaderPortal } from 'lib/components/HeaderPortal'
+import { MainContent } from 'lib/components/Layout'
 import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
@@ -31,6 +31,7 @@ export const Account: FunctionComponent = () => {
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
 	const { notify } = useNotifications()
+	const contentRef = useRef<HTMLElement>(null!)
 
 	const handleRecipesExport = () => {
 		const json = JSON.stringify(recipes.data)
@@ -68,13 +69,12 @@ export const Account: FunctionComponent = () => {
 	}
 
 	return (
-		<Fragment>
-			<HeaderPortal>
-				<TopAppBar
-					configuration="large"
-					title={t('paths.account')}
-				/>
-			</HeaderPortal>
+		<MainContent ref={contentRef}>
+			<TopAppBar
+				configuration="large"
+				title={t('paths.account')}
+				container={contentRef}
+			/>
 			<List>
 				{userInfo === undefined
 					? (
@@ -143,7 +143,7 @@ export const Account: FunctionComponent = () => {
 					{t('settings.account.quickActions.exportUrls')}
 				</Button>
 			</QuickActionsSection>
-		</Fragment>
+		</MainContent>
 	)
 }
 

@@ -76,7 +76,7 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 								<StyledChip
 									text={tag}
 									variant="outlined"
-									onClick={() => navigate(PATHS.RECIPES.SEARCH.buildPath({}, { query: tag }))}
+									onClick={() => navigate(PATHS.RECIPES.SEARCH.buildPath({}, { query: tag }), { unstable_viewTransition: true })}
 								/>
 							</ToggleGroup.Item>
 						))}

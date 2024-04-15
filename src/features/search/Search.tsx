@@ -7,6 +7,7 @@ import { BottomSheet, type SheetState } from 'lib/components/BottomSheet'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
+import { MainContent } from 'lib/components/Layout'
 import { VirtualList } from 'lib/components/list/VirtualList'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopSearchBar } from 'lib/components/TopSearchBar'
@@ -35,7 +36,7 @@ export const Search: FunctionComponent = ({}) => {
 	}, [])
 
 	return (
-		<Fragment>
+		<MainContent>
 			<HeaderPortal>
 				<TopSearchBar
 					ref={searchBarRef}
@@ -80,7 +81,7 @@ export const Search: FunctionComponent = ({}) => {
 				state={filtersModalState}
 				onStateChange={setFiltersModalState}
 			/>
-		</Fragment>
+		</MainContent>
 	)
 }
 

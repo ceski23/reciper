@@ -25,6 +25,7 @@ export const darkThemeClass = createTheme(theme, {
 })
 
 export const navigationMenuHeight = createVar('navigation-menu-height')
+export const headerHeight = createVar('header-height')
 
 export const Layout: FunctionComponent = () => {
 	useScreenNavigationAnimations()
@@ -37,6 +38,11 @@ export const Layout: FunctionComponent = () => {
 			[navigationMenuHeight]: `${height ?? 0}px`,
 		})
 	})
+	const headerRef = useMeasureHeight<HTMLElement>(height => {
+		setElementVars(document.body, {
+			[headerHeight]: `${height ?? 0}px`,
+		})
+	})
 
 	useLayoutEffect(() => {
 		document.body.classList.toggle(lightThemeClass, !isDarkMode)
@@ -45,14 +51,17 @@ export const Layout: FunctionComponent = () => {
 
 	return (
 		<LayoutBase>
-			<Header ref={uiStore.actions.setHeader} />
-			<MainContent>
-				<Outlet />
-				<ContentOverlayContainer>
-					<SnackbarContainer />
-					<div ref={uiStore.actions.setOverlayContainer} />
-				</ContentOverlayContainer>
-			</MainContent>
+			<Outlet />
+			<ContentOverlayContainer>
+				<SnackbarContainer />
+				<div ref={uiStore.actions.setOverlayContainer} />
+			</ContentOverlayContainer>
+			<Header
+				ref={node => {
+					uiStore.actions.setHeader(node)
+					headerRef.current = node
+				}}
+			/>
 			<NavigationBar
 				ref={navbarRef}
 				segments={[
@@ -79,7 +88,7 @@ const LayoutBase = styled('div', {
 	},
 })
 
-const MainContent = styled('main', {
+export const MainContent = styled('main', {
 	base: {
 		flex: 1,
 		width: '100%',
@@ -87,6 +96,8 @@ const MainContent = styled('main', {
 		display: 'flex',
 		flexDirection: 'column',
 		position: 'relative',
+		paddingTop: headerHeight,
+		paddingBottom: navigationMenuHeight,
 	},
 })
 
@@ -95,6 +106,8 @@ const Header = styled('header', {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
+		position: 'absolute',
+		top: 0,
 	},
 })
 

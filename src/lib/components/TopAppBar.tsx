@@ -1,8 +1,12 @@
 import { styled } from '@macaron-css/react'
-import { type ComponentProps, type CSSProperties, Fragment, type FunctionComponent, type ReactNode } from 'react'
+import { animated, useScroll } from '@react-spring/web'
+import { type CSSProperties, Fragment, type FunctionComponent, type MutableRefObject, type ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { Skeleton } from 'lib/components/Skeleton'
+import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
+import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import { IconButton } from './IconButton'
@@ -18,8 +22,8 @@ type TopAppBarProps = {
 		value?: number | null | undefined
 		max?: number
 	} | boolean
-	elevation?: ComponentProps<typeof AppBarBase>['elevation']
 	style?: CSSProperties
+	container?: MutableRefObject<HTMLElement>
 }
 
 export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
@@ -27,12 +31,17 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	configuration,
 	options,
 	progress,
-	elevation,
 	style,
+	container,
 }) => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const location = useLocation()
+	const [isContentScrolled, setIsContentScrolled] = useState(false)
+	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
+	const { scrollY } = useScroll({ container })
+	const [extraContentHeight, setExtraContentHeight] = useState<number>(0)
+	const extraContentRef = useMeasureHeight<HTMLDivElement>(height => setExtraContentHeight(height ?? 0))
 
 	const handleGoBack = () => {
 		if (location.key === 'default') {
@@ -44,41 +53,63 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 
 	return (
 		<Fragment>
-			<MetaThemeColor isScrolled={elevation === 'onScroll'} />
-			<AppBarBase
-				elevation={elevation}
-				style={style}
-			>
-				<IconButton
-					icon="backArrow"
-					title={t('navigation.goBack')}
-					onClick={handleGoBack}
-				/>
-				{configuration === 'small'
-					? (
-						<PageTitle asChild>
-							<h1>{title}</h1>
-						</PageTitle>
-					)
-					: <span />}
-				<OptionsContainer>
-					{options}
-				</OptionsContainer>
-				{configuration === 'large' && (
-					<ExtraContent>
-						{title === undefined ? <TitleSkeleton /> : (
-							<PageTitleLarge asChild>
-								<h1>{title}</h1>
-							</PageTitleLarge>
-						)}
-					</ExtraContent>
-				)}
-			</AppBarBase>
-			{progress === true
-				? <ProgressIndicator.Linear />
-				: progress
-				? <ProgressIndicator.Linear {...progress} />
-				: undefined}
+			{renderProbe}
+			<HeaderPortal>
+				<MetaThemeColor isScrolled={isContentScrolled} />
+				<AppBarBase
+					elevation={isContentScrolled ? 'onScroll' : 'flat'}
+					style={style}
+				>
+					<IconButton
+						icon="backArrow"
+						title={t('navigation.goBack')}
+						onClick={handleGoBack}
+					/>
+					<PageTitle
+						asChild
+					>
+						<animated.h1
+							style={{
+								opacity: configuration === 'large' && extraContentHeight > 0
+									? scrollY.to(sy => 1 - (Math.max(0, -sy + extraContentHeight) / extraContentHeight))
+									: undefined,
+								viewTransitionName: isContentScrolled || configuration !== 'large' ? 'app-bar-title' : undefined,
+							}}
+						>
+							{title}
+						</animated.h1>
+					</PageTitle>
+					<OptionsContainer>
+						{options}
+					</OptionsContainer>
+				</AppBarBase>
+				{progress === true
+					? <ProgressIndicator.Linear />
+					: progress
+					? <ProgressIndicator.Linear {...progress} />
+					: undefined}
+			</HeaderPortal>
+			{configuration === 'large' && (
+				<ExtraContent
+					style={style}
+					ref={extraContentRef}
+				>
+					{title === undefined ? <TitleSkeleton /> : (
+						<PageTitleLarge asChild>
+							<animated.h1
+								style={{
+									opacity: configuration === 'large' && extraContentHeight > 0
+										? scrollY.to(sy => (Math.max(0, -sy + extraContentHeight) / extraContentHeight))
+										: undefined,
+									viewTransitionName: isContentScrolled ? undefined : 'app-bar-title',
+								}}
+							>
+								{title}
+							</animated.h1>
+						</PageTitleLarge>
+					)}
+				</ExtraContent>
+			)}
 		</Fragment>
 	)
 }
@@ -92,7 +123,7 @@ const AppBarBase = styled('div', {
 		gridTemplateColumns: '[leading-icon] 48px [title] 1fr [trailing-icons] auto',
 		alignItems: 'center',
 		gap: 4,
-		transition: 'background-color .2s',
+		transition: 'background-color .3s',
 	},
 	variants: {
 		elevation: {
@@ -109,11 +140,13 @@ const AppBarBase = styled('div', {
 	},
 })
 
-const PageTitle = styled(Typography.TitleLarge, {
+const PageTitle = styled(animated(Typography.TitleLarge), {
 	base: {
 		gridColumn: 'title',
 		color: theme.colors.onSurface,
-		viewTransitionName: 'app-bar-title',
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
+		whiteSpace: 'nowrap',
 	},
 })
 
@@ -129,7 +162,7 @@ const ExtraContent = styled('div', {
 		flexDirection: 'column',
 		paddingTop: 36,
 		paddingBottom: 28,
-		gridColumn: '1 / -1',
+		backgroundColor: theme.colors.surface,
 	},
 })
 
@@ -137,7 +170,6 @@ const PageTitleLarge = styled(Typography.HeadlineMedium, {
 	base: {
 		color: theme.colors.onSurface,
 		paddingInline: 16,
-		viewTransitionName: 'app-bar-title',
 	},
 })
 
