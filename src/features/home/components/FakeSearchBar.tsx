@@ -66,6 +66,7 @@ const SearchBarBase = styled('button', {
 		':focus-visible': {
 			backgroundColor: styleUtils.blendWithColor(theme.colors.surfaceContainerHigh, theme.colors.onSurface, 0.08),
 		},
+		viewTransitionName: 'searchbar',
 	},
 })
 

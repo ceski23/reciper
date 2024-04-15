@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { Fragment, type FunctionComponent, useDeferredValue, useState } from 'react'
+import { Fragment, type FunctionComponent, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { useRecipesSearch } from 'features/search/hooks/useRecipesSearch'
@@ -19,6 +19,7 @@ export const Search: FunctionComponent = ({}) => {
 	const deferredQuery = useDeferredValue(params.get('query') ?? '')
 	const matches = useRecipesSearch(deferredQuery)
 	const [filtersModalState, setFiltersModalState] = useState<SheetState>('close')
+	const searchBarRef = useRef<HTMLInputElement>(null)
 
 	const handleQueryChange = (query: string) => {
 		setSearchParams(prev => ({
@@ -29,11 +30,15 @@ export const Search: FunctionComponent = ({}) => {
 		})
 	}
 
+	useLayoutEffect(() => {
+		searchBarRef.current?.focus()
+	}, [])
+
 	return (
 		<Fragment>
 			<HeaderPortal>
 				<TopSearchBar
-					ref={node => node?.focus()}
+					ref={searchBarRef}
 					query={params.get('query') ?? ''}
 					onQueryChange={handleQueryChange}
 					placeholder={t('search.placeholder')}

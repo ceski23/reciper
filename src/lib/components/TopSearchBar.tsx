@@ -63,6 +63,7 @@ const AppBarBase = styled('div', {
 		transition: 'background-color .2s',
 		background: theme.colors.surfaceContainerHigh,
 		borderBottom: `1px solid ${theme.colors.outline}`,
+		viewTransitionName: 'searchbar',
 	},
 })
 
