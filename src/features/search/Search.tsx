@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { Fragment, type FunctionComponent, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
+import { type FunctionComponent, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { useRecipesSearch } from 'features/search/hooks/useRecipesSearch'
