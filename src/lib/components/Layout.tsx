@@ -106,7 +106,7 @@ const Header = styled('header', {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
-		position: 'absolute',
+		position: 'fixed',
 		top: 0,
 	},
 })

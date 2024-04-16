@@ -38,7 +38,7 @@ const NavigationBarBase = styled(RovingFocusGroup.Root, {
 		backgroundColor: theme.colors.surfaceContainer,
 		width: '100%',
 		viewTransitionName: 'navbar',
-		position: 'absolute',
+		position: 'fixed',
 		bottom: 0,
 	},
 })
