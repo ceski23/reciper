@@ -32,7 +32,9 @@ export const Search: FunctionComponent = ({}) => {
 	}
 
 	useLayoutEffect(() => {
-		searchBarRef.current?.focus()
+		if (!params.get('query')) {
+			searchBarRef.current?.focus()
+		}
 	}, [])
 
 	return (
