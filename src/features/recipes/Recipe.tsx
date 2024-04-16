@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { type FunctionComponent, useEffect, useRef, useState } from 'react'
+import { type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useTypedParams } from 'react-router-typesafe-routes/dom'
@@ -28,7 +28,7 @@ export const Recipe: FunctionComponent = () => {
 	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const navigate = useNavigate()
-	const contentRef = useRef<HTMLElement>(null!)
+	const [container, setContainer] = useState<HTMLElement | null>(null)
 
 	useWakelock()
 
@@ -52,11 +52,12 @@ export const Recipe: FunctionComponent = () => {
 	}
 
 	return (
-		<MainContent ref={contentRef}>
+		<MainContent ref={setContainer}>
 			<TopAppBar
+				key={String(container)}
 				configuration="large"
 				title={recipe?.name}
-				container={contentRef}
+				container={container}
 				options={(
 					<Menu.Root
 						open={isMoreOpen}

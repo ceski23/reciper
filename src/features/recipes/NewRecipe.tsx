@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { type FunctionComponent, useRef, useState } from 'react'
+import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { Chip } from 'lib/components/Chip'
@@ -14,17 +14,18 @@ import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 
 export const NewRecipe: FunctionComponent = () => {
 	const { t } = useTranslation()
-	const contentRef = useRef<HTMLElement>(null!)
+	const [container, setContainer] = useState<HTMLElement | null>(null)
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
 
 	return (
-		<MainContent ref={contentRef}>
+		<MainContent ref={setContainer}>
 			{renderProbe}
 			<TopAppBar
+				key={String(container)}
 				configuration="small"
 				title={t('newRecipe.title')}
-				container={contentRef}
+				container={container}
 			/>
 			<Container>
 				<FormSection>

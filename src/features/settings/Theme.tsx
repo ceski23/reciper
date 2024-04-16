@@ -1,5 +1,5 @@
 import { useReducedMotion } from '@react-spring/web'
-import { type FunctionComponent, useRef } from 'react'
+import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ColorSchemeDialog } from 'features/settings/ColorSchemeDialog'
 import { MainContent } from 'lib/components/Layout'
@@ -14,15 +14,16 @@ export const Theme: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const { AnimateDialog, state: [, setIsColorSchemeDialogOpen] } = useDialogState(false)
 	const { state: settings, actions: { setTheme } } = settingsStore.useStore('theme')
-	const contentRef = useRef<HTMLElement>(null!)
+	const [container, setContainer] = useState<HTMLElement | null>(null)
 	const isReducedMotion = useReducedMotion() ?? false
 
 	return (
-		<MainContent ref={contentRef}>
+		<MainContent ref={setContainer}>
 			<TopAppBar
+				key={String(container)}
 				configuration="large"
 				title={t('paths.theme')}
-				container={contentRef}
+				container={container}
 			/>
 			<List>
 				<ListItem.Simple

@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { type ChangeEventHandler, type FunctionComponent, useRef } from 'react'
+import { type ChangeEventHandler, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as v from 'valibot'
 import { useAccountProvider, useUserInfo } from 'features/auth/hooks'
@@ -31,7 +31,7 @@ export const Account: FunctionComponent = () => {
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
 	const { notify } = useNotifications()
-	const contentRef = useRef<HTMLElement>(null!)
+	const [container, setContainer] = useState<HTMLElement | null>(null)
 
 	const handleRecipesExport = () => {
 		const json = JSON.stringify(recipes.data)
@@ -69,11 +69,12 @@ export const Account: FunctionComponent = () => {
 	}
 
 	return (
-		<MainContent ref={contentRef}>
+		<MainContent ref={setContainer}>
 			<TopAppBar
+				key={String(container)}
 				configuration="large"
 				title={t('paths.account')}
-				container={contentRef}
+				container={container}
 			/>
 			<List>
 				{userInfo === undefined

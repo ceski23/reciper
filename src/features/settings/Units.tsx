@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import eggsImage from 'assets/images/eggs.png'
-import { type FunctionComponent, useRef } from 'react'
+import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MainContent } from 'lib/components/Layout'
 import { ListItem } from 'lib/components/list/items'
@@ -11,14 +11,15 @@ import { theme } from 'lib/styles'
 
 export const Units: FunctionComponent = () => {
 	const { t } = useTranslation()
-	const contentRef = useRef<HTMLElement>(null!)
+	const [container, setContainer] = useState<HTMLElement | null>(null)
 
 	return (
-		<MainContent ref={contentRef}>
+		<MainContent ref={setContainer}>
 			<TopAppBar
+				key={String(container)}
 				configuration="large"
 				title={t('paths.units')}
-				container={contentRef}
+				container={container}
 			/>
 			<List>
 				<ListItem.Switch

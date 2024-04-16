@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { animated, useScroll } from '@react-spring/web'
-import { type CSSProperties, Fragment, type FunctionComponent, type MutableRefObject, type ReactNode, useState } from 'react'
+import { type ComponentProps, type CSSProperties, Fragment, type FunctionComponent, type ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
@@ -23,7 +23,8 @@ type TopAppBarProps = {
 		max?: number
 	} | boolean
 	style?: CSSProperties
-	container?: MutableRefObject<HTMLElement>
+	container: HTMLElement | null
+	elevation?: ComponentProps<typeof AppBarBase>['elevation']
 }
 
 export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
@@ -33,13 +34,19 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	progress,
 	style,
 	container,
+	elevation,
 }) => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const location = useLocation()
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
-	const { scrollY } = useScroll({ container })
+	const { scrollY } = useScroll({
+		container: { current: container! },
+		default: {
+			immediate: true,
+		},
+	})
 	const [extraContentHeight, setExtraContentHeight] = useState<number>(0)
 	const extraContentRef = useMeasureHeight<HTMLDivElement>(height => setExtraContentHeight(height ?? 0))
 
@@ -57,7 +64,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 			<HeaderPortal>
 				<MetaThemeColor isScrolled={isContentScrolled} />
 				<AppBarBase
-					elevation={isContentScrolled ? 'onScroll' : 'flat'}
+					elevation={elevation ?? (isContentScrolled ? 'onScroll' : 'flat')}
 					style={style}
 				>
 					<IconButton
@@ -65,9 +72,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 						title={t('navigation.goBack')}
 						onClick={handleGoBack}
 					/>
-					<PageTitle
-						asChild
-					>
+					<PageTitle asChild>
 						<animated.h1
 							style={{
 								opacity: configuration === 'large' && extraContentHeight > 0

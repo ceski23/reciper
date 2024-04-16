@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
-import { Fragment, type FunctionComponent, useRef, useState } from 'react'
+import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTypedSearchParams } from 'react-router-typesafe-routes/dom'
@@ -35,16 +35,17 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	const addRecipe = useAddRecipe()
 	const transition = useTransition(isError, DIALOG_ANIMATION)
 	const location = useLocation()
-	const contentRef = useRef<HTMLElement>(null!)
+	const [container, setContainer] = useState<HTMLElement | null>(null)
 
 	useWakelock()
 
 	return (
-		<MainContent ref={contentRef}>
+		<MainContent ref={setContainer}>
 			<TopAppBar
+				key={String(container)}
 				configuration="large"
 				title={recipe?.name}
-				container={contentRef}
+				container={container}
 				style={style}
 			/>
 			{renderProbe}

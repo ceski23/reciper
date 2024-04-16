@@ -1,7 +1,7 @@
 import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
-import { type FunctionComponent, useEffect, useRef, useState } from 'react'
+import { type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
@@ -26,7 +26,7 @@ export const Recipes: FunctionComponent = () => {
 	const { notify } = useNotifications()
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
-	const contentRef = useRef<HTMLElement>(null!)
+	const [container, setContainer] = useState<HTMLElement | null>(null)
 	const { AnimateDialog: AnimateAddDialog, state: [, setIsAddDialogOpen] } = useDialogState(false)
 	const { AnimateDialog: AnimateUrlDialog, state: [, setIsUrlDialogOpen] } = useDialogState(false)
 
@@ -63,12 +63,14 @@ export const Recipes: FunctionComponent = () => {
 	}, [isLoading, notify])
 
 	return (
-		<MainContent ref={contentRef}>
+		<MainContent>
 			<TopAppBar
+				key={String(container)}
 				configuration="small"
 				title={t('paths.recipes')}
 				progress={isLoading}
-				container={contentRef}
+				container={container}
+				elevation={isListScrolled ? 'onScroll' : 'flat'}
 				options={(
 					<IconButton
 						icon="sync"
@@ -81,7 +83,10 @@ export const Recipes: FunctionComponent = () => {
 					/>
 				)}
 			/>
-			<VirtualList virtualProps={{ overscan: 10 }}>
+			<VirtualList
+				virtualProps={{ overscan: 10 }}
+				ref={setContainer}
+			>
 				{renderProbe}
 				{recipes.data?.map(recipe => (
 					<RecipeListItem

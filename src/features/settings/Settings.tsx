@@ -1,4 +1,4 @@
-import { type FunctionComponent, useRef } from 'react'
+import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LanguageDialog } from 'features/settings/LanguageDialog'
 import { MainContent } from 'lib/components/Layout'
@@ -13,14 +13,15 @@ import { theme } from 'lib/styles'
 export const Settings: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const { AnimateDialog, state: [, setIsLanguageDialogOpen] } = useDialogState(false)
-	const contentRef = useRef<HTMLElement>(null!)
+	const [container, setContainer] = useState<HTMLElement | null>(null)
 
 	return (
-		<MainContent ref={contentRef}>
+		<MainContent ref={setContainer}>
 			<TopAppBar
+				key={String(container)}
 				configuration="large"
 				title={t('paths.settings')}
-				container={contentRef}
+				container={container}
 			/>
 			<List>
 				<ListItem.Link
