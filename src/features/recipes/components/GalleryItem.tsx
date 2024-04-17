@@ -43,13 +43,7 @@ const GridItem = styled('button', {
 		background: 'none',
 		transition: 'scale 0.2s',
 		willChange: 'scale',
-		outline: 'none',
-		':hover': {
-			scale: 1.1,
-		},
-		':focus-visible': {
-			scale: 1.1,
-		},
+		cursor: 'zoom-in',
 	},
 })
 
