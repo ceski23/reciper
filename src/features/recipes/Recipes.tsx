@@ -170,7 +170,7 @@ const FabContainer = styled('div', {
 const RecipesGrid = styled('div', {
 	base: {
 		display: 'grid',
-		gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+		gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
 		gap: 16,
 		margin: 16,
 	},
