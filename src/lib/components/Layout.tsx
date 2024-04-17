@@ -90,7 +90,7 @@ const LayoutBase = styled('div', {
 	},
 })
 
-export const MainContent = styled('main', {
+const MainContent = styled('main', {
 	base: {
 		flex: 1,
 		width: '100%',
@@ -100,6 +100,8 @@ export const MainContent = styled('main', {
 		position: 'relative',
 		paddingTop: headerHeight,
 		paddingBottom: navigationMenuHeight,
+		scrollPaddingTop: `calc(${headerHeight} + 16px)`,
+		scrollPaddingBottom: `calc(${navigationMenuHeight} + 16px)`,
 	},
 })
 

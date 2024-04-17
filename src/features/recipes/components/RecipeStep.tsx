@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import { type FunctionComponent } from 'react'
+import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TemperatureSegment } from 'features/recipes/components/TemperatureSegment'
 import { type Recipe } from 'features/recipes/types'
@@ -15,12 +15,13 @@ type RecipeStepProps = {
 	step: Recipe['instructions'][number]
 }
 
-export const RecipeStep: FunctionComponent<RecipeStepProps> = ({ number, step }) => {
+export const RecipeStep = forwardRef<HTMLButtonElement, RecipeStepProps>(({ number, step }, ref) => {
 	const { t } = useTranslation()
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
 		<Item
+			ref={ref}
 			value={String(number)}
 			{...eventHandlers}
 		>
@@ -44,7 +45,7 @@ export const RecipeStep: FunctionComponent<RecipeStepProps> = ({ number, step })
 			)}
 		</Item>
 	)
-}
+})
 
 const Item = styled(ToggleGroup.Item, {
 	base: {
