@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
-import { Fragment, type FunctionComponent, useState } from 'react'
+import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTypedSearchParams } from 'react-router-typesafe-routes/dom'
@@ -12,7 +12,6 @@ import { useAddRecipe } from 'features/recipes/recipes'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { DIALOG_ANIMATION, SimpleDialog } from 'lib/components/Dialog'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
-import { MainContent } from 'lib/components/Layout'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
@@ -35,18 +34,20 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	const addRecipe = useAddRecipe()
 	const transition = useTransition(isError, DIALOG_ANIMATION)
 	const location = useLocation()
-	const [container, setContainer] = useState<HTMLElement | null>(null)
 
 	useWakelock()
 
+	useEffect(() => {
+		document.getElementById('root')?.setAttribute('style', String(style))
+
+		return () => document.getElementById('root')?.removeAttribute('style')
+	}, [style])
+
 	return (
-		<MainContent ref={setContainer}>
+		<Fragment>
 			<TopAppBar
-				key={String(container)}
 				configuration="large"
 				title={recipe?.name}
-				container={container}
-				style={style}
 			/>
 			{renderProbe}
 			{status !== 'success' && <RecipeContentSkeleton />}
@@ -94,7 +95,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 					open={open}
 				/>
 			))}
-		</MainContent>
+		</Fragment>
 	)
 }
 

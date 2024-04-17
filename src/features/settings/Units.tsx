@@ -1,8 +1,7 @@
 import { styled } from '@macaron-css/react'
 import eggsImage from 'assets/images/eggs.png'
-import { type FunctionComponent, useState } from 'react'
+import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { MainContent } from 'lib/components/Layout'
 import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
@@ -11,15 +10,12 @@ import { theme } from 'lib/styles'
 
 export const Units: FunctionComponent = () => {
 	const { t } = useTranslation()
-	const [container, setContainer] = useState<HTMLElement | null>(null)
 
 	return (
-		<MainContent ref={setContainer}>
+		<Fragment>
 			<TopAppBar
-				key={String(container)}
 				configuration="large"
 				title={t('paths.units')}
-				container={container}
 			/>
 			<List>
 				<ListItem.Switch
@@ -52,7 +48,7 @@ export const Units: FunctionComponent = () => {
 					)}
 				/>
 			</List>
-		</MainContent>
+		</Fragment>
 	)
 }
 

@@ -1,8 +1,7 @@
 import { useReducedMotion } from '@react-spring/web'
-import { type FunctionComponent, useState } from 'react'
+import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ColorSchemeDialog } from 'features/settings/ColorSchemeDialog'
-import { MainContent } from 'lib/components/Layout'
 import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
@@ -14,16 +13,13 @@ export const Theme: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const { AnimateDialog, state: [, setIsColorSchemeDialogOpen] } = useDialogState(false)
 	const { state: settings, actions: { setTheme } } = settingsStore.useStore('theme')
-	const [container, setContainer] = useState<HTMLElement | null>(null)
 	const isReducedMotion = useReducedMotion() ?? false
 
 	return (
-		<MainContent ref={setContainer}>
+		<Fragment>
 			<TopAppBar
-				key={String(container)}
 				configuration="large"
 				title={t('paths.theme')}
-				container={container}
 			/>
 			<List>
 				<ListItem.Simple
@@ -64,6 +60,6 @@ export const Theme: FunctionComponent = () => {
 					}}
 				/>
 			</AnimateDialog>
-		</MainContent>
+		</Fragment>
 	)
 }

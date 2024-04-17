@@ -1,14 +1,15 @@
 import { styled } from '@macaron-css/react'
-import { animated, useScroll } from '@react-spring/web'
-import { type ComponentProps, type CSSProperties, Fragment, type FunctionComponent, type ReactNode, useState } from 'react'
+import { animated } from '@react-spring/web'
+import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { Skeleton } from 'lib/components/Skeleton'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
-import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { PATHS } from 'lib/routing/paths'
+import { uiStore } from 'lib/stores/ui'
 import { theme } from 'lib/styles'
+import { AnimatedTitle } from './AnimatedTitle'
 import { IconButton } from './IconButton'
 import { MetaThemeColor } from './MetaThemeColor'
 import { ProgressIndicator } from './ProgressIndicator'
@@ -22,8 +23,7 @@ type TopAppBarProps = {
 		value?: number | null | undefined
 		max?: number
 	} | boolean
-	style?: CSSProperties
-	container: HTMLElement | null
+	container?: HTMLElement | null
 	elevation?: ComponentProps<typeof AppBarBase>['elevation']
 }
 
@@ -32,23 +32,16 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	configuration,
 	options,
 	progress,
-	style,
-	container,
 	elevation,
+	container,
 }) => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const location = useLocation()
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
-	const { scrollY } = useScroll({
-		container: { current: container! },
-		default: {
-			immediate: true,
-		},
-	})
-	const [extraContentHeight, setExtraContentHeight] = useState<number>(0)
-	const extraContentRef = useMeasureHeight<HTMLDivElement>(height => setExtraContentHeight(height ?? 0))
+	const { state: { mainContent } } = uiStore.useStore('mainContent')
+	const scrollContainer = container ?? mainContent
 
 	const handleGoBack = () => {
 		if (location.key === 'default') {
@@ -63,27 +56,24 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 			{renderProbe}
 			<HeaderPortal>
 				<MetaThemeColor isScrolled={isContentScrolled} />
-				<AppBarBase
-					elevation={elevation ?? (isContentScrolled ? 'onScroll' : 'flat')}
-					style={style}
-				>
+				<AppBarBase elevation={elevation ?? (isContentScrolled ? 'onScroll' : 'flat')}>
 					<IconButton
 						icon="backArrow"
 						title={t('navigation.goBack')}
 						onClick={handleGoBack}
 					/>
-					<PageTitle asChild>
-						<animated.h1
-							style={{
-								opacity: configuration === 'large' && extraContentHeight > 0
-									? scrollY.to(sy => 1 - (Math.max(0, -sy + extraContentHeight) / extraContentHeight))
-									: undefined,
-								viewTransitionName: isContentScrolled || configuration !== 'large' ? 'app-bar-title' : undefined,
-							}}
-						>
-							{title}
-						</animated.h1>
-					</PageTitle>
+					{scrollContainer && (
+						<PageTitle asChild>
+							<AnimatedTitle
+								container={scrollContainer}
+								shouldAnimate={configuration === 'large'}
+								style={{ viewTransitionName: isContentScrolled || configuration !== 'large' ? 'app-bar-title' : undefined }}
+								reverse
+							>
+								{title}
+							</AnimatedTitle>
+						</PageTitle>
+					)}
 					<OptionsContainer>
 						{options}
 					</OptionsContainer>
@@ -95,22 +85,15 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 					: undefined}
 			</HeaderPortal>
 			{configuration === 'large' && (
-				<ExtraContent
-					style={style}
-					ref={extraContentRef}
-				>
-					{title === undefined ? <TitleSkeleton /> : (
+				<ExtraContent>
+					{title === undefined || scrollContainer === null ? <TitleSkeleton /> : (
 						<PageTitleLarge asChild>
-							<animated.h1
-								style={{
-									opacity: configuration === 'large' && extraContentHeight > 0
-										? scrollY.to(sy => (Math.max(0, -sy + extraContentHeight) / extraContentHeight))
-										: undefined,
-									viewTransitionName: isContentScrolled ? undefined : 'app-bar-title',
-								}}
+							<AnimatedTitle
+								container={scrollContainer}
+								style={{ viewTransitionName: isContentScrolled ? undefined : 'app-bar-title' }}
 							>
 								{title}
-							</animated.h1>
+							</AnimatedTitle>
 						</PageTitleLarge>
 					)}
 				</ExtraContent>
@@ -171,7 +154,7 @@ const ExtraContent = styled('div', {
 	},
 })
 
-const PageTitleLarge = styled(Typography.HeadlineMedium, {
+const PageTitleLarge = styled(animated(Typography.HeadlineMedium), {
 	base: {
 		color: theme.colors.onSurface,
 		paddingInline: 16,

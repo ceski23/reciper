@@ -1,7 +1,6 @@
-import { type FunctionComponent, useState } from 'react'
+import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LanguageDialog } from 'features/settings/LanguageDialog'
-import { MainContent } from 'lib/components/Layout'
 import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
@@ -13,15 +12,12 @@ import { theme } from 'lib/styles'
 export const Settings: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const { AnimateDialog, state: [, setIsLanguageDialogOpen] } = useDialogState(false)
-	const [container, setContainer] = useState<HTMLElement | null>(null)
 
 	return (
-		<MainContent ref={setContainer}>
+		<Fragment>
 			<TopAppBar
-				key={String(container)}
 				configuration="large"
 				title={t('paths.settings')}
-				container={container}
 			/>
 			<List>
 				<ListItem.Link
@@ -69,6 +65,6 @@ export const Settings: FunctionComponent = () => {
 					}}
 				/>
 			</AnimateDialog>
-		</MainContent>
+		</Fragment>
 	)
 }

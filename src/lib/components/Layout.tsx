@@ -51,7 +51,9 @@ export const Layout: FunctionComponent = () => {
 
 	return (
 		<LayoutBase>
-			<Outlet />
+			<MainContent ref={uiStore.actions.setMainContent}>
+				<Outlet />
+			</MainContent>
 			<ContentOverlayContainer>
 				<SnackbarContainer />
 				<div ref={uiStore.actions.setOverlayContainer} />

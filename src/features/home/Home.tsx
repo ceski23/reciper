@@ -10,7 +10,6 @@ import { recipesQuery } from 'features/recipes/recipes'
 import { type Recipe } from 'features/recipes/types'
 import { Chip } from 'lib/components/Chip'
 import { Icon } from 'lib/components/Icon'
-import { MainContent } from 'lib/components/Layout'
 import { List } from 'lib/components/list/List'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { Typography } from 'lib/components/Typography'
@@ -42,75 +41,73 @@ export const Home: FunctionComponent = () => {
 			.map(([key]) => key)
 
 	return (
-		<MainContent>
-			<Container>
-				<FakeSearchBar
-					leadingIcon="search"
-					placeholder={t('home.searchBarPlaceholder')}
-					style={{ gridColumn: '2' }}
-				/>
-				{recipes.data === undefined || recipes.data.length === 0 ? t('home.emptyMessage') : (
-					<Fragment>
-						<FullbleedSection>
-							<Typography.TitleMedium style={{ paddingInline: 16 }}>
-								{t('home.recentRecipes')}
-							</Typography.TitleMedium>
-							<CardsList>
-								{getRecentRecipes(recipes.data, 10).map(recipe => (
-									<RecipeCard
-										key={recipe.id}
-										recipe={recipe}
+		<Container>
+			<FakeSearchBar
+				leadingIcon="search"
+				placeholder={t('home.searchBarPlaceholder')}
+				style={{ gridColumn: '2' }}
+			/>
+			{recipes.data === undefined || recipes.data.length === 0 ? t('home.emptyMessage') : (
+				<Fragment>
+					<FullbleedSection>
+						<Typography.TitleMedium style={{ paddingInline: 16 }}>
+							{t('home.recentRecipes')}
+						</Typography.TitleMedium>
+						<CardsList>
+							{getRecentRecipes(recipes.data, 10).map(recipe => (
+								<RecipeCard
+									key={recipe.id}
+									recipe={recipe}
+								/>
+							))}
+						</CardsList>
+					</FullbleedSection>
+					<Section>
+						<Typography.TitleMedium>
+							{t('home.mostCommonTags')}
+						</Typography.TitleMedium>
+						<TagsContainer
+							type="multiple"
+							value={[]}
+						>
+							{getMostCommonTags(recipes.data, 15).map(tag => (
+								<ToggleGroup.Item
+									key={tag}
+									value={tag}
+									asChild
+								>
+									<StyledChip
+										text={tag}
+										variant="outlined"
+										onClick={() =>
+											navigate(PATHS.RECIPES.SEARCH.buildPath({}, { query: tag }), { unstable_viewTransition: true })}
 									/>
-								))}
-							</CardsList>
-						</FullbleedSection>
-						<Section>
-							<Typography.TitleMedium>
-								{t('home.mostCommonTags')}
-							</Typography.TitleMedium>
-							<TagsContainer
-								type="multiple"
-								value={[]}
-							>
-								{getMostCommonTags(recipes.data, 15).map(tag => (
-									<ToggleGroup.Item
-										key={tag}
-										value={tag}
-										asChild
-									>
-										<StyledChip
-											text={tag}
-											variant="outlined"
-											onClick={() =>
-												navigate(PATHS.RECIPES.SEARCH.buildPath({}, { query: tag }), { unstable_viewTransition: true })}
-										/>
-									</ToggleGroup.Item>
-								))}
-							</TagsContainer>
-						</Section>
-						<FullbleedSection>
-							<Typography.TitleMedium style={{ paddingInline: 16 }}>
-								{t('home.topRecipes')}
-							</Typography.TitleMedium>
-							<List>
-								{getTopRecipes(recipes.data, 10).map(recipe => (
-									<RecipeListItem
-										key={recipe.id}
-										recipe={recipe}
-										details={(
-											<ListItemDetail>
-												{recipe.rating}
-												<ListItemIcon name="star" />
-											</ListItemDetail>
-										)}
-									/>
-								))}
-							</List>
-						</FullbleedSection>
-					</Fragment>
-				)}
-			</Container>
-		</MainContent>
+								</ToggleGroup.Item>
+							))}
+						</TagsContainer>
+					</Section>
+					<FullbleedSection>
+						<Typography.TitleMedium style={{ paddingInline: 16 }}>
+							{t('home.topRecipes')}
+						</Typography.TitleMedium>
+						<List>
+							{getTopRecipes(recipes.data, 10).map(recipe => (
+								<RecipeListItem
+									key={recipe.id}
+									recipe={recipe}
+									details={(
+										<ListItemDetail>
+											{recipe.rating}
+											<ListItemIcon name="star" />
+										</ListItemDetail>
+									)}
+								/>
+							))}
+						</List>
+					</FullbleedSection>
+				</Fragment>
+			)}
+		</Container>
 	)
 }
 

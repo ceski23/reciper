@@ -1,7 +1,7 @@
 import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
-import { type FunctionComponent, useEffect, useState } from 'react'
+import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
@@ -10,7 +10,6 @@ import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { IconButton } from 'lib/components/IconButton'
-import { MainContent } from 'lib/components/Layout'
 import { VirtualList } from 'lib/components/list/VirtualList'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopAppBar } from 'lib/components/TopAppBar'
@@ -63,9 +62,8 @@ export const Recipes: FunctionComponent = () => {
 	}, [isLoading, notify])
 
 	return (
-		<MainContent>
+		<Fragment>
 			<TopAppBar
-				key={String(container)}
 				configuration="small"
 				title={t('paths.recipes')}
 				progress={isLoading}
@@ -119,7 +117,7 @@ export const Recipes: FunctionComponent = () => {
 					onClose={() => setIsAddDialogOpen(false)}
 				/>
 			</AnimateAddDialog>
-		</MainContent>
+		</Fragment>
 	)
 }
 

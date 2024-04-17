@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { type FunctionComponent, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
+import { Fragment, type FunctionComponent, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 import { useRecipesSearch } from 'features/search/hooks/useRecipesSearch'
@@ -7,7 +7,6 @@ import { BottomSheet, type SheetState } from 'lib/components/BottomSheet'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
-import { MainContent } from 'lib/components/Layout'
 import { VirtualList } from 'lib/components/list/VirtualList'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopSearchBar } from 'lib/components/TopSearchBar'
@@ -38,7 +37,7 @@ export const Search: FunctionComponent = ({}) => {
 	}, [])
 
 	return (
-		<MainContent>
+		<Fragment>
 			<HeaderPortal>
 				<TopSearchBar
 					ref={searchBarRef}
@@ -83,7 +82,7 @@ export const Search: FunctionComponent = ({}) => {
 				state={filtersModalState}
 				onStateChange={setFiltersModalState}
 			/>
-		</MainContent>
+		</Fragment>
 	)
 }
 

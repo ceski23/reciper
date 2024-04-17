@@ -1,12 +1,11 @@
 import { styled } from '@macaron-css/react'
-import { type FunctionComponent, useState } from 'react'
+import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { Chip } from 'lib/components/Chip'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { IconButton } from 'lib/components/IconButton'
-import { MainContent } from 'lib/components/Layout'
 import { TextField } from 'lib/components/TextField'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
@@ -14,18 +13,15 @@ import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 
 export const NewRecipe: FunctionComponent = () => {
 	const { t } = useTranslation()
-	const [container, setContainer] = useState<HTMLElement | null>(null)
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
 
 	return (
-		<MainContent ref={setContainer}>
+		<Fragment>
 			{renderProbe}
 			<TopAppBar
-				key={String(container)}
 				configuration="small"
 				title={t('newRecipe.title')}
-				container={container}
 			/>
 			<Container>
 				<FormSection>
@@ -131,7 +127,7 @@ export const NewRecipe: FunctionComponent = () => {
 					/>
 				</FabContainer>
 			</ContentOverlayPortal>
-		</MainContent>
+		</Fragment>
 	)
 }
 

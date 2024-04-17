@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { type FunctionComponent, useEffect, useState } from 'react'
+import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useTypedParams } from 'react-router-typesafe-routes/dom'
@@ -9,7 +9,6 @@ import { recipeQuery, useDeleteRecipe } from 'features/recipes/recipes'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/Dialog'
 import { IconButton } from 'lib/components/IconButton'
-import { MainContent } from 'lib/components/Layout'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
@@ -28,7 +27,6 @@ export const Recipe: FunctionComponent = () => {
 	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const navigate = useNavigate()
-	const [container, setContainer] = useState<HTMLElement | null>(null)
 
 	useWakelock()
 
@@ -52,12 +50,10 @@ export const Recipe: FunctionComponent = () => {
 	}
 
 	return (
-		<MainContent ref={setContainer}>
+		<Fragment>
 			<TopAppBar
-				key={String(container)}
 				configuration="large"
 				title={recipe?.name}
-				container={container}
 				options={(
 					<Menu.Root
 						open={isMoreOpen}
@@ -127,6 +123,6 @@ export const Recipe: FunctionComponent = () => {
 				</AnimateDialog>
 			)}
 			{status === 'pending' ? <RecipeContentSkeleton /> : <RecipeContent recipe={recipe} />}
-		</MainContent>
+		</Fragment>
 	)
 }
