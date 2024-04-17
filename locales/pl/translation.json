@@ -85,6 +85,10 @@
 				"import": "Importuj",
 				"label": "Adres URL"
 			}
+		},
+		"view": {
+			"list": "Pokaż jako listę",
+			"grid": "Pokaż jako siatkę"
 		}
 	},
 	"newRecipe": {

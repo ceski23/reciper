@@ -3,6 +3,7 @@ import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { RecipeCard } from 'features/home/components/RecipeCard'
 import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
 import { recipesQuery, useAddRecipes } from 'features/recipes/recipes'
@@ -28,6 +29,7 @@ export const Recipes: FunctionComponent = () => {
 	const [container, setContainer] = useState<HTMLElement | null>(null)
 	const { AnimateDialog: AnimateAddDialog, state: [, setIsAddDialogOpen] } = useDialogState(false)
 	const { AnimateDialog: AnimateUrlDialog, state: [, setIsUrlDialogOpen] } = useDialogState(false)
+	const [view, setView] = useState<'list' | 'grid'>('list')
 
 	useEffect(() => {
 		if (recipes.data?.length === 0) {
@@ -69,30 +71,56 @@ export const Recipes: FunctionComponent = () => {
 				progress={isLoading}
 				container={container}
 				elevation={isListScrolled ? 'onScroll' : 'flat'}
-				options={(
-					<IconButton
-						icon="sync"
-						title={t('recipes.sync.menuItem')}
-						onClick={() => setIsLoading(true)}
-						isSelected={isLoading}
-						style={{
-							animation: isLoading ? `${spinAnimation} 1s infinite` : undefined,
-						}}
-					/>
-				)}
+				options={[
+					(
+						<IconButton
+							key="view"
+							icon={view === 'list' ? 'viewGrid' : 'viewList'}
+							title={view === 'list' ? t('recipes.view.grid') : t('recipes.view.list')}
+							onClick={() => setView(prev => prev === 'grid' ? 'list' : 'grid')}
+						/>
+					),
+					(
+						<IconButton
+							key="sync"
+							icon="sync"
+							title={t('recipes.sync.menuItem')}
+							onClick={() => setIsLoading(true)}
+							isSelected={isLoading}
+							style={{
+								animation: isLoading ? `${spinAnimation} 1s infinite` : undefined,
+							}}
+						/>
+					),
+				]}
 			/>
-			<VirtualList
-				virtualProps={{ overscan: 10 }}
-				ref={setContainer}
-			>
-				{renderProbe}
-				{recipes.data?.map(recipe => (
-					<RecipeListItem
-						key={recipe.id}
-						recipe={recipe}
-					/>
-				))}
-			</VirtualList>
+			{view === 'grid'
+				? (
+					<RecipesGrid>
+						{renderProbe}
+						{recipes.data?.map(recipe => (
+							<RecipeCard
+								key={recipe.id}
+								recipe={recipe}
+								style={{ width: '100%' }}
+							/>
+						))}
+					</RecipesGrid>
+				)
+				: (
+					<VirtualList
+						virtualProps={{ overscan: 10 }}
+						ref={setContainer}
+					>
+						{renderProbe}
+						{recipes.data?.map(recipe => (
+							<RecipeListItem
+								key={recipe.id}
+								recipe={recipe}
+							/>
+						))}
+					</VirtualList>
+				)}
 			<ContentOverlayPortal>
 				<FabContainer>
 					<FloatingActionButton
@@ -136,5 +164,14 @@ const FabContainer = styled('div', {
 		paddingInline: 16,
 		paddingBottom: 16,
 		justifyContent: 'flex-end',
+	},
+})
+
+const RecipesGrid = styled('div', {
+	base: {
+		display: 'grid',
+		gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+		gap: 16,
+		margin: 16,
 	},
 })

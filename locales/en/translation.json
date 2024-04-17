@@ -80,6 +80,10 @@
 				"import": "Import",
 				"label": "URL address"
 			}
+		},
+		"view": {
+			"list": "Show as list",
+			"grid": "Show as grid"
 		}
 	},
 	"newRecipe": {
