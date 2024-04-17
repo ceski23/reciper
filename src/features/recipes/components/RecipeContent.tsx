@@ -8,12 +8,14 @@ import { type InsightItem, RecipeInsights } from 'features/recipes/components/Re
 import { StepsSection } from 'features/recipes/components/StepsSection'
 import { type Recipe } from 'features/recipes/types'
 import { Chip } from 'lib/components/Chip'
+import { Skeleton } from 'lib/components/Skeleton'
 import { Typography } from 'lib/components/Typography'
 import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
 
 const Gallery = lazy(() => import('./Gallery'))
+const RecipeCover = lazy(() => import('./RecipeCover'))
 
 type RecipeContentProps = {
 	recipe: Recipe
@@ -51,7 +53,11 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 
 	return (
 		<ContentContainer style={style}>
-			<Cover src={recipe.image} />
+			{recipe.image && (
+				<Suspense fallback={<Skeleton style={{ height: '200px' }} />}>
+					<RecipeCover image={recipe.image} />
+				</Suspense>
+			)}
 			<RecipeInsights items={[prepTime, calories, rating, servings].filter(isDefined)} />
 			{recipe.description && (
 				<Description>
@@ -109,15 +115,6 @@ const ContentContainer = styled('div', {
 		paddingInline: 16,
 		paddingBottom: 32,
 		gap: 32,
-	},
-})
-
-const Cover = styled('img', {
-	base: {
-		width: '100%',
-		height: 200,
-		objectFit: 'cover',
-		borderRadius: 12,
 	},
 })
 

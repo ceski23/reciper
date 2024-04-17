@@ -53,10 +53,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 			{status !== 'success' && <RecipeContentSkeleton />}
 			{status === 'success' && (
 				<Fragment>
-					<RecipeContent
-						recipe={recipe}
-						style={style}
-					/>
+					<RecipeContent recipe={recipe} />
 					<ContentOverlayPortal>
 						<FabContainer>
 							<FloatingActionButton
