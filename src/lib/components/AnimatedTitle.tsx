@@ -20,6 +20,14 @@ const calcOpacity = (y: number, reverse?: boolean) => {
 	return clamp(1 - ((y - 30) / 20), 0, 1)
 }
 
+const calcY = (y: number, reverse?: boolean) => {
+	if (reverse) {
+		return clamp(1 - (y - 40) + 20, 0, 20)
+	}
+
+	return 0
+}
+
 export const AnimatedTitle: FunctionComponent<AnimatedTitleProps> = ({
 	container,
 	children,
@@ -41,6 +49,7 @@ export const AnimatedTitle: FunctionComponent<AnimatedTitleProps> = ({
 			style={{
 				...style,
 				opacity: shouldAnimate ? scrollY.to(y => calcOpacity(y, reverse)) : undefined,
+				y: shouldAnimate ? scrollY.to(y => calcY(y, reverse)) : undefined,
 			}}
 		>
 			{children}
