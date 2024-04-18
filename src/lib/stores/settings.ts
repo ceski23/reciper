@@ -10,10 +10,10 @@ export type Settings = {
 }
 
 export const settingsStore = createStore({
-	theme: storage<Settings['theme']>({
+	theme: storage({
 		colorScheme: undefined,
 		dynamicColor: true,
 		disabledAnimations: false,
 	}),
-	language: storage<Settings['language']>(undefined),
+	language: storage(undefined),
 })

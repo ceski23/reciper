@@ -11,8 +11,10 @@ export type Notification = {
 	}
 }
 
-export const notificationsStore = createStore<{
+type NotificationsStore = {
 	notifications: Array<Notification>
-}>({
+}
+
+export const notificationsStore = createStore<NotificationsStore>({
 	notifications: [],
 })

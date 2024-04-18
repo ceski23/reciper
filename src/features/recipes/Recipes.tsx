@@ -17,6 +17,7 @@ import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDialogState } from 'lib/hooks/useDialogState'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
+import { uiStore } from 'lib/stores/ui'
 
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
@@ -29,7 +30,7 @@ export const Recipes: FunctionComponent = () => {
 	const [container, setContainer] = useState<HTMLElement | null>(null)
 	const { AnimateDialog: AnimateAddDialog, state: [, setIsAddDialogOpen] } = useDialogState(false)
 	const { AnimateDialog: AnimateUrlDialog, state: [, setIsUrlDialogOpen] } = useDialogState(false)
-	const [view, setView] = useState<'list' | 'grid'>('list')
+	const { state: { recipesViewMode }, actions: { setRecipesViewMode } } = uiStore.useStore('recipesViewMode')
 
 	useEffect(() => {
 		if (recipes.data?.length === 0) {
@@ -75,9 +76,9 @@ export const Recipes: FunctionComponent = () => {
 					(
 						<IconButton
 							key="view"
-							icon={view === 'list' ? 'viewGrid' : 'viewList'}
-							title={view === 'list' ? t('recipes.view.grid') : t('recipes.view.list')}
-							onClick={() => setView(prev => prev === 'grid' ? 'list' : 'grid')}
+							icon={recipesViewMode === 'list' ? 'viewGrid' : 'viewList'}
+							title={recipesViewMode === 'list' ? t('recipes.view.grid') : t('recipes.view.list')}
+							onClick={() => setRecipesViewMode(prev => prev === 'grid' ? 'list' : 'grid')}
 						/>
 					),
 					(
@@ -94,7 +95,7 @@ export const Recipes: FunctionComponent = () => {
 					),
 				]}
 			/>
-			{view === 'grid'
+			{recipesViewMode === 'grid'
 				? (
 					<RecipesGrid>
 						{renderProbe}
@@ -173,5 +174,6 @@ const RecipesGrid = styled('div', {
 		gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
 		gap: 16,
 		margin: 16,
+		marginTop: 0,
 	},
 })
