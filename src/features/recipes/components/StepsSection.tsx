@@ -1,6 +1,5 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import { group } from 'radash'
 import { type FunctionComponent, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeStep } from 'features/recipes/components/RecipeStep'
@@ -9,12 +8,12 @@ import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 
 type StepsSectionProps = {
+	name: string
 	steps: Recipe['instructions']
 }
 
-export const StepsSection: FunctionComponent<StepsSectionProps> = ({ steps }) => {
+export const StepsSection: FunctionComponent<StepsSectionProps> = ({ steps, name }) => {
 	const { t } = useTranslation()
-	const groups = group(steps, item => item.group ?? '')
 	const refs = useRef<Array<HTMLElement | null>>(Array.from(steps, () => null))
 	const lastDoneSteps = useRef<Array<string>>([])
 
@@ -40,29 +39,25 @@ export const StepsSection: FunctionComponent<StepsSectionProps> = ({ steps }) =>
 		refs.current = refs.current.slice(0, steps.length)
 	}, [steps.length])
 
-	return Object.entries(groups).map(([name, steps]) =>
-		steps
-			? (
-				<Container key={name}>
-					<Typography.TitleLarge>
-						{name || t('recipes.steps.title')}
-					</Typography.TitleLarge>
-					<StepsList
-						type="multiple"
-						onValueChange={handleStepClick}
-					>
-						{steps.map((step, index) => (
-							<RecipeStep
-								number={index + 1}
-								step={step}
-								key={index}
-								ref={node => refs.current[index] = node}
-							/>
-						))}
-					</StepsList>
-				</Container>
-			)
-			: undefined
+	return (
+		<Container>
+			<Typography.TitleLarge>
+				{name || t('recipes.steps.title')}
+			</Typography.TitleLarge>
+			<StepsList
+				type="multiple"
+				onValueChange={handleStepClick}
+			>
+				{steps.map((step, index) => (
+					<RecipeStep
+						number={index + 1}
+						step={step}
+						key={index}
+						ref={node => refs.current[index] = node}
+					/>
+				))}
+			</StepsList>
+		</Container>
 	)
 }
 

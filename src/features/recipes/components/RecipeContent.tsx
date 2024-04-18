@@ -1,5 +1,6 @@
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
+import { group } from 'radash'
 import { type CSSProperties, type FunctionComponent, lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -93,7 +94,19 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 				ingredients={recipe.ingredients}
 				initialServingsCount={recipe.servings}
 			/>
-			<StepsSection steps={recipe.instructions} />
+			{Object
+				.entries(group(recipe.instructions, item => item.group ?? ''))
+				.map(([name, steps]) =>
+					steps
+						? (
+							<StepsSection
+								key={name}
+								name={name}
+								steps={recipe.instructions}
+							/>
+						)
+						: null
+				)}
 			{recipe.gallery.length > 0 && (
 				<Section>
 					<Typography.TitleLarge>
