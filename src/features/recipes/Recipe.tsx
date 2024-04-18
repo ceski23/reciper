@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
+import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useTypedParams } from 'react-router-typesafe-routes/dom'
@@ -12,6 +12,7 @@ import { IconButton } from 'lib/components/IconButton'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
+import { useApplyDynamicTheme } from 'lib/hooks/useApplyDynamicTheme'
 import { useDialogState } from 'lib/hooks/useDialogState'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { useWakelock } from 'lib/hooks/useWakelock'
@@ -23,11 +24,11 @@ export const Recipe: FunctionComponent = () => {
 	const { notify } = useNotifications()
 	const { id } = useTypedParams(PATHS.RECIPES.RECIPE)
 	const { data: recipe, status } = useQuery(recipeQuery(id))
-	const style = useDynamicTheme(recipe?.color)
 	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const navigate = useNavigate()
 
+	useApplyDynamicTheme(useDynamicTheme(recipe?.color))
 	useWakelock()
 
 	const handleShareRecipe = () => {
@@ -35,12 +36,6 @@ export const Recipe: FunctionComponent = () => {
 			error.name !== 'AbortError' && notify(t('recipes.sharing.error'))
 		})
 	}
-
-	useEffect(() => {
-		document.getElementById('root')?.setAttribute('style', String(style))
-
-		return () => document.getElementById('root')?.removeAttribute('style')
-	}, [style])
 
 	if (status === 'error') {
 		notify(t('recipes.loadError'), { id: 'recipeError' })

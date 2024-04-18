@@ -34,19 +34,19 @@ export const Layout: FunctionComponent = () => {
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()
 	const navbarRef = useMeasureHeight<HTMLDivElement>(height => {
-		setElementVars(document.body, {
+		setElementVars(document.documentElement, {
 			[navigationMenuHeight]: `${height ?? 0}px`,
 		})
 	})
 	const headerRef = useMeasureHeight<HTMLElement>(height => {
-		setElementVars(document.body, {
+		setElementVars(document.documentElement, {
 			[headerHeight]: `${height ?? 0}px`,
 		})
 	})
 
 	useLayoutEffect(() => {
-		document.body.classList.toggle(lightThemeClass, !isDarkMode)
-		document.body.classList.toggle(darkThemeClass, isDarkMode)
+		document.documentElement.classList.toggle(lightThemeClass, !isDarkMode)
+		document.documentElement.classList.toggle(darkThemeClass, isDarkMode)
 	}, [isDarkMode])
 
 	return (

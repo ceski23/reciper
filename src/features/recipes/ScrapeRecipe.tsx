@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
-import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
+import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTypedSearchParams } from 'react-router-typesafe-routes/dom'
@@ -14,6 +14,7 @@ import { DIALOG_ANIMATION, SimpleDialog } from 'lib/components/Dialog'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
+import { useApplyDynamicTheme } from 'lib/hooks/useApplyDynamicTheme'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useWakelock } from 'lib/hooks/useWakelock'
 import { PATHS } from 'lib/routing/paths'
@@ -30,18 +31,12 @@ export const ScrapeRecipe: FunctionComponent = () => {
 		queryFn: () => scrapeRecipe(url).catch(),
 		retry: false,
 	})
-	const style = useDynamicTheme(recipe?.color)
 	const addRecipe = useAddRecipe()
 	const transition = useTransition(isError, DIALOG_ANIMATION)
 	const location = useLocation()
 
+	useApplyDynamicTheme(useDynamicTheme(recipe?.color))
 	useWakelock()
-
-	useEffect(() => {
-		document.getElementById('root')?.setAttribute('style', String(style))
-
-		return () => document.getElementById('root')?.removeAttribute('style')
-	}, [style])
 
 	return (
 		<Fragment>
