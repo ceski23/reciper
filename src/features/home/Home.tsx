@@ -47,66 +47,72 @@ export const Home: FunctionComponent = () => {
 				placeholder={t('home.searchBarPlaceholder')}
 				style={{ gridColumn: '2' }}
 			/>
-			{recipes.data === undefined || recipes.data.length === 0 ? t('home.emptyMessage') : (
-				<Fragment>
-					<FullbleedSection>
-						<Typography.TitleMedium style={{ paddingInline: 16 }}>
-							{t('home.recentRecipes')}
-						</Typography.TitleMedium>
-						<CardsList>
-							{getRecentRecipes(recipes.data, 10).map(recipe => (
-								<RecipeCard
-									key={recipe.id}
-									recipe={recipe}
-								/>
-							))}
-						</CardsList>
-					</FullbleedSection>
-					<Section>
-						<Typography.TitleMedium>
-							{t('home.mostCommonTags')}
-						</Typography.TitleMedium>
-						<TagsContainer
-							type="multiple"
-							value={[]}
-						>
-							{getMostCommonTags(recipes.data, 15).map(tag => (
-								<ToggleGroup.Item
-									key={tag}
-									value={tag}
-									asChild
-								>
-									<StyledChip
-										text={tag}
-										variant="outlined"
-										onClick={() =>
-											navigate(PATHS.RECIPES.SEARCH.buildPath({}, { query: tag }), { unstable_viewTransition: true })}
+			{recipes.data === undefined || recipes.data.length === 0
+				? (
+					<EmptyState>
+						{t('home.emptyMessage')}
+					</EmptyState>
+				)
+				: (
+					<Fragment>
+						<FullbleedSection>
+							<Typography.TitleMedium style={{ paddingInline: 16 }}>
+								{t('home.recentRecipes')}
+							</Typography.TitleMedium>
+							<CardsList>
+								{getRecentRecipes(recipes.data, 10).map(recipe => (
+									<RecipeCard
+										key={recipe.id}
+										recipe={recipe}
 									/>
-								</ToggleGroup.Item>
-							))}
-						</TagsContainer>
-					</Section>
-					<FullbleedSection>
-						<Typography.TitleMedium style={{ paddingInline: 16 }}>
-							{t('home.topRecipes')}
-						</Typography.TitleMedium>
-						<List>
-							{getTopRecipes(recipes.data, 10).map(recipe => (
-								<RecipeListItem
-									key={recipe.id}
-									recipe={recipe}
-									details={(
-										<ListItemDetail>
-											{recipe.rating}
-											<ListItemIcon name="star" />
-										</ListItemDetail>
-									)}
-								/>
-							))}
-						</List>
-					</FullbleedSection>
-				</Fragment>
-			)}
+								))}
+							</CardsList>
+						</FullbleedSection>
+						<Section>
+							<Typography.TitleMedium>
+								{t('home.mostCommonTags')}
+							</Typography.TitleMedium>
+							<TagsContainer
+								type="multiple"
+								value={[]}
+							>
+								{getMostCommonTags(recipes.data, 15).map(tag => (
+									<ToggleGroup.Item
+										key={tag}
+										value={tag}
+										asChild
+									>
+										<StyledChip
+											text={tag}
+											variant="outlined"
+											onClick={() =>
+												navigate(PATHS.RECIPES.SEARCH.buildPath({}, { query: tag }), { unstable_viewTransition: true })}
+										/>
+									</ToggleGroup.Item>
+								))}
+							</TagsContainer>
+						</Section>
+						<FullbleedSection>
+							<Typography.TitleMedium style={{ paddingInline: 16 }}>
+								{t('home.topRecipes')}
+							</Typography.TitleMedium>
+							<List>
+								{getTopRecipes(recipes.data, 10).map(recipe => (
+									<RecipeListItem
+										key={recipe.id}
+										recipe={recipe}
+										details={(
+											<ListItemDetail>
+												{recipe.rating}
+												<ListItemIcon name="star" />
+											</ListItemDetail>
+										)}
+									/>
+								))}
+							</List>
+						</FullbleedSection>
+					</Fragment>
+				)}
 		</Container>
 	)
 }
@@ -174,5 +180,15 @@ const ListItemDetail = styled('span', {
 		display: 'flex',
 		alignItems: 'center',
 		gap: 4,
+	},
+})
+
+const EmptyState = styled('div', {
+	base: {
+		gridColumn: '1 / -1',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		paddingBlock: '128px',
 	},
 })
