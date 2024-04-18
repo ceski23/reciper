@@ -8,9 +8,9 @@ export type AccountData = {
 	user?: UserInfo
 }
 
-export const accountStore = createStore<AccountData>({
-	provider: storage(),
-	accessToken: storage(),
-	refreshToken: storage(),
-	user: storage(),
+export const accountStore = createStore({
+	provider: storage<AccountData['provider']>(),
+	accessToken: storage<AccountData['accessToken']>(),
+	refreshToken: storage<AccountData['refreshToken']>(),
+	user: storage<AccountData['user']>(),
 })
