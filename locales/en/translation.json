@@ -84,7 +84,8 @@
 		"view": {
 			"list": "Show as list",
 			"grid": "Show as grid"
-		}
+		},
+		"listLoadError": "Couldn't load recipes"
 	},
 	"newRecipe": {
 		"title": "New recipe",

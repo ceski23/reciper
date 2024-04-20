@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
+import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
 import { recipesQuery, useAddRecipes } from 'features/recipes/recipes'
 import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
@@ -13,6 +14,7 @@ import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { IconButton } from 'lib/components/IconButton'
 import { VirtualList } from 'lib/components/list/VirtualList'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
+import { Snackbar } from 'lib/components/Snackbar'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDialogState } from 'lib/hooks/useDialogState'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
@@ -95,11 +97,24 @@ export const Recipes: FunctionComponent = () => {
 					),
 				]}
 			/>
-			{recipesViewMode === 'grid'
+			{recipes.status === 'pending'
+				? (
+					<div>
+						{Array.from({ length: 8 }, (_, index) => <RecipeListItemSkeleton key={index} />)}
+					</div>
+				)
+				: recipes.status === 'error'
+				? (
+					<Snackbar
+						text={t('recipes.listLoadError')}
+						duration={Infinity}
+					/>
+				)
+				: recipesViewMode === 'grid'
 				? (
 					<RecipesGrid>
 						{renderProbe}
-						{recipes.data?.map(recipe => (
+						{recipes.data.map(recipe => (
 							<RecipeCard
 								key={recipe.id}
 								recipe={recipe}
@@ -114,7 +129,7 @@ export const Recipes: FunctionComponent = () => {
 						ref={setContainer}
 					>
 						{renderProbe}
-						{recipes.data?.map(recipe => (
+						{recipes.data.map(recipe => (
 							<RecipeListItem
 								key={recipe.id}
 								recipe={recipe}

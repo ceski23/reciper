@@ -89,7 +89,8 @@
 		"view": {
 			"list": "Pokaż jako listę",
 			"grid": "Pokaż jako siatkę"
-		}
+		},
+		"listLoadError": "Nie udało się załadować przepisów"
 	},
 	"newRecipe": {
 		"title": "Nowy przepis",
