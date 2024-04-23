@@ -1,12 +1,11 @@
 import { styled } from '@macaron-css/react'
 import { animated } from '@react-spring/web'
+import { useNavigate } from '@tanstack/react-router'
 import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate } from 'react-router-dom'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { Skeleton } from 'lib/components/Skeleton'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
-import { PATHS } from 'lib/routing/paths'
 import { uiStore } from 'lib/stores/ui'
 import { theme } from 'lib/styles'
 import { AnimatedTitle } from './AnimatedTitle'
@@ -36,20 +35,11 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	container,
 }) => {
 	const { t } = useTranslation()
-	const navigate = useNavigate()
-	const location = useLocation()
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
 	const { state: { mainContent } } = uiStore.useStore('mainContent')
+	const navigate = useNavigate()
 	const scrollContainer = container ?? mainContent
-
-	const handleGoBack = () => {
-		if (location.key === 'default') {
-			return navigate(PATHS.HOME.buildPath({}))
-		}
-
-		navigate(-1)
-	}
 
 	return (
 		<Fragment>
@@ -60,7 +50,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 					<IconButton
 						icon="backArrow"
 						title={t('navigation.goBack')}
-						onClick={handleGoBack}
+						onClick={() => navigate({ to: '../' })}
 					/>
 					{scrollContainer && (
 						<PageTitle asChild>

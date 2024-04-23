@@ -1,10 +1,9 @@
 import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
+import { Link, type ToOptions } from '@tanstack/react-router'
 import type { FunctionComponent } from 'react'
-import { NavLink } from 'react-router-dom'
 import { type SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
-import { useIsLinkActive } from 'lib/hooks'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from '../Typography'
 
@@ -12,7 +11,7 @@ export type NavigationSegmentProps = {
 	label?: string
 	icon: SvgSpriteIconName
 	badge?: boolean | string
-	to: string
+	to: ToOptions['to']
 }
 
 export const NavigationSegment: FunctionComponent<RovingFocusGroup.RovingFocusItemProps & NavigationSegmentProps> = ({
@@ -21,40 +20,32 @@ export const NavigationSegment: FunctionComponent<RovingFocusGroup.RovingFocusIt
 	badge,
 	to,
 	...props
-}) => {
-	const isActive = useIsLinkActive(to)
-
-	return (
-		<SegmentBase
-			{...props}
-			asChild
-			active={isActive}
-		>
-			<NavLink
-				to={to}
-				unstable_viewTransition
-			>
-				<IconContainer>
-					<SegmentIcon name={icon} />
-					{badge && (
-						<Badge variant={typeof badge === 'string' ? undefined : 'empty'}>
-							{typeof badge === 'string' && (
-								<Typography.LabelSmall>
-									{badge}
-								</Typography.LabelSmall>
-							)}
-						</Badge>
-					)}
-				</IconContainer>
-				{label && (
-					<Typography.LabelMedium>
-						{label}
-					</Typography.LabelMedium>
+}) => (
+	<SegmentBase
+		asChild
+		{...props}
+	>
+		<Link to={to}>
+			<IconContainer>
+				<SegmentIcon name={icon} />
+				{badge && (
+					<Badge variant={typeof badge === 'string' ? undefined : 'empty'}>
+						{typeof badge === 'string' && (
+							<Typography.LabelSmall>
+								{badge}
+							</Typography.LabelSmall>
+						)}
+					</Badge>
 				)}
-			</NavLink>
-		</SegmentBase>
-	)
-}
+			</IconContainer>
+			{label && (
+				<Typography.LabelMedium>
+					{label}
+				</Typography.LabelMedium>
+			)}
+		</Link>
+	</SegmentBase>
+)
 
 const SegmentBase = styled(RovingFocusGroup.Item, {
 	base: {

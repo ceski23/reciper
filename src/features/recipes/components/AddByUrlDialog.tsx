@@ -1,12 +1,11 @@
 import { styled } from '@macaron-css/react'
 import { type SpringValue } from '@react-spring/web'
+import { useNavigate } from '@tanstack/react-router'
 import { type FunctionComponent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/Dialog'
 import { TextField } from 'lib/components/TextField'
-import { PATHS } from 'lib/routing/paths'
 
 type AddByUrlDialogProps = {
 	open?: boolean
@@ -56,7 +55,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = ({ onClose
 					ref={formRef}
 					onSubmit={event => {
 						event.preventDefault()
-						if (url !== '') navigate(PATHS.RECIPES.SCRAPE.buildPath({}, { url }))
+						if (url !== '') navigate({ to: '/recipes/scrape', search: { url } })
 					}}
 				>
 					<TextField

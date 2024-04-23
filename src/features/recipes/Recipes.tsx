@@ -127,6 +127,7 @@ export const Recipes: FunctionComponent = () => {
 					<VirtualList
 						virtualProps={{ overscan: 10 }}
 						ref={setContainer}
+						scrollRestorationId="recipesList"
 					>
 						{renderProbe}
 						{recipes.data.map(recipe => (

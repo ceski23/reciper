@@ -1,10 +1,9 @@
 import { styled } from '@macaron-css/react'
 import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useTypedSearchParams } from 'react-router-typesafe-routes/dom'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
 import { scrapeRecipe } from 'features/recipes/providers/scrapper'
@@ -17,7 +16,7 @@ import { useDynamicTheme } from 'lib/hooks'
 import { useApplyDynamicTheme } from 'lib/hooks/useApplyDynamicTheme'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useWakelock } from 'lib/hooks/useWakelock'
-import { PATHS } from 'lib/routing/paths'
+import { scrapeRecipeRoute } from 'lib/router'
 import { isValidUrl } from 'lib/utils/urls'
 
 export const ScrapeRecipe: FunctionComponent = () => {
@@ -25,7 +24,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	const navigate = useNavigate()
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
-	const [{ url }] = useTypedSearchParams(PATHS.RECIPES.SCRAPE)
+	const { url } = scrapeRecipeRoute.useSearch()
 	const { data: recipe, status, isError } = useQuery({
 		queryKey: ['scraped', url],
 		queryFn: () => scrapeRecipe(url).catch(),
@@ -33,7 +32,6 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	})
 	const addRecipe = useAddRecipe()
 	const transition = useTransition(isError, DIALOG_ANIMATION)
-	const location = useLocation()
 
 	useApplyDynamicTheme(useDynamicTheme(recipe?.color))
 	useWakelock()
@@ -60,8 +58,9 @@ export const ScrapeRecipe: FunctionComponent = () => {
 								onClick={() =>
 									addRecipe.mutate(recipe, {
 										onSuccess: ({ id }) =>
-											navigate(PATHS.RECIPES.RECIPE.buildPath({ id }), {
-												unstable_viewTransition: true,
+											navigate({
+												to: '/recipes/$id',
+												params: { id },
 												replace: true,
 											}),
 									})}
@@ -77,10 +76,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 					actions={[
 						{
 							label: t('scraping.close'),
-							onClick: () => {
-								if (location.key === 'default') return window.close()
-								navigate(-1)
-							},
+							onClick: () => navigate({ to: '../' }),
 						},
 					]}
 					styles={styles}

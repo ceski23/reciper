@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query'
 import { counting } from 'radash'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { recipesQuery } from 'features/recipes/recipes'
 import { type Recipe } from 'features/recipes/types'
@@ -13,7 +12,6 @@ import { Icon } from 'lib/components/Icon'
 import { List } from 'lib/components/list/List'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { Typography } from 'lib/components/Typography'
-import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
 import { FakeSearchBar } from './components/FakeSearchBar'
@@ -22,7 +20,6 @@ const recipeHasRating = (recipe: Recipe): recipe is Recipe & Required<Pick<Recip
 
 export const Home: FunctionComponent = () => {
 	const { t } = useTranslation()
-	const navigate = useNavigate()
 	const recipes = useQuery(recipesQuery())
 	const getRecentRecipes = (recipes: Array<Recipe>, amount: number) =>
 		[...recipes]
@@ -85,8 +82,8 @@ export const Home: FunctionComponent = () => {
 										<StyledChip
 											text={tag}
 											variant="outlined"
-											onClick={() =>
-												navigate(PATHS.RECIPES.SEARCH.buildPath({}, { query: tag }), { unstable_viewTransition: true })}
+											to="/recipes/search"
+											search={{ query: tag }}
 										/>
 									</ToggleGroup.Item>
 								))}
@@ -129,6 +126,7 @@ const Container = styled('div', {
 const StyledChip = styled(Chip, {
 	base: {
 		flex: '1 0 auto',
+		textDecoration: 'unset',
 	},
 })
 

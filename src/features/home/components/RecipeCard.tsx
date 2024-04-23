@@ -1,13 +1,12 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
+import { createLink } from '@tanstack/react-router'
 import { type CSSProperties, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import { type Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
 import { useDynamicTheme } from 'lib/hooks'
 import { useRipples } from 'lib/hooks/useRipples'
-import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 
 type RecipeCardProps = {
@@ -39,8 +38,8 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 				...style,
 			}}
 			ref={ref}
-			to={PATHS.RECIPES.RECIPE.buildPath({ id: recipe.id })}
-			unstable_viewTransition
+			to="/recipes/$id"
+			params={{ id: recipe.id }}
 			{...eventHandlers}
 		>
 			{renderRipples}
@@ -57,7 +56,7 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 	)
 }
 
-const Card = styled(animated(Link), {
+const Card = createLink(styled(animated.a, {
 	base: {
 		width: 220,
 		height: 250,
@@ -72,7 +71,7 @@ const Card = styled(animated(Link), {
 		textDecoration: 'unset',
 		position: 'relative',
 	},
-})
+}))
 
 const RecipeImage = styled('img', {
 	base: {

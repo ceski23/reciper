@@ -6,7 +6,6 @@ import { SimpleDialog } from 'lib/components/Dialog'
 import { Icon } from 'lib/components/Icon'
 import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
-import { PATHS } from 'lib/routing/paths'
 
 type AddRecipeDialogProps = {
 	open?: boolean
@@ -42,7 +41,7 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = ({ onClo
 			content={(
 				<List>
 					<ListItem.Link
-						to={PATHS.RECIPES.NEW.buildPath({})}
+						to="/recipes/new"
 						title={t('recipes.addRecipe.addManually')}
 						leadingElement={(
 							<Icon

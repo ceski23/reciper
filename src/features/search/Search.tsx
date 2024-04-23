@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
+import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSearchParams } from 'react-router-dom'
 import { useRecipesSearch } from 'features/search/hooks/useRecipesSearch'
 import { BottomSheet, type SheetState } from 'lib/components/BottomSheet'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
@@ -11,29 +11,34 @@ import { VirtualList } from 'lib/components/list/VirtualList'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopSearchBar } from 'lib/components/TopSearchBar'
 import { Typography } from 'lib/components/Typography'
+import { searchRecipeRoute } from 'lib/router'
 import { theme } from 'lib/styles'
 
 export const Search: FunctionComponent = ({}) => {
 	const { t } = useTranslation()
-	const [params, setSearchParams] = useSearchParams()
-	const deferredQuery = useDeferredValue(params.get('query') ?? '')
+	const { query } = searchRecipeRoute.useSearch()
+	const deferredQuery = useDeferredValue(query ?? '')
 	const matches = useRecipesSearch(deferredQuery)
 	const [filtersModalState, setFiltersModalState] = useState<SheetState>('close')
 	const searchBarRef = useRef<HTMLInputElement>(null)
+	const navigate = useNavigate()
 
 	const handleQueryChange = (query: string) => {
-		setSearchParams(prev => ({
-			...prev,
-			query,
-		}), {
+		navigate({
+			search: prev => ({
+				...prev,
+				query,
+			}),
+			viewTransition: false,
 			replace: true,
 		})
 	}
 
 	useLayoutEffect(() => {
-		if (!params.get('query')) {
+		if (!query) {
 			searchBarRef.current?.focus()
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
@@ -41,7 +46,7 @@ export const Search: FunctionComponent = ({}) => {
 			<HeaderPortal>
 				<TopSearchBar
 					ref={searchBarRef}
-					query={params.get('query') ?? ''}
+					query={query ?? ''}
 					onQueryChange={handleQueryChange}
 					placeholder={t('search.placeholder')}
 				/>
@@ -49,7 +54,7 @@ export const Search: FunctionComponent = ({}) => {
 			<Container>
 				{matches.length > 0
 					? (
-						<VirtualList>
+						<VirtualList scrollRestorationId="recipesSearchList">
 							{matches.map(match => (
 								<RecipeListItem
 									key={match.entity.id}

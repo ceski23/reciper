@@ -1,12 +1,11 @@
 import { styled } from '@macaron-css/react'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { type CSSProperties, type FunctionComponent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { type SvgSpriteIconName } from 'virtual:svg-sprite'
 import { useUserInfo } from 'features/auth/hooks'
 import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
 import { useRipples } from 'lib/hooks/useRipples'
-import { PATHS } from 'lib/routing/paths'
 import { styleUtils, theme } from 'lib/styles'
 
 type FakeSearchBarProps = {
@@ -23,7 +22,7 @@ export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIc
 	return (
 		<SearchBarBase
 			{...eventHandlers}
-			onClick={() => navigate(PATHS.RECIPES.SEARCH.path, { unstable_viewTransition: true })}
+			onClick={() => navigate({ to: '/recipes/search' })}
 			style={style}
 		>
 			{renderRipples}
@@ -31,7 +30,7 @@ export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIc
 			{placeholder && <PlaceholderText>{placeholder}</PlaceholderText>}
 			{userInfo && (
 				<AccountLink
-					to={PATHS.SETTINGS.ACCOUNT.buildPath({})}
+					to="/settings/account"
 					onClick={event => event.stopPropagation()}
 				>
 					<Avatar

@@ -1,10 +1,9 @@
 import { styled } from '@macaron-css/react'
+import { useNavigate } from '@tanstack/react-router'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate } from 'react-router-dom'
 import { IconButton } from 'lib/components/IconButton'
 import { bodyLarge } from 'lib/components/Typography'
-import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 
 type TopSearchBarProps = {
@@ -16,22 +15,13 @@ type TopSearchBarProps = {
 export const TopSearchBar = forwardRef<HTMLInputElement, TopSearchBarProps>(({ onQueryChange, query, placeholder }, ref) => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
-	const location = useLocation()
-
-	const handleGoBack = () => {
-		if (location.key === 'default') {
-			return navigate(PATHS.HOME.buildPath({}))
-		}
-
-		navigate(-1)
-	}
 
 	return (
 		<AppBarBase>
 			<IconButton
 				icon="backArrow"
 				title={t('navigation.goBack')}
-				onClick={handleGoBack}
+				onClick={() => navigate({ to: '../' })}
 			/>
 			<TextField
 				inputMode="search"

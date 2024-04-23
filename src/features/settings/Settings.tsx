@@ -5,7 +5,6 @@ import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDialogState } from 'lib/hooks/useDialogState'
-import { PATHS } from 'lib/routing/paths'
 import { settingsStore } from 'lib/stores/settings'
 import { theme } from 'lib/styles'
 
@@ -25,21 +24,21 @@ export const Settings: FunctionComponent = () => {
 					iconColor={theme.colors.primary}
 					title={t('settings.theme.title')}
 					text={t('settings.theme.text')}
-					to={PATHS.SETTINGS.THEME.buildPath({})}
+					to="/settings/theme"
 				/>
 				<ListItem.Link
 					leadingElement="account"
 					iconColor={theme.colors.primary}
 					title={t('settings.account.title')}
 					text={t('settings.account.text')}
-					to={PATHS.SETTINGS.ACCOUNT.buildPath({})}
+					to="/settings/account"
 				/>
 				<ListItem.Link
 					leadingElement="scale"
 					iconColor={theme.colors.primary}
 					title={t('settings.units.title')}
 					text={t('settings.account.text')}
-					to={PATHS.SETTINGS.UNITS.buildPath({})}
+					to="/settings/units"
 				/>
 				<ListItem.Simple
 					leadingElement="language"
@@ -52,7 +51,6 @@ export const Settings: FunctionComponent = () => {
 					leadingElement="info"
 					iconColor={theme.colors.primary}
 					title={t('settings.about.title')}
-					to={PATHS.SETTINGS.ABOUT.buildPath({})}
 					text={t('settings.about.version', { version: `${__APP_VERSION__}-${__COMMIT_HASH__}` })}
 				/>
 			</List>

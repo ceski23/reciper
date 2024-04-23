@@ -1,5 +1,5 @@
 import ky from 'ky'
-import { PATHS } from 'lib/routing/paths'
+import { googleAuthRoute } from 'lib/router'
 import { accountStore } from 'lib/stores/account'
 import { base64url, generateCodeChallenge, randomBytes } from 'lib/utils/oauth'
 import { AccountProvider } from '../provider'
@@ -45,7 +45,7 @@ export class GoogleProvider extends AccountProvider {
 
 		const params = new URLSearchParams({
 			client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-			redirect_uri: `${window.location.protocol}//${window.location.host}${PATHS.AUTH.GOOGLE.buildPath({})}`,
+			redirect_uri: `${window.location.protocol}//${window.location.host}${googleAuthRoute.fullPath}`,
 			response_type: 'code',
 			state: window.location.pathname,
 			code_challenge_method: 'S256',
@@ -73,7 +73,7 @@ export class GoogleProvider extends AccountProvider {
 				client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
 				grant_type: 'authorization_code',
 				code: params.get('code') as string,
-				redirect_uri: `${window.location.protocol}//${window.location.host}${PATHS.AUTH.GOOGLE.buildPath({})}`,
+				redirect_uri: `${window.location.protocol}//${window.location.host}${googleAuthRoute.fullPath}`,
 				code_verifier,
 			}),
 			headers: {

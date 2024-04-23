@@ -1,18 +1,17 @@
 import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
+import { Navigate, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { DIALOG_ANIMATION, SimpleDialog } from 'lib/components/Dialog'
-import { PATHS } from 'lib/routing/paths'
+import { googleAuthRoute } from 'lib/router'
 import { accountStore } from 'lib/stores/account'
 import { GoogleProvider } from './provider'
 
 export const Google = () => {
 	const { t } = useTranslation()
-	const location = useLocation()
 	const navigate = useNavigate()
-	const params = Object.fromEntries(new URLSearchParams(location.search))
-	const grantedScopes = params.scope.split(' ')
+	const { scope, error, state } = googleAuthRoute.useSearch()
+	const grantedScopes = scope.split(' ')
 	const areRequiredScopesGranted = GoogleProvider.requiredScopes.every(scope => grantedScopes.includes(scope))
 	const { actions: { setAccessToken, setProvider, setRefreshToken, setUser } } = accountStore.useStore()
 	const { isSuccess, data, isError: isCompleteLoginError } = useQuery({
@@ -22,7 +21,7 @@ export const Google = () => {
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 	})
-	const isError = 'error' in params || !areRequiredScopesGranted || isCompleteLoginError
+	const isError = Boolean(error) || !areRequiredScopesGranted || isCompleteLoginError
 	const transition = useTransition(isError, DIALOG_ANIMATION)
 
 	if (isSuccess && !isError) {
@@ -35,7 +34,7 @@ export const Google = () => {
 
 		return (
 			<Navigate
-				to={params.state ?? PATHS.HOME.buildPath({})}
+				to={state ?? '/'}
 				replace
 			/>
 		)
@@ -50,7 +49,7 @@ export const Google = () => {
 			actions={[
 				{
 					label: t('auth.google.error.close'),
-					onClick: () => navigate(params.state ?? PATHS.HOME.buildPath({}), { replace: true }),
+					onClick: () => navigate({ to: state ?? '/', replace: true }),
 				},
 			]}
 		/>

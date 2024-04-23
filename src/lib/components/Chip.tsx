@@ -1,12 +1,13 @@
 import { styled } from '@macaron-css/react'
 import * as Toggle from '@radix-ui/react-toggle'
+import { Link, type ToOptions } from '@tanstack/react-router'
 import { type ComponentProps, forwardRef } from 'react'
 import { type SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
 import { styleUtils, theme } from 'lib/styles'
 
-type ChipProps = {
+type ChipProps = ToOptions & {
 	text: string
 	icon?: SvgSpriteIconName
 	onClose?: VoidFunction
@@ -22,6 +23,8 @@ export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase
 		withLeadingIcon={icon !== undefined}
 		withCloseIcon={onClose !== undefined}
 		ref={ref}
+		// @ts-expect-error TS is shouting but it works
+		as={props.to !== undefined ? Link : undefined}
 		{...props}
 	>
 		{icon && (

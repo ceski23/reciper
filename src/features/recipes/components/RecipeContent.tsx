@@ -3,7 +3,6 @@ import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { group } from 'radash'
 import { type CSSProperties, type FunctionComponent, lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { IngredientsSection } from 'features/recipes/components/IngredientsSection'
 import { type InsightItem, RecipeInsights } from 'features/recipes/components/RecipeInsights'
 import { StepsSection } from 'features/recipes/components/StepsSection'
@@ -11,7 +10,6 @@ import { type Recipe } from 'features/recipes/types'
 import { Chip } from 'lib/components/Chip'
 import { Skeleton } from 'lib/components/Skeleton'
 import { Typography } from 'lib/components/Typography'
-import { PATHS } from 'lib/routing/paths'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
 
@@ -25,7 +23,6 @@ type RecipeContentProps = {
 
 export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, style }) => {
 	const { t } = useTranslation()
-	const navigate = useNavigate()
 
 	const prepTime: InsightItem | undefined = recipe.prepTime
 		? {
@@ -83,7 +80,8 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 								<StyledChip
 									text={tag}
 									variant="outlined"
-									onClick={() => navigate(PATHS.RECIPES.SEARCH.buildPath({}, { query: tag }), { unstable_viewTransition: true })}
+									to="/recipes/search"
+									search={{ query: tag }}
 								/>
 							</ToggleGroup.Item>
 						))}
@@ -141,6 +139,7 @@ const Description = styled(Typography.BodyMedium, {
 const StyledChip = styled(Chip, {
 	base: {
 		flex: '1 0 auto',
+		textDecoration: 'unset',
 	},
 })
 

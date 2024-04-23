@@ -3,7 +3,6 @@ import { animated, useInView } from '@react-spring/web'
 import { type FunctionComponent, type ReactNode } from 'react'
 import * as providers from 'features/recipes/providers/websites'
 import { type Recipe } from 'features/recipes/types'
-import { PATHS } from 'lib/routing/paths'
 import { isDefined } from 'lib/utils'
 import { ListItem } from './list/items'
 
@@ -40,7 +39,8 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe,
 			text={details ?? defaultDetails}
 			leadingElement={<RecipeImage src={recipe.image} />}
 			size="3line"
-			to={PATHS.RECIPES.RECIPE.buildPath({ id: recipe.id })}
+			to="/recipes/$id"
+			params={{ id: recipe.id }}
 		/>
 	)
 }

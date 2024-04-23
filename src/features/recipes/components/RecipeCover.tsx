@@ -1,10 +1,10 @@
 import 'photoswipe/dist/photoswipe.css'
 import { styled } from '@macaron-css/react'
+import { useBlocker } from '@tanstack/react-router'
 import { type EventCallback } from 'photoswipe'
 import type PhotoSwipe from 'photoswipe'
 import { type FunctionComponent, useCallback, useRef, useState } from 'react'
 import { Gallery, Item } from 'react-photoswipe-gallery'
-import { useBlocker } from 'react-router-dom'
 import { useImageDimensions } from 'lib/hooks/useImageDimensions'
 
 type RecipeCoverProps = {
@@ -14,8 +14,9 @@ type RecipeCoverProps = {
 const RecipeCover: FunctionComponent<RecipeCoverProps> = ({ image }) => {
 	const galleryRef = useRef<PhotoSwipe>()
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false)
-	const blocker = useBlocker(isGalleryOpen)
 	const dimensions = useImageDimensions(image)
+
+	useBlocker(() => galleryRef.current?.close(), isGalleryOpen)
 
 	const handleGalleryOpen = useCallback((photoswipe: PhotoSwipe) => {
 		setIsGalleryOpen(true)
@@ -27,13 +28,6 @@ const RecipeCover: FunctionComponent<RecipeCoverProps> = ({ image }) => {
 
 		photoswipe.on('closingAnimationStart', handleGalleryClose)
 	}, [])
-
-	if (blocker.state === 'blocked') {
-		queueMicrotask(() => {
-			galleryRef.current?.close()
-			blocker.reset()
-		})
-	}
 
 	return (
 		<Gallery

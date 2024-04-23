@@ -1,13 +1,11 @@
 import { styled } from '@macaron-css/react'
+import { Link, type ToOptions } from '@tanstack/react-router'
 import mergeProps from 'merge-props'
 import { type ComponentProps, forwardRef } from 'react'
-import { Link, type To } from 'react-router-dom'
 import { useRipples } from 'lib/hooks/useRipples'
 import { ListItemBase, MainContent, type MainContentProps } from './MainContent'
 
-type LinkItemProps = {
-	to: To
-}
+type LinkItemProps = Pick<ToOptions, 'to' | 'search' | 'params' | 'state'>
 
 export const LinkItem = forwardRef<
 	HTMLAnchorElement,
@@ -18,6 +16,9 @@ export const LinkItem = forwardRef<
 	leadingElement,
 	iconColor,
 	to,
+	search,
+	params,
+	state,
 	overline,
 	...props
 }, ref) => {
@@ -33,7 +34,9 @@ export const LinkItem = forwardRef<
 			<Container
 				ref={ref}
 				to={to}
-				unstable_viewTransition
+				search={search}
+				params={params}
+				state={state}
 			>
 				{renderRipples}
 				<MainContent

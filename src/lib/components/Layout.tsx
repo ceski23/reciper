@@ -1,20 +1,23 @@
 import { createTheme, createVar } from '@macaron-css/core'
 import { setElementVars } from '@macaron-css/core/dist/dynamic'
 import { styled } from '@macaron-css/react'
-import { type FunctionComponent, useLayoutEffect } from 'react'
+import { Outlet, ScrollRestoration } from '@tanstack/react-router'
+import { type FunctionComponent, lazy, Suspense, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Outlet } from 'react-router-dom'
 import { useDisableAnimations } from 'lib/hooks/useDisableAnimations'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
 import { useScreenNavigationAnimations } from 'lib/hooks/useScreenNavigationAnimations'
-import { PATHS } from 'lib/routing/paths'
 import { uiStore } from 'lib/stores/ui'
 import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
 import { AppUpdatePrompt } from './AppUpdatePrompt'
 import { NavigationBar } from './navigation/NavigationBar'
 import { SnackbarContainer } from './SnackbarContainer'
+
+const TanStackRouterDevtools = import.meta.env.PROD
+	? () => null
+	: lazy(() => import('@tanstack/router-devtools').then(res => ({ default: res.TanStackRouterDevtools })))
 
 export const lightThemeClass = createTheme(theme, {
 	colors: schemes.light,
@@ -67,12 +70,16 @@ export const Layout: FunctionComponent = () => {
 			<NavigationBar
 				ref={navbarRef}
 				segments={[
-					{ icon: 'home', to: PATHS.HOME.buildPath({}), label: t('paths.home') },
-					{ icon: 'recipes', to: PATHS.RECIPES.buildPath({}), label: t('paths.recipes') },
-					{ icon: 'settings', to: PATHS.SETTINGS.buildPath({}), label: t('paths.settings') },
+					{ icon: 'home', to: '/', label: t('paths.home') },
+					{ icon: 'recipes', to: '/recipes/', label: t('paths.recipes') },
+					{ icon: 'settings', to: '/settings/', label: t('paths.settings') },
 				]}
 			/>
 			<AppUpdatePrompt />
+			<Suspense>
+				<TanStackRouterDevtools />
+			</Suspense>
+			<ScrollRestoration />
 		</LayoutBase>
 	)
 }

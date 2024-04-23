@@ -1,11 +1,11 @@
 import 'photoswipe/dist/photoswipe.css'
 import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
+import { useBlocker } from '@tanstack/react-router'
 import type PhotoSwipe from 'photoswipe'
 import { type EventCallback } from 'photoswipe'
 import { type FunctionComponent, useCallback, useRef, useState } from 'react'
 import { Gallery as PhotoSwipeGallery } from 'react-photoswipe-gallery'
-import { useBlocker } from 'react-router-dom'
 import { GalleryItem } from './GalleryItem'
 
 type GalleryProps = {
@@ -15,7 +15,8 @@ type GalleryProps = {
 export const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
 	const galleryRef = useRef<PhotoSwipe>()
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false)
-	const blocker = useBlocker(isGalleryOpen)
+
+	useBlocker(() => galleryRef.current?.close(), isGalleryOpen)
 
 	const handleGalleryOpen = useCallback((photoswipe: PhotoSwipe) => {
 		// const closeWatcher = new CloseWatcher()
@@ -34,13 +35,6 @@ export const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
 	// useEffect(() => {
 	// 	return () => galleryRef.current?.destroy()
 	// }, [])
-
-	if (blocker.state === 'blocked') {
-		queueMicrotask(() => {
-			galleryRef.current?.close()
-			blocker.reset()
-		})
-	}
 
 	return (
 		<PhotoSwipeGallery

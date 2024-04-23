@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
-import { useTypedParams } from 'react-router-typesafe-routes/dom'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
 import { recipeQuery, useDeleteRecipe } from 'features/recipes/recipes'
@@ -16,13 +15,13 @@ import { useApplyDynamicTheme } from 'lib/hooks/useApplyDynamicTheme'
 import { useDialogState } from 'lib/hooks/useDialogState'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { useWakelock } from 'lib/hooks/useWakelock'
-import { PATHS } from 'lib/routing/paths'
+import { recipeRoute } from 'lib/router'
 
 export const Recipe: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const { notify } = useNotifications()
-	const { id } = useTypedParams(PATHS.RECIPES.RECIPE)
+	const { id } = recipeRoute.useParams()
 	const { data: recipe, status } = useQuery(recipeQuery(id))
 	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
@@ -39,7 +38,7 @@ export const Recipe: FunctionComponent = () => {
 
 	if (status === 'error') {
 		notify(t('recipes.loadError'), { id: 'recipeError' })
-		navigate(-1)
+		queueMicrotask(() => navigate({ to: '../' }))
 
 		return
 	}
@@ -106,7 +105,7 @@ export const Recipe: FunctionComponent = () => {
 									variant="filled"
 									onClick={() => {
 										deleteRecipeMutation.mutate(recipe.id, {
-											onSuccess: () => navigate(-1),
+											onSuccess: () => navigate({ to: '../' }),
 										})
 									}}
 								>
