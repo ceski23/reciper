@@ -1,5 +1,6 @@
 import { keyframes, style } from '@macaron-css/core'
-import { useLayoutEffect } from 'react'
+import { useRouter } from '@tanstack/react-router'
+import { useLayoutEffect, useRef } from 'react'
 
 const fadeIn = keyframes({
 	from: {
@@ -60,16 +61,29 @@ const popClass = style({
 })
 
 export const useScreenNavigationAnimations = () => {
+	const { history } = useRouter()
+	const locationRef = useRef<Array<string | undefined>>([])
+
 	useLayoutEffect(() => {
-		document.documentElement.classList.add(pushClass)
+		locationRef.current = [history.location.state.key]
 
-		const handler = () => {
-			document.documentElement.classList.add(popClass)
-			setTimeout(() => document.documentElement.classList.remove(popClass), 500)
+		const unsub = history.subscribe(() => {
+			const newKey = history.location.state.key
+
+			if (locationRef.current.at(-2) === newKey) {
+				document.documentElement.classList.toggle(popClass, true)
+				document.documentElement.classList.toggle(pushClass, false)
+				locationRef.current.pop()
+			} else {
+				document.documentElement.classList.toggle(popClass, false)
+				document.documentElement.classList.toggle(pushClass, true)
+				locationRef.current.push(history.location.state.key)
+			}
+		})
+
+		return () => {
+			unsub()
+			locationRef.current = []
 		}
-
-		window.addEventListener('popstate', handler)
-
-		return () => window.removeEventListener('popstate', handler)
-	}, [])
+	}, [history])
 }
