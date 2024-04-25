@@ -1,7 +1,8 @@
 import { styled } from '@macaron-css/react'
 import { animated } from '@react-spring/web'
 import { useNavigate } from '@tanstack/react-router'
-import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useState } from 'react'
+import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useMemo, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
 import { Skeleton } from 'lib/components/Skeleton'
@@ -10,7 +11,6 @@ import { uiStore } from 'lib/stores/ui'
 import { theme } from 'lib/styles'
 import { AnimatedTitle } from './AnimatedTitle'
 import { IconButton } from './IconButton'
-import { MetaThemeColor } from './MetaThemeColor'
 import { ProgressIndicator } from './ProgressIndicator'
 import { Typography } from './Typography'
 
@@ -39,13 +39,28 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
 	const { state: { mainContent } } = uiStore.useStore('mainContent')
 	const navigate = useNavigate()
+	const themeColor = useMemo(() => {
+		const tempElement = document.createElement('div')
+		tempElement.style.backgroundColor = isContentScrolled || elevation === 'onScroll' ? theme.colors.surfaceContainer : theme.colors.surface
+		document.documentElement.append(tempElement)
+
+		const color = window.getComputedStyle(tempElement).backgroundColor
+		tempElement.remove()
+
+		return color
+	}, [isContentScrolled, elevation])
 	const scrollContainer = container ?? mainContent
 
 	return (
 		<Fragment>
 			{renderProbe}
 			<HeaderPortal>
-				<MetaThemeColor isScrolled={isContentScrolled} />
+				<Helmet>
+					<meta
+						name="theme-color"
+						content={themeColor}
+					/>
+				</Helmet>
 				<AppBarBase elevation={elevation ?? (isContentScrolled ? 'onScroll' : 'flat')}>
 					<IconButton
 						icon="backArrow"
