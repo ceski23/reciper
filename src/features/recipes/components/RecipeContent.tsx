@@ -88,10 +88,7 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 					</TagsContainer>
 				</Section>
 			)}
-			<IngredientsSection
-				ingredients={recipe.ingredients}
-				initialServingsCount={recipe.servings}
-			/>
+			<IngredientsSection ingredients={recipe.ingredients} />
 			{Object
 				.entries(group(recipe.instructions, item => item.group ?? ''))
 				.map(([name, steps]) =>

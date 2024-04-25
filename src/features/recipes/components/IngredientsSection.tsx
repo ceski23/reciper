@@ -10,12 +10,11 @@ import { IngredientItem } from './IngredientItem'
 
 type IngredientsSectionProps = {
 	ingredients: Recipe['ingredients']
-	initialServingsCount?: number
 }
 
-export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({ ingredients, initialServingsCount }) => {
+export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({ ingredients }) => {
 	const { t } = useTranslation()
-	const [servingsCount, setServingsCount] = useState(initialServingsCount ?? 1)
+	const [servingsCount, setServingsCount] = useState(1)
 
 	const groups = group(ingredients, item => item.group ?? '')
 
@@ -33,7 +32,13 @@ export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({
 						<IconButton
 							icon="minus"
 							title={t('recipes.ingredients.decrease')}
-							onClick={() => setServingsCount(prev => Math.max(prev - 1, 1))}
+							onClick={() =>
+								setServingsCount(prev => {
+									if (prev > 1) return prev - 1
+									if (prev === 1) return 0.5
+									if (prev <= 0.5) return 0.25
+									return prev
+								})}
 						/>
 						<Typography.LabelLarge>
 							{t('recipes.ingredients.servings', { count: servingsCount })}
@@ -41,7 +46,12 @@ export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({
 						<IconButton
 							icon="plus"
 							title={t('recipes.ingredients.increase')}
-							onClick={() => setServingsCount(prev => prev + 1)}
+							onClick={() =>
+								setServingsCount(prev => {
+									if (prev <= 0.25) return 0.5
+									if (prev <= 0.5) return 1
+									return prev + 1
+								})}
 						/>
 					</Spinbox>
 					<IngredientsList>

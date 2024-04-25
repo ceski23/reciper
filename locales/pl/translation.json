@@ -42,7 +42,8 @@
 			"decrease": "Zmniejsz ilość porcji",
 			"servings_one": "{{count}} porcja",
 			"servings_few": "{{count}} porcje",
-			"servings_many": "{{count}} porcji"
+			"servings_many": "{{count}} porcji",
+			"servings_other": "{{count}} porcji"
 		},
 		"mostCommonTags": "Najczęstsze tagi",
 		"gallery": "Galeria",
