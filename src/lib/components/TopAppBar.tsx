@@ -9,6 +9,7 @@ import { Skeleton } from 'lib/components/Skeleton'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { uiStore } from 'lib/stores/ui'
 import { theme } from 'lib/styles'
+import { computeStyle } from 'lib/utils/dom'
 import { AnimatedTitle } from './AnimatedTitle'
 import { IconButton } from './IconButton'
 import { ProgressIndicator } from './ProgressIndicator'
@@ -39,16 +40,10 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
 	const { state: { mainContent } } = uiStore.useStore('mainContent')
 	const navigate = useNavigate()
-	const themeColor = useMemo(() => {
-		const tempElement = document.createElement('div')
-		tempElement.style.backgroundColor = isContentScrolled || elevation === 'onScroll' ? theme.colors.surfaceContainer : theme.colors.surface
-		document.documentElement.append(tempElement)
-
-		const color = window.getComputedStyle(tempElement).backgroundColor
-		tempElement.remove()
-
-		return color
-	}, [isContentScrolled, elevation])
+	const themeColor = useMemo(
+		() => computeStyle('backgroundColor', isContentScrolled || elevation === 'onScroll' ? theme.colors.surfaceContainer : theme.colors.surface),
+		[isContentScrolled, elevation],
+	)
 	const scrollContainer = container ?? mainContent
 
 	return (

@@ -2,7 +2,8 @@ import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useQuery } from '@tanstack/react-query'
 import { counting } from 'radash'
-import { Fragment, type FunctionComponent } from 'react'
+import { Fragment, type FunctionComponent, useMemo } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { recipesQuery } from 'features/recipes/recipes'
@@ -14,11 +15,13 @@ import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
+import { computeStyle } from 'lib/utils/dom'
 import { FakeSearchBar } from './components/FakeSearchBar'
 
 const recipeHasRating = (recipe: Recipe): recipe is Recipe & Required<Pick<Recipe, 'rating'>> => isDefined(recipe.rating)
 
 export const Home: FunctionComponent = () => {
+	const themeColor = useMemo(() => computeStyle('backgroundColor', theme.colors.background), [])
 	const { t } = useTranslation()
 	const recipes = useQuery(recipesQuery())
 	const getRecentRecipes = (recipes: Array<Recipe>, amount: number) =>
@@ -39,6 +42,12 @@ export const Home: FunctionComponent = () => {
 
 	return (
 		<Container>
+			<Helmet>
+				<meta
+					name="theme-color"
+					content={themeColor}
+				/>
+			</Helmet>
 			<FakeSearchBar
 				leadingIcon="search"
 				placeholder={t('home.searchBarPlaceholder')}

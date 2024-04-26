@@ -1,10 +1,12 @@
 import { styled } from '@macaron-css/react'
 import { useNavigate } from '@tanstack/react-router'
-import { forwardRef } from 'react'
+import { forwardRef, useMemo } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { IconButton } from 'lib/components/IconButton'
 import { bodyLarge } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
+import { computeStyle } from 'lib/utils/dom'
 
 type TopSearchBarProps = {
 	query: string
@@ -15,9 +17,16 @@ type TopSearchBarProps = {
 export const TopSearchBar = forwardRef<HTMLInputElement, TopSearchBarProps>(({ onQueryChange, query, placeholder }, ref) => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
+	const themeColor = useMemo(() => computeStyle('backgroundColor', theme.colors.surfaceContainerHigh), [])
 
 	return (
 		<AppBarBase>
+			<Helmet>
+				<meta
+					name="theme-color"
+					content={themeColor}
+				/>
+			</Helmet>
 			<IconButton
 				icon="backArrow"
 				title={t('navigation.goBack')}

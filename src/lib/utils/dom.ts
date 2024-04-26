@@ -20,3 +20,14 @@ export const getTextFromNode = (startNode: Node) => {
 
 	return _getTextFromNode(startNode, '').trim()
 }
+
+export const computeStyle = <TStyle extends keyof CSSStyleDeclaration>(style: TStyle, value: CSSStyleDeclaration[TStyle]) => {
+	const tempElement = document.createElement('div')
+	tempElement.style[style] = value
+	document.documentElement.append(tempElement)
+
+	const computedValue = window.getComputedStyle(tempElement)[style]
+	tempElement.remove()
+
+	return computedValue
+}
