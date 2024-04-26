@@ -6,7 +6,7 @@ import { type FunctionComponent, lazy, Suspense, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDisableAnimations } from 'lib/hooks/useDisableAnimations'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
-import { useMeasureHeight } from 'lib/hooks/useMeasureHeight'
+import { useResizeObserver } from 'lib/hooks/useResizeObserver'
 import { useScreenNavigationAnimations } from 'lib/hooks/useScreenNavigationAnimations'
 import { uiStore } from 'lib/stores/ui'
 import { theme } from 'lib/styles'
@@ -36,12 +36,12 @@ export const Layout: FunctionComponent = () => {
 
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()
-	const navbarRef = useMeasureHeight<HTMLDivElement>(height => {
+	const navbarRef = useResizeObserver<HTMLDivElement>(({ height }) => {
 		setElementVars(document.documentElement, {
 			[navigationMenuHeight]: `${height ?? 0}px`,
 		})
 	})
-	const headerRef = useMeasureHeight<HTMLElement>(height => {
+	const headerRef = useResizeObserver<HTMLElement>(({ height }) => {
 		setElementVars(document.documentElement, {
 			[headerHeight]: `${height ?? 0}px`,
 		})

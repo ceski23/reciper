@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
-export const useMeasureHeight = <TElement extends Element>(callback: (height?: number) => void) => {
+export const useResizeObserver = <TElement extends Element>(callback: (contentRect: DOMRectReadOnly) => void) => {
 	const ref = useRef<TElement | null>(null)
 	// eslint-disable-next-line react/hook-use-state
-	const [resizeObserver] = useState(() => new ResizeObserver(([entry]) => callback(entry.contentRect.height)))
+	const [resizeObserver] = useState(() => new ResizeObserver(([entry]) => callback(entry.contentRect)))
 
 	useLayoutEffect(() => {
 		if (ref.current) {
