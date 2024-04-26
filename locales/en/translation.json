@@ -228,7 +228,14 @@
 		"noResults": "No results",
 		"clear": "Clear",
 		"filters": {
-			"title": "Filters"
+			"title": "Filters",
+			"clear": "Clear all filters",
+			"preparationTime": {
+				"title": "Preparation time",
+				"noLimit": "No limit",
+				"upTo_one": "Up to {{count}} minute",
+				"upTo_other": "Up to {{count}} minutes"
+			}
 		}
 	}
 }

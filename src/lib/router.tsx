@@ -6,7 +6,7 @@ import { NewRecipe } from 'features/recipes/NewRecipe'
 import { Recipe } from 'features/recipes/Recipe'
 import { Recipes } from 'features/recipes/Recipes'
 import { ScrapeRecipe } from 'features/recipes/ScrapeRecipe'
-import { Search } from 'features/search/Search'
+import { Search, searchParamsSchema } from 'features/search/Search'
 import { Account } from 'features/settings/Account'
 import { Settings } from 'features/settings/Settings'
 import { Theme } from 'features/settings/Theme'
@@ -63,13 +63,7 @@ export const searchRecipeRoute = createRoute({
 	getParentRoute: () => recipesRoute,
 	path: 'search',
 	component: Search,
-	validateSearch: search =>
-		v.parse(
-			v.object({
-				query: v.optional(v.string()),
-			}),
-			search,
-		),
+	validateSearch: search => v.parse(searchParamsSchema, search),
 })
 
 export const recipeRoute = createRoute({

@@ -10,11 +10,13 @@ import { Typography } from './Typography'
 type FloatingActionButtonProps = {
 	icon: SvgSpriteIconName
 	label: string
+	badge?: boolean | string
 }
 
 export const FloatingActionButton: FunctionComponent<Omit<ComponentProps<typeof BaseFab>, 'children'> & FloatingActionButtonProps> = ({
 	icon,
 	label,
+	badge,
 	...props
 }) => {
 	const { eventHandlers, renderRipples } = useRipples()
@@ -23,6 +25,15 @@ export const FloatingActionButton: FunctionComponent<Omit<ComponentProps<typeof 
 		<BaseFab {...mergeProps(props, eventHandlers)}>
 			{renderRipples}
 			<FabIcon name={icon} />
+			{badge && (
+				<Badge>
+					{typeof badge === 'string' && (
+						<Typography.LabelSmall>
+							{badge}
+						</Typography.LabelSmall>
+					)}
+				</Badge>
+			)}
 			<ExpandedContainer isExpanded={props.size === 'expanded'}>
 				<TextContainer>
 					<FabText>
@@ -185,5 +196,21 @@ const ExpandedContainer = styled('div', {
 	},
 	defaultVariants: {
 		isExpanded: false,
+	},
+})
+
+const Badge = styled('div', {
+	base: {
+		display: 'flex',
+		minWidth: 16,
+		paddingInline: 4,
+		alignItems: 'center',
+		justifyContent: 'center',
+		position: 'absolute',
+		top: 8,
+		right: 8,
+		backgroundColor: theme.colors.error,
+		color: theme.colors.onPrimary,
+		borderRadius: 100,
 	},
 })

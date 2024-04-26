@@ -79,6 +79,8 @@ export const Slider: FunctionComponent<SliderProps> = ({
 					setInternalValue(newValue)
 				}}
 				onValueCommit={([newValue]) => onValueCommit?.(newValue)}
+				onPointerDown={() => setInternalOpen(true)}
+				onPointerUp={() => setInternalOpen(false)}
 				{...props}
 			>
 				<SliderTrack style={{ left: `calc(${currentPercentage}% + 7px + ${thumbOffset}px)` }} />

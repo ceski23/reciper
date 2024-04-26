@@ -110,6 +110,7 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 					{...bind()}
 					style={{ y }}
 					onInteractOutside={() => onStateChange('close')}
+					onOpenAutoFocus={event => event.preventDefault()}
 				>
 					<Handle />
 					<Content>

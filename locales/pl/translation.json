@@ -237,7 +237,15 @@
 		"noResults": "Brak wyników",
 		"clear": "Wyczyść",
 		"filters": {
-			"title": "Filtry"
+			"title": "Filtry",
+			"clear": "Wyczyść filtry",
+			"preparationTime": {
+				"title": "Czas przygotowania",
+				"noLimit": "Bez limitu",
+				"upTo_one": "Do {{count}} minuty",
+				"upTo_few": "Do {{count}} minut",
+				"upTo_many": "Do {{count}} minut"
+			}
 		}
 	}
 }
