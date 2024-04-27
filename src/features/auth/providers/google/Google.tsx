@@ -24,6 +24,8 @@ export const Google = () => {
 	const isError = Boolean(error) || !areRequiredScopesGranted || isCompleteLoginError
 	const transition = useTransition(isError, DIALOG_ANIMATION)
 
+	console.log({ isError, error, scope, state, areRequiredScopesGranted, isCompleteLoginError })
+
 	if (isSuccess && !isError) {
 		queueMicrotask(() => {
 			setAccessToken(data.accessToken)
