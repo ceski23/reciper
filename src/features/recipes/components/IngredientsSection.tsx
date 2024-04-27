@@ -57,6 +57,7 @@ export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({
 					<IngredientsList>
 						{ingredients.map((ingredient, index) => (
 							<IngredientItem
+								servingsCount={servingsCount}
 								ingredient={ingredient}
 								key={index}
 							/>
