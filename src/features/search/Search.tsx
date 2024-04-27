@@ -135,7 +135,7 @@ export const Search: FunctionComponent = ({}) => {
 						<ClearFiltersButton
 							variant="outlined"
 							leftIcon="close"
-							onClick={() => changeSearchParams({})}
+							onClick={() => changeSearchParams(({ query }) => ({ query }))}
 						>
 							{t('search.filters.clear')}
 						</ClearFiltersButton>
