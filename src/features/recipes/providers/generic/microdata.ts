@@ -89,7 +89,7 @@ export const extractMicrodata = async (doc: Document) => {
 		.map(elem => (elem.textContent ? ({ text: elem.textContent?.trim() }) : undefined))
 		.filter(isDefined)
 
-	const tags = getTags(root)
+	const tags = Array.from(new Set(getTags(root)))
 
 	const servingsElement = root.querySelector('[itemprop="recipeYield"]')
 	const servingsText = getMetaData(servingsElement)

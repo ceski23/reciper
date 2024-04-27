@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { type SpringValue } from '@react-spring/web'
 import { useNavigate } from '@tanstack/react-router'
-import { type FunctionComponent, useRef, useState } from 'react'
+import { type FunctionComponent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/Dialog'
@@ -19,7 +19,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = ({ onClose
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const [url, setUrl] = useState('')
-	const formRef = useRef<HTMLFormElement>(null)
+	const formId = useId()
 
 	return (
 		<SimpleDialog
@@ -43,7 +43,8 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = ({ onClose
 					<Button
 						key="add"
 						variant="filled"
-						onClick={() => formRef.current?.submit()}
+						type="submit"
+						form={formId}
 						disabled={url === ''}
 					>
 						{t('recipes.addRecipe.addByUrl.import')}
@@ -52,7 +53,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = ({ onClose
 			]}
 			content={(
 				<UrlFieldForm
-					ref={formRef}
+					id={formId}
 					onSubmit={event => {
 						event.preventDefault()
 						if (url !== '') navigate({ to: '/recipes/scrape', search: { url } })
