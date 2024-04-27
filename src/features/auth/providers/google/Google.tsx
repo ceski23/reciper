@@ -11,8 +11,7 @@ export const Google = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const { scope, error, state } = googleAuthRoute.useSearch()
-	const grantedScopes = scope.split(' ')
-	const areRequiredScopesGranted = GoogleProvider.requiredScopes.every(scope => grantedScopes.includes(scope))
+	const areRequiredScopesGranted = GoogleProvider.requiredScopes.every(requiredScope => scope.includes(requiredScope))
 	const { actions: { setAccessToken, setProvider, setRefreshToken, setUser } } = accountStore.useStore()
 	const { isSuccess, data, isError: isCompleteLoginError } = useQuery({
 		queryKey: ['code'],
@@ -23,8 +22,6 @@ export const Google = () => {
 	})
 	const isError = Boolean(error) || !areRequiredScopesGranted || isCompleteLoginError
 	const transition = useTransition(isError, DIALOG_ANIMATION)
-
-	console.log({ isError, error, scope, state, areRequiredScopesGranted, isCompleteLoginError })
 
 	if (isSuccess && !isError) {
 		queueMicrotask(() => {

@@ -114,7 +114,7 @@ export const googleAuthRoute = createRoute({
 		v.parse(
 			v.object({
 				state: v.optional(v.string()),
-				scope: v.string(),
+				scope: v.coerce(v.array(v.string()), input => typeof input === 'string' ? input.split(/[\+ ]/) : input),
 				error: v.optional(v.string()),
 			}),
 			search,
@@ -143,7 +143,7 @@ const routeTree = rootRoute.addChildren([
 
 export const router = createRouter({
 	routeTree,
-	defaultViewTransition: true,
+	// defaultViewTransition: true,
 })
 
 declare module '@tanstack/react-router' {
