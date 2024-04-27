@@ -209,7 +209,7 @@ const FilterIcon = styled(Icon, {
 const TimeFilter = styled('div', {
 	base: {
 		display: 'grid',
-		gridTemplateColumns: '100px 1fr',
+		gridTemplateColumns: '120px 1fr',
 		gap: 16,
 		color: theme.colors.onSurfaceVariant,
 	},
