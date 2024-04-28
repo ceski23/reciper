@@ -235,6 +235,9 @@
 				"noLimit": "No limit",
 				"upTo_one": "Up to {{count}} minute",
 				"upTo_other": "Up to {{count}} minutes"
+			},
+			"requiredIngredients": {
+				"title": "Contains ingredients"
 			}
 		}
 	}

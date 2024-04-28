@@ -245,6 +245,9 @@
 				"upTo_one": "Do {{count}} minuty",
 				"upTo_few": "Do {{count}} minut",
 				"upTo_many": "Do {{count}} minut"
+			},
+			"requiredIngredients": {
+				"title": "Zawiera składniki"
 			}
 		}
 	}
