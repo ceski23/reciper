@@ -41,6 +41,7 @@ const extractQuantity = (ingredient: string) => {
 		quantity: normalizeQuantity(match[0]),
 		index: match.index,
 		length: match[0].length,
+		original: match.input,
 	}
 }
 
@@ -64,10 +65,10 @@ export const parseIngredient = (ingredient: string): ParsedIngredient => {
 
 	// Ingredient with quantity eg. sok z 1/4 limonki
 	return {
-		original: ingredient,
+		original: data.original,
 		parsed: {
-			begin: ingredient.substring(0, data.index).trim(),
-			end: ingredient.substring(data.index + data.length).trim(),
+			begin: data.original.substring(0, data.index).trim(),
+			end: data.original.substring(data.index + data.length).trim(),
 		},
 		quantity: data.quantity,
 		...(ingredientType && { type: ingredientType }),
