@@ -143,7 +143,7 @@ const routeTree = rootRoute.addChildren([
 
 export const router = createRouter({
 	routeTree,
-	// defaultViewTransition: true,
+	defaultViewTransition: true,
 })
 
 declare module '@tanstack/react-router' {
