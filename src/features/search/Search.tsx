@@ -68,6 +68,7 @@ export const Search: FunctionComponent = ({}) => {
 							query,
 						}))}
 					placeholder={t('search.placeholder')}
+					onBackClick={() => history.length > 1 ? history.back() : window.close()}
 				/>
 			</HeaderPortal>
 			<Container>

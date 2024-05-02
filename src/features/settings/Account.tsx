@@ -1,5 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { type ChangeEventHandler, Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as v from 'valibot'
@@ -30,6 +31,7 @@ export const Account: FunctionComponent = () => {
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
 	const { notify } = useNotifications()
+	const navigate = useNavigate()
 
 	const handleRecipesExport = () => {
 		const json = JSON.stringify(recipes.data)
@@ -71,6 +73,7 @@ export const Account: FunctionComponent = () => {
 			<TopAppBar
 				configuration="large"
 				title={t('paths.account')}
+				onBackClick={() => navigate({ to: '/settings' })}
 			/>
 			<List>
 				{userInfo === undefined

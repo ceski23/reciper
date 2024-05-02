@@ -41,6 +41,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 			<TopAppBar
 				configuration="large"
 				title={recipe?.name}
+				onBackClick={() => history.length > 1 ? history.back() : window.close()}
 			/>
 			{renderProbe}
 			{status !== 'success' && <RecipeContentSkeleton />}
@@ -76,7 +77,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 					actions={[
 						{
 							label: t('scraping.close'),
-							onClick: () => navigate({ to: '../' }),
+							onClick: () => history.length > 1 ? history.back() : window.close(),
 						},
 					]}
 					styles={styles}

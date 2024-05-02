@@ -34,7 +34,7 @@ const recipesRoute = createRoute({
 	path: 'recipes',
 })
 
-const recipesIndexRoute = createRoute({
+export const recipesIndexRoute = createRoute({
 	getParentRoute: () => recipesRoute,
 	path: '/',
 	component: Recipes,

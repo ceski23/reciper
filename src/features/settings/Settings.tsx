@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LanguageDialog } from 'features/settings/LanguageDialog'
@@ -10,6 +11,7 @@ import { theme } from 'lib/styles'
 
 export const Settings: FunctionComponent = () => {
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 	const { AnimateDialog, state: [, setIsLanguageDialogOpen] } = useDialogState(false)
 
 	return (
@@ -17,6 +19,7 @@ export const Settings: FunctionComponent = () => {
 			<TopAppBar
 				configuration="large"
 				title={t('paths.settings')}
+				onBackClick={() => navigate({ to: '/settings' })}
 			/>
 			<List>
 				<ListItem.Link

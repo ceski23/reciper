@@ -71,8 +71,8 @@ export const Layout: FunctionComponent = () => {
 				ref={navbarRef}
 				segments={[
 					{ icon: 'home', to: '/', label: t('paths.home') },
-					{ icon: 'recipes', to: '/recipes/', label: t('paths.recipes') },
-					{ icon: 'settings', to: '/settings/', label: t('paths.settings') },
+					{ icon: 'recipes', to: '/recipes', label: t('paths.recipes') },
+					{ icon: 'settings', to: '/settings', label: t('paths.settings') },
 				]}
 			/>
 			<AppUpdatePrompt />

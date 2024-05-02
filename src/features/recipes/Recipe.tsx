@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
+import { useRouter } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
@@ -25,7 +25,7 @@ export const Recipe: FunctionComponent = () => {
 	const { data: recipe, status } = useQuery(recipeQuery(id))
 	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
-	const navigate = useNavigate()
+	const history = useRouter().history
 
 	useApplyDynamicTheme(useDynamicTheme(recipe?.color))
 	useWakelock()
@@ -38,7 +38,7 @@ export const Recipe: FunctionComponent = () => {
 
 	if (status === 'error') {
 		notify(t('recipes.loadError'), { id: 'recipeError' })
-		queueMicrotask(() => navigate({ to: '../' }))
+		history.back()
 
 		return
 	}
@@ -48,6 +48,7 @@ export const Recipe: FunctionComponent = () => {
 			<TopAppBar
 				configuration="large"
 				title={recipe?.name}
+				onBackClick={() => history.back()}
 				options={(
 					<Menu.Root
 						open={isMoreOpen}
@@ -105,7 +106,7 @@ export const Recipe: FunctionComponent = () => {
 									variant="filled"
 									onClick={() => {
 										deleteRecipeMutation.mutate(recipe.id, {
-											onSuccess: () => navigate({ to: '../' }),
+											onSuccess: () => history.back(),
 										})
 									}}
 								>

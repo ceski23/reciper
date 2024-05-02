@@ -1,6 +1,5 @@
 import { styled } from '@macaron-css/react'
 import { animated } from '@react-spring/web'
-import { useNavigate } from '@tanstack/react-router'
 import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useMemo, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
@@ -25,6 +24,7 @@ type TopAppBarProps = {
 	} | boolean
 	container?: HTMLElement | null
 	elevation?: ComponentProps<typeof AppBarBase>['elevation']
+	onBackClick: () => void
 }
 
 export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
@@ -34,12 +34,12 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	progress,
 	elevation,
 	container,
+	onBackClick,
 }) => {
 	const { t } = useTranslation()
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
 	const { state: { mainContent } } = uiStore.useStore('mainContent')
-	const navigate = useNavigate()
 	const themeColor = useMemo(
 		() => computeStyle('backgroundColor', isContentScrolled || elevation === 'onScroll' ? theme.colors.surfaceContainer : theme.colors.surface),
 		[isContentScrolled, elevation],
@@ -60,7 +60,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 					<IconButton
 						icon="backArrow"
 						title={t('navigation.goBack')}
-						onClick={() => navigate({ to: '../' })}
+						onClick={onBackClick}
 					/>
 					{scrollContainer && (
 						<PageTitle asChild>

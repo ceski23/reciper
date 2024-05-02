@@ -22,6 +22,7 @@ export const NewRecipe: FunctionComponent = () => {
 			<TopAppBar
 				configuration="small"
 				title={t('newRecipe.title')}
+				onBackClick={() => history.length > 1 ? history.back() : window.close()}
 			/>
 			<Container>
 				<FormSection>

@@ -1,4 +1,5 @@
 import { styled } from '@macaron-css/react'
+import { useNavigate } from '@tanstack/react-router'
 import eggsImage from 'assets/images/eggs.png'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,12 +11,14 @@ import { theme } from 'lib/styles'
 
 export const Units: FunctionComponent = () => {
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 
 	return (
 		<Fragment>
 			<TopAppBar
 				configuration="large"
 				title={t('paths.units')}
+				onBackClick={() => navigate({ to: '/settings' })}
 			/>
 			<List>
 				<ListItem.Switch

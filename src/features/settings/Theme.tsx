@@ -1,4 +1,5 @@
 import { useReducedMotion } from '@react-spring/web'
+import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ColorSchemeDialog } from 'features/settings/ColorSchemeDialog'
@@ -11,6 +12,7 @@ import { theme } from 'lib/styles'
 
 export const Theme: FunctionComponent = () => {
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 	const { AnimateDialog, state: [, setIsColorSchemeDialogOpen] } = useDialogState(false)
 	const { state: settings, actions: { setTheme } } = settingsStore.useStore('theme')
 	const isReducedMotion = useReducedMotion() ?? false
@@ -20,6 +22,7 @@ export const Theme: FunctionComponent = () => {
 			<TopAppBar
 				configuration="large"
 				title={t('paths.theme')}
+				onBackClick={() => navigate({ to: '/settings' })}
 			/>
 			<List>
 				<ListItem.Simple

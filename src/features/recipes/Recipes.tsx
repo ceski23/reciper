@@ -1,6 +1,7 @@
 import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeCard } from 'features/home/components/RecipeCard'
@@ -19,6 +20,7 @@ import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDialogState } from 'lib/hooks/useDialogState'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
+import { recipesIndexRoute } from 'lib/router'
 import { uiStore } from 'lib/stores/ui'
 
 export const Recipes: FunctionComponent = () => {
@@ -65,6 +67,7 @@ export const Recipes: FunctionComponent = () => {
 			return () => clearTimeout(id)
 		}
 	}, [isLoading, notify])
+	const navigate = useNavigate()
 
 	return (
 		<Fragment>
@@ -74,6 +77,7 @@ export const Recipes: FunctionComponent = () => {
 				progress={isLoading}
 				container={container}
 				elevation={isListScrolled ? 'onScroll' : 'flat'}
+				onBackClick={() => navigate({ from: recipesIndexRoute.fullPath, to: '../', params: {} })}
 				options={[
 					(
 						<IconButton
