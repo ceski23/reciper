@@ -26,7 +26,10 @@ const getInstructions = (element: Element) =>
 		.from(element.querySelectorAll('[itemprop="recipeInstructions"], [itemprop="itemListElement"][itemtype="http://schema.org/HowToStep"]'))
 		.map(elem => {
 			const text = elem.querySelector('[itemprop=text]')?.textContent?.trim()
-			const image = elem.querySelector('[itemprop="image"]')?.getAttribute('src')
+			const image = Array.from(elem.querySelectorAll('[itemprop="image"]')).filter(elem =>
+				// exclude elements with svg loaders fallbacks
+				!elem.getAttribute('src')?.includes('data:image/svg')
+			).at(0)?.getAttribute('src')
 				?? elem.querySelector('[itemprop="image"]')?.getAttribute('data-src') ?? undefined
 
 			return (text
@@ -38,6 +41,19 @@ const getInstructions = (element: Element) =>
 		})
 		.filter(isDefined)
 
+const findMainImage = (doc: Document) => {
+	const metaElement = doc.querySelector('meta[itemprop="image"]')
+
+	if (metaElement) return metaElement.getAttribute('content') ?? undefined
+
+	const imageElements = Array.from(doc.querySelectorAll('img[itemprop="image"]')).filter(elem =>
+		// exclude elements with svg loaders fallbacks
+		!elem.getAttribute('src')?.includes('data:image/svg')
+	)
+
+	return imageElements.at(0)?.getAttribute('src') ?? undefined
+}
+
 export const extractMicrodata = async (doc: Document) => {
 	const root = doc.querySelector('[itemscope][itemtype="https://schema.org/Recipe"], [itemscope][itemtype="http://schema.org/Recipe"]')
 	if (!root) throw Error('Couldn\'t find recipe')
@@ -48,8 +64,7 @@ export const extractMicrodata = async (doc: Document) => {
 	const descriptionElement = root.querySelector('[itemprop="description"]')
 	const description = descriptionElement ? getMetaData(descriptionElement)?.trim() : undefined
 
-	const imageElement = root.querySelector('[itemprop="image"]')
-	const image = ((imageElement?.tagName === 'META') ? imageElement.getAttribute('content') : imageElement?.getAttribute('src')) ?? undefined
+	const image = findMainImage(doc)
 
 	const instructionSections = Array.from(root.querySelectorAll('[itemprop="recipeInstructions"][itemtype="http://schema.org/HowToSection"]'))
 	const instructions: Recipe['instructions'] = instructionSections.length > 0
