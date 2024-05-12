@@ -179,7 +179,7 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 					leftIcon="plus"
 					onClick={() =>
 						ingredientsFields.append({
-							group: undefined,
+							group: null,
 							items: [
 								{ text: '' },
 							],
@@ -227,7 +227,7 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 					leftIcon="plus"
 					onClick={() =>
 						instructionsFields.append({
-							group: undefined,
+							group: null,
 							items: [
 								{ text: '' },
 							],

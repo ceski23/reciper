@@ -1,41 +1,61 @@
-import { group } from 'radash'
+import { group, mapValues } from 'radash'
 import { type RecipeFormValues } from 'features/recipes/form/scheme'
 import { type Recipe } from 'features/recipes/types'
 
-export const mapFormValuesToRecipe = (values: RecipeFormValues) => ({
-	...values,
-	ingredients: values.ingredients.flatMap(({ items, group }) =>
+type ReplaceUndefinedWithNull<T> = T extends undefined ? null : T
+type ToNullProps<T> = {
+	[P in keyof T]-?: ReplaceUndefinedWithNull<T[P]>
+}
+
+type ReplaceNullWithUndefined<T> = T extends null ? undefined : T
+type ToUndefinedProps<T> = {
+	[P in keyof T]: ReplaceNullWithUndefined<T[P]>
+}
+
+export const mapFormValuesToRecipe = ({
+	ingredients,
+	instructions,
+	tags,
+	...rest
+}: RecipeFormValues) => ({
+	ingredients: ingredients.flatMap(({ items, group }) =>
 		items.map(item => ({
 			...item,
-			group,
+			group: group ?? undefined,
 		}))
 	),
-	instructions: values.instructions.flatMap(({ items, group }) =>
+	instructions: instructions.flatMap(({ items, group }) =>
 		items.map(item => ({
 			...item,
-			group,
+			group: group ?? undefined,
 		}))
 	),
-	tags: values.tags.map(tag => tag.text),
+	tags: tags.map(tag => tag.text),
+	...mapValues(rest, value => value ?? undefined) as ToUndefinedProps<typeof rest>,
 } satisfies Omit<Recipe, 'id' | 'addedDate'>)
 
-export const mapRecipeToFormValues = (recipe: Recipe) => ({
-	...recipe,
-	ingredients: Object.entries(group(recipe.ingredients, item => item.group ?? '')).map(([group, items]) => ({
-		group: group || undefined,
+export const mapRecipeToFormValues = ({
+	ingredients,
+	instructions,
+	tags,
+	...rest
+}: Recipe) => ({
+	ingredients: Object.entries(group(ingredients, item => item.group ?? '')).map(([group, items]) => ({
+		group: group || null,
 		items: items?.map(({
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			group,
 			...item
 		}) => item) ?? [],
 	})),
-	instructions: Object.entries(group(recipe.instructions, item => item.group ?? '')).map(([group, items]) => ({
-		group: group || undefined,
+	instructions: Object.entries(group(instructions, item => item.group ?? '')).map(([group, items]) => ({
+		group: group || null,
 		items: items?.map(({
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			group,
 			...item
 		}) => item) ?? [],
 	})),
-	tags: recipe.tags.map(tag => ({ text: tag })),
+	tags: tags.map(tag => ({ text: tag })),
+	...Object.fromEntries(Object.entries(rest).map(([key, value]) => [key, value ?? null])) as ToNullProps<typeof rest>,
 } satisfies RecipeFormValues)
