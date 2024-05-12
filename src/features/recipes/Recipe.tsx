@@ -66,7 +66,7 @@ export const Recipe: FunctionComponent = () => {
 							<Menu.Item
 								text={t('recipes.edit')}
 								icon="pencil"
-								onSelect={() => navigate({ from: recipeRoute.fullPath, to: 'edit' })}
+								disabled
 							/>
 							{navigator.share !== undefined && (
 								<Menu.Item
