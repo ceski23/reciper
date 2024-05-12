@@ -114,7 +114,7 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 								key={field.id}
 								asChild
 							>
-								<Chip
+								<Tag
 									text={field.text}
 									variant="outlined"
 									onClose={() => tagsFields.remove(index)}
@@ -273,6 +273,13 @@ const TagsContainer = styled(ToggleGroup.Root, {
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		gap: 8,
+	},
+})
+
+const Tag = styled(Chip, {
+	base: {
+		flex: '1 0 auto',
+		textDecoration: 'unset',
 	},
 })
 

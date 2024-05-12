@@ -43,6 +43,15 @@ export const useAddRecipe = () => {
 	})
 }
 
+export const useEditRecipe = () => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
+		mutationFn: (recipe: Recipe) => set(recipe.id, recipe, recipesStore).then(() => getSingleRecipe(recipe.id)),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['recipes'] }),
+	})
+}
+
 export const useDeleteRecipe = () =>
 	useMutation({
 		mutationFn: (id: string) => del(id, recipesStore),

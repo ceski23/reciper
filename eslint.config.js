@@ -24,6 +24,7 @@ export default [
 				disallowTypeAnnotations: false,
 				fixStyle: 'inline-type-imports',
 			}],
+			'@typescript-eslint/no-unsafe-return': 'off',
 		},
 	},
 ]

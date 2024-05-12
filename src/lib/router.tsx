@@ -2,6 +2,7 @@ import { createRootRoute, createRoute, createRouter, Navigate } from '@tanstack/
 import * as v from 'valibot'
 import { Google } from 'features/auth/providers'
 import { Home } from 'features/home/Home'
+import { EditRecipe } from 'features/recipes/EditRecipe'
 import { NewRecipe } from 'features/recipes/NewRecipe'
 import { Recipe } from 'features/recipes/Recipe'
 import { Recipes } from 'features/recipes/Recipes'
@@ -72,6 +73,12 @@ export const recipeRoute = createRoute({
 	component: Recipe,
 })
 
+export const editRecipeRoute = createRoute({
+	getParentRoute: () => recipesRoute,
+	path: '$id/edit',
+	component: EditRecipe,
+})
+
 const settingsRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: 'settings',
@@ -129,6 +136,7 @@ const routeTree = rootRoute.addChildren([
 		scrapeRecipeRoute,
 		recipeRoute,
 		searchRecipeRoute,
+		editRecipeRoute,
 	]),
 	settingsRoute.addChildren([
 		settingsIndexRoute,

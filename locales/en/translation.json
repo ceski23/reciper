@@ -178,6 +178,10 @@
 			}
 		}
 	},
+	"editRecipe": {
+		"title": "Edit recipe",
+		"save": "Save recipe"
+	},
 	"scraping": {
 		"error": "Couldn't scrape this recipe. Website {{website}} might not be supported.",
 		"save": "Save recipe",

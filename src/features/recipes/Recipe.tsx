@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useRouter } from '@tanstack/react-router'
+import { useNavigate, useRouter } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
@@ -26,6 +26,7 @@ export const Recipe: FunctionComponent = () => {
 	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const history = useRouter().history
+	const navigate = useNavigate()
 
 	useApplyDynamicTheme(useDynamicTheme(recipe?.color))
 	useWakelock()
@@ -65,7 +66,7 @@ export const Recipe: FunctionComponent = () => {
 							<Menu.Item
 								text={t('recipes.edit')}
 								icon="pencil"
-								disabled
+								onSelect={() => navigate({ from: recipeRoute.fullPath, to: 'edit' })}
 							/>
 							{navigator.share !== undefined && (
 								<Menu.Item

@@ -185,6 +185,10 @@
 			}
 		}
 	},
+	"editRecipe": {
+		"title": "Edytuj przepis",
+		"save": "Zapisz przepis"
+	},
 	"scraping": {
 		"error": "Nie można pobrać tego przepisu. Strona {{website}} może nie być obsługiwana.",
 		"save": "Zapisz przepis",
