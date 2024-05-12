@@ -103,21 +103,79 @@
 			"calories": "Calories",
 			"tags": {
 				"title": "Tags",
-				"addTag": "Add tag"
+				"addTag": "Add tag",
+				"dialog": {
+					"title": "New tag",
+					"description": "Add a new tag to your recipe",
+					"cancel": "Cancel",
+					"add": "Add",
+					"label": "Tag"
+				}
 			},
 			"ingredients": {
 				"title": "Ingredients",
 				"delete": "Delete ingredient",
 				"add": "Add ingredient",
-				"ingredient": "Ingredient no. {{index}}"
+				"ingredient": "Ingredient no. {{index}}",
+				"group": {
+					"add": "Add ingredient group",
+					"delete": "Delete ingredient group",
+					"group": "Ingredients group no. {{index}}"
+				}
 			},
 			"steps": {
 				"title": "Steps",
 				"delete": "Delete step",
 				"step": "Step no. {{index}}",
-				"add": "Add step"
+				"add": "Add step",
+				"group": {
+					"add": "Add step group",
+					"delete": "Delete step group",
+					"group": "Steps group no. {{index}}"
+				}
+			},
+			"rating": {
+				"label": "Rating"
 			},
 			"save": "Save recipe"
+		},
+		"invalid": "Invalid recipe data",
+		"form": {
+			"name": {
+				"required": "Name is required"
+			},
+			"image": {
+				"invalid": "Invalid image URL"
+			},
+			"ingredients": {
+				"required": "Ingredient must not be empty",
+				"notEmpty": "At least one ingredient is required"
+			},
+			"instructions": {
+				"required": "Step must not be empty",
+				"notEmpty": "At least one step is required"
+			},
+			"url": {
+				"invalid": "Invalid recipe URL"
+			},
+			"calories": {
+				"invalid": "Calories must be positive number"
+			},
+			"tags": {
+				"notEmpty": "Tag must not be empty"
+			},
+			"servings": {
+				"invalid": "Servings must be positive number"
+			},
+			"rating": {
+				"invalid": "Rating must be a number between 1 and 5"
+			},
+			"gallery": {
+				"invalid": "Invalid image URL"
+			},
+			"color": {
+				"invalid": "Invalid color"
+			}
 		}
 	},
 	"scraping": {

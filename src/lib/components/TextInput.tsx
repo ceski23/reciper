@@ -7,7 +7,7 @@ import { styleUtils, theme } from 'lib/styles'
 import { IconButton } from './IconButton'
 import { bodyLarge, bodySmall, Typography } from './Typography'
 
-type TextFieldProps = {
+export type TextInputProps = {
 	label: string
 	placeholder?: string
 	value: string
@@ -21,7 +21,7 @@ type TextFieldProps = {
 	className?: string
 }
 
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 	label,
 	placeholder,
 	value,

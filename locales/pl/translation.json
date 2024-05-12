@@ -110,21 +110,79 @@
 			"calories": "Kalorie",
 			"tags": {
 				"title": "Tagi",
-				"addTag": "Dodaj tag"
+				"addTag": "Dodaj tag",
+				"dialog": {
+					"title": "Dodaj tag",
+					"description": "Dodaj nowy tag do przepisu",
+					"cancel": "Anuluj",
+					"add": "Dodaj",
+					"label": "Tag"
+				}
 			},
 			"ingredients": {
 				"title": "Składniki",
 				"delete": "Usuń składnik",
 				"add": "Dodaj składnik",
-				"ingredient": "Składnik nr. {{index}}"
+				"ingredient": "Składnik nr. {{index}}",
+				"group": {
+					"add": "Dodaj grupę składników",
+					"delete": "Usuń grupę składników",
+					"group": "Grupa składników nr. {{index}}"
+				}
 			},
 			"steps": {
 				"title": "Przygotowywanie",
 				"delete": "Usuń krok",
 				"step": "Krok nr. {{index}}",
-				"add": "Dodaj krok"
+				"add": "Dodaj krok",
+				"group": {
+					"add": "Dodaj grupę kroków",
+					"delete": "Usuń grupę kroków",
+					"group": "Grupa kroków nr. {{index}}"
+				}
+			},
+			"rating": {
+				"label": "Ocena"
 			},
 			"save": "Zapisz przepis"
+		},
+		"invalid": "Nieprawidłowe dane przepisu",
+		"form": {
+			"name": {
+				"required": "Nazwa przepisu jest wymagana"
+			},
+			"image": {
+				"invalid": "Nieprawidłowe adres zdjęcia"
+			},
+			"ingredients": {
+				"required": "Składnik nie może być pusty",
+				"notEmpty": "Przynajmniej jeden składnik jest wymagany"
+			},
+			"instructions": {
+				"required": "Krok nie może być pusty",
+				"notEmpty": "Przynajmniej jeden krok jest wymagany"
+			},
+			"url": {
+				"invalid": "Nieprawidłowy adres URL"
+			},
+			"calories": {
+				"invalid": "Kalorie muszą być liczbą większą od zera"
+			},
+			"tags": {
+				"notEmpty": "Tag nie może być pusty"
+			},
+			"servings": {
+				"invalid": "Porcje muszą być liczbą większą od zera"
+			},
+			"rating": {
+				"invalid": "Ocena musi być liczbą od 1 do 5"
+			},
+			"gallery": {
+				"invalid": "Nieprawidłowe adres zdjęcia"
+			},
+			"color": {
+				"invalid": "Nieprawidłowy kolor"
+			}
 		}
 	},
 	"scraping": {

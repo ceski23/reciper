@@ -17,6 +17,7 @@
 	"dependencies": {
 		"@codemaskinc/store": "^1.0.1",
 		"@fontsource-variable/roboto-flex": "^5.0.8",
+		"@hookform/resolvers": "^3.3.4",
 		"@m31coding/fuzzy-search": "^1.0.1",
 		"@macaron-css/core": "^1.2.0",
 		"@macaron-css/react": "^1.4.0",
@@ -52,6 +53,7 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-helmet-async": "^2.0.3",
+		"react-hook-form": "^7.51.4",
 		"react-i18next": "^14.0.1",
 		"react-photoswipe-gallery": "^3.0.1",
 		"schema-dts": "^1.1.2",

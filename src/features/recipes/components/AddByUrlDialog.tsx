@@ -5,7 +5,7 @@ import { type FunctionComponent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/Dialog'
-import { TextField } from 'lib/components/TextField'
+import { TextInput } from 'lib/components/TextInput'
 
 type AddByUrlDialogProps = {
 	open?: boolean
@@ -59,7 +59,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = ({ onClose
 						if (url !== '') navigate({ to: '/recipes/scrape', search: { url } })
 					}}
 				>
-					<TextField
+					<TextInput
 						label={t('recipes.addRecipe.addByUrl.label')}
 						value={url}
 						onValueChange={setUrl}

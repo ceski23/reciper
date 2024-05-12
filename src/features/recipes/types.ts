@@ -23,7 +23,7 @@ export const recipeScheme = v.object({
 	prepTime: v.optional(v.number([v.minValue(1)])),
 	color: v.optional(v.string([v.minLength(1)])),
 	url: v.optional(v.string([v.minLength(1)])),
-	rating: v.optional(v.number([v.minValue(0), v.maxValue(5)])),
+	rating: v.optional(v.number([v.minValue(1), v.maxValue(5)])),
 	calories: v.optional(v.number([v.minValue(1)])),
 	tags: v.optional(v.array(v.string([v.minLength(1)])), []),
 	servings: v.optional(v.number([v.minValue(1)])),
