@@ -27,7 +27,7 @@ export const EditRecipe: FunctionComponent = () => {
 	const { id } = editRecipeRoute.useParams()
 	const { data: recipe } = useQuery(recipeQuery(id))
 
-	const onSubmit = (values: RecipeFormValues, originalRecipe: Recipe) => {
+	const onSubmit = async (values: RecipeFormValues, originalRecipe: Recipe) => {
 		try {
 			const editedRecipe = v.parse(
 				recipeScheme,
@@ -37,13 +37,9 @@ export const EditRecipe: FunctionComponent = () => {
 				} satisfies Recipe,
 			)
 
-			editRecipe.mutate(editedRecipe, {
-				onSuccess: ({ id }) =>
-					navigate({
-						to: '/recipes/$id',
-						params: { id },
-					}),
-			})
+			const { id } = await editRecipe.mutateAsync(editedRecipe)
+			navigate({ to: '/recipes/$id', params: { id } })
+			notify(t('editRecipe.success'))
 		} catch (error) {
 			notify(t('newRecipe.invalid'))
 		}

@@ -180,7 +180,8 @@
 	},
 	"editRecipe": {
 		"title": "Edit recipe",
-		"save": "Save recipe"
+		"save": "Save recipe",
+		"success": "Recipe saved successfully"
 	},
 	"scraping": {
 		"error": "Couldn't scrape this recipe. Website {{website}} might not be supported.",
