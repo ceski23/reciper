@@ -40,7 +40,6 @@ const Container = styled('div', {
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		touchAction: 'none',
 	},
 })
 
@@ -51,6 +50,7 @@ const DragHandle = styled('button', {
 		border: 'none',
 		background: 'none',
 		cursor: 'grab',
+		touchAction: 'none',
 		color: theme.colors.onSurfaceVariant,
 		':active': {
 			cursor: 'grabbing',
