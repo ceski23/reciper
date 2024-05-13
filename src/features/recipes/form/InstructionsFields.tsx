@@ -1,8 +1,12 @@
+import { closestCenter, DndContext, type DragEndEvent, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
+import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { styled } from '@macaron-css/react'
 import { type FunctionComponent } from 'react'
 import { type Control, useFieldArray } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { type RecipeFormValues } from 'features/recipes/form/scheme'
+import { SortableContainer } from 'features/recipes/form/SortableContainer'
 import { Button } from 'lib/components/Button'
 import { TextField } from 'lib/components/form/TextField'
 import { IconButton } from 'lib/components/IconButton'
@@ -18,24 +22,56 @@ export const InstructionsFields: FunctionComponent<InstructionsFieldsProps> = ({
 		control,
 		name: `instructions.${groupIndex}.items`,
 	})
+	const sensors = useSensors(
+		useSensor(PointerSensor),
+		useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+		useSensor(TouchSensor),
+	)
+
+	const handleDragEnd = (event: DragEndEvent) => {
+		const { active, over } = event
+
+		if (active.id !== over?.id) {
+			const oldIndex = instructionsFields.fields.findIndex(field => field.id === active.id)
+			const newIndex = instructionsFields.fields.findIndex(field => field.id === over?.id)
+
+			instructionsFields.move(oldIndex, newIndex)
+		}
+	}
 
 	return (
 		<Group>
-			{instructionsFields.fields.map((field, fieldIndex) => (
-				<TextField
-					key={field.id}
-					label={t('newRecipe.fields.steps.step', { index: fieldIndex + 1 })}
-					name={`instructions.${groupIndex}.items.${fieldIndex}.text`}
-					control={control}
-					trailingAddon={(
-						<DeleteButton
-							icon="delete"
-							title={t('newRecipe.fields.steps.delete')}
-							onClick={() => instructionsFields.remove(fieldIndex)}
-						/>
-					)}
-				/>
-			))}
+			<DndContext
+				sensors={sensors}
+				collisionDetection={closestCenter}
+				onDragEnd={handleDragEnd}
+				modifiers={[restrictToVerticalAxis]}
+			>
+				<SortableContext
+					items={instructionsFields.fields}
+					strategy={verticalListSortingStrategy}
+				>
+					{instructionsFields.fields.map((field, fieldIndex) => (
+						<SortableContainer
+							key={field.id}
+							id={field.id}
+						>
+							<TextField
+								label={t('newRecipe.fields.steps.step', { index: fieldIndex + 1 })}
+								name={`instructions.${groupIndex}.items.${fieldIndex}.text`}
+								control={control}
+								trailingAddon={(
+									<DeleteButton
+										icon="delete"
+										title={t('newRecipe.fields.steps.delete')}
+										onClick={() => instructionsFields.remove(fieldIndex)}
+									/>
+								)}
+							/>
+						</SortableContainer>
+					))}
+				</SortableContext>
+			</DndContext>
 			<AddButton
 				type="button"
 				leftIcon="plus"
