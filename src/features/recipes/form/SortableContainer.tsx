@@ -14,15 +14,17 @@ export const SortableContainer: FunctionComponent<SortableContainerProps> = ({ i
 
 	return (
 		<Container
-			{...attributes}
-			{...listeners}
 			ref={setNodeRef}
 			style={{
 				transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
 				transition,
 			}}
 		>
-			<DragHandle type="button">
+			<DragHandle
+				type="button"
+				{...attributes}
+				{...listeners}
+			>
 				<Icon
 					name="dragHandle"
 					size={24}
@@ -38,6 +40,7 @@ const Container = styled('div', {
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
+		touchAction: 'none',
 	},
 })
 
