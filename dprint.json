@@ -5,7 +5,8 @@
 	"excludes": [
 		"svg-component.d.ts",
 		"src/lib/styles/theme.json",
-		"dist"
+		"dist",
+		"src/routeTree.gen.ts"
 	],
 	"typescript": {
 		"module.sortImportDeclarations": "maintain",

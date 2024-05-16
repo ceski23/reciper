@@ -7,6 +7,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import { ManifestOptions, VitePWA } from 'vite-plugin-pwa'
 import child from 'node:child_process'
 import svgSprite from '@ceski23/vite-plugin-svg-sprite'
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 
 const pwaManifest: Partial<ManifestOptions> = {
 	short_name: 'Reciper',
@@ -91,5 +92,6 @@ export default defineConfig({
 			},
 			manifest: pwaManifest,
 		}),
+		TanStackRouterVite(),
 	],
 })

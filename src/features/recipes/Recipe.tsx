@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useRouter } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Route as recipeRoute } from 'routes/recipes/$id'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
 import { recipeQuery, useDeleteRecipe } from 'features/recipes/recipes'
@@ -15,7 +16,6 @@ import { useApplyDynamicTheme } from 'lib/hooks/useApplyDynamicTheme'
 import { useDialogState } from 'lib/hooks/useDialogState'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { useWakelock } from 'lib/hooks/useWakelock'
-import { recipeRoute } from 'lib/router'
 
 export const Recipe: FunctionComponent = () => {
 	const { t } = useTranslation()

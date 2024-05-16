@@ -1,5 +1,5 @@
 import ky from 'ky'
-import { googleAuthRoute } from 'lib/router'
+import { Route as googleAuthRoute } from 'routes/auth/google'
 import { accountStore } from 'lib/stores/account'
 import { base64url, generateCodeChallenge, randomBytes } from 'lib/utils/oauth'
 import { AccountProvider } from '../provider'
