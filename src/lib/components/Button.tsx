@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
 import type { ComponentProps, FunctionComponent } from 'react'
-import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
@@ -54,7 +54,7 @@ const ButtonBase = styled('button', {
 				color: theme.colors.primary,
 				backgroundColor: theme.colors.surfaceContainerLow,
 				border: 'none',
-				boxShadow: `0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);`,
+				boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);',
 				':hover': {
 					backgroundColor: styleUtils.blendWithColor(theme.colors.surfaceContainerLow, theme.colors.primary, 0.08),
 					boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 2px 6px 2px rgba(0, 0, 0, 0.15)',

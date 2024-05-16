@@ -1,7 +1,7 @@
 import wszystkiegoslodkiegoIcon from 'assets/images/providers/wszystkiegoslodkiego.png'
 import { extractMicrodata } from 'features/recipes/providers/generic/microdata'
-import { type RecipesProvider } from 'features/recipes/providers/scrapper'
-import { type Recipe } from 'features/recipes/types'
+import type { RecipesProvider } from 'features/recipes/providers/scrapper'
+import type { Recipe } from 'features/recipes/types'
 import { getTextFromNode } from 'lib/utils/dom'
 
 export const wszystkiegoslodkiego: RecipesProvider = {

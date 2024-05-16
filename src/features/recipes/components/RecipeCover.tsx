@@ -1,7 +1,7 @@
 import 'photoswipe/dist/photoswipe.css'
 import { styled } from '@macaron-css/react'
 import { useBlocker } from '@tanstack/react-router'
-import { type EventCallback } from 'photoswipe'
+import type { EventCallback } from 'photoswipe'
 import type PhotoSwipe from 'photoswipe'
 import { type FunctionComponent, useCallback, useRef, useState } from 'react'
 import { Gallery, Item } from 'react-photoswipe-gallery'
@@ -31,7 +31,9 @@ const RecipeCover: FunctionComponent<RecipeCoverProps> = ({ image }) => {
 
 	return (
 		<Gallery
-			plugins={photoswipe => galleryRef.current = photoswipe.pswp}
+			plugins={photoswipe => {
+				galleryRef.current = photoswipe.pswp
+			}}
 			options={{ escKey: !('CloseWatcher' in globalThis) }}
 			onOpen={handleGalleryOpen}
 		>

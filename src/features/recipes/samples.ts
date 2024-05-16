@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { type Recipe } from 'features/recipes/types'
+import type { Recipe } from 'features/recipes/types'
 
 const pancakes: Recipe = {
 	id: nanoid(),

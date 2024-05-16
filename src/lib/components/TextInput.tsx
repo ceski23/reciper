@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import { type ComponentProps, forwardRef, type ReactNode, useId } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
 import { IconButton } from './IconButton'
@@ -129,7 +129,7 @@ const FieldInnerContainer = styled('div', {
 		position: 'relative',
 		borderRadius: 4,
 		transition: 'border-color .2s, outline .2s',
-		outline: `2px solid transparent`,
+		outline: '2px solid transparent',
 		outlineOffset: -2,
 		width: '100%',
 		':hover': {

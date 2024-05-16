@@ -1,4 +1,4 @@
-import { type SpringValue } from '@react-spring/web'
+import type { SpringValue } from '@react-spring/web'
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'

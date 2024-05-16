@@ -1,6 +1,6 @@
 import { decodeHTML5Strict } from 'entities'
 import { parse, toSeconds } from 'iso8601-duration'
-import { type HowToStep, type ImageObject, type Recipe as SchemaRecipe } from 'schema-dts'
+import type { HowToStep, ImageObject, Recipe as SchemaRecipe } from 'schema-dts'
 import { isArrayOf, isDefined, isString } from 'lib/utils'
 import { getColorFromImage } from 'lib/utils/images'
 
@@ -8,8 +8,7 @@ function isHowToStepArray(instructions: SchemaRecipe['recipeInstructions']): ins
 	return Array.isArray(instructions) && instructions[0]['@type'] === 'HowToStep'
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isImageObject = (val: any): val is ImageObject => (
+const isImageObject = (val: unknown): val is ImageObject => (
 	!!val && typeof val === 'object' && ('@type' in val) && val['@type'] === 'ImageObject'
 )
 
@@ -143,8 +142,7 @@ export const extractJsonLD = async (doc: Document) => {
 
 	const ingredientsData = schemaRecipe.recipeIngredient
 	// if (!ingredientsData) throw Error('Couldn\'t find ingredients');
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const ingredientsArray = Array.from(ingredientsData as Array<any> ?? [])
+	const ingredientsArray = Array.from(ingredientsData as Array<string> ?? [])
 	const ingredients = ingredientsArray?.map(i => ({ text: i }))
 
 	// FIXME: Better instructions parsing

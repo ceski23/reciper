@@ -41,7 +41,7 @@ export const Recipes: FunctionComponent = () => {
 			const id = setTimeout(() => {
 				notify(t('recipes.sampleRecipes.text'), {
 					id: 'samples',
-					duration: Infinity,
+					duration: Number.POSITIVE_INFINITY,
 					action: {
 						label: t('recipes.sampleRecipes.add'),
 						onClick: () => addRecipes.mutate(sampleRecipes),
@@ -51,7 +51,7 @@ export const Recipes: FunctionComponent = () => {
 
 			return () => clearTimeout(id)
 		}
-	}, [recipes.data?.length])
+	}, [recipes.data?.length, addRecipes, notify, t])
 
 	useEffect(() => {
 		if (isLoading) {
@@ -66,7 +66,7 @@ export const Recipes: FunctionComponent = () => {
 
 			return () => clearTimeout(id)
 		}
-	}, [isLoading, notify])
+	}, [isLoading, notify, t])
 	const navigate = useNavigate()
 
 	return (
@@ -111,7 +111,7 @@ export const Recipes: FunctionComponent = () => {
 				? (
 					<Snackbar
 						text={t('recipes.listLoadError')}
-						duration={Infinity}
+						duration={Number.POSITIVE_INFINITY}
 					/>
 				)
 				: recipesViewMode === 'grid'

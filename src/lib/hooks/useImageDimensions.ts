@@ -10,7 +10,7 @@ export const useImageDimensions = (imageUrl: string): Dimensions | undefined => 
 
 	useLayoutEffect(() => {
 		const image = new Image()
-		image.crossOrigin = `Anonymous`
+		image.crossOrigin = 'Anonymous'
 		image.src = import.meta.env.VITE_CORS_PROXY !== undefined
 			? import.meta.env.VITE_CORS_PROXY + encodeURIComponent(imageUrl)
 			: imageUrl

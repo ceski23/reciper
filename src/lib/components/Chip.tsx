@@ -2,7 +2,7 @@ import { styled } from '@macaron-css/react'
 import * as Toggle from '@radix-ui/react-toggle'
 import { Link, type ToOptions } from '@tanstack/react-router'
 import { type ComponentProps, forwardRef } from 'react'
-import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
 import { styleUtils, theme } from 'lib/styles'
@@ -37,13 +37,20 @@ export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase
 			{text}
 		</Label>
 		{onClose && (
-			<CloseIcon
-				name="close"
+			// eslint-disable-next-line jsx-a11y/prefer-tag-over-role
+			<CloseButton
+				role="button"
+				title="Close"
 				onClick={event => {
 					event.stopPropagation()
 					onClose()
 				}}
-			/>
+			>
+				<Icon
+					name="close"
+					size={18}
+				/>
+			</CloseButton>
 		)}
 	</ChipBase>
 ))
@@ -201,7 +208,7 @@ const ChipIcon = styled(Icon, {
 	},
 })
 
-const CloseIcon = styled(Icon, {
+const CloseButton = styled('span', {
 	base: {
 		width: 18,
 		height: 18,

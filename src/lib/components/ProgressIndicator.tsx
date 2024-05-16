@@ -1,7 +1,7 @@
 import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import * as Progress from '@radix-ui/react-progress'
-import { type ComponentProps, type FunctionComponent } from 'react'
+import type { ComponentProps, FunctionComponent } from 'react'
 import { theme } from 'lib/styles'
 
 const Linear: FunctionComponent<ComponentProps<typeof LinearBase>> = props => (

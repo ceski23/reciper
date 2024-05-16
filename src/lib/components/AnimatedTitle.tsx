@@ -1,5 +1,5 @@
 import { animated, useScroll } from '@react-spring/web'
-import { type CSSProperties, type FunctionComponent, type ReactNode } from 'react'
+import type { CSSProperties, FunctionComponent, ReactNode } from 'react'
 
 type AnimatedTitleProps = {
 	container: HTMLElement

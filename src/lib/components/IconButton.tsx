@@ -1,7 +1,7 @@
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
 import { type ComponentProps, forwardRef, useCallback, useState } from 'react'
-import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { Tooltip } from 'lib/components/Tooltip'
 import { useLongPress } from 'lib/hooks/useLongPress'

@@ -1,8 +1,8 @@
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
-import { type FunctionComponent, type ReactNode } from 'react'
+import type { FunctionComponent, ReactNode } from 'react'
 import * as providers from 'features/recipes/providers/websites'
-import { type Recipe } from 'features/recipes/types'
+import type { Recipe } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
 import { ListItem } from './list/items'
 

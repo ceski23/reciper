@@ -1,4 +1,4 @@
-import { type KnownIngredient } from 'features/recipes/ingredients'
+import type { KnownIngredient } from 'features/recipes/ingredients'
 
 export const KNOWN_INGREDIENTS = {
 	chocolate: {

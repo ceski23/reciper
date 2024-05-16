@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
-import { type FunctionComponent } from 'react'
+import type { FunctionComponent } from 'react'
 import { Item } from 'react-photoswipe-gallery'
 import { useImageDimensions } from 'lib/hooks/useImageDimensions'
 

@@ -3,7 +3,7 @@ import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { type FunctionComponent, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeStep } from 'features/recipes/components/RecipeStep'
-import { type Recipe } from 'features/recipes/types'
+import type { Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 
@@ -52,8 +52,10 @@ export const StepsSection: FunctionComponent<StepsSectionProps> = ({ steps, name
 					<RecipeStep
 						number={index + 1}
 						step={step}
-						key={index}
-						ref={node => refs.current[index] = node}
+						key={step.text}
+						ref={node => {
+							refs.current[index] = node
+						}}
 					/>
 				))}
 			</StepsList>

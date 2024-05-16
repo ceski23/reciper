@@ -1,4 +1,4 @@
-import { type IngredientName } from 'features/recipes/ingredients/ingredients'
+import type { IngredientName } from 'features/recipes/ingredients/ingredients'
 
 export type KnownIngredient = {
 	name: string

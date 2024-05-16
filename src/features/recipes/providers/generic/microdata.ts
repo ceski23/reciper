@@ -1,6 +1,6 @@
 import { decodeHTML5Strict } from 'entities'
 import { parse, toSeconds } from 'iso8601-duration'
-import { type Recipe } from 'features/recipes/types'
+import type { Recipe } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
 import { getTextFromNode } from 'lib/utils/dom'
 import { getColorFromImage } from 'lib/utils/images'

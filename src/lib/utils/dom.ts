@@ -1,21 +1,23 @@
 export const getTextFromNode = (startNode: Node) => {
 	const _getTextFromNode = (node: Node, text: string) => {
+		let finalText = text
+
 		if (node instanceof HTMLElement) {
-			if (node.tagName === 'BR') text += '\n'
+			if (node.tagName === 'BR') finalText += '\n'
 		} else {
 			const newFragment = node.textContent?.trim()
 
-			if (![' ', '\t', '\n'].includes(text[text.length - 1])) text += ' '
-			if (newFragment?.startsWith('.')) text = text.trimEnd()
+			if (![' ', '\t', '\n'].includes(text[text.length - 1])) finalText += ' '
+			if (newFragment?.startsWith('.')) finalText = finalText.trimEnd()
 
-			text += newFragment
+			finalText += newFragment
 		}
 
 		for (const childNode of node.childNodes) {
-			text = _getTextFromNode(childNode, text)
+			finalText = _getTextFromNode(childNode, finalText)
 		}
 
-		return text
+		return finalText
 	}
 
 	return _getTextFromNode(startNode, '').trim()

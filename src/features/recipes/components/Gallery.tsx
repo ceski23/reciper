@@ -3,7 +3,7 @@ import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import { useBlocker } from '@tanstack/react-router'
 import type PhotoSwipe from 'photoswipe'
-import { type EventCallback } from 'photoswipe'
+import type { EventCallback } from 'photoswipe'
 import { type FunctionComponent, useCallback, useRef, useState } from 'react'
 import { Gallery as PhotoSwipeGallery } from 'react-photoswipe-gallery'
 import { GalleryItem } from './GalleryItem'
@@ -38,7 +38,9 @@ export const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
 
 	return (
 		<PhotoSwipeGallery
-			plugins={photoswipe => galleryRef.current = photoswipe.pswp}
+			plugins={photoswipe => {
+				galleryRef.current = photoswipe.pswp
+			}}
 			options={{ escKey: !('CloseWatcher' in globalThis) }}
 			// onOpen={'CloseWatcher' in globalThis ? handleGalleryOpen : undefined}
 			onOpen={handleGalleryOpen}

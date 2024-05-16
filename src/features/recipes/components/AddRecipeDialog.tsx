@@ -1,5 +1,5 @@
-import { type SpringValue } from '@react-spring/web'
-import { type FunctionComponent } from 'react'
+import type { SpringValue } from '@react-spring/web'
+import type { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/Dialog'

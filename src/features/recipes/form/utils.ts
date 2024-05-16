@@ -1,6 +1,6 @@
 import { group, mapValues } from 'radash'
-import { type RecipeFormValues } from 'features/recipes/form/scheme'
-import { type Recipe } from 'features/recipes/types'
+import type { RecipeFormValues } from 'features/recipes/form/scheme'
+import type { Recipe } from 'features/recipes/types'
 
 type ReplaceUndefinedWithNull<T> = T extends undefined ? null : T
 type ToNullProps<T> = {

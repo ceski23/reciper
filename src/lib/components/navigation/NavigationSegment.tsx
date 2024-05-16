@@ -2,7 +2,7 @@ import { styled } from '@macaron-css/react'
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import { Link, type ToOptions } from '@tanstack/react-router'
 import type { FunctionComponent } from 'react'
-import { type SvgSpriteIconName } from 'virtual:svg-sprite'
+import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from '../Typography'
@@ -86,25 +86,25 @@ const IconContainer = styled('div', {
 		transition: 'background-color .2s, color .2s',
 		position: 'relative',
 		selectors: {
-			[`:hover > &`]: {
+			':hover > &': {
 				backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.08),
 			},
-			[`:focus-visible > &`]: {
+			':focus-visible > &': {
 				backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.12),
 			},
-			[`:active > &`]: {
+			':active > &': {
 				backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.12),
 			},
-			[`[aria-current="page"] > &`]: {
+			'[aria-current="page"] > &': {
 				backgroundColor: theme.colors.secondaryContainer,
 			},
-			[`[aria-current="page"]:hover > &`]: {
+			'[aria-current="page"]:hover > &': {
 				backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.08),
 			},
-			[`[aria-current="page"]:focus-visible > &`]: {
+			'[aria-current="page"]:focus-visible > &': {
 				backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
 			},
-			[`[aria-current="page"]:active > &`]: {
+			'[aria-current="page"]:active > &': {
 				backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
 			},
 		},

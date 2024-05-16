@@ -1,7 +1,7 @@
 /* eslint-disable react/function-component-definition */
 import { style } from '@macaron-css/core'
 import { Slot } from '@radix-ui/react-slot'
-import { type ComponentPropsWithoutRef, type FunctionComponent } from 'react'
+import type { ComponentPropsWithoutRef, FunctionComponent } from 'react'
 import { styleUtils } from 'lib/styles'
 
 type TypographyParagraphProps = {

@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { type SpringValue } from '@react-spring/web'
+import type { SpringValue } from '@react-spring/web'
 import { useNavigate } from '@tanstack/react-router'
 import { type FunctionComponent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'

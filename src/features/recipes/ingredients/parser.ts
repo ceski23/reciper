@@ -1,4 +1,4 @@
-import { type KnownIngredient, type ParsedIngredient } from 'features/recipes/ingredients'
+import type { KnownIngredient, ParsedIngredient } from 'features/recipes/ingredients'
 import { type IngredientName, KNOWN_INGREDIENTS } from 'features/recipes/ingredients/ingredients'
 
 const quantityPattern = /\d+(?:[\.,\/]\d+|\si\s\d+\/\d+)?/

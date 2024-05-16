@@ -1,11 +1,10 @@
-import { queryOptions, type UseMutationOptions } from '@tanstack/react-query'
-import { type AccountProvider } from 'features/auth/providers'
+import { queryOptions, skipToken, type UseMutationOptions } from '@tanstack/react-query'
+import type { AccountProvider } from 'features/auth/providers'
 
 export const userInfoQuery = (provider?: AccountProvider) =>
 	queryOptions({
 		queryKey: ['userInfo', provider],
-		queryFn: () => provider!.getUserInfo(),
-		enabled: provider !== undefined,
+		queryFn: provider !== undefined ? () => provider.getUserInfo() : skipToken,
 		retry: false,
 	})
 

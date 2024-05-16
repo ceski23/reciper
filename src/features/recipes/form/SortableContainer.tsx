@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { styled } from '@macaron-css/react'
-import React, { type FunctionComponent } from 'react'
+import type { FunctionComponent } from 'react'
 import { Icon } from 'lib/components/Icon'
 import { theme } from 'lib/styles'
 

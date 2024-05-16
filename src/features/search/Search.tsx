@@ -30,7 +30,7 @@ export const searchParamsSchema = v.object({
 
 export type SearchParams = v.Output<typeof searchParamsSchema>
 
-export const Search: FunctionComponent = ({}) => {
+export const Search: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const { query, maxPreparationTime, ingredients } = searchRecipeRoute.useSearch()
 	const deferredParams = useDeferredValue({ query, maxPreparationTime, ingredients })

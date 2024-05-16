@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import * as RadixRadioGroup from '@radix-ui/react-radio-group'
-import { type ComponentProps, type FunctionComponent } from 'react'
+import type { ComponentProps, FunctionComponent } from 'react'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'

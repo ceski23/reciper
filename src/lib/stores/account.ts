@@ -1,5 +1,5 @@
 import { createStore, storage } from '@codemaskinc/store'
-import { type UserInfo } from 'features/auth/providers'
+import type { UserInfo } from 'features/auth/providers'
 
 export type AccountData = {
 	provider?: string

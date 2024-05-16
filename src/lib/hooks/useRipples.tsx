@@ -2,7 +2,7 @@ import { useTransition } from '@react-spring/web'
 import { type KeyboardEvent, type PointerEventHandler, useRef, useState } from 'react'
 import { Ripple, RipplesContainer } from 'lib/components/Ripple'
 
-type Ripple<TElement> = {
+type RippleData<TElement> = {
 	element: TElement
 	top: number
 	left: number
@@ -10,9 +10,9 @@ type Ripple<TElement> = {
 	height: number
 }
 
-export const useRipples = <TElement extends HTMLElement>(color: string = 'currentColor') => {
+export const useRipples = <TElement extends HTMLElement>(color = 'currentColor') => {
 	const isKeyHolded = useRef(false)
-	const [ripples, setRipples] = useState<Array<Ripple<TElement>>>([])
+	const [ripples, setRipples] = useState<Array<RippleData<TElement>>>([])
 	const transitions = useTransition(ripples, {
 		from: { opacity: .12, scale: 0 },
 		enter: { opacity: .12, scale: 1 },

@@ -3,7 +3,7 @@ import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TemperatureSegment } from 'features/recipes/components/TemperatureSegment'
-import { type Recipe } from 'features/recipes/types'
+import type { Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
@@ -26,9 +26,9 @@ export const RecipeStep = forwardRef<HTMLButtonElement, RecipeStepProps>(({ numb
 			{...eventHandlers}
 		>
 			{renderRipples}
-			<Number>
+			<StepNumber>
 				{t('recipes.steps.step', { step: number })}
-			</Number>
+			</StepNumber>
 			<Typography.BodyMedium>
 				{segmentizeText(step.text, TEMPERATURE_PATTERN, (match, index) => (
 					<TemperatureSegment
@@ -79,7 +79,7 @@ const Item = styled(ToggleGroup.Item, {
 	},
 })
 
-const Number = styled(Typography.LabelMedium, {
+const StepNumber = styled(Typography.LabelMedium, {
 	base: {
 		color: theme.colors.primary,
 	},

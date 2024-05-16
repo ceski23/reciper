@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 import { parseIngredient } from 'features/recipes/ingredients/parser'
 import { recipesQuery } from 'features/recipes/recipes'
-import { type Recipe } from 'features/recipes/types'
-import { type SearchParams } from 'features/search/Search'
+import type { Recipe } from 'features/recipes/types'
+import type { SearchParams } from 'features/search/Search'
 import { isDefined } from 'lib/utils'
 
 export const useRecipesSearch = ({ query, maxPreparationTime, ingredients }: SearchParams) => {

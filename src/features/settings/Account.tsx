@@ -64,7 +64,7 @@ export const Account: FunctionComponent = () => {
 
 			notify(t('settings.account.quickActions.import.success', { count: importedRecipes.length }))
 		} catch (error) {
-			notify(t('settings.account.quickActions.import.error'), { duration: Infinity })
+			notify(t('settings.account.quickActions.import.error'), { duration: Number.POSITIVE_INFINITY })
 		}
 	}
 

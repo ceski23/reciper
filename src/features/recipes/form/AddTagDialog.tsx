@@ -1,6 +1,6 @@
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
-import { type SpringValue } from '@react-spring/web'
+import type { SpringValue } from '@react-spring/web'
 import { type FunctionComponent, useId } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'

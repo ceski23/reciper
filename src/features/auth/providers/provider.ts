@@ -53,7 +53,7 @@ export abstract class AccountProvider {
 								prev.concat({
 									id: 'errorLogout',
 									content: i18next.t('auth.logoutError.text'),
-									duration: Infinity,
+									duration: Number.POSITIVE_INFINITY,
 									action: { label: i18next.t('auth.logoutError.action') },
 								})
 							)
