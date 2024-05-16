@@ -12,7 +12,7 @@ export const Google = () => {
 	const navigate = useNavigate()
 	const { scope, error, state } = googleAuthRoute.useSearch()
 	const areRequiredScopesGranted = GoogleProvider.requiredScopes.every(requiredScope => scope.includes(requiredScope))
-	const { actions: { setAccessToken, setProvider, setRefreshToken, setUser } } = accountStore.useStore()
+	const { setAccessToken, setProvider, setRefreshToken, setUser } = accountStore.useStore()
 	const { isSuccess, data, isError: isCompleteLoginError } = useQuery({
 		queryKey: ['code'],
 		queryFn: GoogleProvider.completeLogin,

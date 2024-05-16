@@ -13,6 +13,7 @@ export const Settings: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const { AnimateDialog, state: [, setIsLanguageDialogOpen] } = useDialogState(false)
+	const { setLanguage } = settingsStore.useStore()
 
 	return (
 		<Fragment>
@@ -62,7 +63,7 @@ export const Settings: FunctionComponent = () => {
 					onCancel={() => setIsLanguageDialogOpen(false)}
 					onSave={language => {
 						setIsLanguageDialogOpen(false)
-						settingsStore.actions.setLanguage(language)
+						setLanguage(language)
 					}}
 				/>
 			</AnimateDialog>

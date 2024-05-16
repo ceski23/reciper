@@ -1,11 +1,13 @@
 import { styled } from '@macaron-css/react'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { animated, config, useTransition } from '@react-spring/web'
-import { type ComponentProps, type FunctionComponent, useEffect, useState } from 'react'
+import { type ComponentPropsWithoutRef, type FunctionComponent, useEffect, useState } from 'react'
 import { theme } from 'lib/styles'
 import { Typography } from './Typography'
 
-export const Tooltip: FunctionComponent<ComponentProps<typeof TooltipPrimitive.Content> & ComponentProps<typeof TooltipPrimitive.Root>> = ({
+export const Tooltip: FunctionComponent<
+	ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>
+> = ({
 	children,
 	content,
 	open,

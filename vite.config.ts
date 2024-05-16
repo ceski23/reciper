@@ -11,6 +11,7 @@ import svgSprite from '@ceski23/vite-plugin-svg-sprite'
 const pwaManifest: Partial<ManifestOptions> = {
 	short_name: 'Reciper',
 	name: 'Reciper - your recipes',
+	theme_color: '#ffffff',
 	icons: [
 		{
 			src: 'pwa-64x64.png',

@@ -12,7 +12,7 @@ export const initI18n = () => {
 		lookup: () => settingsStore.getState().language,
 	})
 
-	settingsStore.effect(() => i18n.isInitialized && i18n.changeLanguage(), ['language'])
+	settingsStore.effect(({ language }) => i18n.isInitialized && i18n.changeLanguage(language))
 
 	i18n
 		.use(initReactI18next)
