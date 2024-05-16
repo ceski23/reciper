@@ -7,7 +7,7 @@ import { theme } from 'lib/styles'
 
 export const useDynamicTheme = (color?: string) => {
 	const isDarkMode = useIsDarkMode()
-	const { state: { theme: { dynamicColor } } } = settingsStore.useStore('theme')
+	const { theme: { dynamicColor } } = settingsStore.useStore()
 	const schemes = useMemo(() => (color && dynamicColor) ? createSchemes(color) : undefined, [color, dynamicColor])
 
 	return schemes

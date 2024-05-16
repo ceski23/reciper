@@ -1,7 +1,7 @@
 import { type Notification, notificationsStore } from 'lib/stores/notifications'
 
 export const useNotifications = () => {
-	const { actions: { setNotifications } } = notificationsStore.useStore('notifications')
+	const { setNotifications } = notificationsStore.useStore()
 	const notify = (content: string, {
 		id = crypto.randomUUID(),
 		duration = 5000,

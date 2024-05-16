@@ -1,4 +1,5 @@
-import { createStore, storage } from '@codemaskinc/store'
+import { createStore } from 'stan-js'
+import { storage } from 'stan-js/storage'
 import type { UserInfo } from 'features/auth/providers'
 
 export type AccountData = {

@@ -1,4 +1,5 @@
-import { createStore, storage } from '@codemaskinc/store'
+import { createStore } from 'stan-js'
+import { storage } from 'stan-js/storage'
 
 export type UIState = {
 	header: HTMLElement | null

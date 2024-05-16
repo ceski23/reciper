@@ -1,4 +1,4 @@
-import { createStore } from '@codemaskinc/store'
+import { createStore } from 'stan-js'
 
 export type Notification = {
 	id: string

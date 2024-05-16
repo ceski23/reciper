@@ -34,7 +34,7 @@ export const Recipes: FunctionComponent = () => {
 	const [container, setContainer] = useState<HTMLElement | null>(null)
 	const { AnimateDialog: AnimateAddDialog, state: [, setIsAddDialogOpen] } = useDialogState(false)
 	const { AnimateDialog: AnimateUrlDialog, state: [, setIsUrlDialogOpen] } = useDialogState(false)
-	const { state: { recipesViewMode }, actions: { setRecipesViewMode } } = uiStore.useStore('recipesViewMode')
+	const { recipesViewMode, setRecipesViewMode } = uiStore.useStore()
 
 	useEffect(() => {
 		if (recipes.data?.length === 0) {

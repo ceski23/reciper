@@ -3,7 +3,7 @@ import { accountStore } from 'lib/stores/account'
 import { GoogleProvider } from '../providers/google/provider'
 
 export const useAccountProvider = () => {
-	const { state: { provider } } = accountStore.useStore('provider')
+	const { provider } = accountStore.useStore()
 
 	return useMemo(() => {
 		switch (provider) {

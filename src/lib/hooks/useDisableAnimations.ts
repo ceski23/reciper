@@ -12,7 +12,7 @@ const disabledAnimationsClass = style({
 })
 
 export const useDisableAnimations = () => {
-	const { state: { theme } } = settingsStore.useStore('theme')
+	const { theme } = settingsStore.useStore()
 	const areDisabledAnimations = theme.disabledAnimations
 	const isReducedMotion = useReducedMotion() ?? false
 	const shouldDisableAnimations = areDisabledAnimations || isReducedMotion

@@ -5,7 +5,7 @@ import { userInfoQuery } from 'features/auth/queries'
 import { accountStore } from 'lib/stores/account'
 
 export const useUserInfo = () => {
-	const { state: { user }, actions: { setUser } } = accountStore.useStore('user')
+	const { user, setUser } = accountStore.useStore()
 	const { data, status } = useQuery({
 		...userInfoQuery(useAccountProvider()),
 		placeholderData: user,

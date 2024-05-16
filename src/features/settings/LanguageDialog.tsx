@@ -18,7 +18,7 @@ type LanguageDialogProps = {
 
 export const LanguageDialog: FunctionComponent<LanguageDialogProps> = ({ onCancel, onSave, open, styles }) => {
 	const { t } = useTranslation()
-	const { state: { language } } = settingsStore.useStore('language')
+	const { language } = settingsStore.useStore()
 	const [selectedLanguage, setSelectedLanguage] = useState<Settings['language']>(language)
 
 	return (

@@ -14,7 +14,7 @@ export const SnackbarContainer: FunctionComponent<SnackbarContainerProps & Compo
 	...props
 }) => {
 	const { hide } = useNotifications()
-	const { state: { notifications } } = notificationsStore.useStore('notifications')
+	const { notifications } = notificationsStore.useStore()
 
 	return (
 		<Container {...props}>

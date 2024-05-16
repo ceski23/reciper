@@ -7,7 +7,7 @@ type ContentOverlayPortalProps = {
 }
 
 export const ContentOverlayPortal: FunctionComponent<ContentOverlayPortalProps> = ({ children }) => {
-	const { state: { overlayContainer } } = uiStore.useStore('overlayContainer')
+	const { overlayContainer } = uiStore.useStore()
 
 	return overlayContainer ? createPortal(children, overlayContainer) : null
 }

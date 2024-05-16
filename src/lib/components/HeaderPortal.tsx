@@ -7,7 +7,7 @@ type HeaderPortalProps = {
 }
 
 export const HeaderPortal: FunctionComponent<HeaderPortalProps> = ({ children }) => {
-	const { state: { header } } = uiStore.useStore('header')
+	const { header } = uiStore.useStore()
 
 	return header ? createPortal(children, header) : null
 }

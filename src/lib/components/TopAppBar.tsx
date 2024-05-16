@@ -39,7 +39,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	const { t } = useTranslation()
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
-	const { state: { mainContent } } = uiStore.useStore('mainContent')
+	const { mainContent } = uiStore.useStore()
 	const themeColor = useMemo(
 		() => computeStyle('backgroundColor', isContentScrolled || elevation === 'onScroll' ? theme.colors.surfaceContainer : theme.colors.surface),
 		[isContentScrolled, elevation],

@@ -17,7 +17,7 @@ type ColorSchemeDialogProps = {
 
 export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ onCancel, onSave, open, styles }) => {
 	const { t } = useTranslation()
-	const { state: { theme } } = settingsStore.useStore('theme')
+	const { theme } = settingsStore.useStore()
 	const [selectedColorScheme, setSelectedColorScheme] = useState<Settings['theme']['colorScheme']>(theme.colorScheme)
 
 	const handleRadioChange = (value: string) => {

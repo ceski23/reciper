@@ -14,7 +14,7 @@ export const Theme: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const { AnimateDialog, state: [, setIsColorSchemeDialogOpen] } = useDialogState(false)
-	const { state: settings, actions: { setTheme } } = settingsStore.useStore('theme')
+	const { setTheme, theme: themeSettings } = settingsStore.useStore()
 	const isReducedMotion = useReducedMotion() ?? false
 
 	return (
@@ -38,7 +38,7 @@ export const Theme: FunctionComponent = () => {
 					text={t('settings.theme.dynamicColors.text')}
 					size="3line"
 					switchProps={{
-						checked: settings.theme.dynamicColor,
+						checked: themeSettings.dynamicColor,
 						onCheckedChange: dynamicColor => setTheme(prev => ({ ...prev, dynamicColor })),
 					}}
 				/>
@@ -48,7 +48,7 @@ export const Theme: FunctionComponent = () => {
 					title={t('settings.theme.disableAnimations.title')}
 					text={isReducedMotion ? t('settings.theme.disableAnimations.forcedText') : t('settings.theme.disableAnimations.text')}
 					switchProps={{
-						checked: isReducedMotion ? true : settings.theme.disabledAnimations,
+						checked: isReducedMotion ? true : themeSettings.disabledAnimations,
 						onCheckedChange: disabledAnimations => setTheme(prev => ({ ...prev, disabledAnimations })),
 					}}
 					isDisabled={isReducedMotion}
