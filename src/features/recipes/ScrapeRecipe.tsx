@@ -1,5 +1,4 @@
 import { styled } from '@macaron-css/react'
-import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
