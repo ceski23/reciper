@@ -7,13 +7,12 @@ import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
 import { recipeQuery, useDeleteRecipe } from 'features/recipes/recipes'
 import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/Dialog'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
 import { IconButton } from 'lib/components/IconButton'
 import { Menu } from 'lib/components/Menu'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
 import { useApplyDynamicTheme } from 'lib/hooks/useApplyDynamicTheme'
-import { useDialogState } from 'lib/hooks/useDialogState'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { useWakelock } from 'lib/hooks/useWakelock'
 
@@ -23,7 +22,7 @@ export const Recipe: FunctionComponent = () => {
 	const { notify } = useNotifications()
 	const { id } = recipeRoute.useParams()
 	const { data: recipe, status } = useQuery(recipeQuery(id))
-	const { AnimateDialog, state: [, setIsDeleteDialogOpen] } = useDialogState(false)
+	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const history = useRouter().history
 	const navigate = useNavigate()
@@ -86,37 +85,36 @@ export const Recipe: FunctionComponent = () => {
 				)}
 			/>
 			{status === 'success' && (
-				<AnimateDialog>
-					<SimpleDialog
-						title={t('recipes.delete.title')}
-						description={t('recipes.delete.confirmation', { name: recipe.name })}
-						onOpenChange={() => setIsDeleteDialogOpen(false)}
-						actions={[
-							(
-								<Button
-									key="cancel"
-									variant="text"
-									onClick={() => setIsDeleteDialogOpen(false)}
-								>
-									{t('recipes.delete.cancel')}
-								</Button>
-							),
-							(
-								<Button
-									key="delete"
-									variant="filled"
-									onClick={() => {
-										deleteRecipeMutation.mutate(recipe.id, {
-											onSuccess: () => history.back(),
-										})
-									}}
-								>
-									{t('recipes.delete.delete')}
-								</Button>
-							),
-						]}
-					/>
-				</AnimateDialog>
+				<SimpleDialog
+					open={isDeleteDialogOpen}
+					title={t('recipes.delete.title')}
+					description={t('recipes.delete.confirmation', { name: recipe.name })}
+					onOpenChange={() => setIsDeleteDialogOpen(false)}
+					actions={[
+						(
+							<Button
+								key="cancel"
+								variant="text"
+								onClick={() => setIsDeleteDialogOpen(false)}
+							>
+								{t('recipes.delete.cancel')}
+							</Button>
+						),
+						(
+							<Button
+								key="delete"
+								variant="filled"
+								onClick={() => {
+									deleteRecipeMutation.mutate(recipe.id, {
+										onSuccess: () => history.back(),
+									})
+								}}
+							>
+								{t('recipes.delete.delete')}
+							</Button>
+						),
+					]}
+				/>
 			)}
 			{status === 'pending' ? <RecipeContentSkeleton /> : <RecipeContent recipe={recipe} />}
 		</Fragment>

@@ -1,19 +1,18 @@
 import { useReducedMotion } from '@react-spring/web'
 import { useNavigate } from '@tanstack/react-router'
-import { Fragment, type FunctionComponent } from 'react'
+import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ColorSchemeDialog } from 'features/settings/ColorSchemeDialog'
 import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
 import { TopAppBar } from 'lib/components/TopAppBar'
-import { useDialogState } from 'lib/hooks/useDialogState'
 import { settingsStore } from 'lib/stores/settings'
 import { theme } from 'lib/styles'
 
 export const Theme: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
-	const { AnimateDialog, state: [, setIsColorSchemeDialogOpen] } = useDialogState(false)
+	const [isColorSchemeDialogOpen, setIsColorSchemeDialogOpen] = useState(false)
 	const { setTheme, theme: themeSettings } = settingsStore.useStore()
 	const isReducedMotion = useReducedMotion() ?? false
 
@@ -54,15 +53,14 @@ export const Theme: FunctionComponent = () => {
 					isDisabled={isReducedMotion}
 				/>
 			</List>
-			<AnimateDialog>
-				<ColorSchemeDialog
-					onCancel={() => setIsColorSchemeDialogOpen(false)}
-					onSave={colorScheme => {
-						setIsColorSchemeDialogOpen(false)
-						setTheme(prev => ({ ...prev, colorScheme }))
-					}}
-				/>
-			</AnimateDialog>
+			<ColorSchemeDialog
+				open={isColorSchemeDialogOpen}
+				onCancel={() => setIsColorSchemeDialogOpen(false)}
+				onSave={colorScheme => {
+					setIsColorSchemeDialogOpen(false)
+					setTheme(prev => ({ ...prev, colorScheme }))
+				}}
+			/>
 		</Fragment>
 	)
 }

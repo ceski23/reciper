@@ -1,7 +1,7 @@
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
-import { Fragment, type FunctionComponent } from 'react'
+import { Fragment, type FunctionComponent, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { AddTagDialog } from 'features/recipes/form/AddTagDialog'
@@ -13,7 +13,6 @@ import { Chip } from 'lib/components/Chip'
 import { TextField } from 'lib/components/form/TextField'
 import { IconButton } from 'lib/components/IconButton'
 import { Typography } from 'lib/components/Typography'
-import { useDialogState } from 'lib/hooks/useDialogState'
 import { theme } from 'lib/styles/theme'
 
 type RecipeFormProps = {
@@ -24,7 +23,7 @@ type RecipeFormProps = {
 
 export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, initialValues }) => {
 	const { t } = useTranslation()
-	const { AnimateDialog: AnimateAddTagDialog, state: [, setIsAddTagDialogOpen] } = useDialogState(false)
+	const [isAddTagDialogOpen, setIsAddTagDialogOpen] = useState(false)
 	const { handleSubmit, control, formState: { errors }, watch } = useForm<RecipeFormValues>({
 		resolver: valibotResolver(recipeFormSchema()),
 		defaultValues: initialValues,
@@ -130,15 +129,14 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 				>
 					{t('newRecipe.fields.tags.addTag')}
 				</AddButton>
-				<AnimateAddTagDialog>
-					<AddTagDialog
-						onClose={() => setIsAddTagDialogOpen(false)}
-						onAddTag={text => {
-							tagsFields.append({ text })
-							setIsAddTagDialogOpen(false)
-						}}
-					/>
-				</AnimateAddTagDialog>
+				<AddTagDialog
+					open={isAddTagDialogOpen}
+					onClose={() => setIsAddTagDialogOpen(false)}
+					onAddTag={text => {
+						tagsFields.append({ text })
+						setIsAddTagDialogOpen(false)
+					}}
+				/>
 			</FormSection>
 			<FormSection>
 				<div>

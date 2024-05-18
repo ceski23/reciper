@@ -1,29 +1,31 @@
-import type { SpringValue } from '@react-spring/web'
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/Dialog'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
 import { RadioGroup } from 'lib/components/RadioGroup'
 import { LANGUAGES } from 'lib/i18n'
 import { type Settings, settingsStore } from 'lib/stores/settings'
 
 type LanguageDialogProps = {
 	open?: boolean
-	styles?: {
-		opacity: SpringValue<number>
-	}
 	onSave: (language: Settings['language']) => void
 	onCancel: () => void
 }
 
-export const LanguageDialog: FunctionComponent<LanguageDialogProps> = ({ onCancel, onSave, open, styles }) => {
+export const LanguageDialog: FunctionComponent<LanguageDialogProps> = withDialogAnimation(({
+	onCancel,
+	onSave,
+	open,
+	...props
+}) => {
 	const { t } = useTranslation()
 	const { language } = settingsStore.useStore()
 	const [selectedLanguage, setSelectedLanguage] = useState<Settings['language']>(language)
 
 	return (
 		<SimpleDialog
-			styles={styles}
+			{...props}
 			open={open}
 			icon="language"
 			title={t('settings.language.title')}
@@ -69,4 +71,4 @@ export const LanguageDialog: FunctionComponent<LanguageDialogProps> = ({ onCance
 			]}
 		/>
 	)
-}
+})

@@ -1,21 +1,22 @@
 import { styled } from '@macaron-css/react'
-import type { SpringValue } from '@react-spring/web'
 import { useNavigate } from '@tanstack/react-router'
 import { type FunctionComponent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/Dialog'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
 import { TextInput } from 'lib/components/TextInput'
 
 type AddByUrlDialogProps = {
 	open?: boolean
-	styles?: {
-		opacity: SpringValue<number>
-	}
 	onClose: () => void
 }
 
-export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = ({ onClose, open, styles }) => {
+export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = withDialogAnimation(({
+	onClose,
+	open,
+	...props
+}) => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const [url, setUrl] = useState('')
@@ -23,9 +24,9 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = ({ onClose
 
 	return (
 		<SimpleDialog
+			{...props}
 			title={t('recipes.addRecipe.addByUrl.title')}
 			icon="link"
-			styles={styles}
 			open={open}
 			description={t('recipes.addRecipe.addByUrl.description')}
 			onOpenChange={onClose}
@@ -69,7 +70,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = ({ onClose
 			)}
 		/>
 	)
-}
+})
 
 const UrlFieldForm = styled('form', {
 	base: {

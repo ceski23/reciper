@@ -1,12 +1,12 @@
 import { styled } from '@macaron-css/react'
 import * as RadixDialog from '@radix-ui/react-dialog'
-import { animated, config, type SpringValue, type UseTransitionProps } from '@react-spring/web'
+import { animated, type SpringValue } from '@react-spring/web'
 import { type ComponentProps, type FunctionComponent, isValidElement, type ReactElement, type ReactNode } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
-import { Button } from './Button'
-import { Typography } from './Typography'
+import { Button } from '../Button'
+import { Typography } from '../Typography'
 
 type DialogActionItem = {
 	label: string
@@ -24,13 +24,6 @@ type SimpleDialogProps = {
 		opacity: SpringValue<number>
 	}
 }
-
-export const DIALOG_ANIMATION = {
-	from: { opacity: 0, y: 100 },
-	enter: { opacity: 1, y: 0 },
-	leave: { opacity: 0, y: 100 },
-	config: config.stiff,
-} satisfies UseTransitionProps
 
 export const SimpleDialog: FunctionComponent<SimpleDialogProps & ComponentProps<typeof RadixDialog.Root>> = ({
 	title,

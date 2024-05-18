@@ -1,32 +1,34 @@
-import type { SpringValue } from '@react-spring/web'
 import type { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/Dialog'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
 import { Icon } from 'lib/components/Icon'
 import { ListItem } from 'lib/components/list/items'
 import { List } from 'lib/components/list/List'
 
 type AddRecipeDialogProps = {
 	open?: boolean
-	styles?: {
-		opacity: SpringValue<number>
-	}
 	onClose: VoidFunction
 	onAddByUrl: VoidFunction
 }
 
-export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = ({ onClose, open, styles, onAddByUrl }) => {
+export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = withDialogAnimation(({
+	onClose,
+	open,
+	onAddByUrl,
+	...props
+}) => {
 	const { t } = useTranslation()
 
 	return (
 		<SimpleDialog
+			{...props}
 			title={t('recipes.addRecipe.title')}
 			description={t('recipes.addRecipe.description')}
 			icon="recipes"
 			onOpenChange={onClose}
 			open={open}
-			styles={styles}
 			actions={[
 				(
 					<Button
@@ -64,4 +66,4 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = ({ onClo
 			)}
 		/>
 	)
-}
+})

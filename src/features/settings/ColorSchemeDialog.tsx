@@ -1,21 +1,23 @@
-import type { SpringValue } from '@react-spring/web'
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/Dialog'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
 import { RadioGroup } from 'lib/components/RadioGroup'
 import { type Settings, settingsStore } from 'lib/stores/settings'
 
 type ColorSchemeDialogProps = {
-	open?: boolean
-	styles?: {
-		opacity: SpringValue<number>
-	}
+	open: boolean
 	onSave: (colorScheme: Settings['theme']['colorScheme']) => void
 	onCancel: () => void
 }
 
-export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ onCancel, onSave, open, styles }) => {
+export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = withDialogAnimation(({
+	onCancel,
+	onSave,
+	open,
+	...props
+}) => {
 	const { t } = useTranslation()
 	const { theme } = settingsStore.useStore()
 	const [selectedColorScheme, setSelectedColorScheme] = useState<Settings['theme']['colorScheme']>(theme.colorScheme)
@@ -33,7 +35,7 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ o
 
 	return (
 		<SimpleDialog
-			styles={styles}
+			{...props}
 			open={open}
 			icon="brightness"
 			title={t('settings.theme.colorScheme.dialog.title')}
@@ -80,4 +82,4 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = ({ o
 			]}
 		/>
 	)
-}
+})

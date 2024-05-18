@@ -1,27 +1,29 @@
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
-import type { SpringValue } from '@react-spring/web'
 import { type FunctionComponent, useId } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import type * as v from 'valibot'
 import { recipeFormSchema } from 'features/recipes/form/scheme'
 import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/Dialog'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
 import { TextField } from 'lib/components/form/TextField'
 
 type AddTagDialogProps = {
 	open?: boolean
-	styles?: {
-		opacity: SpringValue<number>
-	}
 	onClose: VoidFunction
 	onAddTag: (tag: string) => void
 }
 
 type TagFormValues = v.Output<ReturnType<typeof recipeFormSchema>['entries']['tags']['wrapped']['item']>
 
-export const AddTagDialog: FunctionComponent<AddTagDialogProps> = ({ onClose, open, styles, onAddTag }) => {
+export const AddTagDialog: FunctionComponent<AddTagDialogProps> = withDialogAnimation(({
+	onClose,
+	open,
+	onAddTag,
+	...props
+}) => {
 	const { t } = useTranslation()
 	const formId = useId()
 	const { control, handleSubmit } = useForm<TagFormValues>({
@@ -30,8 +32,8 @@ export const AddTagDialog: FunctionComponent<AddTagDialogProps> = ({ onClose, op
 
 	return (
 		<SimpleDialog
+			{...props}
 			open={open}
-			styles={styles}
 			onOpenChange={onClose}
 			title={t('newRecipe.fields.tags.dialog.title')}
 			description={t('newRecipe.fields.tags.dialog.description')}
@@ -76,7 +78,7 @@ export const AddTagDialog: FunctionComponent<AddTagDialogProps> = ({ onClose, op
 			]}
 		/>
 	)
-}
+})
 
 const Form = styled('form', {
 	base: {

@@ -10,7 +10,8 @@ import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContent
 import { scrapeRecipe } from 'features/recipes/providers/scrapper'
 import { useAddRecipe } from 'features/recipes/recipes'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
-import { DIALOG_ANIMATION, SimpleDialog } from 'lib/components/Dialog'
+import { AnimateDialog } from 'lib/components/dialog/AnimateDialog'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
@@ -31,7 +32,6 @@ export const ScrapeRecipe: FunctionComponent = () => {
 		retry: false,
 	})
 	const addRecipe = useAddRecipe()
-	const transition = useTransition(isError, DIALOG_ANIMATION)
 
 	useApplyDynamicTheme(useDynamicTheme(recipe?.color))
 	useWakelock()
@@ -70,7 +70,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 					</ContentOverlayPortal>
 				</Fragment>
 			)}
-			{transition((styles, open) => (
+			<AnimateDialog open={isError}>
 				<SimpleDialog
 					title="Scraping error"
 					description={t('scraping.error', { website: isValidUrl(url) ? new URL(url).host : undefined })}
@@ -80,10 +80,8 @@ export const ScrapeRecipe: FunctionComponent = () => {
 							onClick: () => history.length > 1 ? history.back() : window.close(),
 						},
 					]}
-					styles={styles}
-					open={open}
 				/>
-			))}
+			</AnimateDialog>
 		</Fragment>
 	)
 }

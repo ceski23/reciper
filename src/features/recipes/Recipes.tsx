@@ -18,7 +18,6 @@ import { VirtualList } from 'lib/components/list/VirtualList'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { Snackbar } from 'lib/components/Snackbar'
 import { TopAppBar } from 'lib/components/TopAppBar'
-import { useDialogState } from 'lib/hooks/useDialogState'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { uiStore } from 'lib/stores/ui'
@@ -32,8 +31,8 @@ export const Recipes: FunctionComponent = () => {
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
 	const [container, setContainer] = useState<HTMLElement | null>(null)
-	const { AnimateDialog: AnimateAddDialog, state: [, setIsAddDialogOpen] } = useDialogState(false)
-	const { AnimateDialog: AnimateUrlDialog, state: [, setIsUrlDialogOpen] } = useDialogState(false)
+	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+	const [isUrlDialogOpen, setIsUrlDialogOpen] = useState(false)
 	const { recipesViewMode, setRecipesViewMode } = uiStore.useStore()
 
 	useEffect(() => {
@@ -154,18 +153,18 @@ export const Recipes: FunctionComponent = () => {
 					/>
 				</FabContainer>
 			</ContentOverlayPortal>
-			<AnimateUrlDialog>
-				<AddByUrlDialog onClose={() => setIsUrlDialogOpen(false)} />
-			</AnimateUrlDialog>
-			<AnimateAddDialog>
-				<AddRecipeDialog
-					onAddByUrl={() => {
-						setIsUrlDialogOpen(true)
-						setIsAddDialogOpen(false)
-					}}
-					onClose={() => setIsAddDialogOpen(false)}
-				/>
-			</AnimateAddDialog>
+			<AddByUrlDialog
+				open={isUrlDialogOpen}
+				onClose={() => setIsUrlDialogOpen(false)}
+			/>
+			<AddRecipeDialog
+				open={isAddDialogOpen}
+				onAddByUrl={() => {
+					setIsUrlDialogOpen(true)
+					setIsAddDialogOpen(false)
+				}}
+				onClose={() => setIsAddDialogOpen(false)}
+			/>
 		</Fragment>
 	)
 }

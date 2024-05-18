@@ -1,9 +1,9 @@
-import { useTransition } from '@react-spring/web'
 import { useQuery } from '@tanstack/react-query'
 import { Navigate, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { Route as googleAuthRoute } from 'routes/auth/google'
-import { DIALOG_ANIMATION, SimpleDialog } from 'lib/components/Dialog'
+import { AnimateDialog } from 'lib/components/dialog/AnimateDialog'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
 import { accountStore } from 'lib/stores/account'
 import { GoogleProvider } from './provider'
 
@@ -21,7 +21,6 @@ export const Google = () => {
 		refetchOnWindowFocus: false,
 	})
 	const isError = Boolean(error) || !areRequiredScopesGranted || isCompleteLoginError
-	const transition = useTransition(isError, DIALOG_ANIMATION)
 
 	if (isSuccess && !isError) {
 		queueMicrotask(() => {
@@ -39,18 +38,18 @@ export const Google = () => {
 		)
 	}
 
-	return transition((styles, open) => (
-		<SimpleDialog
-			open={open}
-			styles={styles}
-			title={t('auth.google.error.title')}
-			description={t('auth.google.error.description')}
-			actions={[
-				{
-					label: t('auth.google.error.close'),
-					onClick: () => navigate({ to: state ?? '/', replace: true }),
-				},
-			]}
-		/>
-	))
+	return (
+		<AnimateDialog open={isError}>
+			<SimpleDialog
+				title={t('auth.google.error.title')}
+				description={t('auth.google.error.description')}
+				actions={[
+					{
+						label: t('auth.google.error.close'),
+						onClick: () => navigate({ to: state ?? '/', replace: true }),
+					},
+				]}
+			/>
+		</AnimateDialog>
+	)
 }
