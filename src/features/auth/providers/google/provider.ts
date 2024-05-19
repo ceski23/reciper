@@ -51,6 +51,7 @@ export class GoogleProvider extends AccountProvider {
 			code_challenge_method: 'S256',
 			code_challenge: await generateCodeChallenge(code_verifier),
 			scope: GoogleProvider.requiredScopes.join(' '),
+			access_type: 'offline',
 		})
 
 		const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth')
