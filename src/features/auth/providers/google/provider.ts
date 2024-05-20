@@ -1,5 +1,6 @@
 import ky from 'ky'
 import { Route as googleAuthRoute } from 'routes/auth/google'
+import { type Recipe } from 'features/recipes/types'
 import { accountStore } from 'lib/stores/account'
 import { base64url, generateCodeChallenge, randomBytes } from 'lib/utils/oauth'
 import { AccountProvider } from '../provider'
@@ -11,6 +12,18 @@ type GoogleUserInfoResponse = {
 	locale: string
 	name: string
 	picture: string
+}
+
+type GoogleDriveFileResponse = {
+	kind: 'drive#file'
+	id: string
+	name: string
+	mimeType: string
+}
+
+type GoogleDriveFilesResponse = {
+	kind: 'drive#fileList'
+	files: Array<GoogleDriveFileResponse>
 }
 
 type AuthReturnedParams = {
@@ -126,5 +139,81 @@ export class GoogleProvider extends AccountProvider {
 		}).json<{ access_token: string }>()
 
 		return response.access_token
+	}
+
+	private async findRecipesFile() {
+		const response = await this.apiClient.get('drive/v3/files', {
+			searchParams: {
+				q: 'name=\'recipes.json\'',
+				spaces: 'appDataFolder',
+			},
+		})
+
+		return response.json<GoogleDriveFilesResponse>()
+	}
+
+	private async createBackupFile(content: string) {
+		const formData = new FormData()
+		const metadata = new Blob([JSON.stringify({
+			name: 'recipes.json',
+			parents: ['appDataFolder'],
+		})], {
+			type: 'application/json',
+		})
+		const file = new Blob([content], {
+			type: 'application/json',
+		})
+
+		formData.append('metadata', metadata)
+		formData.append('file', file)
+
+		const response = await this.apiClient.post('upload/drive/v3/files', {
+			searchParams: {
+				uploadType: 'multipart',
+			},
+			body: formData,
+		})
+
+		return response.json<GoogleDriveFileResponse>()
+	}
+
+	async uploadRecipes(recipes: Record<string, Recipe>) {
+		const searchResponse = await this.findRecipesFile()
+		const fileId = searchResponse.files?.[0]?.id
+
+		if (!fileId) {
+			await this.createBackupFile(JSON.stringify(recipes))
+		} else {
+			await this.apiClient.patch(`upload/drive/v3/files/${fileId}`, {
+				headers: {
+					'Content-type': 'application/json',
+				},
+				body: JSON.stringify(recipes),
+				searchParams: {
+					uploadType: 'media',
+				},
+			})
+		}
+	}
+
+	async downloadRecipes() {
+		const searchResponse = await this.findRecipesFile()
+		let fileId = searchResponse.files?.[0]?.id
+
+		if (!fileId) {
+			fileId = (await this.createBackupFile('')).id
+		}
+
+		const response = await this.apiClient.get(`drive/v3/files/${fileId}`, {
+			searchParams: {
+				alt: 'media',
+			},
+		})
+
+		if (response.headers.get('Content-Length') === '0') {
+			return {}
+		}
+
+		return response.json<Record<string, Recipe>>()
 	}
 }

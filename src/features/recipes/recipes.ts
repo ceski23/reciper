@@ -1,5 +1,5 @@
 import { queryOptions, useMutation, useQueryClient } from '@tanstack/react-query'
-import { createStore, del, get, set, setMany, values } from 'idb-keyval'
+import { clear, createStore, del, get, set, setMany, values } from 'idb-keyval'
 import * as v from 'valibot'
 import { type Recipe, recipeScheme } from 'features/recipes/types'
 
@@ -30,6 +30,18 @@ export const useAddRecipes = () => {
 
 	return useMutation({
 		mutationFn: (recipes: Array<Recipe>) => setMany(recipes.map(recipe => [recipe.id, recipe]), recipesStore),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['recipes'] }),
+	})
+}
+
+export const useSetRecipes = () => {
+	const queryClient = useQueryClient()
+
+	return useMutation({
+		mutationFn: async (recipes: Array<Recipe>) => {
+			await clear(recipesStore)
+			await setMany(recipes.map(recipe => [recipe.id, recipe]), recipesStore)
+		},
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['recipes'] }),
 	})
 }

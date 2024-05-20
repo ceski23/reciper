@@ -1,3 +1,5 @@
+import 'core-js/modules/esnext.set.difference'
+import 'core-js/modules/esnext.set.intersection'
 import 'lib/styles/global'
 import 'lib/i18n'
 import * as Toast from '@radix-ui/react-toast'

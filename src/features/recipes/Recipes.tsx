@@ -5,11 +5,12 @@ import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as recipesIndexRoute } from 'routes/recipes/index'
+import { useAccountProvider } from 'features/auth/hooks'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
 import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
-import { recipesQuery, useAddRecipes } from 'features/recipes/recipes'
+import { recipesQuery, useAddRecipes, useSetRecipes } from 'features/recipes/recipes'
 import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
@@ -20,7 +21,9 @@ import { Snackbar } from 'lib/components/Snackbar'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
+import { accountStore } from 'lib/stores/account'
 import { uiStore } from 'lib/stores/ui'
+import { synchronizeRecipes } from 'lib/utils/synchronization'
 
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
@@ -34,6 +37,37 @@ export const Recipes: FunctionComponent = () => {
 	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
 	const [isUrlDialogOpen, setIsUrlDialogOpen] = useState(false)
 	const { recipesViewMode, setRecipesViewMode } = uiStore.useStore()
+	const navigate = useNavigate()
+	const accountProvider = useAccountProvider()
+	const { syncStatus, setSyncStatus } = accountStore.useStore()
+	const setRecipes = useSetRecipes()
+
+	const handleRecipesSync = async () => {
+		if (accountProvider === undefined || recipes.data === undefined) {
+			return
+		}
+
+		setIsLoading(true)
+
+		try {
+			const { recipes: syncedRecipes, syncStatus: newSyncStatus } = synchronizeRecipes({
+				localRecipes: Object.fromEntries(recipes.data.map(recipe => [recipe.id, recipe])),
+				remoteRecipes: await accountProvider.downloadRecipes(),
+				syncStatus,
+			})
+			setSyncStatus(newSyncStatus)
+			await accountProvider.uploadRecipes(syncedRecipes)
+			await setRecipes.mutateAsync(Object.values(syncedRecipes))
+		} catch (error) {
+			notify(t('recipes.sync.error'), {
+				action: {
+					label: t('recipes.sync.ok'),
+				},
+			})
+		} finally {
+			setIsLoading(false)
+		}
+	}
 
 	useEffect(() => {
 		if (recipes.data?.length === 0) {
@@ -51,22 +85,6 @@ export const Recipes: FunctionComponent = () => {
 			return () => clearTimeout(id)
 		}
 	}, [recipes.data?.length, addRecipes, notify, t])
-
-	useEffect(() => {
-		if (isLoading) {
-			const id = setTimeout(() => {
-				setIsLoading(false)
-				notify(t('recipes.sync.error'), {
-					action: {
-						label: t('recipes.sync.ok'),
-					},
-				})
-			}, 3000)
-
-			return () => clearTimeout(id)
-		}
-	}, [isLoading, notify, t])
-	const navigate = useNavigate()
 
 	return (
 		<Fragment>
@@ -91,8 +109,9 @@ export const Recipes: FunctionComponent = () => {
 							key="sync"
 							icon="sync"
 							title={t('recipes.sync.menuItem')}
-							onClick={() => setIsLoading(true)}
+							onClick={handleRecipesSync}
 							isSelected={isLoading}
+							disabled={accountProvider === undefined || recipes.data === undefined || isLoading}
 							style={{
 								animation: isLoading ? `${spinAnimation} 1s infinite` : undefined,
 							}}

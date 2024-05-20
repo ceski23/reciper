@@ -1,5 +1,6 @@
 import i18next from 'i18next'
 import ky from 'ky'
+import { type Recipe } from 'features/recipes/types'
 import { accountStore } from 'lib/stores/account'
 import { notificationsStore } from 'lib/stores/notifications'
 
@@ -21,8 +22,8 @@ export abstract class AccountProvider {
 	abstract refreshAccessToken(): Promise<string>
 	abstract getUserInfo(): Promise<UserInfo>
 	abstract logout(): Promise<void>
-	// abstract uploadRecipes(recipes: RecipesState & PersistPartial): Promise<void>
-	// abstract downloadRecipes(): Promise<(RecipesState & PersistPartial) | undefined>
+	abstract uploadRecipes(recipes: Record<string, Recipe>): Promise<void>
+	abstract downloadRecipes(): Promise<(Record<string, Recipe>) | undefined>
 
 	apiClient = ky.extend({
 		prefixUrl: 'https://www.googleapis.com',
