@@ -16,6 +16,7 @@ import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { accountStore } from 'lib/stores/account'
+import { settingsStore } from 'lib/stores/settings'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
 import { downloadBlob } from 'lib/utils/download'
@@ -32,6 +33,7 @@ export const Account: FunctionComponent = () => {
 	const addRecipes = useAddRecipes()
 	const { notify } = useNotifications()
 	const navigate = useNavigate()
+	const { account, setAccount } = settingsStore.useStore()
 
 	const handleRecipesExport = () => {
 		const json = JSON.stringify(recipes.data)
@@ -111,7 +113,11 @@ export const Account: FunctionComponent = () => {
 					iconColor={theme.colors.primary}
 					title={t('settings.account.sync.title')}
 					text={t('settings.account.sync.text')}
-					isDisabled
+					isDisabled={userInfo === undefined}
+					switchProps={{
+						checked: account.sync,
+						onCheckedChange: sync => setAccount(prev => ({ ...prev, sync })),
+					}}
 				/>
 			</List>
 			<QuickActionsSection>

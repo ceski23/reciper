@@ -8,6 +8,9 @@ export type Settings = {
 		disabledAnimations: boolean
 	}
 	language: string | undefined
+	account: {
+		sync: boolean
+	}
 }
 
 export const settingsStore = createStore<Settings>({
@@ -17,4 +20,7 @@ export const settingsStore = createStore<Settings>({
 		disabledAnimations: false,
 	}),
 	language: storage(undefined),
+	account: storage({
+		sync: false,
+	}),
 })

@@ -1,6 +1,6 @@
 import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
-import { useQuery } from '@tanstack/react-query'
+import { useIsMutating, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,12 +10,13 @@ import { RecipeCard } from 'features/home/components/RecipeCard'
 import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
 import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
-import { recipesQuery, useAddRecipes, useSetRecipes } from 'features/recipes/recipes'
+import { recipesQuery, useAddRecipes, useSyncRecipes } from 'features/recipes/recipes'
 import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { IconButton } from 'lib/components/IconButton'
 import { VirtualList } from 'lib/components/list/VirtualList'
+import { Menu } from 'lib/components/Menu'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { Snackbar } from 'lib/components/Snackbar'
 import { TopAppBar } from 'lib/components/TopAppBar'
@@ -23,11 +24,9 @@ import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { useNotifications } from 'lib/hooks/useNotifications'
 import { accountStore } from 'lib/stores/account'
 import { uiStore } from 'lib/stores/ui'
-import { synchronizeRecipes } from 'lib/utils/synchronization'
 
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
-	const [isLoading, setIsLoading] = useState(false)
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { notify } = useNotifications()
@@ -40,33 +39,22 @@ export const Recipes: FunctionComponent = () => {
 	const navigate = useNavigate()
 	const accountProvider = useAccountProvider()
 	const { syncStatus, setSyncStatus } = accountStore.useStore()
-	const setRecipes = useSetRecipes()
+	const syncRecipes = useSyncRecipes()
+	const isSyncing = useIsMutating({ exact: true, mutationKey: ['syncRecipes'] }) > 0
+	const [isMoreOpen, setIsMoreOpen] = useState(false)
 
 	const handleRecipesSync = async () => {
 		if (accountProvider === undefined || recipes.data === undefined) {
 			return
 		}
 
-		setIsLoading(true)
-
-		try {
-			const { recipes: syncedRecipes, syncStatus: newSyncStatus } = synchronizeRecipes({
-				localRecipes: Object.fromEntries(recipes.data.map(recipe => [recipe.id, recipe])),
-				remoteRecipes: await accountProvider.downloadRecipes(),
-				syncStatus,
-			})
-			setSyncStatus(newSyncStatus)
-			await accountProvider.uploadRecipes(syncedRecipes)
-			await setRecipes.mutateAsync(Object.values(syncedRecipes))
-		} catch (error) {
-			notify(t('recipes.sync.error'), {
-				action: {
-					label: t('recipes.sync.ok'),
-				},
-			})
-		} finally {
-			setIsLoading(false)
-		}
+		syncRecipes.mutate({
+			accountProvider,
+			recipes: recipes.data,
+			syncStatus,
+		}, {
+			onSuccess: ({ syncStatus }) => setSyncStatus(syncStatus),
+		})
 	}
 
 	useEffect(() => {
@@ -91,7 +79,7 @@ export const Recipes: FunctionComponent = () => {
 			<TopAppBar
 				configuration="small"
 				title={t('paths.recipes')}
-				progress={isLoading}
+				progress={isSyncing}
 				container={container}
 				elevation={isListScrolled ? 'onScroll' : 'flat'}
 				onBackClick={() => navigate({ from: recipesIndexRoute.fullPath, to: '../', params: {} })}
@@ -105,17 +93,27 @@ export const Recipes: FunctionComponent = () => {
 						/>
 					),
 					(
-						<IconButton
-							key="sync"
-							icon="sync"
-							title={t('recipes.sync.menuItem')}
-							onClick={handleRecipesSync}
-							isSelected={isLoading}
-							disabled={accountProvider === undefined || recipes.data === undefined || isLoading}
-							style={{
-								animation: isLoading ? `${spinAnimation} 1s infinite` : undefined,
-							}}
-						/>
+						<Menu.Root
+							key="more"
+							open={isMoreOpen}
+							onOpenChange={setIsMoreOpen}
+						>
+							<Menu.Trigger asChild>
+								<IconButton
+									icon="more"
+									title={t('recipes.moreOptions')}
+									isSelected={isMoreOpen}
+								/>
+							</Menu.Trigger>
+							<Menu.Content open={isMoreOpen}>
+								<Menu.Item
+									text={t('recipes.sync.menuItem')}
+									icon="sync"
+									onSelect={handleRecipesSync}
+									disabled={accountProvider === undefined || recipes.data === undefined || isSyncing}
+								/>
+							</Menu.Content>
+						</Menu.Root>
 					),
 				]}
 			/>
@@ -187,15 +185,6 @@ export const Recipes: FunctionComponent = () => {
 		</Fragment>
 	)
 }
-
-const spinAnimation = keyframes({
-	from: {
-		rotate: '0deg',
-	},
-	to: {
-		rotate: '-360deg',
-	},
-})
 
 const FabContainer = styled('div', {
 	base: {

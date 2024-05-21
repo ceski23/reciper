@@ -4,6 +4,7 @@ import { styled } from '@macaron-css/react'
 import { Outlet, ScrollRestoration } from '@tanstack/react-router'
 import { type FunctionComponent, lazy, Suspense, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAutoSyncRecipes } from 'lib/hooks/useAutoSyncRecipes'
 import { useDisableAnimations } from 'lib/hooks/useDisableAnimations'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
 import { useResizeObserver } from 'lib/hooks/useResizeObserver'
@@ -33,6 +34,7 @@ export const headerHeight = createVar('header-height')
 export const Layout: FunctionComponent = () => {
 	useScreenNavigationAnimations()
 	useDisableAnimations()
+	useAutoSyncRecipes()
 
 	const isDarkMode = useIsDarkMode()
 	const { t } = useTranslation()
