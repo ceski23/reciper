@@ -14,6 +14,10 @@ type SynchronizeParams = {
 
 const calcRecipeHash = (recipe: Recipe) => cyrb53(JSON.stringify(recipe))
 
+/**
+ * Synchronize recipes between local and remote sources.
+ * Based on {@link https://unterwaditzer.net/2016/sync-algorithm.html} and {@link http://blog.ezyang.com/2012/08/how-offlineimap-works/}
+ */
 export const synchronizeRecipes = ({ localRecipes, remoteRecipes, syncStatus }: SynchronizeParams) => {
 	const localIds = new Set(Object.keys(localRecipes))
 	const remoteIds = new Set(Object.keys(remoteRecipes))
