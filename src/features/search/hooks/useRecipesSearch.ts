@@ -47,6 +47,7 @@ export const useRecipesSearch = ({ query, maxPreparationTime, ingredients }: Sea
 			recipe => [
 				recipe.name,
 				...recipe.tags,
+				...recipe.name.split(' '),
 			],
 		))
 	}, [recipes, searcher])
