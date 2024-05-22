@@ -33,3 +33,11 @@ export const computeStyle = <TStyle extends keyof CSSStyleDeclaration>(style: TS
 
 	return computedValue
 }
+
+export const isElementNode = (node: Node | Element): node is Element => (
+	node.nodeType === Node.ELEMENT_NODE
+)
+
+export const isTextNode = (node: Node | Element): node is Text => (
+	node.nodeType === Node.TEXT_NODE
+)

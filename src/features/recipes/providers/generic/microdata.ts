@@ -4,6 +4,7 @@ import type { Recipe } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
 import { getTextFromNode } from 'lib/utils/dom'
 import { getColorFromImage } from 'lib/utils/images'
+import { parseValidNumber } from 'lib/utils/numbers'
 
 const getMetaData = (element: Element | null) => {
 	if (element === null) return undefined
@@ -107,8 +108,7 @@ export const extractMicrodata = async (doc: Document) => {
 	const tags = Array.from(new Set(getTags(root)))
 
 	const servingsElement = root.querySelector('[itemprop="recipeYield"]')
-	const servingsText = getMetaData(servingsElement)
-	const servings = servingsText ? Number.parseInt(servingsText, 10) : undefined
+	const servings = parseValidNumber(getMetaData(servingsElement))
 
 	const color = image ? await getColorFromImage(image.toString()) : undefined
 
