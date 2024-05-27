@@ -4,7 +4,6 @@ import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as recipesIndexRoute } from 'routes/recipes/index'
-import { useAccountProvider } from 'features/auth/hooks'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
@@ -36,8 +35,7 @@ export const Recipes: FunctionComponent = () => {
 	const [isUrlDialogOpen, setIsUrlDialogOpen] = useState(false)
 	const { recipesViewMode, setRecipesViewMode } = uiStore.useStore()
 	const navigate = useNavigate()
-	const accountProvider = useAccountProvider()
-	const { syncStatus, setSyncStatus } = accountStore.useStore()
+	const { syncStatus, setSyncStatus, accountProvider } = accountStore.useStore()
 	const syncRecipes = useSyncRecipes()
 	const isSyncing = useIsMutating({ exact: true, mutationKey: ['syncRecipes'] }) > 0
 	const [isMoreOpen, setIsMoreOpen] = useState(false)

@@ -1,15 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { useAccountProvider } from 'features/auth/hooks'
 import { recipesQuery, useSyncRecipes } from 'features/recipes/recipes'
 import { accountStore } from 'lib/stores/account'
 import { settingsStore } from 'lib/stores/settings'
 
 export const useAutoSyncRecipes = () => {
-	const accountProvider = useAccountProvider()
 	const recipes = useQuery(recipesQuery())
 	const syncRecipes = useSyncRecipes()
-	const { syncStatus, setSyncStatus } = accountStore.useStore()
+	const { syncStatus, setSyncStatus, accountProvider } = accountStore.useStore()
 	const { account: { sync } } = settingsStore.useStore()
 
 	useEffect(() => {

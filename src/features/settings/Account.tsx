@@ -4,7 +4,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { type ChangeEventHandler, Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as v from 'valibot'
-import { useAccountProvider, useUserInfo } from 'features/auth/hooks'
+import { useUserInfo } from 'features/auth/hooks'
 import { GoogleProvider } from 'features/auth/providers/google/provider'
 import { logoutMutation } from 'features/auth/queries'
 import { recipesQuery, useAddRecipes } from 'features/recipes/recipes'
@@ -24,7 +24,7 @@ import { downloadBlob } from 'lib/utils/download'
 export const Account: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const userInfo = useUserInfo()
-	const accountProvider = useAccountProvider()
+	const { accountProvider } = accountStore.useStore()
 	const logout = useMutation({
 		...logoutMutation(accountProvider),
 		onSuccess: () => accountStore.reset(),

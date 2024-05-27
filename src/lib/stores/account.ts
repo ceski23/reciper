@@ -1,6 +1,7 @@
 import { createStore } from 'stan-js'
 import { storage } from 'stan-js/storage'
-import type { UserInfo } from 'features/auth/providers'
+import { type AccountProvider, type UserInfo } from 'features/auth/providers'
+import { GoogleProvider } from 'features/auth/providers/google/provider'
 import { type SyncStatus } from 'lib/utils/synchronization'
 
 export type AccountData = {
@@ -9,6 +10,7 @@ export type AccountData = {
 	refreshToken: string | undefined
 	user: UserInfo | undefined
 	syncStatus: Record<string, SyncStatus>
+	accountProvider: AccountProvider | undefined
 }
 
 export const accountStore = createStore<AccountData>({
@@ -17,4 +19,12 @@ export const accountStore = createStore<AccountData>({
 	refreshToken: storage(),
 	user: storage(),
 	syncStatus: storage({}),
+	get accountProvider(): AccountProvider | undefined {
+		switch (this.provider) {
+			case GoogleProvider.providerName:
+				return new GoogleProvider()
+			default:
+				return undefined
+		}
+	},
 })

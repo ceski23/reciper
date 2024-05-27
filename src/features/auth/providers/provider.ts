@@ -15,6 +15,7 @@ type Tokens = {
 }
 
 export abstract class AccountProvider {
+	private refreshAccessTokenTask: Promise<string> | null = null
 	static providerName: string
 	static icon: string
 	static startLogin: (this: void) => void
@@ -42,10 +43,16 @@ export abstract class AccountProvider {
 				async (input, _options, response) => {
 					if (response.status === 401) {
 						try {
-							const newAccessToken = await this.refreshAccessToken()
+							if (this.refreshAccessTokenTask === null) {
+								this.refreshAccessTokenTask = this.refreshAccessToken().then(newAccessToken => {
+									this.refreshAccessTokenTask = null
+									accountStore.actions.setAccessToken(newAccessToken)
 
-							accountStore.actions.setAccessToken(newAccessToken)
-							input.headers.set('Authorization', `Bearer ${newAccessToken}`)
+									return newAccessToken
+								})
+							}
+
+							input.headers.set('Authorization', `Bearer ${await this.refreshAccessTokenTask}`)
 
 							return ky(input)
 						} catch (error) {
