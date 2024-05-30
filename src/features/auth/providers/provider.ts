@@ -1,5 +1,5 @@
 import i18next from 'i18next'
-import ky from 'ky'
+import ky, { HTTPError } from 'ky'
 import { type Recipe } from 'features/recipes/types'
 import { accountStore } from 'lib/stores/account'
 import { notificationsStore } from 'lib/stores/notifications'
@@ -65,6 +65,17 @@ export abstract class AccountProvider {
 									action: { label: i18next.t('auth.logoutError.action') },
 								})
 							)
+							if (error instanceof HTTPError) {
+								const text = await error.response.text()
+								notificationsStore.actions.setNotifications(prev =>
+									prev.concat({
+										id: 'errorLogoutError',
+										content: text,
+										duration: Number.POSITIVE_INFINITY,
+										action: { label: i18next.t('auth.logoutError.action') },
+									})
+								)
+							}
 
 							return response
 						}
