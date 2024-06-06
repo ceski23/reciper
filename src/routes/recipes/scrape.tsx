@@ -7,7 +7,7 @@ export const Route = createFileRoute('/recipes/scrape')({
 	validateSearch: search =>
 		v.parse(
 			v.object({
-				url: v.optional(v.string([v.url()])),
+				url: v.optional(v.pipe(v.string(), v.url())),
 			}),
 			search,
 		),

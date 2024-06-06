@@ -24,11 +24,11 @@ import { theme } from 'lib/styles'
 
 export const searchParamsSchema = v.object({
 	query: v.optional(v.string()),
-	maxPreparationTime: v.optional(v.number([v.integer(), v.minValue(0), v.maxValue(120)])),
+	maxPreparationTime: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(120))),
 	ingredients: v.optional(v.array(v.string())),
 })
 
-export type SearchParams = v.Output<typeof searchParamsSchema>
+export type SearchParams = v.InferOutput<typeof searchParamsSchema>
 
 export const Search: FunctionComponent = () => {
 	const { t } = useTranslation()

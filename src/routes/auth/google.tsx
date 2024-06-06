@@ -8,7 +8,10 @@ export const Route = createFileRoute('/auth/google')({
 		v.parse(
 			v.object({
 				state: v.optional(v.string()),
-				scope: v.coerce(v.array(v.string()), input => typeof input === 'string' ? input.split(/[\+ ]/) : input),
+				scope: v.pipe(
+					v.union([v.string(), v.array(v.string())]),
+					v.transform(input => typeof input === 'string' ? input.split(/[\+ ]/) : input),
+				),
 				error: v.optional(v.string()),
 			}),
 			search,

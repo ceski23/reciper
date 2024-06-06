@@ -16,7 +16,7 @@ type AddTagDialogProps = {
 	onAddTag: (tag: string) => void
 }
 
-type TagFormValues = v.Output<ReturnType<typeof recipeFormSchema>['entries']['tags']['wrapped']['item']>
+type TagFormValues = v.InferOutput<ReturnType<typeof recipeFormSchema>['entries']['tags']['wrapped']['item']>
 
 export const AddTagDialog: FunctionComponent<AddTagDialogProps> = withDialogAnimation(({
 	onClose,
