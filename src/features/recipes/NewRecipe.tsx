@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 import { Fragment, type FunctionComponent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as v from 'valibot'
+import { useNotifications } from 'features/notifications'
 import { RecipeForm } from 'features/recipes/form/RecipeForm'
 import type { RecipeFormValues } from 'features/recipes/form/scheme'
 import { mapFormValuesToRecipe } from 'features/recipes/form/utils'
@@ -13,7 +14,6 @@ import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
-import { useNotifications } from 'lib/hooks/useNotifications'
 
 export const NewRecipe: FunctionComponent = () => {
 	const { t } = useTranslation()

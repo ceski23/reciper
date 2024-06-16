@@ -1,8 +1,7 @@
 import { styled } from '@macaron-css/react'
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import type { ComponentProps, FunctionComponent } from 'react'
-import { useNotifications } from 'lib/hooks/useNotifications'
-import { notificationsStore } from 'lib/stores/notifications'
+import { notificationsStore, useNotifications } from 'features/notifications'
 import { Snackbar } from './Snackbar'
 
 type SnackbarContainerProps = {

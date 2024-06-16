@@ -1,6 +1,6 @@
 import { createStore } from 'stan-js'
 
-export type Notification = {
+export type NotificationOptions = {
 	id: string
 	content: string
 	duration: number
@@ -12,7 +12,7 @@ export type Notification = {
 }
 
 type NotificationsStore = {
-	notifications: Array<Notification>
+	notifications: Array<NotificationOptions>
 }
 
 export const notificationsStore = createStore<NotificationsStore>({

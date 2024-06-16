@@ -4,6 +4,8 @@ import { styled } from '@macaron-css/react'
 import { Outlet, ScrollRestoration } from '@tanstack/react-router'
 import { type FunctionComponent, lazy, Suspense, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { NotificationsViewport } from 'features/notifications'
+import { Snackbar } from 'lib/components2/Snackbar'
 import { useAutoSyncRecipes } from 'lib/hooks/useAutoSyncRecipes'
 import { useDisableAnimations } from 'lib/hooks/useDisableAnimations'
 import { useIsDarkMode } from 'lib/hooks/useIsDarkMode'
@@ -14,7 +16,6 @@ import { theme } from 'lib/styles'
 import * as schemes from 'lib/styles/theme.json'
 import { AppUpdatePrompt } from './AppUpdatePrompt'
 import { NavigationBar } from './navigation/NavigationBar'
-import { SnackbarContainer } from './SnackbarContainer'
 
 const TanStackRouterDevtools = import.meta.env.PROD
 	? () => null
@@ -60,7 +61,7 @@ export const Layout: FunctionComponent = () => {
 				<Outlet />
 			</MainContent>
 			<ContentOverlayContainer>
-				<SnackbarContainer />
+				<NotificationsViewport notificationComponent={Snackbar} />
 				<div ref={uiStore.actions.setOverlayContainer} />
 			</ContentOverlayContainer>
 			<Header

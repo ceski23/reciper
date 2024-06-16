@@ -1,8 +1,8 @@
 import i18next from 'i18next'
 import ky, { HTTPError } from 'ky'
+import { notificationsStore } from 'features/notifications'
 import { type Recipe } from 'features/recipes/types'
 import { accountStore } from 'lib/stores/account'
-import { notificationsStore } from 'lib/stores/notifications'
 
 export type UserInfo = {
 	name: string
