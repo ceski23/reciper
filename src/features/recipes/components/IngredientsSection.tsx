@@ -34,8 +34,7 @@ export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({
 							title={t('recipes.ingredients.decrease')}
 							onClick={() =>
 								setServingsCount(prev => {
-									if (prev > 1) return prev - 1
-									if (prev === 1) return 0.5
+									if (prev > 0.5) return prev - 0.5
 									if (prev <= 0.5) return 0.25
 									return prev
 								})}
@@ -49,8 +48,7 @@ export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({
 							onClick={() =>
 								setServingsCount(prev => {
 									if (prev <= 0.25) return 0.5
-									if (prev <= 0.5) return 1
-									return prev + 1
+									return prev + 0.5
 								})}
 						/>
 					</Spinbox>
