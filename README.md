@@ -18,9 +18,9 @@
 - [ ] Slider
 - [x] Snackbar
 - [x] SnackbarContainer
-- [ ] Switch
-- [ ] TextInput
+- [x] Switch
+- [x] TextInput
 - [x] Tooltip
 - [ ] TopAppBar
-- [ ] TopSearchBar
+- [x] TopSearchBar
 - [x] Typography
