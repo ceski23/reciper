@@ -73,7 +73,7 @@ const parseIngredients = (doc: Document) => {
 
 const parseInstructions = (doc: Document) => {
 	const instructions: Recipe['instructions'] = []
-	let currentElement: Node | Element | null = doc.querySelector('[itemprop="recipeInstructions"] div + h3')
+	let currentElement: Node | Element | null = doc.querySelector('[itemprop="recipeInstructions"] div + :is(h3, h2)')
 	let header: string | undefined
 
 	while (currentElement !== null && currentElement !== undefined) {
