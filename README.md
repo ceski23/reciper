@@ -10,7 +10,7 @@
 - [x] IconButton
 - [ ] Layout
 - [x] Menu
-- [ ] ProgressIndicator
+- [x] ProgressIndicator
 - [ ] RadioGroup
 - [ ] RecipeListItem
 - [x] Ripple
