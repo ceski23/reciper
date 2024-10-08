@@ -11,7 +11,7 @@
 - [x] Layout
 - [x] Menu
 - [x] ProgressIndicator
-- [ ] RadioGroup
+- [x] RadioGroup
 - [ ] RecipeListItem
 - [x] Ripple
 - [x] Skeleton

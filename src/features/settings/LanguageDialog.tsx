@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/dialog/Dialog'
 import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
-import { RadioGroup } from 'lib/components/RadioGroup'
+import { RadioGroup } from 'lib/components2/RadioGroup'
 import { LANGUAGES } from 'lib/i18n'
 import { type Settings, settingsStore } from 'lib/stores/settings'
 
@@ -32,22 +32,24 @@ export const LanguageDialog: FunctionComponent<LanguageDialogProps> = withDialog
 			description={t('settings.language.text')}
 			onOpenChange={onCancel}
 			content={(
-				<RadioGroup.Root
-					onValueChange={value => setSelectedLanguage(value === 'system' ? undefined : value)}
+				<RadioGroup.Provider
+					setValue={value => setSelectedLanguage(value === 'system' ? undefined : String(value))}
 					value={selectedLanguage ?? 'system'}
 				>
-					<RadioGroup.Item
-						label={t('settings.theme.colorScheme.dialog.options.system')}
-						value="system"
-					/>
-					{Object.entries(LANGUAGES).map(([value, label]) => (
+					<RadioGroup.Root>
 						<RadioGroup.Item
-							key={value}
-							label={label}
-							value={value}
+							label={t('settings.theme.colorScheme.dialog.options.system')}
+							value="system"
 						/>
-					))}
-				</RadioGroup.Root>
+						{Object.entries(LANGUAGES).map(([value, label]) => (
+							<RadioGroup.Item
+								key={value}
+								label={label}
+								value={value}
+							/>
+						))}
+					</RadioGroup.Root>
+				</RadioGroup.Provider>
 			)}
 			actions={[
 				(

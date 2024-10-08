@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/dialog/Dialog'
 import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
-import { RadioGroup } from 'lib/components/RadioGroup'
+import { RadioGroup } from 'lib/components2/RadioGroup'
 import { type Settings, settingsStore } from 'lib/stores/settings'
 
 type ColorSchemeDialogProps = {
@@ -22,7 +22,7 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = with
 	const { theme } = settingsStore.useStore()
 	const [selectedColorScheme, setSelectedColorScheme] = useState<Settings['theme']['colorScheme']>(theme.colorScheme)
 
-	const handleRadioChange = (value: string) => {
+	const handleRadioChange = (value: string | number | null) => {
 		switch (value) {
 			case 'light':
 				return setSelectedColorScheme('light')
@@ -42,23 +42,25 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = with
 			description={t('settings.theme.colorScheme.dialog.description')}
 			closeOnClickOutside={false}
 			content={(
-				<RadioGroup.Root
-					onValueChange={handleRadioChange}
+				<RadioGroup.Provider
+					setValue={handleRadioChange}
 					value={selectedColorScheme ?? 'system'}
 				>
-					<RadioGroup.Item
-						label={t('settings.theme.colorScheme.dialog.options.light')}
-						value="light"
-					/>
-					<RadioGroup.Item
-						label={t('settings.theme.colorScheme.dialog.options.dark')}
-						value="dark"
-					/>
-					<RadioGroup.Item
-						label={t('settings.theme.colorScheme.dialog.options.system')}
-						value="system"
-					/>
-				</RadioGroup.Root>
+					<RadioGroup.Root>
+						<RadioGroup.Item
+							label={t('settings.theme.colorScheme.dialog.options.light')}
+							value="light"
+						/>
+						<RadioGroup.Item
+							label={t('settings.theme.colorScheme.dialog.options.dark')}
+							value="dark"
+						/>
+						<RadioGroup.Item
+							label={t('settings.theme.colorScheme.dialog.options.system')}
+							value="system"
+						/>
+					</RadioGroup.Root>
+				</RadioGroup.Provider>
 			)}
 			actions={[
 				(

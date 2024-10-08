@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { Link, type ToOptions } from '@tanstack/react-router'
-import type { FunctionComponent } from 'react'
+import { forwardRef } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components2/Icon'
 import { styleUtils, theme } from 'lib/styles'
@@ -13,15 +13,16 @@ export type NavigationSegmentProps = {
 	to: ToOptions['to']
 }
 
-export const NavigationSegment: FunctionComponent<NavigationSegmentProps> = ({
+export const NavigationSegment = forwardRef<HTMLAnchorElement, NavigationSegmentProps>(({
 	label,
 	icon,
 	badge,
 	to,
 	...props
-}) => (
+}, ref) => (
 	<SegmentBase
 		to={to}
+		ref={ref}
 		{...props}
 	>
 		<IconContainer>
@@ -42,7 +43,7 @@ export const NavigationSegment: FunctionComponent<NavigationSegmentProps> = ({
 			</Typography.LabelMedium>
 		)}
 	</SegmentBase>
-)
+))
 
 const SegmentBase = styled(Link, {
 	base: {

@@ -1,9 +1,12 @@
+import { RadioProvider } from '@ariakit/react'
 import { type FunctionComponent, useState } from 'react'
 import { Notification } from 'features/notifications'
 import { IconButton } from 'lib/components/IconButton'
+import { RadioGroup } from 'lib/components/RadioGroup'
 import { Snackbar } from 'lib/components/Snackbar'
 import { Switch } from 'lib/components/Switch'
 import { IconButton as IconButton2 } from 'lib/components2/IconButton'
+import { RadioGroup as RadioGroup2 } from 'lib/components2/RadioGroup'
 import { Switch as Switch2 } from 'lib/components2/Switch'
 import { TextInput } from 'lib/components2/TextInput'
 
@@ -69,6 +72,44 @@ export const Home: FunctionComponent = () => {
 				checked={isOn}
 				onCheckedChange={setIsOn}
 			/>
+			<RadioGroup.Root>
+				<RadioGroup.Item
+					label="Item 1"
+					value="1"
+				/>
+				<RadioGroup.Item
+					label="Item 2"
+					value="2"
+				/>
+				<RadioGroup.Item
+					label="Item 3"
+					value="3"
+				/>
+				<RadioGroup.Item
+					label="Item 4"
+					value="4"
+				/>
+			</RadioGroup.Root>
+			<RadioProvider>
+				<RadioGroup2.Root>
+					<RadioGroup2.Item
+						label="Item 1"
+						value="1"
+					/>
+					<RadioGroup2.Item
+						label="Item 2"
+						value="2"
+					/>
+					<RadioGroup2.Item
+						label="Item 3"
+						value="3"
+					/>
+					<RadioGroup2.Item
+						label="Item 4"
+						value="4"
+					/>
+				</RadioGroup2.Root>
+			</RadioProvider>
 		</div>
 	)
 }
