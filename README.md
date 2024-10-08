@@ -1,11 +1,11 @@
-- [ ] AnimatedTitle
+- [x] AnimatedTitle
 - [ ] AppUpdatePrompt
 - [ ] BottomSheet
 - [x] Button
 - [x] Chip
-- [ ] ContentOverlayPortal
-- [ ] FloatingActionButton
-- [ ] HeaderPortal
+- [x] ContentOverlayPortal
+- [x] FloatingActionButton
+- [x] HeaderPortal
 - [x] Icon
 - [x] IconButton
 - [ ] Layout
@@ -21,6 +21,6 @@
 - [x] Switch
 - [x] TextInput
 - [x] Tooltip
-- [ ] TopAppBar
+- [x] TopAppBar
 - [x] TopSearchBar
 - [x] Typography

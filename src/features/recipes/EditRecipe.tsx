@@ -11,9 +11,9 @@ import type { RecipeFormValues } from 'features/recipes/form/scheme'
 import { mapFormValuesToRecipe, mapRecipeToFormValues } from 'features/recipes/form/utils'
 import { recipeQuery, useEditRecipe } from 'features/recipes/recipes'
 import { type Recipe, recipeScheme } from 'features/recipes/types'
-import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
-import { FloatingActionButton } from 'lib/components/FloatingActionButton'
-import { TopAppBar } from 'lib/components/TopAppBar'
+import { ContentOverlayPortal } from 'lib/components2/ContentOverlayPortal'
+import { FloatingActionButton } from 'lib/components2/FloatingActionButton'
+import { TopAppBar } from 'lib/components2/TopAppBar'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 
 export const EditRecipe: FunctionComponent = () => {
