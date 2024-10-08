@@ -1,6 +1,6 @@
 - [x] AnimatedTitle
 - [x] AppUpdatePrompt
-- [ ] BottomSheet
+- [x] BottomSheet
 - [x] Button
 - [x] Chip
 - [x] ContentOverlayPortal
