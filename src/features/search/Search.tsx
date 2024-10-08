@@ -1,16 +1,14 @@
 import { styled } from '@macaron-css/react'
-import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useNavigate } from '@tanstack/react-router'
 import { sum } from 'radash'
 import { Fragment, type FunctionComponent, type SetStateAction, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as searchRecipeRoute } from 'routes/recipes/search'
 import * as v from 'valibot'
-import { KNOWN_INGREDIENTS } from 'features/recipes/ingredients/ingredients'
 import { useRecipesSearch } from 'features/search/hooks/useRecipesSearch'
+import { IngredientsFilter } from 'features/search/IngredientsFilter'
 import { BottomSheet, type SheetState } from 'lib/components/BottomSheet'
 import { Button } from 'lib/components/Button'
-import { Chip } from 'lib/components/Chip'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
@@ -32,7 +30,7 @@ export type SearchParams = v.InferOutput<typeof searchParamsSchema>
 
 export const Search: FunctionComponent = () => {
 	const { t } = useTranslation()
-	const { query, maxPreparationTime, ingredients } = searchRecipeRoute.useSearch()
+	const { query, maxPreparationTime, ingredients = [] } = searchRecipeRoute.useSearch()
 	const deferredParams = useDeferredValue({ query, maxPreparationTime, ingredients })
 	const matches = useRecipesSearch(deferredParams)
 	const [filtersModalState, setFiltersModalState] = useState<SheetState>('close')
@@ -40,7 +38,7 @@ export const Search: FunctionComponent = () => {
 	const navigate = useNavigate()
 	const filtersCount = sum([
 		maxPreparationTime !== undefined ? 1 : 0,
-		ingredients !== undefined && ingredients.length > 0 ? 1 : 0,
+		ingredients.length > 0 ? 1 : 0,
 	])
 
 	const changeSearchParams = (search: SetStateAction<SearchParams>) =>
@@ -54,6 +52,7 @@ export const Search: FunctionComponent = () => {
 		if (!query) {
 			searchBarRef.current?.focus()
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
@@ -119,25 +118,10 @@ export const Search: FunctionComponent = () => {
 								{t('search.filters.requiredIngredients.title')}
 							</Typography.TitleMedium>
 						</FilterSectionHeader>
-						<TagsContainer
-							type="multiple"
-							value={ingredients}
-							onValueChange={ingredients => changeSearchParams(prev => ({ ...prev, ingredients }))}
-						>
-							{Object.entries(KNOWN_INGREDIENTS).map(([name, ingredient]) => (
-								<ToggleGroup.Item
-									value={name}
-									key={name}
-									asChild
-								>
-									<StyledChip
-										text={ingredient.name}
-										variant="outlined"
-										icon={ingredients?.includes(name) ? 'check' : undefined}
-									/>
-								</ToggleGroup.Item>
-							))}
-						</TagsContainer>
+						<IngredientsFilter
+							selectedIngredients={ingredients}
+							onSelectedIngredientsChange={ingredients => changeSearchParams(prev => ({ ...prev, ingredients }))}
+						/>
 					</FilterSection>
 					<FilterSection>
 						<FilterSectionHeader>
@@ -254,21 +238,5 @@ const TimeFilter = styled('div', {
 const ClearFiltersButton = styled(Button, {
 	base: {
 		marginTop: 16,
-	},
-})
-
-const TagsContainer = styled(ToggleGroup.Root, {
-	base: {
-		display: 'flex',
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-		gap: 8,
-	},
-})
-
-const StyledChip = styled(Chip, {
-	base: {
-		flex: '1 0 auto',
-		textDecoration: 'unset',
 	},
 })

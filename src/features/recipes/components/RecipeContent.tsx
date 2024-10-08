@@ -1,5 +1,5 @@
+import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { group } from 'radash'
 import { type CSSProperties, type FunctionComponent, lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,9 +7,9 @@ import { IngredientsSection } from 'features/recipes/components/IngredientsSecti
 import { type InsightItem, RecipeInsights } from 'features/recipes/components/RecipeInsights'
 import { StepsSection } from 'features/recipes/components/StepsSection'
 import type { Recipe } from 'features/recipes/types'
-import { Chip } from 'lib/components/Chip'
 import { Skeleton } from 'lib/components/Skeleton'
 import { Typography } from 'lib/components/Typography'
+import { Chip } from 'lib/components2/Chip'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
 
@@ -67,25 +67,23 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 					<Typography.TitleLarge>
 						{t('recipes.mostCommonTags')}
 					</Typography.TitleLarge>
-					<TagsContainer
-						type="multiple"
-						value={[]}
-					>
-						{recipe.tags.map(tag => (
-							<ToggleGroup.Item
-								key={tag}
-								value={tag}
-								asChild
-							>
-								<StyledChip
-									text={tag}
-									variant="outlined"
-									to="/recipes/search"
-									search={{ query: tag }}
+					<CompositeProvider>
+						<TagsContainer>
+							{recipe.tags.map(tag => (
+								<CompositeItem
+									key={tag}
+									render={(
+										<Tag
+											text={tag}
+											variant="outlined"
+											to="/recipes/search"
+											search={{ query: tag }}
+										/>
+									)}
 								/>
-							</ToggleGroup.Item>
-						))}
-					</TagsContainer>
+							))}
+						</TagsContainer>
+					</CompositeProvider>
 				</Section>
 			)}
 			<IngredientsSection ingredients={recipe.ingredients} />
@@ -133,14 +131,14 @@ const Description = styled(Typography.BodyMedium, {
 	},
 })
 
-const StyledChip = styled(Chip, {
+const Tag = styled(Chip, {
 	base: {
 		flex: '1 0 auto',
 		textDecoration: 'unset',
 	},
 })
 
-const TagsContainer = styled(ToggleGroup.Root, {
+const TagsContainer = styled(Composite, {
 	base: {
 		display: 'flex',
 		flexDirection: 'row',

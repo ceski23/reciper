@@ -2,7 +2,7 @@
 - [ ] AppUpdatePrompt
 - [ ] BottomSheet
 - [x] Button
-- [ ] Chip
+- [x] Chip
 - [ ] ContentOverlayPortal
 - [ ] FloatingActionButton
 - [ ] HeaderPortal
