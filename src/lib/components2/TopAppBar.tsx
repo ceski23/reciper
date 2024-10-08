@@ -71,7 +71,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 									style={{ viewTransitionName: isContentScrolled || configuration !== 'large' ? 'app-bar-title' : undefined }}
 									reverse
 								>
-									{title}lol
+									{title}
 								</AnimatedTitle>
 							)}
 						/>

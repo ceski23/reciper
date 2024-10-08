@@ -1,5 +1,5 @@
 import { createRootRoute, Navigate } from '@tanstack/react-router'
-import { Layout } from 'lib/components/Layout'
+import { Layout } from 'features/shell/Layout'
 
 export const Route = createRootRoute({
 	component: Layout,

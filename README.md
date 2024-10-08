@@ -1,5 +1,5 @@
 - [x] AnimatedTitle
-- [ ] AppUpdatePrompt
+- [x] AppUpdatePrompt
 - [ ] BottomSheet
 - [x] Button
 - [x] Chip
@@ -8,7 +8,7 @@
 - [x] HeaderPortal
 - [x] Icon
 - [x] IconButton
-- [ ] Layout
+- [x] Layout
 - [x] Menu
 - [x] ProgressIndicator
 - [ ] RadioGroup

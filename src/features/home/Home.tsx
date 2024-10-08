@@ -1,4 +1,3 @@
-import * as Ariakit from '@ariakit/react'
 import { type FunctionComponent, useState } from 'react'
 import { Notification } from 'features/notifications'
 import { IconButton } from 'lib/components/IconButton'
