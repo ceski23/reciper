@@ -18,7 +18,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
 }, ref) => {
 	const [isOn, setIsOn] = useState(defaultValue ?? false)
 
-	if (checked !== isOn) {
+	if (checked !== isOn && checked !== undefined) {
 		setIsOn(checked ?? false)
 	}
 

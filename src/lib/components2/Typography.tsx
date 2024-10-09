@@ -1,5 +1,4 @@
-import { createElement } from '@ariakit/react-core/utils/system'
-import { type Options } from '@ariakit/react-core/utils/types'
+import { Role } from '@ariakit/react'
 import { styleVariants } from '@macaron-css/core'
 import { type ComponentPropsWithoutRef, forwardRef } from 'react'
 import { styleUtils } from 'lib/styles'
@@ -113,18 +112,18 @@ export const typography = styleVariants({
 })
 
 const typographyComponent = (typographyClassName: string) =>
-	forwardRef<HTMLParagraphElement, ComponentPropsWithoutRef<'p'> & Options>(({
+	forwardRef<HTMLParagraphElement, ComponentPropsWithoutRef<typeof Role.p>>(({
 		className,
 		render,
 		...props
-	}, ref) => {
-		return createElement('p', {
-			...props,
-			className: styleUtils.mergeClassNames([typographyClassName, className]),
-			render,
-			ref,
-		})
-	})
+	}, ref) => (
+		<Role.p
+			{...props}
+			className={styleUtils.mergeClassNames([typographyClassName, className])}
+			ref={ref}
+			render={render}
+		/>
+	))
 
 export const Typography = {
 	DisplayLarge: typographyComponent(typography.displayLarge),

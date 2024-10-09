@@ -1,115 +1,47 @@
-import { RadioProvider } from '@ariakit/react'
-import { type FunctionComponent, useState } from 'react'
-import { Notification } from 'features/notifications'
-import { IconButton } from 'lib/components/IconButton'
-import { RadioGroup } from 'lib/components/RadioGroup'
-import { Snackbar } from 'lib/components/Snackbar'
-import { Switch } from 'lib/components/Switch'
-import { IconButton as IconButton2 } from 'lib/components2/IconButton'
-import { RadioGroup as RadioGroup2 } from 'lib/components2/RadioGroup'
-import { Switch as Switch2 } from 'lib/components2/Switch'
-import { TextInput } from 'lib/components2/TextInput'
+import { type FunctionComponent } from 'react'
+import { ListItem } from 'lib/components/list/items'
+import { List } from 'lib/components/list/List'
+import { List as List2 } from 'lib/components2/list'
 
-export const Home: FunctionComponent = () => {
-	const [isOn, setIsOn] = useState(false)
-
-	return (
-		<div style={{ display: 'flex', flexDirection: 'column' }}>
-			<div style={{ padding: 16 }}>
-				<IconButton
-					type="button"
-					icon="account"
-					title="Button"
-				/>
-				<Snackbar
-					text="lol"
-					action={{
-						label: 'ok',
-						onClick: () => {},
-					}}
-					dismissable
-				/>
-			</div>
-			<div style={{ padding: 16 }}>
-				<IconButton2
-					type="button"
-					icon="cookie"
-					title="2"
-				/>
-			</div>
-			<Notification
-				content="This is test"
-				duration={5000}
-				dismissable
+export const Home: FunctionComponent = () => (
+	<div style={{ display: 'flex', flexDirection: 'column' }}>
+		<List>
+			<ListItem.Simple title="Hello World" />
+			<ListItem.Simple
+				title="I am clickable"
+				onClick={() => {}}
+				leadingElement="account"
 			/>
-			<Notification
-				content="This is test 2"
-				duration={3000}
-				action={{
-					label: 'Shieeet',
-					onClick: () => {},
-				}}
+			<ListItem.Simple
+				title="I am clickable too"
+				onClick={() => {}}
+				leadingElement="cookie"
 			/>
-			<Notification content="This is test 3" />
-			<Notification
-				content="This is test 4"
-				duration={2000}
+			<ListItem.Link
+				title="I am a link"
+				to="/recipes/$id"
+				leadingElement="link"
 			/>
-			<Notification content="This is test 5" />
-			<TextInput
-				label="First name"
-				value=""
-				supportingText="Must be at least 8 characters long"
-				hasError
+			<ListItem.Switch title="I am a switch" />
+		</List>
+		<List2.Root>
+			<List2.SimpleItem title="Hello World" />
+			<List2.SimpleItem
+				title="I am clickable"
+				onClick={() => {}}
+				leadingElement="account"
 			/>
-			<Switch />
-			{/* <Switch2 /> */}
-			<Switch
-				checked={isOn}
-				onCheckedChange={setIsOn}
+			<List2.SimpleItem
+				title="I am clickable too"
+				onClick={() => {}}
+				leadingElement="cookie"
 			/>
-			<Switch2
-				checked={isOn}
-				onCheckedChange={setIsOn}
+			<List2.LinkItem
+				title="I am a link"
+				to="/recipes/$id"
+				leadingElement="link"
 			/>
-			<RadioGroup.Root>
-				<RadioGroup.Item
-					label="Item 1"
-					value="1"
-				/>
-				<RadioGroup.Item
-					label="Item 2"
-					value="2"
-				/>
-				<RadioGroup.Item
-					label="Item 3"
-					value="3"
-				/>
-				<RadioGroup.Item
-					label="Item 4"
-					value="4"
-				/>
-			</RadioGroup.Root>
-			<RadioProvider>
-				<RadioGroup2.Root>
-					<RadioGroup2.Item
-						label="Item 1"
-						value="1"
-					/>
-					<RadioGroup2.Item
-						label="Item 2"
-						value="2"
-					/>
-					<RadioGroup2.Item
-						label="Item 3"
-						value="3"
-					/>
-					<RadioGroup2.Item
-						label="Item 4"
-						value="4"
-					/>
-				</RadioGroup2.Root>
-			</RadioProvider>
-		</div>
-	)
-}
+			<List2.SwitchItem title="I am a switch" />
+		</List2.Root>
+	</div>
+)
