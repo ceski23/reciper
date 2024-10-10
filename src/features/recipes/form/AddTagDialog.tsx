@@ -8,7 +8,7 @@ import { recipeFormSchema } from 'features/recipes/form/scheme'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/dialog/Dialog'
 import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
-import { TextField } from 'lib/components/form/TextField'
+import { TextField } from 'lib/components2/form/TextField'
 
 type AddTagDialogProps = {
 	open?: boolean

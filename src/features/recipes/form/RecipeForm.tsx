@@ -9,10 +9,10 @@ import { IngredientsFields } from 'features/recipes/form/IngredientsFields'
 import { InstructionsFields } from 'features/recipes/form/InstructionsFields'
 import { recipeFormSchema, type RecipeFormValues } from 'features/recipes/form/scheme'
 import { Button } from 'lib/components/Button'
-import { TextField } from 'lib/components/form/TextField'
 import { IconButton } from 'lib/components/IconButton'
 import { Typography } from 'lib/components/Typography'
 import { Chip } from 'lib/components2/Chip'
+import { TextField } from 'lib/components2/form/TextField'
 import { theme } from 'lib/styles/theme'
 
 type RecipeFormProps = {
