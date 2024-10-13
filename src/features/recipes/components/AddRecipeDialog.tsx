@@ -1,10 +1,10 @@
 import type { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from 'lib/components2/Button'
-import { SimpleDialog } from 'lib/components2/dialog/Dialog'
-import { withDialogAnimation } from 'lib/components2/dialog/withDialogAnimation'
-import { Icon } from 'lib/components2/Icon'
-import { List } from 'lib/components2/list'
+import { Button } from 'lib/components/Button'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
+import { Icon } from 'lib/components/Icon'
+import { List } from 'lib/components/list'
 
 type AddRecipeDialogProps = {
 	open?: boolean

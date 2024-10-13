@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import type * as v from 'valibot'
 import { recipeFormSchema } from 'features/recipes/form/scheme'
-import { Button } from 'lib/components2/Button'
-import { SimpleDialog } from 'lib/components2/dialog/Dialog'
-import { withDialogAnimation } from 'lib/components2/dialog/withDialogAnimation'
-import { TextField } from 'lib/components2/form/TextField'
+import { Button } from 'lib/components/Button'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
+import { TextField } from 'lib/components/form/TextField'
 
 type AddTagDialogProps = {
 	open?: boolean

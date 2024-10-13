@@ -3,8 +3,8 @@ import { styled } from '@macaron-css/react'
 import { Link, type ToOptions } from '@tanstack/react-router'
 import mergeProps from 'merge-props'
 import { type ComponentProps, forwardRef } from 'react'
-import { ListItemContainer } from 'lib/components2/list/ListItemContainer'
-import { ListItemContent, type ListItemContentProps } from 'lib/components2/list/ListItemContent'
+import { ListItemContainer } from 'lib/components/list/ListItemContainer'
+import { ListItemContent, type ListItemContentProps } from 'lib/components/list/ListItemContent'
 import { useRipples } from 'lib/hooks/useRipples'
 
 type LinkItemProps = Pick<ToOptions, 'to' | 'search' | 'params' | 'state'>

@@ -2,10 +2,10 @@ import { styled } from '@macaron-css/react'
 import { useNavigate } from '@tanstack/react-router'
 import { type FunctionComponent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from 'lib/components2/Button'
-import { SimpleDialog } from 'lib/components2/dialog/Dialog'
-import { withDialogAnimation } from 'lib/components2/dialog/withDialogAnimation'
-import { TextInput } from 'lib/components2/TextInput'
+import { Button } from 'lib/components/Button'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
+import { TextInput } from 'lib/components/TextInput'
 
 type AddByUrlDialogProps = {
 	open?: boolean

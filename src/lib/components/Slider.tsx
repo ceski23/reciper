@@ -12,7 +12,7 @@ import {
 	useRef,
 	useState,
 } from 'react'
-import { Typography } from 'lib/components2/Typography'
+import { Typography } from 'lib/components/Typography'
 import { useResizeObserver } from 'lib/hooks/useResizeObserver'
 import { styleUtils, theme } from 'lib/styles'
 import { clamp, linearScale } from 'lib/utils/math'

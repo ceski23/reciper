@@ -7,9 +7,9 @@ import { IngredientsSection } from 'features/recipes/components/IngredientsSecti
 import { type InsightItem, RecipeInsights } from 'features/recipes/components/RecipeInsights'
 import { StepsSection } from 'features/recipes/components/StepsSection'
 import type { Recipe } from 'features/recipes/types'
-import { Chip } from 'lib/components2/Chip'
-import { Skeleton } from 'lib/components2/Skeleton'
-import { Typography } from 'lib/components2/Typography'
+import { Chip } from 'lib/components/Chip'
+import { Skeleton } from 'lib/components/Skeleton'
+import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
 

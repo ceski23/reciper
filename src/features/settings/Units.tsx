@@ -3,9 +3,9 @@ import { useNavigate } from '@tanstack/react-router'
 import eggsImage from 'assets/images/eggs.png'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { List } from 'lib/components2/list'
-import { TopAppBar } from 'lib/components2/TopAppBar'
-import { Typography } from 'lib/components2/Typography'
+import { List } from 'lib/components/list'
+import { TopAppBar } from 'lib/components/TopAppBar'
+import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 
 export const Units: FunctionComponent = () => {

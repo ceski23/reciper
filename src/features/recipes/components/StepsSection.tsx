@@ -4,7 +4,7 @@ import { type FunctionComponent, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeStep } from 'features/recipes/components/RecipeStep'
 import type { Recipe } from 'features/recipes/types'
-import { Typography } from 'lib/components2/Typography'
+import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 
 type StepsSectionProps = {

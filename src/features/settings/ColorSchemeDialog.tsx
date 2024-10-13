@@ -1,9 +1,9 @@
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from 'lib/components2/Button'
-import { SimpleDialog } from 'lib/components2/dialog/Dialog'
-import { withDialogAnimation } from 'lib/components2/dialog/withDialogAnimation'
-import { RadioGroup } from 'lib/components2/RadioGroup'
+import { Button } from 'lib/components/Button'
+import { SimpleDialog } from 'lib/components/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
+import { RadioGroup } from 'lib/components/RadioGroup'
 import { type Settings, settingsStore } from 'lib/stores/settings'
 
 type ColorSchemeDialogProps = {

@@ -2,7 +2,7 @@ import { styled } from '@macaron-css/react'
 import { Link, type ToOptions } from '@tanstack/react-router'
 import { forwardRef } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
-import { Icon } from 'lib/components2/Icon'
+import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from '../Typography'
 

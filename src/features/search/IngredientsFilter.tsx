@@ -2,7 +2,7 @@ import { Checkbox, CheckboxProvider, Composite, CompositeItem, CompositeProvider
 import { styled } from '@macaron-css/react'
 import { type FunctionComponent } from 'react'
 import { KNOWN_INGREDIENTS } from 'features/recipes/ingredients/ingredients'
-import { Chip } from 'lib/components2/Chip'
+import { Chip } from 'lib/components/Chip'
 
 type IngredientsFilterProps = {
 	selectedIngredients: Array<string>

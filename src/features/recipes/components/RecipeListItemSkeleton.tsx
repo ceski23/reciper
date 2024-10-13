@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import type { FunctionComponent } from 'react'
-import { Skeleton } from 'lib/components2/Skeleton'
+import { Skeleton } from 'lib/components/Skeleton'
 
 export const RecipeListItemSkeleton: FunctionComponent = () => {
 	return (

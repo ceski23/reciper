@@ -1,6 +1,6 @@
 import { useTransition } from '@react-spring/web'
 import { type KeyboardEvent, type PointerEventHandler, useRef, useState } from 'react'
-import { Ripple, RipplesContainer } from 'lib/components2/Ripple'
+import { Ripple, RipplesContainer } from 'lib/components/Ripple'
 
 type RippleData<TElement> = {
 	element: TElement

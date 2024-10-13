@@ -3,7 +3,7 @@ import { styled } from '@macaron-css/react'
 import { animated, useSpring } from '@react-spring/web'
 import { useDrag } from '@use-gesture/react'
 import { type FunctionComponent, type ReactNode, useCallback, useEffect, useState } from 'react'
-import { Typography } from 'lib/components2/Typography'
+import { Typography } from 'lib/components/Typography'
 import { styleUtils, theme } from 'lib/styles'
 
 export type SheetState = 'open' | 'close' | 'peek'
