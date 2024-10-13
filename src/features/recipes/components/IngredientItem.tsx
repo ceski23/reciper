@@ -3,8 +3,8 @@ import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { parseIngredient } from 'features/recipes/ingredients/parser'
 import type { Recipe } from 'features/recipes/types'
-import { Icon } from 'lib/components/Icon'
-import { Typography } from 'lib/components/Typography'
+import { Icon } from 'lib/components2/Icon'
+import { Typography } from 'lib/components2/Typography'
 import { styleUtils, theme } from 'lib/styles'
 
 type IngredientItemProps = {

@@ -10,11 +10,10 @@ import { logoutMutation } from 'features/auth/queries'
 import { useNotifications } from 'features/notifications'
 import { recipesQuery, useAddRecipes } from 'features/recipes/recipes'
 import { recipeScheme } from 'features/recipes/types'
-import { Button } from 'lib/components/Button'
-import { ListItem } from 'lib/components/list/items'
-import { List } from 'lib/components/list/List'
-import { Typography } from 'lib/components/Typography'
+import { Button } from 'lib/components2/Button'
+import { List } from 'lib/components2/list'
 import { TopAppBar } from 'lib/components2/TopAppBar'
+import { Typography } from 'lib/components2/Typography'
 import { accountStore } from 'lib/stores/account'
 import { settingsStore } from 'lib/stores/settings'
 import { theme } from 'lib/styles'
@@ -77,10 +76,10 @@ export const Account: FunctionComponent = () => {
 				title={t('paths.account')}
 				onBackClick={() => navigate({ to: '/settings' })}
 			/>
-			<List>
+			<List.Root>
 				{userInfo === undefined
 					? (
-						<ListItem.Simple
+						<List.SimpleItem
 							title={t('settings.account.loggedOutTitle')}
 							text={t('settings.account.loggedOutText')}
 							trailingElement={<Button onClick={GoogleProvider.startLogin}>{t('settings.account.login')}</Button>}
@@ -89,7 +88,7 @@ export const Account: FunctionComponent = () => {
 						/>
 					)
 					: (
-						<ListItem.Simple
+						<List.SimpleItem
 							leadingElement={(
 								<Avatar
 									alt={userInfo.name}
@@ -108,7 +107,7 @@ export const Account: FunctionComponent = () => {
 							)}
 						/>
 					)}
-				<ListItem.Switch
+				<List.SwitchItem
 					leadingElement="sync"
 					iconColor={theme.colors.primary}
 					title={t('settings.account.sync.title')}
@@ -119,7 +118,7 @@ export const Account: FunctionComponent = () => {
 						onCheckedChange: sync => setAccount(prev => ({ ...prev, sync })),
 					}}
 				/>
-			</List>
+			</List.Root>
 			<QuickActionsSection>
 				<Typography.TitleMedium>
 					{t('settings.account.quickActions.title')}

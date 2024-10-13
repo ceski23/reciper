@@ -7,9 +7,9 @@ import { type Control, useFieldArray } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import type { RecipeFormValues } from 'features/recipes/form/scheme'
 import { SortableContainer } from 'features/recipes/form/SortableContainer'
-import { Button } from 'lib/components/Button'
-import { TextField } from 'lib/components/form/TextField'
-import { IconButton } from 'lib/components/IconButton'
+import { Button } from 'lib/components2/Button'
+import { TextField } from 'lib/components2/form/TextField'
+import { IconButton } from 'lib/components2/IconButton'
 
 type IngredientsFieldsProps = {
 	groupIndex: number

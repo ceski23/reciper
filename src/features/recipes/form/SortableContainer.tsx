@@ -1,7 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { styled } from '@macaron-css/react'
 import type { FunctionComponent } from 'react'
-import { Icon } from 'lib/components/Icon'
+import { Icon } from 'lib/components2/Icon'
 import { theme } from 'lib/styles'
 
 type SortableContainerProps = {

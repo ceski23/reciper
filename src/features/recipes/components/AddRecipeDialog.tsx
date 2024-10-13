@@ -1,11 +1,10 @@
 import type { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from 'lib/components/Button'
-import { Icon } from 'lib/components/Icon'
-import { ListItem } from 'lib/components/list/items'
-import { List } from 'lib/components/list/List'
+import { Button } from 'lib/components2/Button'
 import { SimpleDialog } from 'lib/components2/dialog/Dialog'
 import { withDialogAnimation } from 'lib/components2/dialog/withDialogAnimation'
+import { Icon } from 'lib/components2/Icon'
+import { List } from 'lib/components2/list'
 
 type AddRecipeDialogProps = {
 	open?: boolean
@@ -41,8 +40,8 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = withDial
 				),
 			]}
 			extraContent={(
-				<List>
-					<ListItem.Link
+				<List.Root>
+					<List.LinkItem
 						to="/recipes/new"
 						title={t('recipes.addRecipe.addManually')}
 						leadingElement={(
@@ -52,7 +51,7 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = withDial
 							/>
 						)}
 					/>
-					<ListItem.Simple
+					<List.SimpleItem
 						title={t('recipes.addRecipe.addByUrl.title')}
 						leadingElement={(
 							<Icon
@@ -62,7 +61,7 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = withDial
 						)}
 						onClick={onAddByUrl}
 					/>
-				</List>
+				</List.Root>
 			)}
 		/>
 	)

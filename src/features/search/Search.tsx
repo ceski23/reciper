@@ -7,17 +7,17 @@ import { Route as searchRecipeRoute } from 'routes/recipes/search'
 import * as v from 'valibot'
 import { useRecipesSearch } from 'features/search/hooks/useRecipesSearch'
 import { IngredientsFilter } from 'features/search/IngredientsFilter'
-import { Button } from 'lib/components/Button'
-import { Icon } from 'lib/components/Icon'
-import { VirtualList } from 'lib/components/list/VirtualList'
-import { RecipeListItem } from 'lib/components/RecipeListItem'
-import { TopSearchBar } from 'lib/components/TopSearchBar'
-import { Typography } from 'lib/components/Typography'
 import { BottomSheet, type SheetState } from 'lib/components2/BottomSheet'
+import { Button } from 'lib/components2/Button'
 import { ContentOverlayPortal } from 'lib/components2/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components2/FloatingActionButton'
 import { HeaderPortal } from 'lib/components2/HeaderPortal'
+import { Icon } from 'lib/components2/Icon'
+import { List } from 'lib/components2/list'
+import { RecipeListItem } from 'lib/components2/RecipeListItem'
 import { Slider } from 'lib/components2/Slider'
+import { TopSearchBar } from 'lib/components2/TopSearchBar'
+import { Typography } from 'lib/components2/Typography'
 import { theme } from 'lib/styles'
 
 export const searchParamsSchema = v.object({
@@ -73,14 +73,17 @@ export const Search: FunctionComponent = () => {
 			<Container>
 				{matches.length > 0
 					? (
-						<VirtualList scrollRestorationId="recipesSearchList">
+						<List.Root
+							virtual
+							scrollRestorationId="recipesSearchList"
+						>
 							{matches.map(match => (
 								<RecipeListItem
 									key={match.entity.id}
 									recipe={match.entity}
 								/>
 							))}
-						</VirtualList>
+						</List.Root>
 					)
 					: (
 						<NoResultsContainer>

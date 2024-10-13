@@ -55,7 +55,6 @@ export default defineConfig({
 			output: {
 				manualChunks: id => {
 					if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'react'
-					if (id.includes('node_modules/@radix-ui/')) return 'radix'
 					if (id.includes('node_modules/@ariakit/react/')) return 'ariakit'
 				},
 			},

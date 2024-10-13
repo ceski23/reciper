@@ -5,18 +5,17 @@ import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as recipesIndexRoute } from 'routes/recipes/index'
 import { RecipeCard } from 'features/home/components/RecipeCard'
-import { useNotifications } from 'features/notifications'
+import { Notification, useNotifications } from 'features/notifications'
 import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
 import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
 import { recipesQuery, useAddRecipes, useSyncRecipes } from 'features/recipes/recipes'
 import { sampleRecipes } from 'features/recipes/samples'
-import { IconButton } from 'lib/components/IconButton'
-import { VirtualList } from 'lib/components/list/VirtualList'
-import { Menu } from 'lib/components/Menu'
-import { Snackbar } from 'lib/components/Snackbar'
 import { ContentOverlayPortal } from 'lib/components2/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components2/FloatingActionButton'
+import { IconButton } from 'lib/components2/IconButton'
+import { List } from 'lib/components2/list'
+import { Menu } from 'lib/components2/menu'
 import { RecipeListItem } from 'lib/components2/RecipeListItem'
 import { TopAppBar } from 'lib/components2/TopAppBar'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
@@ -93,23 +92,21 @@ export const Recipes: FunctionComponent = () => {
 						<Menu.Root
 							key="more"
 							open={isMoreOpen}
-							onOpenChange={setIsMoreOpen}
-						>
-							<Menu.Trigger asChild>
+							setOpen={setIsMoreOpen}
+							trigger={(
 								<IconButton
 									icon="more"
 									title={t('recipes.moreOptions')}
 									isSelected={isMoreOpen}
 								/>
-							</Menu.Trigger>
-							<Menu.Content open={isMoreOpen}>
-								<Menu.Item
-									text={t('recipes.sync.menuItem')}
-									icon="sync"
-									onSelect={handleRecipesSync}
-									disabled={accountProvider === undefined || recipes.data === undefined || isSyncing}
-								/>
-							</Menu.Content>
+							)}
+						>
+							<Menu.Item
+								text={t('recipes.sync.menuItem')}
+								icon="sync"
+								onClick={handleRecipesSync}
+								disabled={accountProvider === undefined || recipes.data === undefined || isSyncing}
+							/>
 						</Menu.Root>
 					),
 				]}
@@ -122,8 +119,8 @@ export const Recipes: FunctionComponent = () => {
 				)
 				: recipes.status === 'error'
 				? (
-					<Snackbar
-						text={t('recipes.listLoadError')}
+					<Notification
+						content={t('recipes.listLoadError')}
 						duration={Number.POSITIVE_INFINITY}
 					/>
 				)
@@ -141,8 +138,8 @@ export const Recipes: FunctionComponent = () => {
 					</RecipesGrid>
 				)
 				: (
-					<VirtualList
-						virtualProps={{ overscan: 10 }}
+					<List.Root
+						virtual={{ overscan: 10 }}
 						ref={setContainer}
 						scrollRestorationId="recipesList"
 					>
@@ -153,7 +150,7 @@ export const Recipes: FunctionComponent = () => {
 								recipe={recipe}
 							/>
 						))}
-					</VirtualList>
+					</List.Root>
 				)}
 			<ContentOverlayPortal>
 				<FabContainer>

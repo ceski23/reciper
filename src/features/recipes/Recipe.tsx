@@ -7,10 +7,10 @@ import { useNotifications } from 'features/notifications'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
 import { recipeQuery, useDeleteRecipe } from 'features/recipes/recipes'
-import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/dialog/Dialog'
-import { IconButton } from 'lib/components/IconButton'
-import { Menu } from 'lib/components/Menu'
+import { Button } from 'lib/components2/Button'
+import { SimpleDialog } from 'lib/components2/dialog/Dialog'
+import { IconButton } from 'lib/components2/IconButton'
+import { Menu } from 'lib/components2/menu'
 import { TopAppBar } from 'lib/components2/TopAppBar'
 import { useDynamicTheme } from 'lib/hooks'
 import { useApplyDynamicTheme } from 'lib/hooks/useApplyDynamicTheme'
@@ -52,35 +52,33 @@ export const Recipe: FunctionComponent = () => {
 				options={(
 					<Menu.Root
 						open={isMoreOpen}
-						onOpenChange={setIsMoreOpen}
-					>
-						<Menu.Trigger asChild>
+						setOpen={setIsMoreOpen}
+						trigger={(
 							<IconButton
 								icon="more"
 								title={t('recipes.moreOptions')}
 								isSelected={isMoreOpen}
 							/>
-						</Menu.Trigger>
-						<Menu.Content open={isMoreOpen}>
+						)}
+					>
+						<Menu.Item
+							text={t('recipes.edit')}
+							icon="pencil"
+							onClick={() => navigate({ from: recipeRoute.fullPath, to: 'edit' })}
+						/>
+						{navigator.share !== undefined && (
 							<Menu.Item
-								text={t('recipes.edit')}
-								icon="pencil"
-								onSelect={() => navigate({ from: recipeRoute.fullPath, to: 'edit' })}
+								text={t('recipes.sharing.menuItem')}
+								icon="share"
+								onClick={handleShareRecipe}
+								disabled={status !== 'success'}
 							/>
-							{navigator.share !== undefined && (
-								<Menu.Item
-									text={t('recipes.sharing.menuItem')}
-									icon="share"
-									onSelect={handleShareRecipe}
-									disabled={status !== 'success'}
-								/>
-							)}
-							<Menu.Item
-								text={t('recipes.delete.menuItem')}
-								icon="delete"
-								onSelect={() => setIsDeleteDialogOpen(true)}
-							/>
-						</Menu.Content>
+						)}
+						<Menu.Item
+							text={t('recipes.delete.menuItem')}
+							icon="delete"
+							onClick={() => setIsDeleteDialogOpen(true)}
+						/>
 					</Menu.Root>
 				)}
 			/>
@@ -89,7 +87,7 @@ export const Recipe: FunctionComponent = () => {
 					open={isDeleteDialogOpen}
 					title={t('recipes.delete.title')}
 					description={t('recipes.delete.confirmation', { name: recipe.name })}
-					onOpenChange={() => setIsDeleteDialogOpen(false)}
+					onClose={() => setIsDeleteDialogOpen(false)}
 					actions={[
 						(
 							<Button
