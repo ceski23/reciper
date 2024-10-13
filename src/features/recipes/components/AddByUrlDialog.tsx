@@ -3,9 +3,9 @@ import { useNavigate } from '@tanstack/react-router'
 import { type FunctionComponent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/dialog/Dialog'
-import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
-import { TextInput } from 'lib/components/TextInput'
+import { SimpleDialog } from 'lib/components2/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components2/dialog/withDialogAnimation'
+import { TextInput } from 'lib/components2/TextInput'
 
 type AddByUrlDialogProps = {
 	open?: boolean
@@ -29,7 +29,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = withDialog
 			icon="link"
 			open={open}
 			description={t('recipes.addRecipe.addByUrl.description')}
-			onOpenChange={onClose}
+			onClose={onClose}
 			actions={[
 				(
 					<Button
@@ -52,7 +52,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = withDialog
 					</Button>
 				),
 			]}
-			content={(
+			extraContent={(
 				<UrlFieldForm
 					id={formId}
 					onSubmit={event => {

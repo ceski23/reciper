@@ -1,8 +1,8 @@
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/dialog/Dialog'
-import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
+import { Button } from 'lib/components2/Button'
+import { SimpleDialog } from 'lib/components2/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components2/dialog/withDialogAnimation'
 import { RadioGroup } from 'lib/components2/RadioGroup'
 import { LANGUAGES } from 'lib/i18n'
 import { type Settings, settingsStore } from 'lib/stores/settings'
@@ -30,8 +30,8 @@ export const LanguageDialog: FunctionComponent<LanguageDialogProps> = withDialog
 			icon="language"
 			title={t('settings.language.title')}
 			description={t('settings.language.text')}
-			onOpenChange={onCancel}
-			content={(
+			onClose={onCancel}
+			extraContent={(
 				<RadioGroup.Provider
 					setValue={value => setSelectedLanguage(value === 'system' ? undefined : String(value))}
 					value={selectedLanguage ?? 'system'}

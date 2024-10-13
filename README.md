@@ -24,7 +24,7 @@
 - [x] TopAppBar
 - [x] TopSearchBar
 - [x] Typography
-- [ ] Dialog
+- [x] Dialog
 - [x] TextField
 - [x] List
 - [x] ListItems

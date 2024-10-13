@@ -1,8 +1,8 @@
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/dialog/Dialog'
-import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
+import { SimpleDialog } from 'lib/components2/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components2/dialog/withDialogAnimation'
 import { RadioGroup } from 'lib/components2/RadioGroup'
 import { type Settings, settingsStore } from 'lib/stores/settings'
 
@@ -41,7 +41,7 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = with
 			title={t('settings.theme.colorScheme.dialog.title')}
 			description={t('settings.theme.colorScheme.dialog.description')}
 			closeOnClickOutside={false}
-			content={(
+			extraContent={(
 				<RadioGroup.Provider
 					setValue={handleRadioChange}
 					value={selectedColorScheme ?? 'system'}

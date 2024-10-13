@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next'
 import type * as v from 'valibot'
 import { recipeFormSchema } from 'features/recipes/form/scheme'
 import { Button } from 'lib/components/Button'
-import { SimpleDialog } from 'lib/components/dialog/Dialog'
-import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
+import { SimpleDialog } from 'lib/components2/dialog/Dialog'
+import { withDialogAnimation } from 'lib/components2/dialog/withDialogAnimation'
 import { TextField } from 'lib/components2/form/TextField'
 
 type AddTagDialogProps = {
@@ -34,10 +34,10 @@ export const AddTagDialog: FunctionComponent<AddTagDialogProps> = withDialogAnim
 		<SimpleDialog
 			{...props}
 			open={open}
-			onOpenChange={onClose}
+			onClose={onClose}
 			title={t('newRecipe.fields.tags.dialog.title')}
 			description={t('newRecipe.fields.tags.dialog.description')}
-			content={(
+			extraContent={(
 				<Form
 					id={formId}
 					noValidate
