@@ -15,7 +15,7 @@
 - [x] RecipeListItem
 - [x] Ripple
 - [x] Skeleton
-- [ ] Slider
+- [x] Slider
 - [x] Snackbar
 - [x] SnackbarContainer
 - [x] Switch
