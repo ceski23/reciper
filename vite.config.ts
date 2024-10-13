@@ -54,8 +54,17 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: id => {
-					if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'react'
-					if (id.includes('node_modules/@ariakit/react/')) return 'ariakit'
+					if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/@ariakit/react/')) {
+						return 'react-ariakit'
+					}
+
+					if (id.includes('node_modules/i18next')) {
+						return 'i18next'
+					}
+
+					if (id.includes('node_modules/@tanstack/')) {
+						return 'tanstack'
+					}
 				},
 			},
 		},
