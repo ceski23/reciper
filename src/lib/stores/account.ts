@@ -1,8 +1,8 @@
+import { type SyncStatus } from '@utils/synchronization'
 import { createStore } from 'stan-js'
 import { storage } from 'stan-js/storage'
 import { type AccountProvider, type UserInfo } from 'features/auth/providers'
 import { GoogleProvider } from 'features/auth/providers/google/provider'
-import { type SyncStatus } from 'lib/utils/synchronization'
 
 export type AccountData = {
 	provider: string | undefined

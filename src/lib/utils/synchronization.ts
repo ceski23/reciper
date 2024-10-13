@@ -1,5 +1,5 @@
 import { type Recipe } from 'features/recipes/types'
-import { cyrb53 } from 'lib/utils/hash'
+import { cyrb53 } from './hash'
 
 export type SyncStatus = {
 	localHash: string

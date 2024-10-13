@@ -1,6 +1,8 @@
 import * as Ariakit from '@ariakit/react'
+import { useResizeObserver } from '@hooks/useResizeObserver'
 import { styled } from '@macaron-css/react'
 import { animated, config, useTransition } from '@react-spring/web'
+import { clamp, linearScale } from '@utils/math'
 import {
 	type FunctionComponent,
 	type KeyboardEventHandler,
@@ -12,10 +14,8 @@ import {
 	useRef,
 	useState,
 } from 'react'
-import { Typography } from 'lib/components/Typography'
-import { useResizeObserver } from 'lib/hooks/useResizeObserver'
 import { styleUtils, theme } from 'lib/styles'
-import { clamp, linearScale } from 'lib/utils/math'
+import { Typography } from './Typography'
 
 /**
  * Offsets the thumb centre point while sliding to ensure it remains

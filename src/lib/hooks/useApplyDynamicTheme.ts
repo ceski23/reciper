@@ -1,5 +1,5 @@
 import { useInsertionEffect } from 'react'
-import type { useDynamicTheme } from 'lib/hooks/useDynamicTheme'
+import type { useDynamicTheme } from './useDynamicTheme'
 
 export const useApplyDynamicTheme = (style: ReturnType<typeof useDynamicTheme>) => {
 	useInsertionEffect(() => {

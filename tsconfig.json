@@ -28,7 +28,14 @@
 			"vite-plugin-pwa/react",
 			"dom-close-watcher"
 		],
-		"baseUrl": "src"
+		"baseUrl": "src",
+		"paths": {
+			"@components/*": ["lib/components/*"],
+			"@hooks/*": ["lib/hooks/*"],
+			"@utils/*": ["lib/utils/*"],
+			"@styles/*": ["lib/styles/*"],
+			"@stores/*": ["lib/stores/*"]
+		}
 	},
 	"include": [
 		"src",

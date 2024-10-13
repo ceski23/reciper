@@ -1,8 +1,8 @@
+import { accountStore } from '@stores/account'
+import { settingsStore } from '@stores/settings'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { recipesQuery, useSyncRecipes } from 'features/recipes/recipes'
-import { accountStore } from 'lib/stores/account'
-import { settingsStore } from 'lib/stores/settings'
 
 export const useAutoSyncRecipes = () => {
 	const recipes = useQuery(recipesQuery())

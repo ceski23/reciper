@@ -3,8 +3,8 @@ import { animated, useInView } from '@react-spring/web'
 import type { FunctionComponent, ReactNode } from 'react'
 import * as providers from 'features/recipes/providers/websites'
 import type { Recipe } from 'features/recipes/types'
-import { List } from 'lib/components/list'
 import { isDefined } from 'lib/utils'
+import { List } from './list'
 
 type RecipeListItemProps = {
 	recipe: Recipe

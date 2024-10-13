@@ -1,10 +1,10 @@
 import { CompositeItem } from '@ariakit/react'
+import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
 import { type ComponentProps, forwardRef, type ReactNode } from 'react'
-import { ListItemContainer } from 'lib/components/list/ListItemContainer'
-import { ListItemContent, type ListItemContentProps } from 'lib/components/list/ListItemContent'
-import { useRipples } from 'lib/hooks/useRipples'
+import { ListItemContainer } from './ListItemContainer'
+import { ListItemContent, type ListItemContentProps } from './ListItemContent'
 
 type SimpleItemProps = {
 	trailingElement?: ReactNode

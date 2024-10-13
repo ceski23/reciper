@@ -1,7 +1,7 @@
 import { style } from '@macaron-css/core'
 import { Globals, useReducedMotion } from '@react-spring/web'
+import { settingsStore } from '@stores/settings'
 import { useLayoutEffect } from 'react'
-import { settingsStore } from 'lib/stores/settings'
 
 const disabledAnimationsClass = style({
 	selectors: {

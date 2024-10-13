@@ -2,8 +2,8 @@ import { styled } from '@macaron-css/react'
 import { Link, type ToOptions } from '@tanstack/react-router'
 import { forwardRef } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
-import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
+import { Icon } from '../Icon'
 import { Typography } from '../Typography'
 
 export type NavigationSegmentProps = {

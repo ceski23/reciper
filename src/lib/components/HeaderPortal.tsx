@@ -1,6 +1,6 @@
+import { uiStore } from '@stores/ui'
 import type { FunctionComponent, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { uiStore } from 'lib/stores/ui'
 
 type HeaderPortalProps = {
 	children?: ReactNode

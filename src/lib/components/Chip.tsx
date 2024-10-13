@@ -1,13 +1,13 @@
 import { Button } from '@ariakit/react'
+import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
 import { Link, type ToOptions } from '@tanstack/react-router'
 import mergeProps from 'merge-props'
 import { type ComponentProps, forwardRef } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
-import { Icon } from 'lib/components/Icon'
-import { Typography } from 'lib/components/Typography'
-import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
+import { Icon } from './Icon'
+import { Typography } from './Typography'
 
 type ChipProps = ToOptions & {
 	text: string

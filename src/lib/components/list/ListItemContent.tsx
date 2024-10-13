@@ -1,9 +1,9 @@
 import { styled } from '@macaron-css/react'
 import { Fragment, type FunctionComponent, type ReactElement, type ReactNode } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
-import { Icon } from 'lib/components/Icon'
-import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
+import { Icon } from '../Icon'
+import { Typography } from '../Typography'
 
 export type ListItemContentProps = {
 	leadingElement?: SvgSpriteIconName | ReactElement

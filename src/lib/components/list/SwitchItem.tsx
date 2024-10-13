@@ -1,12 +1,12 @@
 import { CompositeItem } from '@ariakit/react'
+import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
 import type { ComponentProps, FunctionComponent } from 'react'
-import { ListItemContainer } from 'lib/components/list/ListItemContainer'
-import { ListItemContent, type ListItemContentProps } from 'lib/components/list/ListItemContent'
-import { Switch } from 'lib/components/Switch'
-import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
+import { ListItemContainer } from './ListItemContainer'
+import { ListItemContent, type ListItemContentProps } from './ListItemContent'
+import { Switch } from '../Switch'
 
 type SwitchItemProps = {
 	switchProps?: ComponentProps<typeof Switch>

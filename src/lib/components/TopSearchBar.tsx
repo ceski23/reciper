@@ -1,9 +1,9 @@
 import { styled } from '@macaron-css/react'
+import { computeStyle } from '@utils/dom'
 import { forwardRef, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'lib/styles'
-import { computeStyle } from 'lib/utils/dom'
 import { IconButton } from './IconButton'
 import { typography } from './Typography'
 

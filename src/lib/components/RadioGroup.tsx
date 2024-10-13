@@ -1,7 +1,7 @@
 import { Radio, RadioGroup as AriakitRadioGroup, RadioProvider, useRadioContext } from '@ariakit/react'
+import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
 import type { ComponentProps, FunctionComponent } from 'react'
-import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
 
