@@ -1,26 +1,31 @@
+import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as RadixSlider from '@radix-ui/react-slider'
-import * as Tooltip from '@radix-ui/react-tooltip'
 import { animated, config, useTransition } from '@react-spring/web'
-import { type FunctionComponent, useEffect, useMemo, useState } from 'react'
+import {
+	type FunctionComponent,
+	type KeyboardEventHandler,
+	type PointerEvent,
+	type PointerEventHandler,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react'
 import { Typography } from 'lib/components/Typography'
 import { useResizeObserver } from 'lib/hooks/useResizeObserver'
 import { styleUtils, theme } from 'lib/styles'
+import { clamp, linearScale } from 'lib/utils/math'
 
-// Copied from: https://github.com/radix-ui/primitives/blob/b32a93318cdfce383c2eec095710d35ffbd33a1c/packages/react/slider/src/Slider.tsx#L749
-const linearScale = (input: readonly [number, number], output: readonly [number, number]) => {
-	return (value: number) => {
-		if (input[0] === input[1] || output[0] === output[1]) return output[0]
-		const ratio = (output[1] - output[0]) / (input[1] - input[0])
-		return output[0] + ratio * (value - input[0])
-	}
-}
-
-// Copied from: https://github.com/radix-ui/primitives/blob/b32a93318cdfce383c2eec095710d35ffbd33a1c/packages/react/slider/src/Slider.tsx#L709
+/**
+ * Offsets the thumb centre point while sliding to ensure it remains
+ * within the bounds of the slider when reaching the edges
+ */
 const getThumbInBoundsOffset = (width: number, left: number, direction: number) => {
 	const halfWidth = width / 2
 	const halfPercent = 50
 	const offset = linearScale([0, halfPercent], [0, halfWidth])
+
 	return (halfWidth - offset(left) * direction) * direction
 }
 
@@ -44,82 +49,141 @@ export const Slider: FunctionComponent<SliderProps> = ({
 	onValueCommit,
 	label,
 	renderLabel,
-	...props
+	disabled,
+	step,
 }) => {
-	const [internalValue, setInternalValue] = useState(value ?? min)
-	const [internalOpen, setInternalOpen] = useState(false)
-	const transitions = useTransition(internalOpen, {
+	// Tooltip related
+	const tooltip = Ariakit.useTooltipStore()
+	const currentTooltipPlacement = tooltip.useState('currentPlacement')
+	const transitions = useTransition(tooltip.useState('mounted'), {
 		from: { opacity: 0, scale: 0, y: 8 },
 		enter: { opacity: 1, scale: 1, y: 0 },
 		leave: { opacity: 0, scale: 0, y: 8 },
 		config: config.stiff,
 	})
+
+	// Slider related
+	const [internalValue, setInternalValue] = useState(value ?? min)
+	const [isHoldingThumb, setIsHoldingThumb] = useState(false)
 	const [thumbSize, setThumbSize] = useState(0)
-	const measureRef = useResizeObserver<HTMLSpanElement>(({ width }) => setThumbSize(width))
-	const currentPercentage = (internalValue - min) / (max - min) * 100
-	const thumbOffset = useMemo(() => getThumbInBoundsOffset(thumbSize, currentPercentage, 1), [thumbSize, currentPercentage])
+	const sliderRootRef = useRef<HTMLDivElement>(null)
+	const thumbRef = useResizeObserver<HTMLDivElement>(({ width }) => setThumbSize(width))
+	const getPercentage = useCallback((value: number) => linearScale([min, max], [0, 100])(value), [min, max])
+	const thumbOffset = useMemo(() => getThumbInBoundsOffset(thumbSize, getPercentage(internalValue), 1), [thumbSize, getPercentage, internalValue])
+	const spaceWidth = 7
+	const clampValues = clamp(min, max)
+
+	const convertPositionToValue = (event: PointerEvent<HTMLDivElement>) => {
+		const rect = event.currentTarget.getBoundingClientRect()
+		const valueFn = linearScale([0, rect.width], [min, max])
+		const value = valueFn(event.clientX - rect.left)
+
+		return Math.round(value / step) * step
+	}
+
+	const handlePointerDown: PointerEventHandler<HTMLDivElement> = event => {
+		if (disabled) return
+
+		event.currentTarget.setPointerCapture(event.pointerId)
+		setIsHoldingThumb(true)
+		setInternalValue(convertPositionToValue(event))
+		tooltip.show()
+	}
+
+	const handlePointerUp: PointerEventHandler<HTMLDivElement> = event => {
+		if (disabled) return
+
+		event.currentTarget.releasePointerCapture(event.pointerId)
+		setIsHoldingThumb(false)
+		tooltip.hide()
+		onValueCommit?.(internalValue)
+	}
+
+	const handlePointerMove: PointerEventHandler<HTMLDivElement> = event => {
+		if (!isHoldingThumb || disabled) return
+
+		const newValue = clampValues(convertPositionToValue(event))
+		setInternalValue(newValue)
+		onValueChange?.(newValue)
+		tooltip.render()
+	}
+
+	const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = event => {
+		const multiplier = event.shiftKey ? 10 : 1
+
+		if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+			// Prevent page scroll
+			event.preventDefault()
+		}
+
+		if (['ArrowRight', 'ArrowUp'].includes(event.key)) {
+			setInternalValue(prev => clampValues(prev + (step * multiplier)))
+		}
+
+		if (['ArrowLeft', 'ArrowDown'].includes(event.key)) {
+			setInternalValue(prev => clampValues(prev - (step * multiplier)))
+		}
+	}
 
 	useEffect(() => {
 		value !== undefined && setInternalValue(value)
 	}, [value])
 
 	return (
-		<Tooltip.Root
-			delayDuration={0}
-			open={internalOpen}
-			onOpenChange={setInternalOpen}
-			disableHoverableContent={false}
+		<SliderRoot
+			onPointerDown={handlePointerDown}
+			onPointerUp={handlePointerUp}
+			onPointerMove={handlePointerMove}
+			ref={sliderRootRef}
 		>
-			<SliderRoot
-				value={[internalValue]}
-				min={min}
-				max={max}
-				onValueChange={([newValue]) => {
-					onValueChange?.(newValue)
-					setInternalValue(newValue)
-				}}
-				onValueCommit={([newValue]) => onValueCommit?.(newValue)}
-				onPointerDown={() => setInternalOpen(true)}
-				onPointerUp={() => setInternalOpen(false)}
-				{...props}
+			<SliderTrack
+				aria-disabled={disabled}
+				style={{ left: `calc(${getPercentage(internalValue)}% + ${spaceWidth}px + ${thumbOffset}px)` }}
+			/>
+			<SliderRange
+				aria-disabled={disabled}
+				style={{ marginRight: `calc(${spaceWidth}px - ${thumbOffset}px)`, left: 0, right: `${100 - getPercentage(internalValue)}%` }}
+			/>
+			<Ariakit.TooltipProvider
+				timeout={0}
+				placement="top"
+				store={tooltip}
+				open={disabled ? false : undefined}
 			>
-				<SliderTrack style={{ left: `calc(${currentPercentage}% + 7px + ${thumbOffset}px)` }} />
-				<SliderRange style={{ marginRight: `calc(7px - ${thumbOffset}px)` }} />
-				<Tooltip.Trigger asChild>
-					<SliderThumb
-						aria-label={label}
-						ref={measureRef}
-						onPointerUp={event => {
-							event.currentTarget.blur()
-						}}
-					/>
-				</Tooltip.Trigger>
-			</SliderRoot>
-			{transitions((styles, isOpen) =>
-				isOpen && (
-					<Tooltip.Portal forceMount>
+				{/* eslint-disable-next-line jsx-a11y/prefer-tag-over-role */}
+				<SliderThumb
+					ref={thumbRef}
+					role="slider"
+					aria-label={label}
+					aria-valuemin={min}
+					aria-valuemax={max}
+					aria-valuenow={internalValue}
+					disabled={disabled}
+					style={{ left: `calc(${getPercentage(internalValue)}% + ${thumbOffset}px)`, transform: 'translateX(-50%)' }}
+					onKeyDown={handleKeyDown}
+				/>
+				{transitions((styles, isOpen) =>
+					isOpen && (
 						<TooltipContent
-							side="top"
-							align="center"
-							sideOffset={8}
-							collisionPadding={8}
 							style={styles}
-							onPointerDownOutside={event => {
-								event.preventDefault()
-							}}
+							alwaysVisible
+							gutter={8}
+							overflowPadding={8}
+							hideOnHoverOutside={event => !isHoldingThumb || !(sliderRootRef.current?.contains(event.target as HTMLElement) ?? false)}
+							data-placement={currentTooltipPlacement}
 						>
 							<Typography.LabelLarge>
 								{renderLabel?.(internalValue) ?? internalValue}
 							</Typography.LabelLarge>
 						</TooltipContent>
-					</Tooltip.Portal>
-				)
-			)}
-		</Tooltip.Root>
+					)
+				)}
+			</Ariakit.TooltipProvider>
+		</SliderRoot>
 	)
 }
 
-const SliderRoot = styled(RadixSlider.Root, {
+const SliderRoot = styled('div', {
 	base: {
 		position: 'relative',
 		display: 'flex',
@@ -131,14 +195,14 @@ const SliderRoot = styled(RadixSlider.Root, {
 	},
 })
 
-const SliderRange = styled(RadixSlider.Range, {
+const SliderRange = styled('div', {
 	base: {
 		position: 'absolute',
 		backgroundColor: theme.colors.primary,
 		height: '100%',
 		borderRadius: '16px 2px 2px 16px',
 		selectors: {
-			'&[data-disabled]': {
+			'&[aria-disabled="true"]': {
 				opacity: 0.38,
 				backgroundColor: theme.colors.onSurface,
 			},
@@ -146,7 +210,7 @@ const SliderRange = styled(RadixSlider.Range, {
 	},
 })
 
-const SliderTrack = styled(RadixSlider.Track, {
+const SliderTrack = styled('div', {
 	base: {
 		backgroundColor: theme.colors.primaryContainer,
 		position: 'absolute',
@@ -155,30 +219,31 @@ const SliderTrack = styled(RadixSlider.Track, {
 		right: 0,
 		borderRadius: '2px 16px 16px 2px',
 		selectors: {
-			'&[data-disabled]': {
+			'&[aria-disabled="true"]': {
 				backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.12),
 			},
 		},
 	},
 })
 
-const SliderThumb = styled(RadixSlider.Thumb, {
+const SliderThumb = styled(Ariakit.TooltipAnchor, {
 	base: {
 		display: 'block',
 		width: 5,
 		height: 44,
 		backgroundColor: theme.colors.primary,
+		position: 'absolute',
 		transition: 'width .1s',
 		borderRadius: 2,
 		selectors: {
-			'&:focus-visible:not([data-disabled])': {
+			'&:focus-visible:not([aria-disabled="true"])': {
 				outline: 'none',
 				width: 3,
 			},
-			'&:active:not([data-disabled])': {
+			'&:active:not([aria-disabled="true"])': {
 				width: 3,
 			},
-			'&[data-disabled]': {
+			'&[aria-disabled="true"]': {
 				opacity: 0.38,
 				backgroundColor: theme.colors.onSurface,
 			},
@@ -186,7 +251,7 @@ const SliderThumb = styled(RadixSlider.Thumb, {
 	},
 })
 
-const TooltipContent = styled(animated(Tooltip.Content), {
+const TooltipContent = styled(animated(Ariakit.Tooltip), {
 	base: {
 		display: 'flex',
 		width: 48,
@@ -198,10 +263,10 @@ const TooltipContent = styled(animated(Tooltip.Content), {
 		backgroundColor: theme.colors.inverseSurface,
 		color: theme.colors.inverseOnSurface,
 		selectors: {
-			'&[data-side="top"]': {
+			'&[data-placement="top"]': {
 				transformOrigin: 'bottom',
 			},
-			'&[data-side="bottom"]': {
+			'&[data-placement="bottom"]': {
 				transformOrigin: 'top',
 			},
 		},

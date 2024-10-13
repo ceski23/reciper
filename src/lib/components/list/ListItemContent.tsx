@@ -1,12 +1,11 @@
 import { styled } from '@macaron-css/react'
-import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import { Fragment, type FunctionComponent, type ReactElement, type ReactNode } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
-import { styleUtils, theme } from 'lib/styles'
+import { theme } from 'lib/styles'
 
-export type MainContentProps = {
+export type ListItemContentProps = {
 	leadingElement?: SvgSpriteIconName | ReactElement
 	iconColor?: string
 	title: string
@@ -15,7 +14,7 @@ export type MainContentProps = {
 	overline?: string
 }
 
-export const MainContent: FunctionComponent<MainContentProps> = ({
+export const ListItemContent: FunctionComponent<ListItemContentProps> = ({
 	title,
 	iconColor,
 	leadingElement,
@@ -43,50 +42,6 @@ export const MainContent: FunctionComponent<MainContentProps> = ({
 		</Fragment>
 	)
 }
-
-export const ListItemBase = styled(RovingFocusGroup.Item, {
-	base: {
-		display: 'flex',
-		paddingLeft: 16,
-		paddingRight: 24,
-		gap: 16,
-		backgroundColor: 'unset',
-		border: 'none',
-		transition: 'background-color .2s',
-		textAlign: 'start',
-		textDecoration: 'none',
-		color: theme.colors.onSurface,
-		width: '100%',
-	},
-	variants: {
-		size: {
-			'2line': {
-				alignItems: 'center',
-				paddingBlock: 8,
-			},
-			'3line': {
-				paddingBlock: 12,
-			},
-		},
-		variant: {
-			clickable: {
-				cursor: 'pointer',
-				outline: 'none',
-				':hover': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.08),
-				},
-				':focus-visible': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
-				},
-			},
-			nonClickable: {},
-		},
-	},
-	defaultVariants: {
-		size: '2line',
-		variant: 'nonClickable',
-	},
-})
 
 const Content = styled('div', {
 	base: {

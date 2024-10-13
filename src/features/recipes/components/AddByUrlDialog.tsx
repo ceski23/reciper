@@ -29,7 +29,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = withDialog
 			icon="link"
 			open={open}
 			description={t('recipes.addRecipe.addByUrl.description')}
-			onOpenChange={onClose}
+			onClose={onClose}
 			actions={[
 				(
 					<Button
@@ -52,7 +52,7 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = withDialog
 					</Button>
 				),
 			]}
-			content={(
+			extraContent={(
 				<UrlFieldForm
 					id={formId}
 					onSubmit={event => {

@@ -1,5 +1,5 @@
+import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as RadixDialog from '@radix-ui/react-dialog'
 import { animated, useSpring } from '@react-spring/web'
 import { useDrag } from '@use-gesture/react'
 import { type FunctionComponent, type ReactNode, useCallback, useEffect, useState } from 'react'
@@ -102,32 +102,35 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 	})
 
 	return (
-		<RadixDialog.Root open={showBackdrop}>
-			<RadixDialog.Portal>
-				<DialogOverlay style={backdropStyles} />
+		<Ariakit.Dialog
+			open={showBackdrop}
+			unmountOnHide
+			backdrop={<DialogOverlay style={backdropStyles} />}
+			onClose={() => onStateChange('close')}
+			render={(
 				<Container
 					ref={measuredRef}
 					{...bind()}
 					style={{ y }}
-					onInteractOutside={() => onStateChange('close')}
-					onOpenAutoFocus={event => event.preventDefault()}
 				>
 					<Handle />
 					<Content>
-						<RadixDialog.Title asChild>
-							<Typography.TitleLarge>
-								{title}
-							</Typography.TitleLarge>
-						</RadixDialog.Title>
+						<Ariakit.DialogHeading
+							render={(
+								<Typography.TitleLarge>
+									{title}
+								</Typography.TitleLarge>
+							)}
+						/>
 						{children}
 					</Content>
 				</Container>
-			</RadixDialog.Portal>
-		</RadixDialog.Root>
+			)}
+		/>
 	)
 }
 
-const Container = styled(animated(RadixDialog.Content), {
+const Container = styled(animated.div, {
 	base: {
 		backgroundColor: theme.colors.surfaceContainerLow,
 		position: 'fixed',
@@ -154,7 +157,7 @@ const Handle = styled('div', {
 	},
 })
 
-const DialogOverlay = styled(animated(RadixDialog.Overlay), {
+const DialogOverlay = styled(animated.div, {
 	base: {
 		width: '100vw',
 		height: '100vh',

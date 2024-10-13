@@ -5,6 +5,7 @@ import { Fragment, type FunctionComponent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as editRecipeRoute } from 'routes/recipes_/$id.edit'
 import * as v from 'valibot'
+import { useNotifications } from 'features/notifications'
 import { RecipeForm } from 'features/recipes/form/RecipeForm'
 import type { RecipeFormValues } from 'features/recipes/form/scheme'
 import { mapFormValuesToRecipe, mapRecipeToFormValues } from 'features/recipes/form/utils'
@@ -14,7 +15,6 @@ import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
-import { useNotifications } from 'lib/hooks/useNotifications'
 
 export const EditRecipe: FunctionComponent = () => {
 	const { t } = useTranslation()

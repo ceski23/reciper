@@ -1,5 +1,5 @@
 import { animated, useScroll } from '@react-spring/web'
-import type { CSSProperties, FunctionComponent, ReactNode } from 'react'
+import { type CSSProperties, forwardRef, type ReactNode } from 'react'
 
 type AnimatedTitleProps = {
 	container: HTMLElement
@@ -28,14 +28,14 @@ const calcY = (y: number, reverse?: boolean) => {
 	return 0
 }
 
-export const AnimatedTitle: FunctionComponent<AnimatedTitleProps> = ({
+export const AnimatedTitle = forwardRef<HTMLHeadingElement, AnimatedTitleProps>(({
 	container,
 	children,
 	className,
 	reverse,
 	shouldAnimate = true,
 	style,
-}) => {
+}, ref) => {
 	const { scrollY } = useScroll({
 		container: { current: container },
 		default: {
@@ -45,6 +45,7 @@ export const AnimatedTitle: FunctionComponent<AnimatedTitleProps> = ({
 
 	return (
 		<animated.h1
+			ref={ref}
 			className={className}
 			style={{
 				...style,
@@ -55,4 +56,4 @@ export const AnimatedTitle: FunctionComponent<AnimatedTitleProps> = ({
 			{children}
 		</animated.h1>
 	)
-}
+})

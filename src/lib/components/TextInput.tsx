@@ -2,23 +2,24 @@ import { styled } from '@macaron-css/react'
 import { type ComponentProps, forwardRef, type ReactNode, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
-import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
+import { Icon } from './Icon'
 import { IconButton } from './IconButton'
-import { bodyLarge, bodySmall, Typography } from './Typography'
+import { Typography, typography } from './Typography'
 
 export type TextInputProps = {
 	label: string
 	placeholder?: string
 	value: string
 	onValueChange?: (value: string) => void
-	error?: string
+	supportingText?: string
 	disabled?: boolean
 	required?: boolean
 	leadingIcon?: SvgSpriteIconName
 	trailingAddon?: ReactNode
 	inputProps?: ComponentProps<'input'>
 	className?: string
+	hasError?: boolean
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
@@ -26,7 +27,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 	placeholder,
 	value,
 	onValueChange,
-	error,
+	supportingText,
+	hasError,
 	disabled,
 	required,
 	leadingIcon,
@@ -37,12 +39,11 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 	const { t } = useTranslation()
 	const fieldId = useId()
 	const supportingTextId = useId()
-	const hasError = error !== undefined
+	const labelId = useId()
 	const shouldShrinkLabel = placeholder !== undefined || value.length > 0
-
 	const renderTrailingAddon = typeof trailingAddon === 'string'
 		? (
-			<FieldAddon className={bodyLarge}>
+			<FieldAddon className={typography.bodyLarge}>
 				{trailingAddon}
 			</FieldAddon>
 		)
@@ -63,7 +64,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 				disabled={disabled}
 			>
 				{leadingIcon && (
-					<FieldAddon className={bodyLarge}>
+					<FieldAddon className={typography.bodyLarge}>
 						<LeadingIcon name={leadingIcon} />
 					</FieldAddon>
 				)}
@@ -76,14 +77,15 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 					disabled={disabled}
 					aria-required={required}
 					withIcon={leadingIcon !== undefined}
-					className={bodyLarge}
-					aria-invalid={error !== undefined}
-					aria-errormessage={error !== undefined ? supportingTextId : undefined}
+					className={typography.bodyLarge}
+					aria-invalid={hasError}
+					aria-describedby={supportingText !== undefined ? supportingTextId : undefined}
+					aria-labelledby={labelId}
 					{...inputProps}
 				/>
 				{trailingAddon
 					? renderTrailingAddon
-					: error
+					: hasError
 					? renderErrorAddon
 					: value.length > 0 && !disabled
 					? renderClearAddon
@@ -92,18 +94,20 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 					shrinked={shouldShrinkLabel}
 					htmlFor={fieldId}
 					withIcon={leadingIcon !== undefined}
-					className={shouldShrinkLabel ? bodySmall : bodyLarge}
+					className={shouldShrinkLabel ? typography.bodySmall : typography.bodyLarge}
+					id={labelId}
 				>
 					{label}
 					{required && <RequiredIndicator>*</RequiredIndicator>}
 				</FieldLabel>
 			</FieldInnerContainer>
-			{hasError && (
+			{supportingText && (
 				<SupportingText
 					id={supportingTextId}
 					hasError={hasError}
+					role={hasError ? 'alert' : undefined}
 				>
-					{error}
+					{supportingText}
 				</SupportingText>
 			)}
 		</FieldContainer>

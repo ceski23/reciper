@@ -8,6 +8,7 @@ import { ManifestOptions, VitePWA } from 'vite-plugin-pwa'
 import child from 'node:child_process'
 import svgSprite from '@ceski23/vite-plugin-svg-sprite'
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 const pwaManifest: Partial<ManifestOptions> = {
 	short_name: 'Reciper',
@@ -53,8 +54,17 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: id => {
-					if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'react'
-					if (id.includes('node_modules/@radix-ui/')) return 'radix'
+					if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/@ariakit/react/')) {
+						return 'react-ariakit'
+					}
+
+					if (id.includes('node_modules/i18next')) {
+						return 'i18next'
+					}
+
+					if (id.includes('node_modules/@tanstack/')) {
+						return 'tanstack'
+					}
 				},
 			},
 		},
@@ -93,5 +103,6 @@ export default defineConfig({
 			manifest: pwaManifest,
 		}),
 		TanStackRouterVite(),
+		visualizer(),
 	],
 })

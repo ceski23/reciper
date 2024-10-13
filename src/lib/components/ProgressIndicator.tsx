@@ -1,19 +1,39 @@
 import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
-import * as Progress from '@radix-ui/react-progress'
 import type { ComponentProps, FunctionComponent } from 'react'
 import { theme } from 'lib/styles'
 
-const Linear: FunctionComponent<ComponentProps<typeof LinearBase>> = props => (
-	<LinearBase {...props}>
-		<LinearIndicator
-			isIndeterminate={props.value === undefined}
-			style={{ width: props.value !== undefined ? `${(props.value ?? 0) / (props.max ?? 100) * 100}%` : undefined }}
-		/>
-	</LinearBase>
-)
+type LinearProgressIndicatorProps = ComponentProps<'div'> & {
+	max?: number
+	value?: number
+}
 
-const LinearBase = styled(Progress.Root, {
+const Linear: FunctionComponent<LinearProgressIndicatorProps> = ({
+	value,
+	max,
+	...props
+}) => {
+	const width = value !== undefined
+		? (value / (max ?? 100)).toLocaleString('en', { style: 'percent' })
+		: undefined
+
+	return (
+		// eslint-disable-next-line jsx-a11y/prefer-tag-over-role
+		<LinearBase
+			{...props}
+			role="progressbar"
+			aria-valuemax={max}
+			aria-valuenow={value}
+		>
+			<LinearIndicator
+				isIndeterminate={value === undefined}
+				style={{ width }}
+			/>
+		</LinearBase>
+	)
+}
+
+const LinearBase = styled('div', {
 	base: {
 		display: 'flex',
 		height: 4,
@@ -53,7 +73,7 @@ const animation2 = keyframes({
 	},
 })
 
-const LinearIndicator = styled(Progress.Indicator, {
+const LinearIndicator = styled('div', {
 	variants: {
 		isIndeterminate: {
 			true: {

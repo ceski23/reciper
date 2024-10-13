@@ -1,6 +1,6 @@
 import { useTransition } from '@react-spring/web'
 import React, { type FunctionComponent, type ReactElement } from 'react'
-import { DIALOG_ANIMATION } from 'lib/components/dialog/constants'
+import { DIALOG_ANIMATION } from './constants'
 
 type AnimateDialogProps = {
 	open: boolean

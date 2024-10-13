@@ -1,5 +1,5 @@
+import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { useQuery } from '@tanstack/react-query'
 import { counting } from 'radash'
 import { Fragment, type FunctionComponent, useMemo } from 'react'
@@ -10,7 +10,7 @@ import { recipesQuery } from 'features/recipes/recipes'
 import type { Recipe } from 'features/recipes/types'
 import { Chip } from 'lib/components/Chip'
 import { Icon } from 'lib/components/Icon'
-import { List } from 'lib/components/list/List'
+import { List } from 'lib/components/list'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
@@ -78,31 +78,29 @@ export const Home: FunctionComponent = () => {
 							<Typography.TitleMedium>
 								{t('home.mostCommonTags')}
 							</Typography.TitleMedium>
-							<TagsContainer
-								type="multiple"
-								value={[]}
-							>
-								{getMostCommonTags(recipes.data, 15).map(tag => (
-									<ToggleGroup.Item
-										key={tag}
-										value={tag}
-										asChild
-									>
-										<StyledChip
-											text={tag}
-											variant="outlined"
-											to="/recipes/search"
-											search={{ query: tag }}
+							<CompositeProvider>
+								<TagsContainer>
+									{getMostCommonTags(recipes.data, 15).map(tag => (
+										<CompositeItem
+											key={tag}
+											render={(
+												<StyledChip
+													text={tag}
+													variant="outlined"
+													to="/recipes/search"
+													search={{ query: tag }}
+												/>
+											)}
 										/>
-									</ToggleGroup.Item>
-								))}
-							</TagsContainer>
+									))}
+								</TagsContainer>
+							</CompositeProvider>
 						</Section>
 						<FullbleedSection>
 							<Typography.TitleMedium style={{ paddingInline: 16 }}>
 								{t('home.topRecipes')}
 							</Typography.TitleMedium>
-							<List>
+							<List.Root>
 								{getTopRecipes(recipes.data, 10).map(recipe => (
 									<RecipeListItem
 										key={recipe.id}
@@ -115,7 +113,7 @@ export const Home: FunctionComponent = () => {
 										)}
 									/>
 								))}
-							</List>
+							</List.Root>
 						</FullbleedSection>
 					</Fragment>
 				)}
@@ -139,7 +137,7 @@ const StyledChip = styled(Chip, {
 	},
 })
 
-const TagsContainer = styled(ToggleGroup.Root, {
+const TagsContainer = styled(Composite, {
 	base: {
 		display: 'flex',
 		flexDirection: 'row',

@@ -1,5 +1,5 @@
+import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import { type ComponentProps, forwardRef } from 'react'
 import { theme } from 'lib/styles'
 import { NavigationSegment, type NavigationSegmentProps } from './NavigationSegment'
@@ -12,23 +12,29 @@ export const NavigationBar = forwardRef<HTMLDivElement, NavigationBarProps & Com
 	segments,
 	...props
 }, ref) => (
-	<NavigationBarBase
-		asChild
-		ref={ref}
-		{...props}
-	>
-		<nav>
-			{segments.map(segment => (
-				<NavigationSegment
-					key={segment.to}
-					{...segment}
-				/>
-			))}
-		</nav>
-	</NavigationBarBase>
+	<CompositeProvider>
+		<NavigationBarBase
+			ref={ref}
+			{...props}
+			render={(
+				<nav>
+					{segments.map(segment => (
+						<CompositeItem
+							key={segment.to}
+							render={(
+								<NavigationSegment
+									{...segment}
+								/>
+							)}
+						/>
+					))}
+				</nav>
+			)}
+		/>
+	</CompositeProvider>
 ))
 
-const NavigationBarBase = styled(RovingFocusGroup.Root, {
+const NavigationBarBase = styled(Composite, {
 	base: {
 		display: 'flex',
 		flexDirection: 'row',

@@ -1,10 +1,12 @@
+import { Button } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as Toggle from '@radix-ui/react-toggle'
 import { Link, type ToOptions } from '@tanstack/react-router'
+import mergeProps from 'merge-props'
 import { type ComponentProps, forwardRef } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { Typography } from 'lib/components/Typography'
+import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
 
 type ChipProps = ToOptions & {
@@ -18,46 +20,51 @@ export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase
 	icon,
 	onClose,
 	...props
-}, ref) => (
-	<ChipBase
-		withLeadingIcon={icon !== undefined}
-		withCloseIcon={onClose !== undefined}
-		ref={ref}
-		// @ts-expect-error TS is shouting but it works
-		as={props.to !== undefined ? Link : undefined}
-		{...props}
-	>
-		{icon && (
-			<ChipIcon
-				name={icon}
-				variant={props.disabled ? 'disabled' : 'primary'}
-			/>
-		)}
-		<Label>
-			{text}
-		</Label>
-		{onClose && (
-			// eslint-disable-next-line jsx-a11y/prefer-tag-over-role
-			<CloseButton
-				role="button"
-				title="Close"
-				onClick={event => {
-					event.stopPropagation()
-					onClose()
-				}}
-			>
-				<Icon
-					name="close"
-					size={18}
-				/>
-			</CloseButton>
-		)}
-	</ChipBase>
-))
+}, ref) => {
+	const { eventHandlers, renderRipples } = useRipples()
 
-export const ChipBase = styled(Toggle.Root, {
+	return (
+		<ChipBase
+			withLeadingIcon={icon !== undefined}
+			withCloseIcon={onClose !== undefined}
+			ref={ref}
+			// @ts-expect-error TS is shouting but it works
+			as={props.to !== undefined ? Link : undefined}
+			{...mergeProps(props, eventHandlers)}
+		>
+			{icon && (
+				<ChipIcon
+					name={icon}
+					variant={props.disabled ? 'disabled' : 'primary'}
+				/>
+			)}
+			<Label>
+				{text}
+			</Label>
+			{onClose && (
+				// eslint-disable-next-line jsx-a11y/prefer-tag-over-role
+				<CloseButton
+					role="button"
+					title="Close"
+					onClick={event => {
+						event.stopPropagation()
+						onClose()
+					}}
+				>
+					<Icon
+						name="close"
+						size={18}
+					/>
+				</CloseButton>
+			)}
+			{renderRipples}
+		</ChipBase>
+	)
+})
+
+export const ChipBase = styled(Button, {
 	base: {
-		backgroundColor: 'transparent',
+		backgroundColor: theme.colors.surfaceContainerLow,
 		border: 'none',
 		paddingInline: 16,
 		paddingBlock: 6,
@@ -70,12 +77,13 @@ export const ChipBase = styled(Toggle.Root, {
 		cursor: 'pointer',
 		borderRadius: 8,
 		outline: 'none',
+		position: 'relative',
 	},
 	variants: {
 		variant: {
 			outlined: {
 				color: theme.colors.onSurfaceVariant,
-				border: `1px solid ${theme.colors.outline}`,
+				border: `1px solid ${theme.colors.outlineVariant}`,
 				':hover': {
 					backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.08),
 				},
@@ -88,32 +96,32 @@ export const ChipBase = styled(Toggle.Root, {
 				},
 				':disabled': {
 					borderColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.5),
-					backgroundColor: 'transparent',
+					backgroundColor: theme.colors.surfaceContainerLow,
 					opacity: 0.38,
 					cursor: 'unset',
 				},
 				selectors: {
-					'&[data-state="on"]': {
+					'&[aria-checked="true"]': {
 						backgroundColor: theme.colors.secondaryContainer,
 						color: theme.colors.onSecondaryContainer,
 						borderColor: theme.colors.secondaryContainer,
 					},
-					'&[data-state="on"]:hover': {
+					'&[aria-checked="true"]:hover': {
 						boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
 						backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.08),
 						borderColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.08),
 					},
-					'&[data-state="on"]:focus-visible': {
+					'&[aria-checked="true"]:focus-visible': {
 						boxShadow: 'none',
 						backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
 						borderColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
 					},
-					'&[data-state="on"]:active': {
+					'&[aria-checked="true"]:active': {
 						boxShadow: '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
 						backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
 						borderColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
 					},
-					'&[data-state="on"]:disabled': {
+					'&[aria-checked="true"]:disabled': {
 						boxShadow: 'none',
 						backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.5),
 						borderColor: 'transparent',
@@ -142,22 +150,22 @@ export const ChipBase = styled(Toggle.Root, {
 					cursor: 'unset',
 				},
 				selectors: {
-					'&[data-state="on"]': {
+					'&[aria-checked="true"]': {
 						backgroundColor: theme.colors.secondaryContainer,
 						color: theme.colors.onSecondaryContainer,
 						boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
 					},
-					'&[data-state="on"]:hover': {
+					'&[aria-checked="true"]:hover': {
 						backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.08),
 					},
-					'&[data-state="on"]:focus-visible': {
+					'&[aria-checked="true"]:focus-visible': {
 						backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
 					},
-					'&[data-state="on"]:active': {
+					'&[aria-checked="true"]:active': {
 						boxShadow: '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)',
 						backgroundColor: styleUtils.blendWithColor(theme.colors.secondaryContainer, theme.colors.onSecondaryContainer, 0.12),
 					},
-					'&[data-state="on"]:disabled': {
+					'&[aria-checked="true"]:disabled': {
 						boxShadow: 'none',
 						backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.5),
 						color: theme.colors.onSurface,
@@ -182,13 +190,13 @@ export const ChipBase = styled(Toggle.Root, {
 	},
 })
 
-const Label = styled(Typography.LabelLarge, {
+export const Label = styled(Typography.LabelLarge, {
 	base: {
 		color: theme.colors.onSurface,
 	},
 })
 
-const ChipIcon = styled(Icon, {
+export const ChipIcon = styled(Icon, {
 	base: {
 		width: 18,
 		height: 18,
@@ -208,7 +216,7 @@ const ChipIcon = styled(Icon, {
 	},
 })
 
-const CloseButton = styled('span', {
+export const CloseButton = styled('span', {
 	base: {
 		width: 18,
 		height: 18,

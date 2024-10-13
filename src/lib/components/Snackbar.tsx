@@ -1,103 +1,70 @@
-import { keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
-import * as ToastPrimitive from '@radix-ui/react-toast'
-import { animated } from '@react-spring/web'
-import { type ComponentProps, type FunctionComponent, useRef } from 'react'
+import { animated, to, useSpring } from '@react-spring/web'
+import { useDrag } from '@use-gesture/react'
+import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Icon } from 'lib/components/Icon'
+import { type NotificationComponentProps } from 'features/notifications'
 import { styleUtils, theme } from 'lib/styles'
+import { Icon } from './Icon'
 import { Typography } from './Typography'
 
-type SnackbarProps = {
-	text: string
-	action?: {
-		label: string
-		onClick?: VoidFunction
-	}
-	dismissable?: boolean
-}
-
-export const Snackbar: FunctionComponent<SnackbarProps & ComponentProps<typeof SnackbarBase>> = ({
-	action,
-	dismissable,
-	text,
-	onOpenChange,
-	...props
-}) => {
-	const ref = useRef<HTMLLIElement>(null)
+export const Snackbar = forwardRef<HTMLOutputElement, NotificationComponentProps>(({ action, dismissable, content, onHide, style }, ref) => {
 	const { t } = useTranslation()
+	const [{ x, opacity }, api] = useSpring(() => ({ x: 0, opacity: 1 }))
+	const bind = useDrag(({ last, movement: [x], currentTarget }) => {
+		if (!last) {
+			return api.start({ x, immediate: true })
+		}
+
+		if (Math.abs(x) > 100) {
+			return api.start({
+				x: (currentTarget as HTMLElement).getBoundingClientRect().width * (x > 0 ? 1 : -1),
+				opacity: 0,
+				onRest: onHide,
+			})
+		}
+
+		api.start({ x: 0, opacity: 1 })
+	}, {
+		axis: 'x',
+		from: () => [x.get(), 0],
+	})
 
 	return (
 		<SnackbarBase
 			variant={(action !== undefined || dismissable) ? 'withAction' : 'textOnly'}
-			onAnimationEnd={event => event.animationName === slideRight && onOpenChange?.(false)}
-			onOpenChange={() => {
-				if (ref.current?.dataset.swipe === 'end') {
-					return
-				}
-
-				const animation = ref.current?.animate([
-					{
-						opacity: 1,
-						transform: 'translateY(0px)',
-					},
-					{
-						opacity: 0,
-						transform: 'translateY(10px)',
-					},
-				], {
-					duration: 200,
-					fill: 'forwards',
-				})
-
-				animation?.addEventListener('finish', () => onOpenChange?.(false))
-			}}
 			ref={ref}
-			{...props}
+			{...bind()}
+			style={{
+				...style,
+				x,
+				opacity: to([style.opacity, opacity], (hideOpacity, swipeOpacity) => Math.min(hideOpacity, swipeOpacity)),
+			}}
 		>
-			<ToastPrimitive.Description asChild>
-				<Text>{text}</Text>
-			</ToastPrimitive.Description>
+			<Text>{content}</Text>
 			{action && (
-				<ActionButton
-					onClick={action.onClick}
-					altText={action.label}
-				>
+				<ActionButton onClick={action.onClick}>
 					<Typography.LabelLarge>
 						{action.label}
 					</Typography.LabelLarge>
 				</ActionButton>
 			)}
 			{dismissable && (
-				<DismissButton aria-label={t('notifications.close')}>
-					<DismissIcon name="close" />
+				<DismissButton
+					aria-label={t('notifications.close')}
+					onClick={onHide}
+				>
+					<Icon
+						size={24}
+						name="close"
+					/>
 				</DismissButton>
 			)}
 		</SnackbarBase>
 	)
-}
-
-const slideRight = keyframes({
-	from: {
-		transform: 'translateX(var(--radix-toast-swipe-end-x))',
-	},
-	to: {
-		transform: 'translateX(100%)',
-	},
 })
 
-const show = keyframes({
-	from: {
-		opacity: 0,
-		transform: 'translateY(10px)',
-	},
-	to: {
-		opacity: 1,
-		transform: 'translateY(0px)',
-	},
-})
-
-const SnackbarBase = styled(animated(ToastPrimitive.Root), {
+const SnackbarBase = styled(animated.output, {
 	base: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -109,20 +76,8 @@ const SnackbarBase = styled(animated(ToastPrimitive.Root), {
 		gap: 4,
 		alignItems: 'center',
 		paddingBlock: 4,
-		animation: `${show} 200ms ease-out`,
 		pointerEvents: 'auto',
-		selectors: {
-			'&[data-swipe="move"]': {
-				transform: 'translateX(var(--radix-toast-swipe-move-x))',
-			},
-			'&[data-swipe="cancel"]': {
-				transform: 'translateX(0)',
-				transition: 'transform 200ms ease-out',
-			},
-			'&[data-swipe="end"]': {
-				animation: `${slideRight} 200ms ease-out forwards`,
-			},
-		},
+		touchAction: 'none',
 	},
 	variants: {
 		variant: {
@@ -147,7 +102,7 @@ const Text = styled(Typography.BodyMedium, {
 	},
 })
 
-const ActionButton = styled(ToastPrimitive.Action, {
+const ActionButton = styled('button', {
 	base: {
 		display: 'flex',
 		paddingBlock: 10,
@@ -170,7 +125,7 @@ const ActionButton = styled(ToastPrimitive.Action, {
 	},
 })
 
-const DismissButton = styled(ToastPrimitive.Close, {
+const DismissButton = styled('button', {
 	base: {
 		display: 'flex',
 		padding: 8,
@@ -189,12 +144,5 @@ const DismissButton = styled(ToastPrimitive.Close, {
 		':active': {
 			backgroundColor: styleUtils.transparentize(theme.colors.inverseOnSurface, 0.12),
 		},
-	},
-})
-
-const DismissIcon = styled(Icon, {
-	base: {
-		width: 24,
-		height: 24,
 	},
 })

@@ -1,18 +1,18 @@
-import { type Notification, notificationsStore } from 'lib/stores/notifications'
+import { type NotificationOptions, notificationsStore } from './store'
 
 export const useNotifications = () => {
 	const { setNotifications } = notificationsStore.useStore()
 	const notify = (content: string, {
 		id = crypto.randomUUID(),
-		duration = 5000,
+		duration,
 		...options
-	}: Partial<Omit<Notification, 'content'>> = {}) => {
+	}: Partial<Omit<NotificationOptions, 'content'>> = {}) => {
 		queueMicrotask(() =>
 			setNotifications(prev =>
 				prev.concat({
 					content,
 					id,
-					duration,
+					duration: duration ?? (options.action ? Infinity : 5000),
 					...options,
 				})
 			)

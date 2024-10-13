@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRegisterSW } from 'virtual:pwa-register/react'
-import { Snackbar } from './Snackbar'
+import { Notification } from 'features/notifications'
 
 export const AppUpdatePrompt: FunctionComponent = () => {
 	const { updateServiceWorker, needRefresh: [needRefresh, setNeedRefresh] } = useRegisterSW()
@@ -9,8 +9,8 @@ export const AppUpdatePrompt: FunctionComponent = () => {
 
 	return needRefresh
 		? (
-			<Snackbar
-				text={t('appUpdate.updateAvailable')}
+			<Notification
+				content={t('appUpdate.updateAvailable')}
 				duration={Number.POSITIVE_INFINITY}
 				action={{
 					label: t('appUpdate.update'),

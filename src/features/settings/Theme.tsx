@@ -3,8 +3,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ColorSchemeDialog } from 'features/settings/ColorSchemeDialog'
-import { ListItem } from 'lib/components/list/items'
-import { List } from 'lib/components/list/List'
+import { List } from 'lib/components/list'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { settingsStore } from 'lib/stores/settings'
 import { theme } from 'lib/styles'
@@ -23,14 +22,14 @@ export const Theme: FunctionComponent = () => {
 				title={t('paths.theme')}
 				onBackClick={() => navigate({ to: '/settings' })}
 			/>
-			<List>
-				<ListItem.Simple
+			<List.Root>
+				<List.SimpleItem
 					leadingElement="brightness"
 					iconColor={theme.colors.primary}
 					title={t('settings.theme.colorScheme.title')}
 					onClick={() => setIsColorSchemeDialogOpen(true)}
 				/>
-				<ListItem.Switch
+				<List.SwitchItem
 					leadingElement="palette"
 					iconColor={theme.colors.primary}
 					title={t('settings.theme.dynamicColors.title')}
@@ -41,7 +40,7 @@ export const Theme: FunctionComponent = () => {
 						onCheckedChange: dynamicColor => setTheme(prev => ({ ...prev, dynamicColor })),
 					}}
 				/>
-				<ListItem.Switch
+				<List.SwitchItem
 					leadingElement="animation"
 					iconColor={theme.colors.primary}
 					title={t('settings.theme.disableAnimations.title')}
@@ -52,7 +51,7 @@ export const Theme: FunctionComponent = () => {
 					}}
 					isDisabled={isReducedMotion}
 				/>
-			</List>
+			</List.Root>
 			<ColorSchemeDialog
 				open={isColorSchemeDialogOpen}
 				onCancel={() => setIsColorSchemeDialogOpen(false)}

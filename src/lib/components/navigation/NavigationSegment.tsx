@@ -1,7 +1,6 @@
 import { styled } from '@macaron-css/react'
-import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import { Link, type ToOptions } from '@tanstack/react-router'
-import type { FunctionComponent } from 'react'
+import { forwardRef } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
@@ -14,40 +13,39 @@ export type NavigationSegmentProps = {
 	to: ToOptions['to']
 }
 
-export const NavigationSegment: FunctionComponent<RovingFocusGroup.RovingFocusItemProps & NavigationSegmentProps> = ({
+export const NavigationSegment = forwardRef<HTMLAnchorElement, NavigationSegmentProps>(({
 	label,
 	icon,
 	badge,
 	to,
 	...props
-}) => (
+}, ref) => (
 	<SegmentBase
-		asChild
+		to={to}
+		ref={ref}
 		{...props}
 	>
-		<Link to={to}>
-			<IconContainer>
-				<SegmentIcon name={icon} />
-				{badge && (
-					<Badge variant={typeof badge === 'string' ? undefined : 'empty'}>
-						{typeof badge === 'string' && (
-							<Typography.LabelSmall>
-								{badge}
-							</Typography.LabelSmall>
-						)}
-					</Badge>
-				)}
-			</IconContainer>
-			{label && (
-				<Typography.LabelMedium>
-					{label}
-				</Typography.LabelMedium>
+		<IconContainer>
+			<SegmentIcon name={icon} />
+			{badge && (
+				<Badge variant={typeof badge === 'string' ? undefined : 'empty'}>
+					{typeof badge === 'string' && (
+						<Typography.LabelSmall>
+							{badge}
+						</Typography.LabelSmall>
+					)}
+				</Badge>
 			)}
-		</Link>
+		</IconContainer>
+		{label && (
+			<Typography.LabelMedium>
+				{label}
+			</Typography.LabelMedium>
+		)}
 	</SegmentBase>
-)
+))
 
-const SegmentBase = styled(RovingFocusGroup.Item, {
+const SegmentBase = styled(Link, {
 	base: {
 		paddingTop: 12,
 		paddingBottom: 16,

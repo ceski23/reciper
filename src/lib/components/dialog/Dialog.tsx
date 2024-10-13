@@ -1,11 +1,11 @@
+import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as RadixDialog from '@radix-ui/react-dialog'
 import { animated, type SpringValue } from '@react-spring/web'
-import { type ComponentProps, type FunctionComponent, isValidElement, type ReactElement, type ReactNode } from 'react'
+import { type ComponentProps, type FunctionComponent, isValidElement, type ReactElement } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
-import { Icon } from 'lib/components/Icon'
 import { styleUtils, theme } from 'lib/styles'
 import { Button } from '../Button'
+import { Icon } from '../Icon'
 import { Typography } from '../Typography'
 
 type DialogActionItem = {
@@ -18,69 +18,58 @@ type SimpleDialogProps = {
 	description: string
 	icon?: SvgSpriteIconName
 	actions: Array<DialogActionItem | ReactElement>
-	content?: ReactNode
+	extraContent?: ReactElement | string
 	closeOnClickOutside?: boolean
 	styles?: {
 		opacity: SpringValue<number>
 	}
 }
 
-export const SimpleDialog: FunctionComponent<SimpleDialogProps & ComponentProps<typeof RadixDialog.Root>> = ({
+export const SimpleDialog: FunctionComponent<SimpleDialogProps & ComponentProps<typeof Ariakit.Dialog>> = ({
 	title,
 	description,
 	icon,
 	actions,
-	content,
+	extraContent,
 	closeOnClickOutside = true,
 	styles,
 	...props
 }) => (
-	<RadixDialog.Root {...props}>
-		<Dialog.Portal>
-			<DialogOverlay style={{ opacity: styles?.opacity }} />
-			<Dialog.Content
-				style={styles}
-				variant={icon ? 'withIcon' : 'simple'}
-				onInteractOutside={event => {
-					if (!closeOnClickOutside) {
-						event.preventDefault()
-					}
-				}}
-			>
-				{icon && <DialogIcon name={icon} />}
-				<Dialog.Title asChild>
-					<Title>
-						{title}
-					</Title>
-				</Dialog.Title>
-				<Dialog.Description asChild>
-					<Description>
-						{description}
-					</Description>
-				</Dialog.Description>
-				{content && <DialogExtraContent>{content}</DialogExtraContent>}
-				<Dialog.Actions>
-					{actions.map(action =>
-						isValidElement(action) ? action : 'label' in action
-							? (
-								<Button
-									key={action.label}
-									onClick={action.onClick}
-									type="button"
-									variant="text"
-								>
-									{action.label}
-								</Button>
-							)
-							: null
-					)}
-				</Dialog.Actions>
-			</Dialog.Content>
-		</Dialog.Portal>
-	</RadixDialog.Root>
+	<DialogContent
+		backdrop={<DialogOverlay style={{ opacity: styles?.opacity }} />}
+		style={styles}
+		variant={icon ? 'withIcon' : 'simple'}
+		hideOnInteractOutside={closeOnClickOutside}
+		{...props}
+	>
+		{icon && <DialogIcon name={icon} />}
+		<Ariakit.DialogHeading render={<Title />}>
+			{title}
+		</Ariakit.DialogHeading>
+		<Ariakit.DialogDescription render={<Description />}>
+			{description}
+		</Ariakit.DialogDescription>
+		{extraContent && <DialogExtraContent>{extraContent}</DialogExtraContent>}
+		<DialogActions>
+			{actions.map(action =>
+				isValidElement(action) ? action : 'label' in action
+					? (
+						<Button
+							key={action.label}
+							onClick={action.onClick}
+							type="button"
+							variant="text"
+						>
+							{action.label}
+						</Button>
+					)
+					: null
+			)}
+		</DialogActions>
+	</DialogContent>
 )
 
-const DialogOverlay = styled(animated(RadixDialog.Overlay), {
+const DialogOverlay = styled(animated.div, {
 	base: {
 		width: '100vw',
 		height: '100vh',
@@ -90,7 +79,7 @@ const DialogOverlay = styled(animated(RadixDialog.Overlay), {
 	},
 })
 
-const DialogContent = styled(animated(RadixDialog.Content), {
+const DialogContent = styled(animated(Ariakit.Dialog), {
 	base: {
 		minWidth: 280,
 		maxWidth: 560,
@@ -157,14 +146,3 @@ const Description = styled(Typography.BodyMedium, {
 		width: '100%',
 	},
 })
-
-export const Dialog = {
-	Root: RadixDialog.Root,
-	Trigger: RadixDialog.Trigger,
-	Portal: RadixDialog.Portal,
-	Overlay: DialogOverlay,
-	Content: DialogContent,
-	Title: RadixDialog.Title,
-	Description: RadixDialog.Description,
-	Actions: DialogActions,
-}

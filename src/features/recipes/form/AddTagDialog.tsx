@@ -34,10 +34,10 @@ export const AddTagDialog: FunctionComponent<AddTagDialogProps> = withDialogAnim
 		<SimpleDialog
 			{...props}
 			open={open}
-			onOpenChange={onClose}
+			onClose={onClose}
 			title={t('newRecipe.fields.tags.dialog.title')}
 			description={t('newRecipe.fields.tags.dialog.description')}
-			content={(
+			extraContent={(
 				<Form
 					id={formId}
 					noValidate

@@ -22,7 +22,7 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = with
 	const { theme } = settingsStore.useStore()
 	const [selectedColorScheme, setSelectedColorScheme] = useState<Settings['theme']['colorScheme']>(theme.colorScheme)
 
-	const handleRadioChange = (value: string) => {
+	const handleRadioChange = (value: string | number | null) => {
 		switch (value) {
 			case 'light':
 				return setSelectedColorScheme('light')
@@ -41,24 +41,26 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = with
 			title={t('settings.theme.colorScheme.dialog.title')}
 			description={t('settings.theme.colorScheme.dialog.description')}
 			closeOnClickOutside={false}
-			content={(
-				<RadioGroup.Root
-					onValueChange={handleRadioChange}
+			extraContent={(
+				<RadioGroup.Provider
+					setValue={handleRadioChange}
 					value={selectedColorScheme ?? 'system'}
 				>
-					<RadioGroup.Item
-						label={t('settings.theme.colorScheme.dialog.options.light')}
-						value="light"
-					/>
-					<RadioGroup.Item
-						label={t('settings.theme.colorScheme.dialog.options.dark')}
-						value="dark"
-					/>
-					<RadioGroup.Item
-						label={t('settings.theme.colorScheme.dialog.options.system')}
-						value="system"
-					/>
-				</RadioGroup.Root>
+					<RadioGroup.Root>
+						<RadioGroup.Item
+							label={t('settings.theme.colorScheme.dialog.options.light')}
+							value="light"
+						/>
+						<RadioGroup.Item
+							label={t('settings.theme.colorScheme.dialog.options.dark')}
+							value="dark"
+						/>
+						<RadioGroup.Item
+							label={t('settings.theme.colorScheme.dialog.options.system')}
+							value="system"
+						/>
+					</RadioGroup.Root>
+				</RadioGroup.Provider>
 			)}
 			actions={[
 				(

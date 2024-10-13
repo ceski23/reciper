@@ -30,24 +30,26 @@ export const LanguageDialog: FunctionComponent<LanguageDialogProps> = withDialog
 			icon="language"
 			title={t('settings.language.title')}
 			description={t('settings.language.text')}
-			onOpenChange={onCancel}
-			content={(
-				<RadioGroup.Root
-					onValueChange={value => setSelectedLanguage(value === 'system' ? undefined : value)}
+			onClose={onCancel}
+			extraContent={(
+				<RadioGroup.Provider
+					setValue={value => setSelectedLanguage(value === 'system' ? undefined : String(value))}
 					value={selectedLanguage ?? 'system'}
 				>
-					<RadioGroup.Item
-						label={t('settings.theme.colorScheme.dialog.options.system')}
-						value="system"
-					/>
-					{Object.entries(LANGUAGES).map(([value, label]) => (
+					<RadioGroup.Root>
 						<RadioGroup.Item
-							key={value}
-							label={label}
-							value={value}
+							label={t('settings.theme.colorScheme.dialog.options.system')}
+							value="system"
 						/>
-					))}
-				</RadioGroup.Root>
+						{Object.entries(LANGUAGES).map(([value, label]) => (
+							<RadioGroup.Item
+								key={value}
+								label={label}
+								value={value}
+							/>
+						))}
+					</RadioGroup.Root>
+				</RadioGroup.Provider>
 			)}
 			actions={[
 				(

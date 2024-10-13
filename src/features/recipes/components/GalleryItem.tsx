@@ -1,5 +1,5 @@
+import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import type { FunctionComponent } from 'react'
 import { Item } from 'react-photoswipe-gallery'
 import { useImageDimensions } from 'lib/hooks/useImageDimensions'
@@ -20,24 +20,20 @@ export const GalleryItem: FunctionComponent<GalleryItemProps> = ({ image }) => {
 			cropped
 		>
 			{({ ref, open }) => (
-				<RovingFocusGroup.Item
-					asChild
+				<GridItem
 					key={image}
+					ref={ref}
+					onClick={open}
+					type="button"
 				>
-					<GridItem
-						ref={ref}
-						onClick={open}
-						type="button"
-					>
-						<ImageThumbnail src={image} />
-					</GridItem>
-				</RovingFocusGroup.Item>
+					<ImageThumbnail src={image} />
+				</GridItem>
 			)}
 		</Item>
 	)
 }
 
-const GridItem = styled('button', {
+const GridItem = styled(Ariakit.CompositeItem, {
 	base: {
 		border: 'none',
 		background: 'none',

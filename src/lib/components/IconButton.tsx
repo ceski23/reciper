@@ -1,19 +1,20 @@
+import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
 import { type ComponentProps, forwardRef, useCallback, useState } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
-import { Icon } from 'lib/components/Icon'
-import { Tooltip } from 'lib/components/Tooltip'
 import { useLongPress } from 'lib/hooks/useLongPress'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
+import { Icon } from './Icon'
+import { Tooltip } from './Tooltip'
 
-type IconButtonProps = {
+type IconButtonProps = ComponentProps<typeof ButtonBase> & {
 	icon: SvgSpriteIconName
 	title: string
 }
 
-export const IconButton = forwardRef<HTMLButtonElement, ComponentProps<typeof ButtonBase> & IconButtonProps>(({
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(({
 	icon,
 	type = 'button',
 	title,
@@ -30,9 +31,9 @@ export const IconButton = forwardRef<HTMLButtonElement, ComponentProps<typeof Bu
 	return (
 		<Tooltip
 			content={title}
-			sideOffset={4}
+			gutter={4}
 			open={isTooltipOpen}
-			onOpenChange={setIsTooltipOpen}
+			setOpen={setIsTooltipOpen}
 		>
 			<ButtonBase
 				type={type}
@@ -41,13 +42,16 @@ export const IconButton = forwardRef<HTMLButtonElement, ComponentProps<typeof Bu
 				{...mergeProps(props, eventHandlers, longPressHandlers)}
 			>
 				{renderRipples}
-				<StyledIcon name={icon} />
+				<Icon
+					name={icon}
+					size={24}
+				/>
 			</ButtonBase>
 		</Tooltip>
 	)
 })
 
-const ButtonBase = styled('button', {
+const ButtonBase = styled(Ariakit.Button, {
 	base: {
 		width: 40,
 		height: 40,
@@ -157,11 +161,4 @@ const ButtonBase = styled('button', {
 			},
 		},
 	],
-})
-
-const StyledIcon = styled(Icon, {
-	base: {
-		width: 24,
-		height: 24,
-	},
 })

@@ -1,71 +1,70 @@
+import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { animated, config, useTransition } from '@react-spring/web'
-import { type ComponentPropsWithoutRef, type FunctionComponent, useEffect, useState } from 'react'
+import { type FunctionComponent, type ReactElement } from 'react'
 import { theme } from 'lib/styles'
-import { Typography } from './Typography'
+import { typography } from './Typography'
 
-export const Tooltip: FunctionComponent<
-	ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>
-> = ({
+type TooltipProps =
+	& Pick<Ariakit.TooltipProps, 'gutter' | 'onClose' | 'overflowPadding'>
+	& Pick<Ariakit.TooltipProviderProps, 'placement' | 'timeout' | 'open' | 'setOpen'>
+	& {
+		content: string
+		children: ReactElement
+	}
+
+export const Tooltip: FunctionComponent<TooltipProps> = ({
 	children,
 	content,
+	gutter = 8,
+	onClose,
+	overflowPadding = 8,
+	placement = 'top',
+	timeout = 500,
 	open,
-	defaultOpen,
-	onOpenChange,
-	side = 'top',
-	align = 'center',
-	sideOffset = 8,
-	collisionPadding = 8,
-	...props
+	setOpen,
 }) => {
-	const [internalOpen, setInternalOpen] = useState(defaultOpen)
-	const transitions = useTransition(internalOpen, {
+	const tooltip = Ariakit.useTooltipStore()
+	const transitions = useTransition(tooltip.useState('mounted'), {
 		from: { opacity: 0 },
 		enter: { opacity: 1 },
 		leave: { opacity: 0 },
 		config: config.stiff,
 	})
 
-	useEffect(() => {
-		setInternalOpen(open)
-	}, [open])
-
 	return (
-		<TooltipPrimitive.Root
-			open={internalOpen}
-			defaultOpen={defaultOpen}
-			onOpenChange={open => {
-				setInternalOpen(open)
-				onOpenChange?.(open)
-			}}
+		<Ariakit.TooltipProvider
+			store={tooltip}
+			placement={placement}
+			timeout={timeout}
+			hideTimeout={timeout}
+			open={open}
+			setOpen={setOpen}
 		>
-			<TooltipPrimitive.Trigger asChild>
-				{children}
-			</TooltipPrimitive.Trigger>
+			<Ariakit.TooltipAnchor render={children} />
 			{transitions((styles, isOpen) =>
 				isOpen && (
-					<TooltipPrimitive.Portal forceMount>
-						<Content
-							side={side}
-							align={align}
-							sideOffset={sideOffset}
-							style={styles}
-							collisionPadding={collisionPadding}
-							{...props}
-						>
-							<Typography.BodySmall>
+					<Ariakit.Tooltip
+						alwaysVisible
+						gutter={gutter}
+						onClose={onClose}
+						overflowPadding={overflowPadding}
+						render={(
+							<Content
+								style={styles}
+								className={typography.bodySmall}
+							>
 								{content}
-							</Typography.BodySmall>
-						</Content>
-					</TooltipPrimitive.Portal>
+							</Content>
+						)}
+					/>
 				)
 			)}
-		</TooltipPrimitive.Root>
+		</Ariakit.TooltipProvider>
 	)
 }
 
-const Content = styled(animated(TooltipPrimitive.Content), {
+const Content = styled(animated.div, {
 	base: {
 		display: 'flex',
 		paddingInline: 8,

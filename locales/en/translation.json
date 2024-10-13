@@ -12,6 +12,7 @@
 		"update": "Update"
 	},
 	"notifications": {
+		"title": "Notifications",
 		"close": "Close"
 	},
 	"forms": {

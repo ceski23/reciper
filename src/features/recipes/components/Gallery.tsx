@@ -1,6 +1,6 @@
 import 'photoswipe/dist/photoswipe.css'
+import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import { useBlocker } from '@tanstack/react-router'
 import type PhotoSwipe from 'photoswipe'
 import type { EventCallback } from 'photoswipe'
@@ -45,21 +45,23 @@ export const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
 			// onOpen={'CloseWatcher' in globalThis ? handleGalleryOpen : undefined}
 			onOpen={handleGalleryOpen}
 		>
-			<ImagesGrid>
-				{images.map(image => (
-					<GalleryItem
-						key={image}
-						image={image}
-					/>
-				))}
-			</ImagesGrid>
+			<Ariakit.CompositeProvider>
+				<ImagesGrid>
+					{images.map(image => (
+						<GalleryItem
+							key={image}
+							image={image}
+						/>
+					))}
+				</ImagesGrid>
+			</Ariakit.CompositeProvider>
 		</PhotoSwipeGallery>
 	)
 }
 
 export default Gallery
 
-const ImagesGrid = styled(RovingFocusGroup.Root, {
+const ImagesGrid = styled(Ariakit.Composite, {
 	base: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',

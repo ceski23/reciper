@@ -3,8 +3,7 @@ import { useNavigate } from '@tanstack/react-router'
 import eggsImage from 'assets/images/eggs.png'
 import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ListItem } from 'lib/components/list/items'
-import { List } from 'lib/components/list/List'
+import { List } from 'lib/components/list'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
@@ -20,27 +19,27 @@ export const Units: FunctionComponent = () => {
 				title={t('paths.units')}
 				onBackClick={() => navigate({ to: '/settings' })}
 			/>
-			<List>
-				<ListItem.Switch
+			<List.Root>
+				<List.SwitchItem
 					leadingElement="scale"
 					iconColor={theme.colors.primary}
 					title={t('settings.units.conversion.title')}
 					text={t('settings.units.conversion.text')}
 				/>
-				<ListItem.Simple
+				<List.SimpleItem
 					leadingElement="numbers"
 					iconColor={theme.colors.primary}
 					title={t('settings.units.precision.title')}
 					text={t('settings.units.precision.text', { count: 2 })}
 				/>
-			</List>
+			</List.Root>
 			<PreferredUnitsSection>
 				<Typography.TitleMedium>
 					{t('settings.units.preferred.title')}
 				</Typography.TitleMedium>
 			</PreferredUnitsSection>
-			<List>
-				<ListItem.Simple
+			<List.Root>
+				<List.SimpleItem
 					title="Eggs"
 					text={t('settings.units.preferred.preferred', { unit: 'kilogram' })}
 					leadingElement={(
@@ -50,7 +49,7 @@ export const Units: FunctionComponent = () => {
 						/>
 					)}
 				/>
-			</List>
+			</List.Root>
 		</Fragment>
 	)
 }

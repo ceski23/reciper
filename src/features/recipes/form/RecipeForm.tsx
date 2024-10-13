@@ -1,6 +1,6 @@
+import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
-import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -103,24 +103,22 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 					{t('newRecipe.fields.tags.title')}
 				</Typography.TitleMedium>
 				{tagsFields.fields.length > 0 && (
-					<TagsContainer
-						type="multiple"
-						value={[]}
-					>
-						{tagsFields.fields.map((field, index) => (
-							<ToggleGroup.Item
-								value={field.text}
-								key={field.id}
-								asChild
-							>
-								<Tag
-									text={field.text}
-									variant="outlined"
-									onClose={() => tagsFields.remove(index)}
+					<CompositeProvider>
+						<TagsContainer>
+							{tagsFields.fields.map((field, index) => (
+								<CompositeItem
+									key={field.id}
+									render={(
+										<Tag
+											text={field.text}
+											variant="outlined"
+											onClose={() => tagsFields.remove(index)}
+										/>
+									)}
 								/>
-							</ToggleGroup.Item>
-						))}
-					</TagsContainer>
+							))}
+						</TagsContainer>
+					</CompositeProvider>
 				)}
 				<AddButton
 					leftIcon="plus"
@@ -265,7 +263,7 @@ const FormSection = styled('div', {
 	},
 })
 
-const TagsContainer = styled(ToggleGroup.Root, {
+const TagsContainer = styled(Composite, {
 	base: {
 		display: 'flex',
 		flexDirection: 'row',

@@ -1,19 +1,21 @@
+import { CompositeItem } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as Label from '@radix-ui/react-label'
-import * as RovingFocusGroup from '@radix-ui/react-roving-focus'
 import mergeProps from 'merge-props'
 import type { ComponentProps, FunctionComponent } from 'react'
+import { ListItemContainer } from 'lib/components/list/ListItemContainer'
+import { ListItemContent, type ListItemContentProps } from 'lib/components/list/ListItemContent'
 import { Switch } from 'lib/components/Switch'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
-import { ListItemBase, MainContent, type MainContentProps } from './MainContent'
 
 type SwitchItemProps = {
 	switchProps?: ComponentProps<typeof Switch>
 	isDisabled?: boolean
 }
 
-export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> & SwitchItemProps & Omit<MainContentProps, 'hasWrappedText'>> = ({
+export const SwitchItem: FunctionComponent<
+	ComponentProps<typeof ListItemContainer> & SwitchItemProps & Omit<ListItemContentProps, 'hasWrappedText'>
+> = ({
 	title,
 	text,
 	leadingElement,
@@ -26,37 +28,35 @@ export const SwitchItem: FunctionComponent<ComponentProps<typeof ListItemBase> &
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
-		<SwitchItemBase
+		<SwitchItemContainer
 			variant="clickable"
 			isDisabled={isDisabled}
-			focusable={false}
 			aria-label={title}
-			{...props}
-			asChild
 			{...mergeProps(props, eventHandlers)}
+			render={<Container />}
 		>
-			<Container>
-				{!isDisabled && renderRipples}
-				<MainContent
-					overline={overline}
-					title={title}
-					text={text}
-					leadingElement={leadingElement}
-					iconColor={iconColor}
-					hasWrappedText={props.size === '3line'}
-				/>
-				<RovingFocusGroup.Item asChild>
+			{!isDisabled && renderRipples}
+			<ListItemContent
+				overline={overline}
+				title={title}
+				text={text}
+				leadingElement={leadingElement}
+				iconColor={iconColor}
+				hasWrappedText={props.size === '3line'}
+			/>
+			<CompositeItem
+				render={(
 					<Switch
 						{...switchProps}
 						disabled={isDisabled}
 					/>
-				</RovingFocusGroup.Item>
-			</Container>
-		</SwitchItemBase>
+				)}
+			/>
+		</SwitchItemContainer>
 	)
 }
 
-const SwitchItemBase = styled(ListItemBase, {
+const SwitchItemContainer = styled(ListItemContainer, {
 	base: {
 		selectors: {
 			'&:focus-within:has(> :focus-visible)': {
@@ -73,7 +73,7 @@ const SwitchItemBase = styled(ListItemBase, {
 	},
 })
 
-const Container = styled(Label.Root, {
+const Container = styled('label', {
 	base: {
 		position: 'relative',
 	},

@@ -2,10 +2,10 @@ import { styled } from '@macaron-css/react'
 import { forwardRef, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
-import { IconButton } from 'lib/components/IconButton'
-import { bodyLarge } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 import { computeStyle } from 'lib/utils/dom'
+import { IconButton } from './IconButton'
+import { typography } from './Typography'
 
 type TopSearchBarProps = {
 	query: string
@@ -33,7 +33,7 @@ export const TopSearchBar = forwardRef<HTMLInputElement, TopSearchBarProps>(({ o
 			/>
 			<TextField
 				inputMode="search"
-				className={bodyLarge}
+				className={typography.bodyLarge}
 				ref={ref}
 				value={query}
 				onChange={event => onQueryChange(event.currentTarget.value)}

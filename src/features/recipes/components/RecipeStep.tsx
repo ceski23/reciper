@@ -1,5 +1,5 @@
+import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TemperatureSegment } from 'features/recipes/components/TemperatureSegment'
@@ -20,10 +20,14 @@ export const RecipeStep = forwardRef<HTMLButtonElement, RecipeStepProps>(({ numb
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
-		<Item
-			ref={ref}
+		<Ariakit.Checkbox
 			value={String(number)}
-			{...eventHandlers}
+			render={(
+				<Item
+					ref={ref}
+					{...eventHandlers}
+				/>
+			)}
 		>
 			{renderRipples}
 			<StepNumber>
@@ -43,11 +47,11 @@ export const RecipeStep = forwardRef<HTMLButtonElement, RecipeStepProps>(({ numb
 					alt={step.text}
 				/>
 			)}
-		</Item>
+		</Ariakit.Checkbox>
 	)
 })
 
-const Item = styled(ToggleGroup.Item, {
+const Item = styled('button', {
 	base: {
 		position: 'relative',
 		border: 'none',
@@ -62,7 +66,7 @@ const Item = styled(ToggleGroup.Item, {
 		cursor: 'pointer',
 		transition: 'background-color .2s, opacity .2s',
 		selectors: {
-			'&[data-state="on"]': {
+			'&[aria-checked="true"]': {
 				opacity: 0.5,
 				textDecoration: 'line-through',
 			},

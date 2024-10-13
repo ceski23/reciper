@@ -19,7 +19,7 @@ type TopAppBarProps = {
 	title?: string
 	options?: ReactNode
 	progress?: {
-		value?: number | null | undefined
+		value?: number | undefined
 		max?: number
 	} | boolean
 	container?: HTMLElement | null
@@ -63,16 +63,18 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 						onClick={onBackClick}
 					/>
 					{scrollContainer && (
-						<PageTitle asChild>
-							<AnimatedTitle
-								container={scrollContainer}
-								shouldAnimate={configuration === 'large'}
-								style={{ viewTransitionName: isContentScrolled || configuration !== 'large' ? 'app-bar-title' : undefined }}
-								reverse
-							>
-								{title}
-							</AnimatedTitle>
-						</PageTitle>
+						<PageTitle
+							render={(
+								<AnimatedTitle
+									container={scrollContainer}
+									shouldAnimate={configuration === 'large'}
+									style={{ viewTransitionName: isContentScrolled || configuration !== 'large' ? 'app-bar-title' : undefined }}
+									reverse
+								>
+									{title}
+								</AnimatedTitle>
+							)}
+						/>
 					)}
 					<OptionsContainer>
 						{options}
@@ -87,14 +89,16 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 			{configuration === 'large' && (
 				<ExtraContent>
 					{title === undefined || scrollContainer === null ? <TitleSkeleton /> : (
-						<PageTitleLarge asChild>
-							<AnimatedTitle
-								container={scrollContainer}
-								style={{ viewTransitionName: isContentScrolled ? undefined : 'app-bar-title' }}
-							>
-								{title}
-							</AnimatedTitle>
-						</PageTitleLarge>
+						<PageTitleLarge
+							render={(
+								<AnimatedTitle
+									container={scrollContainer}
+									style={{ viewTransitionName: isContentScrolled ? undefined : 'app-bar-title' }}
+								>
+									{title}
+								</AnimatedTitle>
+							)}
+						/>
 					)}
 				</ExtraContent>
 			)}

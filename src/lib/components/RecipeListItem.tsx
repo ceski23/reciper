@@ -3,19 +3,21 @@ import { animated, useInView } from '@react-spring/web'
 import type { FunctionComponent, ReactNode } from 'react'
 import * as providers from 'features/recipes/providers/websites'
 import type { Recipe } from 'features/recipes/types'
+import { List } from 'lib/components/list'
 import { isDefined } from 'lib/utils'
-import { ListItem } from './list/items'
 
 type RecipeListItemProps = {
 	recipe: Recipe
 	details?: ReactNode
 }
 
-export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe, details }) => {
-	const defaultDetails = [
+export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
+	recipe,
+	details = [
 		`${recipe.ingredients.length} ingredients`,
 		recipe.prepTime ? `${recipe.prepTime} minutes` : undefined,
-	].filter(isDefined).join('  •  ')
+	].filter(isDefined).join('  •  '),
+}) => {
 	const [ref, style] = useInView(() => ({
 		from: {
 			opacity: 0,
@@ -36,7 +38,7 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({ recipe,
 			ref={ref}
 			overline={provider?.name}
 			title={recipe.name}
-			text={details ?? defaultDetails}
+			text={details}
 			leadingElement={<RecipeImage src={recipe.image} />}
 			size="3line"
 			to="/recipes/$id"
@@ -54,4 +56,4 @@ const RecipeImage = styled('img', {
 	},
 })
 
-const AnimatedListItem = animated(ListItem.Link)
+const AnimatedListItem = animated(List.LinkItem)

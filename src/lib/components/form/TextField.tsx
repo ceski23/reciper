@@ -32,7 +32,8 @@ export const TextField = <TFormShape extends FieldValues, TFieldName extends Pat
 				{...props}
 				onValueChange={value => onChange(value || null)}
 				value={value?.toString() ?? ''}
-				error={error?.message}
+				hasError={Boolean(error)}
+				supportingText={error?.message}
 			/>
 		)}
 	/>

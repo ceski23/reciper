@@ -1,32 +1,41 @@
+import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
-import type { ComponentProps, FunctionComponent } from 'react'
+import { type ComponentProps, forwardRef } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
-import { Icon } from 'lib/components/Icon'
 import { useRipples } from 'lib/hooks/useRipples'
 import { styleUtils, theme } from 'lib/styles'
+import { Icon } from './Icon'
 
-type ButtonProps = {
+type ButtonProps = ComponentProps<typeof Container> & {
 	leftIcon?: SvgSpriteIconName
 }
 
-export const Button: FunctionComponent<ComponentProps<typeof ButtonBase> & ButtonProps> = ({
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
 	children,
 	leftIcon,
 	...props
-}) => {
+}, ref) => {
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
-		<ButtonBase {...mergeProps(props, eventHandlers)}>
+		<Container
+			ref={ref}
+			{...mergeProps(props, eventHandlers)}
+		>
 			{!props.disabled && renderRipples}
-			{leftIcon && <ButtonIcon name={leftIcon} />}
+			{leftIcon && (
+				<Icon
+					size={18}
+					name={leftIcon}
+				/>
+			)}
 			{children}
-		</ButtonBase>
+		</Container>
 	)
-}
+})
 
-const ButtonBase = styled('button', {
+const Container = styled(Ariakit.Button, {
 	base: {
 		position: 'relative',
 		overflow: 'hidden',
@@ -165,12 +174,5 @@ const ButtonBase = styled('button', {
 	},
 	defaultVariants: {
 		variant: 'tonal',
-	},
-})
-
-const ButtonIcon = styled(Icon, {
-	base: {
-		width: 18,
-		height: 18,
 	},
 })

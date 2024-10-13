@@ -1,18 +1,46 @@
 import { styled } from '@macaron-css/react'
-import * as RadixSwitch from '@radix-ui/react-switch'
-import { type ComponentProps, forwardRef } from 'react'
+import { type AriaAttributes, forwardRef, useState } from 'react'
 import { styleUtils, theme } from 'lib/styles'
 
-export const Switch = forwardRef<HTMLButtonElement, ComponentProps<typeof RadixSwitch.Root>>((props, ref) => (
-	<Track
-		{...props}
-		ref={ref}
-	>
-		<Handle />
-	</Track>
-))
+type SwitchProps = AriaAttributes & {
+	defaultValue?: boolean
+	checked?: boolean
+	onCheckedChange?: (checked: boolean) => void
+	disabled?: boolean
+}
 
-const Track = styled(RadixSwitch.Root, {
+export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
+	defaultValue,
+	checked,
+	onCheckedChange,
+	disabled,
+	...props
+}, ref) => {
+	const [isOn, setIsOn] = useState(defaultValue ?? false)
+
+	if (checked !== isOn && checked !== undefined) {
+		setIsOn(checked ?? false)
+	}
+
+	return (
+		<Track
+			type="button"
+			ref={ref}
+			role="switch"
+			disabled={disabled}
+			aria-checked={isOn}
+			onClick={() => {
+				setIsOn(!isOn)
+				onCheckedChange?.(!isOn)
+			}}
+			{...props}
+		>
+			<Handle />
+		</Track>
+	)
+})
+
+const Track = styled('button', {
 	base: {
 		width: 52,
 		height: 32,
@@ -26,17 +54,17 @@ const Track = styled(RadixSwitch.Root, {
 		transition: 'background-color .2s, border-color .2s',
 		cursor: 'pointer',
 		selectors: {
-			'&[data-state="checked"]': {
+			'&[aria-checked="true"]': {
 				backgroundColor: theme.colors.primary,
 				borderColor: theme.colors.primary,
 			},
-			'&[data-disabled]': {
+			'&:disabled': {
 				borderColor: styleUtils.transparentize(theme.colors.onSurface, 0.12),
 				backgroundColor: styleUtils.transparentize(theme.colors.surfaceVariant, 0.12),
 				opacity: 0.38,
 				cursor: 'unset',
 			},
-			'&[data-disabled][data-state="checked"]': {
+			'&:disabled[aria-checked="true"]': {
 				opacity: 1,
 				backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.12),
 				borderColor: 'transparent',
@@ -45,7 +73,7 @@ const Track = styled(RadixSwitch.Root, {
 	},
 })
 
-const Handle = styled(RadixSwitch.Thumb, {
+const Handle = styled('span', {
 	base: {
 		width: 16,
 		height: 16,
@@ -68,56 +96,56 @@ const Handle = styled(RadixSwitch.Thumb, {
 			transition: 'width .2s, height .2s, margin-inline .2s, background-color .2s',
 		},
 		selectors: {
-			':not([data-disabled]):hover > &': {
+			':not(:disabled):hover > &': {
 				backgroundColor: theme.colors.onSurfaceVariant,
 			},
-			':not([data-disabled]):hover > &::after': {
+			':not(:disabled):hover > &::after': {
 				backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.08),
 			},
-			':not([data-disabled]):focus-visible > &::after': {
+			':not(:disabled):focus-visible > &::after': {
 				backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.12),
 			},
-			':not([data-disabled]):active > &': {
+			':not(:disabled):active > &': {
 				width: 28,
 				height: 28,
 				transform: 'translateX(0px)',
 			},
-			':not([data-disabled]):active > &::after': {
+			':not(:disabled):active > &::after': {
 				backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.12),
 			},
-			'[data-state="checked"]:not([data-disabled]) > &': {
+			'[aria-checked="true"]:not(:disabled) > &': {
 				backgroundColor: theme.colors.onPrimary,
 				width: 24,
 				height: 24,
 				transform: 'translateX(22px)',
 			},
-			'[data-state="checked"]:hover:not([data-disabled]) > &': {
+			'[aria-checked="true"]:hover:not(:disabled) > &': {
 				backgroundColor: theme.colors.primaryContainer,
 			},
-			'[data-state="checked"]:hover:not([data-disabled]) > &::after': {
+			'[aria-checked="true"]:hover:not(:disabled) > &::after': {
 				backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.08),
 			},
-			'[data-state="checked"]:focus-visible:not([data-disabled]) > &::after': {
+			'[aria-checked="true"]:focus-visible:not(:disabled) > &::after': {
 				backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.12),
 			},
-			'[data-state="checked"]:active:not([data-disabled]) > &': {
+			'[aria-checked="true"]:active:not(:disabled) > &': {
 				width: 28,
 				height: 28,
 				transform: 'translateX(20px)',
 			},
-			'[data-state="checked"]:active:not([data-disabled]) > &::after': {
+			'[aria-checked="true"]:active:not(:disabled) > &::after': {
 				backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.12),
 			},
-			'[data-disabled] > &': {
+			':disabled > &': {
 				backgroundColor: theme.colors.onSurface,
 			},
-			'[data-state="checked"][data-disabled] > &': {
+			'[aria-checked="true"]:disabled > &': {
 				backgroundColor: theme.colors.surface,
 				width: 24,
 				height: 24,
 				transform: 'translateX(22px)',
 			},
-			'[data-disabled] > &::after': {
+			':disabled > &::after': {
 				content: 'none',
 			},
 		},

@@ -4,8 +4,7 @@ import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/dialog/Dialog'
 import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
 import { Icon } from 'lib/components/Icon'
-import { ListItem } from 'lib/components/list/items'
-import { List } from 'lib/components/list/List'
+import { List } from 'lib/components/list'
 
 type AddRecipeDialogProps = {
 	open?: boolean
@@ -27,7 +26,7 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = withDial
 			title={t('recipes.addRecipe.title')}
 			description={t('recipes.addRecipe.description')}
 			icon="recipes"
-			onOpenChange={onClose}
+			onClose={onClose}
 			open={open}
 			actions={[
 				(
@@ -40,9 +39,9 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = withDial
 					</Button>
 				),
 			]}
-			content={(
-				<List>
-					<ListItem.Link
+			extraContent={(
+				<List.Root>
+					<List.LinkItem
 						to="/recipes/new"
 						title={t('recipes.addRecipe.addManually')}
 						leadingElement={(
@@ -52,7 +51,7 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = withDial
 							/>
 						)}
 					/>
-					<ListItem.Simple
+					<List.SimpleItem
 						title={t('recipes.addRecipe.addByUrl.title')}
 						leadingElement={(
 							<Icon
@@ -62,7 +61,7 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = withDial
 						)}
 						onClick={onAddByUrl}
 					/>
-				</List>
+				</List.Root>
 			)}
 		/>
 	)
