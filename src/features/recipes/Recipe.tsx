@@ -1,3 +1,4 @@
+import { AnimateDialog } from '@components/dialog/AnimateDialog'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useRouter } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
@@ -83,36 +84,37 @@ export const Recipe: FunctionComponent = () => {
 				)}
 			/>
 			{status === 'success' && (
-				<SimpleDialog
-					open={isDeleteDialogOpen}
-					title={t('recipes.delete.title')}
-					description={t('recipes.delete.confirmation', { name: recipe.name })}
-					onClose={() => setIsDeleteDialogOpen(false)}
-					actions={[
-						(
-							<Button
-								key="cancel"
-								variant="text"
-								onClick={() => setIsDeleteDialogOpen(false)}
-							>
-								{t('recipes.delete.cancel')}
-							</Button>
-						),
-						(
-							<Button
-								key="delete"
-								variant="filled"
-								onClick={() => {
-									deleteRecipeMutation.mutate(recipe.id, {
-										onSuccess: () => history.back(),
-									})
-								}}
-							>
-								{t('recipes.delete.delete')}
-							</Button>
-						),
-					]}
-				/>
+				<AnimateDialog open={isDeleteDialogOpen}>
+					<SimpleDialog
+						title={t('recipes.delete.title')}
+						description={t('recipes.delete.confirmation', { name: recipe.name })}
+						onClose={() => setIsDeleteDialogOpen(false)}
+						actions={[
+							(
+								<Button
+									key="cancel"
+									variant="text"
+									onClick={() => setIsDeleteDialogOpen(false)}
+								>
+									{t('recipes.delete.cancel')}
+								</Button>
+							),
+							(
+								<Button
+									key="delete"
+									variant="filled"
+									onClick={() => {
+										deleteRecipeMutation.mutate(recipe.id, {
+											onSuccess: () => history.back(),
+										})
+									}}
+								>
+									{t('recipes.delete.delete')}
+								</Button>
+							),
+						]}
+					/>
+				</AnimateDialog>
 			)}
 			{status === 'pending' ? <RecipeContentSkeleton /> : <RecipeContent recipe={recipe} />}
 		</Fragment>
