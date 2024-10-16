@@ -1,6 +1,7 @@
 import { keyframes, style } from '@macaron-css/core'
 import { useRouter } from '@tanstack/react-router'
 import { useLayoutEffect, useRef } from 'react'
+import { theme } from 'lib/styles'
 
 const fadeIn = keyframes({
 	from: {
@@ -45,6 +46,9 @@ const pushClass = style({
 		},
 		'&::view-transition-new(root)': {
 			animation: `210ms cubic-bezier(0, 0, 0.2, 1) 90ms both ${fadeIn}, 300ms cubic-bezier(0.4, 0, 0.2, 1) both ${slideFromRight}`,
+		},
+		'&::view-transition-image-pair(root)': {
+			background: theme.colors.background,
 		},
 	},
 })
