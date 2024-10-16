@@ -26,7 +26,7 @@ export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
-	const { notify } = useNotifications()
+	const notifications = useNotifications()
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
 	const [container, setContainer] = useState<HTMLElement | null>(null)
@@ -56,19 +56,23 @@ export const Recipes: FunctionComponent = () => {
 	useEffect(() => {
 		if (recipes.data?.length === 0) {
 			const id = setTimeout(() => {
-				notify(t('recipes.sampleRecipes.text'), {
+				notifications.notify(t('recipes.sampleRecipes.text'), {
 					id: 'samples',
 					duration: Number.POSITIVE_INFINITY,
 					action: {
 						label: t('recipes.sampleRecipes.add'),
-						onClick: () => addRecipes.mutate(sampleRecipes),
+						onClick: () => {
+							addRecipes.mutate(sampleRecipes, {
+								onSuccess: () => notifications.hide('samples'),
+							})
+						},
 					},
 				})
 			}, 2000)
 
 			return () => clearTimeout(id)
 		}
-	}, [recipes.data?.length, addRecipes, notify, t])
+	}, [recipes.data?.length, addRecipes, t, notifications])
 
 	return (
 		<Fragment>
