@@ -2,8 +2,7 @@ import { useIsContainerScrolled } from '@hooks/useIsContainerScrolled'
 import { styled } from '@macaron-css/react'
 import { animated } from '@react-spring/web'
 import { uiStore } from '@stores/ui'
-import { computeStyle } from '@utils/dom'
-import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useMemo, useState } from 'react'
+import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useCallback, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'lib/styles'
@@ -27,6 +26,30 @@ type TopAppBarProps = {
 	onBackClick: () => void
 }
 
+const getVarName = (variable: string) => variable.match(/var\((.*)\)/)?.[1] ?? ''
+
+const useAppBarColor = (isContentScrolled: boolean, elevation: ComponentProps<typeof AppBarBase>['elevation']) => {
+	const getColor = useCallback(
+		() =>
+			window.getComputedStyle(document.body).getPropertyValue(
+				getVarName(isContentScrolled || elevation === 'onScroll' ? theme.colors.surfaceContainer : theme.colors.surface),
+			),
+		[isContentScrolled, elevation],
+	)
+	const [themeColor, setThemeColor] = useState(() => getColor())
+
+	useEffect(() => {
+		setThemeColor(getColor())
+
+		const styleObserver = new MutationObserver(() => setThemeColor(getColor()))
+		styleObserver.observe(document.head, { childList: true })
+
+		return () => styleObserver.disconnect()
+	}, [getColor])
+
+	return themeColor
+}
+
 export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	title,
 	configuration,
@@ -40,10 +63,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
 	const { mainContent } = uiStore.useStore()
-	const themeColor = useMemo(
-		() => computeStyle('backgroundColor', isContentScrolled || elevation === 'onScroll' ? theme.colors.surfaceContainer : theme.colors.surface),
-		[isContentScrolled, elevation],
-	)
+	const themeColor = useAppBarColor(isContentScrolled, elevation)
 	const scrollContainer = container ?? mainContent
 
 	return (
