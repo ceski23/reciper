@@ -1,11 +1,12 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
-import { counting } from 'radash'
-import { Fragment, type FunctionComponent, useMemo } from 'react'
+import { counting, isEmpty } from 'radash'
+import { type FunctionComponent, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { RecipeCard } from 'features/home/components/RecipeCard'
+import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
 import { recipesQuery } from 'features/recipes/recipes'
 import type { Recipe } from 'features/recipes/types'
 import { Chip } from 'lib/components/Chip'
@@ -17,6 +18,8 @@ import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
 import { computeStyle } from 'lib/utils/dom'
 import { FakeSearchBar } from './components/FakeSearchBar'
+import { RecipeCardSkeleton } from './components/RecipeCardSkeleton'
+import { TagsSkeleton } from './components/TagsSkeleton'
 
 const recipeHasRating = (recipe: Recipe): recipe is Recipe & Required<Pick<Recipe, 'rating'>> => isDefined(recipe.rating)
 
@@ -53,70 +56,76 @@ export const Home: FunctionComponent = () => {
 				placeholder={t('home.searchBarPlaceholder')}
 				style={{ gridColumn: '2' }}
 			/>
-			{recipes.data === undefined || recipes.data.length === 0
-				? (
-					<EmptyState>
+			{recipes.status === 'success' && isEmpty(recipes.data) && (
+				<EmptyState>
+					<Typography.TitleLarge>
 						{t('home.emptyMessage')}
-					</EmptyState>
-				)
-				: (
-					<Fragment>
-						<FullbleedSection>
-							<Typography.TitleMedium style={{ paddingInline: 16 }}>
-								{t('home.recentRecipes')}
-							</Typography.TitleMedium>
-							<CardsList>
-								{getRecentRecipes(recipes.data, 10).map(recipe => (
-									<RecipeCard
-										key={recipe.id}
-										recipe={recipe}
-									/>
-								))}
-							</CardsList>
-						</FullbleedSection>
-						<Section>
-							<Typography.TitleMedium>
-								{t('home.mostCommonTags')}
-							</Typography.TitleMedium>
-							<CompositeProvider>
-								<TagsContainer>
-									{getMostCommonTags(recipes.data, 15).map(tag => (
-										<CompositeItem
-											key={tag}
-											render={(
-												<StyledChip
-													text={tag}
-													variant="outlined"
-													to="/recipes/search"
-													search={{ query: tag }}
-												/>
-											)}
+					</Typography.TitleLarge>
+				</EmptyState>
+			)}
+			{(recipes.isLoading || !isEmpty(recipes.data)) && (
+				<FullbleedSection>
+					<Typography.TitleMedium style={{ paddingInline: 16 }}>
+						{t('home.recentRecipes')}
+					</Typography.TitleMedium>
+					<CardsList>
+						{recipes.status === 'pending' && Array.from({ length: 3 }, (_, index) => <RecipeCardSkeleton key={index} />)}
+						{recipes.status === 'success' && getRecentRecipes(recipes.data, 10).map(recipe => (
+							<RecipeCard
+								key={recipe.id}
+								recipe={recipe}
+							/>
+						))}
+					</CardsList>
+				</FullbleedSection>
+			)}
+			{(recipes.isLoading || !isEmpty(recipes.data)) && (
+				<Section>
+					<Typography.TitleMedium>
+						{t('home.mostCommonTags')}
+					</Typography.TitleMedium>
+					<CompositeProvider>
+						<TagsContainer>
+							{recipes.status === 'pending' && <TagsSkeleton />}
+							{recipes.status === 'success' && getMostCommonTags(recipes.data, 15).map(tag => (
+								<CompositeItem
+									key={tag}
+									render={(
+										<StyledChip
+											text={tag}
+											variant="outlined"
+											to="/recipes/search"
+											search={{ query: tag }}
 										/>
-									))}
-								</TagsContainer>
-							</CompositeProvider>
-						</Section>
-						<FullbleedSection>
-							<Typography.TitleMedium style={{ paddingInline: 16 }}>
-								{t('home.topRecipes')}
-							</Typography.TitleMedium>
-							<List.Root>
-								{getTopRecipes(recipes.data, 10).map(recipe => (
-									<RecipeListItem
-										key={recipe.id}
-										recipe={recipe}
-										details={(
-											<ListItemDetail>
-												{recipe.rating}
-												<ListItemIcon name="star" />
-											</ListItemDetail>
-										)}
-									/>
-								))}
-							</List.Root>
-						</FullbleedSection>
-					</Fragment>
-				)}
+									)}
+								/>
+							))}
+						</TagsContainer>
+					</CompositeProvider>
+				</Section>
+			)}
+			{(recipes.isLoading || !isEmpty(recipes.data)) && (
+				<FullbleedSection>
+					<Typography.TitleMedium style={{ paddingInline: 16 }}>
+						{t('home.topRecipes')}
+					</Typography.TitleMedium>
+					<List.Root>
+						{recipes.status === 'pending' && Array.from({ length: 5 }, (_, index) => <RecipeListItemSkeleton key={index} />)}
+						{recipes.status === 'success' && getTopRecipes(recipes.data, 10).map(recipe => (
+							<RecipeListItem
+								key={recipe.id}
+								recipe={recipe}
+								details={(
+									<ListItemDetail>
+										{recipe.rating}
+										<ListItemIcon name="star" />
+									</ListItemDetail>
+								)}
+							/>
+						))}
+					</List.Root>
+				</FullbleedSection>
+			)}
 		</Container>
 	)
 }
