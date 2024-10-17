@@ -37,3 +37,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 		</React.StrictMode>
 	),
 )
+
+if ('virtualKeyboard' in navigator) {
+	// @ts-expect-error TS doesn't know about this property
+	navigator.virtualKeyboard.overlaysContent = true
+}
