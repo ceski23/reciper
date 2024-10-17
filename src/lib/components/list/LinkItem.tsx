@@ -7,7 +7,9 @@ import { type ComponentProps, forwardRef } from 'react'
 import { ListItemContainer } from './ListItemContainer'
 import { ListItemContent, type ListItemContentProps } from './ListItemContent'
 
-type LinkItemProps = Pick<ToOptions, 'to' | 'search' | 'params' | 'state'>
+type LinkItemProps = Pick<ToOptions, 'to' | 'search' | 'params' | 'state'> & {
+	isDisabled?: boolean
+}
 
 export const LinkItem = forwardRef<
 	HTMLAnchorElement,
@@ -22,15 +24,17 @@ export const LinkItem = forwardRef<
 	params,
 	state,
 	overline,
+	isDisabled,
 	...props
 }, ref) => {
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
 		<CompositeItem
+			disabled={isDisabled}
 			render={(
 				<ListItemContainer
-					variant="clickable"
+					variant={isDisabled ? 'disabled' : 'clickable'}
 					aria-label={title}
 					{...mergeProps(props, eventHandlers)}
 					render={(

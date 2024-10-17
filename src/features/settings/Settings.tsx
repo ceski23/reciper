@@ -41,6 +41,7 @@ export const Settings: FunctionComponent = () => {
 					title={t('settings.units.title')}
 					text={t('settings.account.text')}
 					to="/settings/units"
+					isDisabled
 				/>
 				<List.SimpleItem
 					leadingElement="language"

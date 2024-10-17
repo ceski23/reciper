@@ -38,6 +38,9 @@ export const ListItemContainer = styled(Role.div, {
 				},
 			},
 			nonClickable: {},
+			disabled: {
+				opacity: 0.3,
+			},
 		},
 	},
 	defaultVariants: {
