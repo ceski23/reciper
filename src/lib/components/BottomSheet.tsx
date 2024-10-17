@@ -115,13 +115,9 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 				>
 					<Handle />
 					<Content>
-						<Ariakit.DialogHeading
-							render={(
-								<Typography.TitleLarge>
-									{title}
-								</Typography.TitleLarge>
-							)}
-						/>
+						<Ariakit.DialogHeading render={<Title />}>
+							{title}
+						</Ariakit.DialogHeading>
 						{children}
 					</Content>
 				</Container>
@@ -129,6 +125,12 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 		/>
 	)
 }
+
+const Title = styled(Typography.TitleLarge, {
+	base: {
+		color: theme.colors.onSurface,
+	},
+})
 
 const Container = styled(animated.div, {
 	base: {
