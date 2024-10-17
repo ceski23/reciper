@@ -82,7 +82,5 @@ const FabContainer = styled('div', {
 		paddingInline: 16,
 		paddingBottom: 16,
 		justifyContent: 'flex-end',
-		position: 'relative',
-		bottom: 'env(keyboard-inset-height, 0)',
 	},
 })

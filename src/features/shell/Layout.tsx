@@ -132,6 +132,7 @@ const ContentOverlayContainer = styled('div', {
 		display: 'flex',
 		flexDirection: 'column',
 		pointerEvents: 'none',
-		bottom: navigationMenuHeight,
+		bottom: `max(${navigationMenuHeight}, env(keyboard-inset-height, 0))`,
+		transition: 'bottom .2s',
 	},
 })
