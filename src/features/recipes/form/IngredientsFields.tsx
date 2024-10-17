@@ -60,7 +60,7 @@ export const IngredientsFields: FunctionComponent<IngredientsFieldsProps> = ({ c
 		const { active, over } = event
 
 		if (active.id !== over?.id) {
-			navigator.vibrate(50)
+			navigator.vibrate(1)
 		}
 	}
 

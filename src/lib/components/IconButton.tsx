@@ -24,7 +24,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(({
 	const { eventHandlers, renderRipples } = useRipples()
 	const handleLongPress = useCallback(() => {
 		setIsTooltipOpen(true)
-		navigator.vibrate(50)
+		navigator.vibrate(1)
 	}, [])
 	const longPressHandlers = useLongPress(handleLongPress, 700)
 
