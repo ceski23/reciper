@@ -1,8 +1,18 @@
-import { closestCenter, DndContext, type DragEndEvent, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
+import {
+	closestCenter,
+	DndContext,
+	type DragEndEvent,
+	KeyboardSensor,
+	PointerSensor,
+	TouchSensor,
+	type UniqueIdentifier,
+	useSensor,
+	useSensors,
+} from '@dnd-kit/core'
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
 import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { styled } from '@macaron-css/react'
-import type { FunctionComponent } from 'react'
+import { type FunctionComponent, useState } from 'react'
 import { type Control, useFieldArray } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import type { RecipeFormValues } from 'features/recipes/form/scheme'
@@ -27,6 +37,11 @@ export const InstructionsFields: FunctionComponent<InstructionsFieldsProps> = ({
 		useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
 		useSensor(TouchSensor),
 	)
+	const [draggedFieldId, setDraggedFieldId] = useState<UniqueIdentifier>()
+
+	const handleDragStart = (event: DragEndEvent) => {
+		setDraggedFieldId(event.active.id)
+	}
 
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event
@@ -37,6 +52,16 @@ export const InstructionsFields: FunctionComponent<InstructionsFieldsProps> = ({
 
 			instructionsFields.move(oldIndex, newIndex)
 		}
+
+		setDraggedFieldId(undefined)
+	}
+
+	const handleDragOver = (event: DragEndEvent) => {
+		const { active, over } = event
+
+		if (active.id !== over?.id) {
+			navigator.vibrate(50)
+		}
 	}
 
 	return (
@@ -44,7 +69,9 @@ export const InstructionsFields: FunctionComponent<InstructionsFieldsProps> = ({
 			<DndContext
 				sensors={sensors}
 				collisionDetection={closestCenter}
+				onDragStart={handleDragStart}
 				onDragEnd={handleDragEnd}
+				onDragOver={handleDragOver}
 				modifiers={[restrictToVerticalAxis]}
 			>
 				<SortableContext
@@ -60,6 +87,7 @@ export const InstructionsFields: FunctionComponent<InstructionsFieldsProps> = ({
 								label={t('newRecipe.fields.steps.step', { index: fieldIndex + 1 })}
 								name={`instructions.${groupIndex}.items.${fieldIndex}.text`}
 								control={control}
+								isSelected={field.id === draggedFieldId}
 								trailingAddon={(
 									<DeleteButton
 										icon="delete"

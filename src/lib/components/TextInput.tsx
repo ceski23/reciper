@@ -20,6 +20,7 @@ export type TextInputProps = {
 	inputProps?: ComponentProps<'input'>
 	className?: string
 	hasError?: boolean
+	isSelected?: boolean
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
@@ -35,6 +36,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 	trailingAddon,
 	inputProps,
 	className,
+	isSelected,
 }, ref) => {
 	const { t } = useTranslation()
 	const fieldId = useId()
@@ -62,6 +64,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 			<FieldInnerContainer
 				hasError={hasError}
 				disabled={disabled}
+				selected={isSelected}
 			>
 				{leadingIcon && (
 					<FieldAddon className={typography.bodyLarge}>
@@ -158,6 +161,16 @@ const FieldInnerContainer = styled('div', {
 				opacity: 0.38,
 				':hover': {
 					borderColor: theme.colors.outline,
+				},
+			},
+		},
+		selected: {
+			true: {
+				outlineColor: theme.colors.primary,
+				borderColor: theme.colors.primary,
+				':hover': {
+					outlineColor: theme.colors.primary,
+					borderColor: theme.colors.primary,
 				},
 			},
 		},
