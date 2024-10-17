@@ -146,11 +146,14 @@ export const Search: FunctionComponent = () => {
 								max={120}
 								step={5}
 								value={maxPreparationTime ?? 0}
-								onValueCommit={time =>
+								onValueCommit={time => {
+									if (time === maxPreparationTime) return
+
 									changeSearchParams(prev => ({
 										...prev,
 										maxPreparationTime: time === 0 ? undefined : time,
-									}))}
+									}))
+								}}
 							/>
 						</TimeFilter>
 					</FilterSection>
