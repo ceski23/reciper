@@ -185,6 +185,7 @@
 		"success": "Recipe saved successfully"
 	},
 	"scraping": {
+		"title": "Scraping error",
 		"error": "Couldn't scrape this recipe. Website {{website}} might not be supported.",
 		"save": "Save recipe",
 		"close": "Close"

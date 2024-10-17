@@ -192,6 +192,7 @@
 		"success": "Pomyślnie zaktualizowano przepis"
 	},
 	"scraping": {
+		"title": "Import przepisu",
 		"error": "Nie można pobrać tego przepisu. Strona {{website}} może nie być obsługiwana.",
 		"save": "Zapisz przepis",
 		"close": "Zamknij"

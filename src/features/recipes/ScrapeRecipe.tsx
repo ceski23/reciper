@@ -71,7 +71,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 			)}
 			<AnimateDialog open={isError}>
 				<SimpleDialog
-					title="Scraping error"
+					title={t('scraping.title')}
 					description={t('scraping.error', { website: isValidUrl(url) ? new URL(url).host : undefined })}
 					actions={[
 						{
