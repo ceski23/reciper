@@ -21,6 +21,10 @@ const TanStackRouterDevtools = import.meta.env.PROD
 	? () => null
 	: lazy(() => import('@tanstack/router-devtools').then(res => ({ default: res.TanStackRouterDevtools })))
 
+const ReactQueryDevtools = import.meta.env.PROD
+	? () => null
+	: lazy(() => import('@tanstack/react-query-devtools').then(res => ({ default: res.ReactQueryDevtools })))
+
 export const lightThemeClass = createTheme(theme, {
 	colors: schemes.light,
 })
@@ -81,6 +85,7 @@ export const Layout: FunctionComponent = () => {
 			<AppUpdatePrompt />
 			<Suspense>
 				<TanStackRouterDevtools />
+				<ReactQueryDevtools />
 			</Suspense>
 			<ScrollRestoration />
 		</LayoutBase>
