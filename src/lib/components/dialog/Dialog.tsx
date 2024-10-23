@@ -36,6 +36,7 @@ export const SimpleDialog: FunctionComponent<SimpleDialogProps & ComponentProps<
 	...props
 }) => (
 	<DialogContent
+		unmountOnHide
 		backdrop={<DialogOverlay style={{ opacity: styles?.opacity }} />}
 		style={styles}
 		variant={icon ? 'withIcon' : 'simple'}
