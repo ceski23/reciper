@@ -79,7 +79,8 @@
 				"title": "Import from URL",
 				"description": "Paste URL address to recipe that you want to import",
 				"import": "Import",
-				"label": "URL address"
+				"label": "URL address",
+				"invalid": "Invalid URL address"
 			}
 		},
 		"view": {

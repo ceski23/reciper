@@ -85,7 +85,8 @@
 				"title": "Import z adresu URL",
 				"description": "Wklej adres URL przepisu, który chcesz zaimportować.",
 				"import": "Importuj",
-				"label": "Adres URL"
+				"label": "Adres URL",
+				"invalid": "Nieprawidłowy adres URL"
 			}
 		},
 		"view": {

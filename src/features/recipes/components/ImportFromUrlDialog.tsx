@@ -1,26 +1,40 @@
+import { TextField } from '@components/form/TextField'
+import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
 import { useNavigate } from '@tanstack/react-router'
-import { type FunctionComponent, useId, useState } from 'react'
+import i18next from 'i18next'
+import { type FunctionComponent, useId } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import * as v from 'valibot'
 import { Button } from 'lib/components/Button'
 import { SimpleDialog } from 'lib/components/dialog/Dialog'
 import { withDialogAnimation } from 'lib/components/dialog/withDialogAnimation'
-import { TextInput } from 'lib/components/TextInput'
 
-type AddByUrlDialogProps = {
+type ImportFromUrlDialogProps = {
 	open?: boolean
 	onClose: () => void
 }
 
-export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = withDialogAnimation(({
+const recipeUrlSchema = () =>
+	v.object({
+		url: v.pipe(
+			v.string(i18next.t('recipes.addRecipe.addByUrl.invalid')),
+			v.url(i18next.t('recipes.addRecipe.addByUrl.invalid')),
+		),
+	})
+
+export const ImportFromUrlDialog: FunctionComponent<ImportFromUrlDialogProps> = withDialogAnimation(({
 	onClose,
 	open,
 	...props
 }) => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
-	const [url, setUrl] = useState('')
 	const formId = useId()
+	const { control, handleSubmit } = useForm<v.InferOutput<ReturnType<typeof recipeUrlSchema>>>({
+		resolver: valibotResolver(recipeUrlSchema()),
+	})
 
 	return (
 		<SimpleDialog
@@ -46,33 +60,33 @@ export const AddByUrlDialog: FunctionComponent<AddByUrlDialogProps> = withDialog
 						variant="filled"
 						type="submit"
 						form={formId}
-						disabled={url === ''}
 					>
 						{t('recipes.addRecipe.addByUrl.import')}
 					</Button>
 				),
 			]}
 			extraContent={(
-				<UrlFieldForm
+				<Form
 					id={formId}
+					noValidate
 					onSubmit={event => {
 						event.preventDefault()
-						if (url !== '') navigate({ to: '/recipes/scrape', search: { url } })
+						event.stopPropagation()
+						handleSubmit(({ url }) => navigate({ to: '/recipes/scrape', search: { url } }))(event)
 					}}
 				>
-					<TextInput
+					<TextField
 						label={t('recipes.addRecipe.addByUrl.label')}
-						value={url}
-						onValueChange={setUrl}
-						inputProps={{ type: 'url' }}
+						control={control}
+						name="url"
 					/>
-				</UrlFieldForm>
+				</Form>
 			)}
 		/>
 	)
 })
 
-const UrlFieldForm = styled('form', {
+const Form = styled('form', {
 	base: {
 		display: 'flex',
 		paddingInline: 24,

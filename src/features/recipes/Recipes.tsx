@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { Route as recipesIndexRoute } from 'routes/recipes/index'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { Notification, useNotifications } from 'features/notifications'
-import { AddByUrlDialog } from 'features/recipes/components/AddByUrlDialog'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
+import { ImportFromUrlDialog } from 'features/recipes/components/ImportFromUrlDialog'
 import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
 import { recipesQuery, useAddRecipes, useSyncRecipes } from 'features/recipes/recipes'
 import { sampleRecipes } from 'features/recipes/samples'
@@ -168,7 +168,7 @@ export const Recipes: FunctionComponent = () => {
 					/>
 				</FabContainer>
 			</ContentOverlayPortal>
-			<AddByUrlDialog
+			<ImportFromUrlDialog
 				open={isUrlDialogOpen}
 				onClose={() => setIsUrlDialogOpen(false)}
 			/>
