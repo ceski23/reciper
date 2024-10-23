@@ -1,47 +1,54 @@
-const worker = new Worker(new URL('../imageWorker.ts', import.meta.url), {
+const colorExtractWorker = new Worker(new URL('../colorExtractWorker.ts', import.meta.url), {
 	type: 'module',
 })
 
-type WorkerResponse = {
+export type ColorExtractWorkerResponse = {
 	url: string
 	color: string
 }
 
-export const getColorFromImage = (imageUrl?: string, resizedImageSize = 128) => {
-	if (!imageUrl) return
+const imageToBuffer = (image: HTMLImageElement, resizedImageSize: number) => {
+	const sizeRatio = image.width / image.height
+	const { targetWidth, targetHeight } = image.width > image.height
+		? {
+			targetWidth: resizedImageSize,
+			targetHeight: resizedImageSize / sizeRatio,
+		}
+		: {
+			targetWidth: resizedImageSize * sizeRatio,
+			targetHeight: resizedImageSize,
+		}
+	const canvas = new OffscreenCanvas(targetWidth, targetHeight)
+	const context = canvas.getContext('2d')
+	context?.drawImage(image, 0, 0, targetWidth, targetHeight)
+	const imageData = context?.getImageData(0, 0, targetWidth, targetHeight)
 
-	const handleImageLoad = () => {
-		const sizeRatio = image.width / image.height
-		const { targetWidth, targetHeight } = image.width > image.height
-			? {
-				targetWidth: resizedImageSize,
-				targetHeight: resizedImageSize / sizeRatio,
-			}
-			: {
-				targetWidth: resizedImageSize * sizeRatio,
-				targetHeight: resizedImageSize,
-			}
-		const canvas = new OffscreenCanvas(targetWidth, targetHeight)
-		const context = canvas.getContext('2d')
-		context?.drawImage(image, 0, 0, targetWidth, targetHeight)
-		const imageData = context?.getImageData(0, 0, targetWidth, targetHeight)
+	return imageData?.data.buffer
+}
 
-		worker.postMessage({
-			buffer: imageData?.data.buffer,
-			url: imageUrl,
-		})
-	}
-
+const loadImage = (imageUrl: string, onLoad: (image: HTMLImageElement) => void) => {
 	const image = new Image()
 	image.crossOrigin = 'Anonymous'
 	image.src = import.meta.env.VITE_CORS_PROXY !== undefined
 		? import.meta.env.VITE_CORS_PROXY + encodeURIComponent(imageUrl)
 		: imageUrl
 
-	image.addEventListener('load', handleImageLoad, { once: true })
+	image.addEventListener('load', () => onLoad(image), { once: true })
+}
+
+export const getColorFromImage = (imageUrl?: string, resizedImageSize = 128) => {
+	if (!imageUrl) return
+
+	loadImage(imageUrl, image => {
+		colorExtractWorker.postMessage({
+			buffer: imageToBuffer(image, resizedImageSize),
+			url: imageUrl,
+			size: resizedImageSize,
+		})
+	})
 
 	return new Promise<string>(resolve =>
-		worker.addEventListener('message', (event: MessageEvent<WorkerResponse>) => {
+		colorExtractWorker.addEventListener('message', (event: MessageEvent<ColorExtractWorkerResponse>) => {
 			if (event.data.url === imageUrl) resolve(event.data.color)
 		}, { once: true })
 	)

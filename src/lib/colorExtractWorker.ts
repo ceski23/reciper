@@ -1,8 +1,10 @@
 import { argbFromRgb, hexFromArgb, QuantizerCelebi, Score } from '@material/material-color-utilities'
+import { type ColorExtractWorkerResponse } from '@utils/images'
 
 type EventPayload = {
 	url: string
 	buffer: ArrayBuffer
+	size: number
 }
 
 const rgbaToArgb = (src: Uint8ClampedArray) => {
@@ -19,18 +21,22 @@ const cache = new Map<string, string>()
 
 globalThis.addEventListener('message', (event: MessageEvent<EventPayload>) => {
 	if (cache.has(event.data.url)) {
-		return globalThis.postMessage({
-			url: event.data.url,
-			color: cache.get(event.data.url),
-		})
+		return globalThis.postMessage(
+			{
+				url: event.data.url,
+				color: cache.get(event.data.url)!,
+			} satisfies ColorExtractWorkerResponse,
+		)
 	}
 
 	const modified = Array.from(rgbaToArgb(new Uint8ClampedArray(event.data.buffer)))
-	const quantizerResult = QuantizerCelebi.quantize(modified, 128)
+	const quantizerResult = QuantizerCelebi.quantize(modified, event.data.size)
 	const [color] = Score.score(quantizerResult).map(hexFromArgb)
 
-	globalThis.postMessage({
-		url: event.data.url,
-		color,
-	})
+	globalThis.postMessage(
+		{
+			url: event.data.url,
+			color,
+		} satisfies ColorExtractWorkerResponse,
+	)
 })
