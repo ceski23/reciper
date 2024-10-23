@@ -1,4 +1,5 @@
 import config from '@ceski23/eslint-config'
+import pluginRouter from '@tanstack/eslint-plugin-router'
 
 /**
  * @type {Array<import('eslint').Linter.FlatConfig>}
@@ -13,9 +14,11 @@ export default [
 			'vite-env.d.ts',
 			'svgSpritePlugin.d.ts',
 			'svgSpritePlugin.ts',
+			'dist',
 		],
 	},
 	...config,
+	...pluginRouter.configs['flat/recommended'],
 	{
 		rules: {
 			'import/no-cycle': 'warn',

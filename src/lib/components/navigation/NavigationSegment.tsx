@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { Link, type ToOptions } from '@tanstack/react-router'
+import { Link, type ToOptions, useMatchRoute } from '@tanstack/react-router'
 import { forwardRef } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { styleUtils, theme } from 'lib/styles'
@@ -19,31 +19,36 @@ export const NavigationSegment = forwardRef<HTMLAnchorElement, NavigationSegment
 	badge,
 	to,
 	...props
-}, ref) => (
-	<SegmentBase
-		to={to}
-		ref={ref}
-		{...props}
-	>
-		<IconContainer>
-			<SegmentIcon name={icon} />
-			{badge && (
-				<Badge variant={typeof badge === 'string' ? undefined : 'empty'}>
-					{typeof badge === 'string' && (
-						<Typography.LabelSmall>
-							{badge}
-						</Typography.LabelSmall>
-					)}
-				</Badge>
+}, ref) => {
+	const matchRoute = useMatchRoute()
+
+	return (
+		<SegmentBase
+			to={to}
+			ref={ref}
+			onClick={event => (matchRoute({ to }) !== false) && event.preventDefault()}
+			{...props}
+		>
+			<IconContainer>
+				<SegmentIcon name={icon} />
+				{badge && (
+					<Badge variant={typeof badge === 'string' ? undefined : 'empty'}>
+						{typeof badge === 'string' && (
+							<Typography.LabelSmall>
+								{badge}
+							</Typography.LabelSmall>
+						)}
+					</Badge>
+				)}
+			</IconContainer>
+			{label && (
+				<Typography.LabelMedium>
+					{label}
+				</Typography.LabelMedium>
 			)}
-		</IconContainer>
-		{label && (
-			<Typography.LabelMedium>
-				{label}
-			</Typography.LabelMedium>
-		)}
-	</SegmentBase>
-))
+		</SegmentBase>
+	)
+})
 
 const SegmentBase = styled(Link, {
 	base: {

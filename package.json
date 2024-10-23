@@ -58,6 +58,7 @@
 	"devDependencies": {
 		"@ceski23/eslint-config": "github:ceski23/eslint-config#feat/flat-config",
 		"@ceski23/vite-plugin-svg-sprite": "^1.0.0",
+		"@tanstack/eslint-plugin-router": "^1.74.5",
 		"@tanstack/router-devtools": "^1.32.12",
 		"@tanstack/router-vite-plugin": "^1.32.10",
 		"@types/dom-close-watcher": "^1.0.0",
