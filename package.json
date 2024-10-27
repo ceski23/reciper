@@ -12,7 +12,9 @@
 		"prepare": "husky",
 		"postinstall": "patch-package",
 		"detect-circular-deps": "dpdm src/main.tsx",
-		"generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg"
+		"generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg",
+		"i18n:check": "i18n-check --locales ./locales --source en --format i18next",
+		"i18n:sync": "i18next-locales-sync --primaryLanguage en --secondaryLanguages pl --localesFolder ./locales --spaces 4 --useEmptyString"
 	},
 	"dependencies": {
 		"@ariakit/react": "^0.4.7",
@@ -59,6 +61,7 @@
 	"devDependencies": {
 		"@ceski23/eslint-config": "github:ceski23/eslint-config#feat/flat-config",
 		"@ceski23/vite-plugin-svg-sprite": "^1.0.0",
+		"@lingual/i18n-check": "^0.3.1",
 		"@tanstack/eslint-plugin-router": "^1.74.5",
 		"@tanstack/router-devtools": "^1.32.12",
 		"@tanstack/router-vite-plugin": "^1.32.10",
@@ -71,6 +74,7 @@
 		"dprint": "^0.45.1",
 		"eslint": "^8.57.0",
 		"husky": "^9.0.11",
+		"i18next-locales-sync": "^2.1.0",
 		"lint-staged": "^15.2.2",
 		"patch-package": "^8.0.0",
 		"rollup-plugin-visualizer": "^5.12.0",

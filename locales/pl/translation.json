@@ -26,19 +26,23 @@
 			"ingredients_one": "{{count}} składnik",
 			"ingredients_few": "{{count}} składniki",
 			"ingredients_many": "{{count}} składników",
+			"ingredients_other": "{{count}} składników",
 			"prepTime_one": "{{count}} minuta",
 			"prepTime_few": "{{count}} minuty",
 			"prepTime_many": "{{count}} minut",
+			"prepTime_other": "{{count}} minut",
 			"calories": "{{count}} kcal",
 			"servings_one": "{{count}} porcja",
 			"servings_few": "{{count}} porcje",
-			"servings_many": "{{count}} porcji"
+			"servings_many": "{{count}} porcji",
+			"servings_other": "{{count}} porcji"
 		},
 		"ingredients": {
 			"title": "Składniki",
 			"amount_one": "{{count}} produkt",
 			"amount_few": "{{count}} produkty",
 			"amount_many": "{{count}} produktów",
+			"amount_other": "{{count}} produktów",
 			"increase": "Zwiększ ilość porcji",
 			"decrease": "Zmniejsz ilość porcji",
 			"servings_one": "{{count}} porcja",
@@ -93,7 +97,15 @@
 			"list": "Pokaż jako listę",
 			"grid": "Pokaż jako siatkę"
 		},
-		"listLoadError": "Nie udało się załadować przepisów"
+		"listLoadError": "Nie udało się załadować przepisów",
+		"selection": {
+			"start": "Wybierz przepisy",
+			"reset": "Wyczyść",
+			"selected_one": "1 wybrany",
+			"selected_few": "{{count}} wybrane",
+			"selected_many": "{{count}} wybranych",
+			"selected_other": "{{count}} wybranych"
+		}
 	},
 	"newRecipe": {
 		"title": "Nowy przepis",
@@ -106,7 +118,8 @@
 				"label": "Czas przygotowywania",
 				"unit_one": "minuta",
 				"unit_few": "minuty",
-				"unit_many": "minut"
+				"unit_many": "minut",
+				"unit_other": "minut"
 			},
 			"servings": "Porcje",
 			"calories": "Kalorie",
@@ -222,13 +235,14 @@
 				"title": "Szybkie akcje",
 				"importFile": "Import z pliku",
 				"exportFile": "Eksport do pliku",
-				"exportUrls": "Eksportuj adresy URL przepisów"
-			},
-			"import": {
-				"success_one": "Pomyślnie zaimportowano {{count}} przepis",
-				"success_few": "Pomyślnie zaimportowano {{count}} przepisy",
-				"success_many": "Pomyślnie zaimportowano {{count}} przepisów",
-				"error": "Wystąpił błąd podczas importowania przepisów"
+				"exportUrls": "Eksportuj adresy URL przepisów",
+				"import": {
+					"success_one": "Pomyślnie zaimportowano {{count}} przepis",
+					"success_few": "Pomyślnie zaimportowano {{count}} przepisy",
+					"success_many": "Pomyślnie zaimportowano {{count}} przepisów",
+					"success_other": "Pomyślnie zaimportowano {{count}} przepisów",
+					"error": "Wystąpił błąd podczas importowania przepisów"
+				}
 			}
 		},
 		"theme": {
@@ -269,7 +283,8 @@
 				"title": "Precyzja przeliczania",
 				"text_one": "Zaokrąglij do {{count}} cyfry po przecinku",
 				"text_few": "Zaokrąglij do {{count}} cyfr po przecinku",
-				"text_many": "Zaokrąglij do {{count}} cyfr po przecinku"
+				"text_many": "Zaokrąglij do {{count}} cyfr po przecinku",
+				"text_other": "Zaokrąglij do {{count}} cyfr po przecinku"
 			},
 			"preferred": {
 				"title": "Preferowane jednostki składników",
@@ -310,7 +325,8 @@
 				"noLimit": "Bez limitu",
 				"upTo_one": "Do {{count}} minuty",
 				"upTo_few": "Do {{count}} minut",
-				"upTo_many": "Do {{count}} minut"
+				"upTo_many": "Do {{count}} minut",
+				"upTo_other": "Do {{count}} minut"
 			},
 			"requiredIngredients": {
 				"title": "Zawiera składniki"
