@@ -1,7 +1,9 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
+import { Icon } from '@components/Icon'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
-import { Fragment, type FunctionComponent, useState } from 'react'
+import { Fragment, type FunctionComponent, Suspense, useState } from 'react'
+import React from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { AddTagDialog } from 'features/recipes/form/AddTagDialog'
@@ -15,6 +17,8 @@ import { IconButton } from 'lib/components/IconButton'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles/theme'
 
+const ImagePreview = React.lazy(() => import('./ImagePreview'))
+
 type RecipeFormProps = {
 	id?: string
 	initialValues?: RecipeFormValues
@@ -24,7 +28,14 @@ type RecipeFormProps = {
 export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, initialValues }) => {
 	const { t } = useTranslation()
 	const [isAddTagDialogOpen, setIsAddTagDialogOpen] = useState(false)
-	const { handleSubmit, control, formState: { errors }, watch } = useForm<RecipeFormValues>({
+	const {
+		handleSubmit,
+		control,
+		formState: { errors },
+		watch,
+		getValues,
+		trigger,
+	} = useForm<RecipeFormValues>({
 		resolver: valibotResolver(recipeFormSchema()),
 		defaultValues: initialValues,
 	})
@@ -41,6 +52,7 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 		name: 'tags',
 	})
 	const prepTime = watch('prepTime')
+	const [previewUrl, setPreviewUrl] = useState<string | null>(getValues('image'))
 
 	return (
 		<Form
@@ -51,9 +63,19 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 			<FormSection>
 				<TextField
 					label={t('newRecipe.fields.cover')}
-					leadingIcon="image"
 					name="image"
 					control={control}
+					leadingIcon={previewUrl && errors.image === undefined
+						? (
+							<Suspense fallback={<FallbackIcon name="image" />}>
+								<ImagePreview image={previewUrl} />
+							</Suspense>
+						)
+						: 'image'}
+					inputProps={{
+						onBlur: () => trigger('image').then(isValid => setPreviewUrl(isValid ? getValues('image') : null)),
+					}}
+					onValueChange={value => value === '' && setPreviewUrl(null)}
 				/>
 				<TextField
 					label={t('newRecipe.fields.name')}
@@ -325,5 +347,12 @@ const VerticalLine = styled('div', {
 			borderBottom: `3px solid ${theme.colors.primary}`,
 			borderLeft: `3px solid ${theme.colors.primary}`,
 		},
+	},
+})
+
+const FallbackIcon = styled(Icon, {
+	base: {
+		width: 24,
+		height: 24,
 	},
 })

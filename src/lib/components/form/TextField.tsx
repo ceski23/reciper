@@ -13,6 +13,8 @@ export type TextFieldProps<
 export const TextField = <TFormShape extends FieldValues, TFieldName extends Path<TFormShape>>({
 	name,
 	control,
+	inputProps,
+	onValueChange,
 	...props
 }: TextFieldProps<TFormShape, TFieldName>) => (
 	<Controller<TFormShape, TFieldName>
@@ -23,17 +25,32 @@ export const TextField = <TFormShape extends FieldValues, TFieldName extends Pat
 			field: {
 				onChange,
 				value,
-				...rest
+				onBlur,
+				name,
+				ref,
+				disabled,
 			},
 			fieldState: { error },
 		}) => (
 			<TextInput
-				{...rest}
-				{...props}
-				onValueChange={value => onChange(value || null)}
+				ref={ref}
+				disabled={disabled}
+				onValueChange={value => {
+					onChange(value || null)
+					onValueChange?.(value)
+				}}
 				value={value?.toString() ?? ''}
 				hasError={Boolean(error)}
 				supportingText={error?.message}
+				inputProps={{
+					...inputProps,
+					onBlur: event => {
+						inputProps?.onBlur?.(event)
+						onBlur()
+					},
+					name,
+				}}
+				{...props}
 			/>
 		)}
 	/>

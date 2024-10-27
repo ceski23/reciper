@@ -9,6 +9,8 @@ export const useImageDimensions = (imageUrl: string): Dimensions | undefined => 
 	const [dimensions, setDimensions] = useState<Dimensions>()
 
 	useLayoutEffect(() => {
+		setDimensions(undefined)
+
 		const image = new Image()
 		image.crossOrigin = 'Anonymous'
 		image.src = import.meta.env.VITE_CORS_PROXY !== undefined
@@ -21,9 +23,15 @@ export const useImageDimensions = (imageUrl: string): Dimensions | undefined => 
 				height: image.naturalHeight,
 			})
 
-		image.addEventListener('load', handleImageLoad, { once: true })
+		const handleImageError = () => setDimensions(undefined)
 
-		return () => image.removeEventListener('load', handleImageLoad)
+		image.addEventListener('load', handleImageLoad, { once: true })
+		image.addEventListener('error', handleImageError, { once: true })
+
+		return () => {
+			image.removeEventListener('load', handleImageLoad)
+			image.removeEventListener('error', handleImageError)
+		}
 	}, [imageUrl])
 
 	return dimensions

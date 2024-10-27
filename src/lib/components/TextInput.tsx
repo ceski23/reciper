@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { type ComponentProps, forwardRef, type ReactNode, useId } from 'react'
+import { type ComponentProps, forwardRef, type ReactElement, type ReactNode, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { styleUtils, theme } from 'lib/styles'
@@ -15,7 +15,7 @@ export type TextInputProps = {
 	supportingText?: string
 	disabled?: boolean
 	required?: boolean
-	leadingIcon?: SvgSpriteIconName
+	leadingIcon?: SvgSpriteIconName | ReactElement
 	trailingAddon?: ReactNode
 	inputProps?: ComponentProps<'input'>
 	className?: string
@@ -68,7 +68,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 			>
 				{leadingIcon && (
 					<FieldAddon className={typography.bodyLarge}>
-						<LeadingIcon name={leadingIcon} />
+						{typeof leadingIcon === 'string' ? <LeadingIcon name={leadingIcon} /> : leadingIcon}
 					</FieldAddon>
 				)}
 				<FieldInput
