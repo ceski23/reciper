@@ -159,6 +159,16 @@
 			"rating": {
 				"label": "Ocena"
 			},
+			"color": {
+				"label": "Kolor",
+				"extract": "Pobierz z obrazu",
+				"dialog": {
+					"title": "Wybierz kolor",
+					"description": "Wybierz kolor dla swojego przepisu",
+					"cancel": "Anuluj",
+					"select": "Wybierz"
+				}
+			},
 			"save": "Zapisz przepis"
 		},
 		"invalid": "Nieprawidłowe dane przepisu",

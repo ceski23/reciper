@@ -2,11 +2,13 @@ import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { Icon } from '@components/Icon'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
+import { getColorFromImage } from '@utils/images'
 import { Fragment, type FunctionComponent, Suspense, useState } from 'react'
 import React from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { AddTagDialog } from 'features/recipes/form/AddTagDialog'
+import { ColorPicker } from 'features/recipes/form/ColorPicker'
 import { IngredientsFields } from 'features/recipes/form/IngredientsFields'
 import { InstructionsFields } from 'features/recipes/form/InstructionsFields'
 import { recipeFormSchema, type RecipeFormValues } from 'features/recipes/form/scheme'
@@ -35,6 +37,7 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 		watch,
 		getValues,
 		trigger,
+		setValue,
 	} = useForm<RecipeFormValues>({
 		resolver: valibotResolver(recipeFormSchema()),
 		defaultValues: initialValues,
@@ -52,6 +55,7 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 		name: 'tags',
 	})
 	const prepTime = watch('prepTime')
+	const color = watch('color')
 	const [previewUrl, setPreviewUrl] = useState<string | null>(getValues('image'))
 
 	return (
@@ -76,6 +80,30 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 						onBlur: () => trigger('image').then(isValid => setPreviewUrl(isValid ? getValues('image') : null)),
 					}}
 					onValueChange={value => value === '' && setPreviewUrl(null)}
+				/>
+				<TextField
+					label={t('newRecipe.fields.color.label')}
+					name="color"
+					required
+					control={control}
+					leadingIcon={(
+						<ColorPicker
+							color={color ?? undefined}
+							onColorChange={newColor => setValue('color', newColor ?? null)}
+						/>
+					)}
+					trailingAddon={(
+						<IconButton
+							title={t('newRecipe.fields.color.extract')}
+							icon="palette"
+							onClick={async () => {
+								const image = getValues('image')
+								const color = await getColorFromImage(image ?? undefined)
+
+								color && setValue('color', color)
+							}}
+						/>
+					)}
 				/>
 				<TextField
 					label={t('newRecipe.fields.name')}

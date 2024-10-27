@@ -145,6 +145,16 @@
 			"rating": {
 				"label": "Rating"
 			},
+			"color": {
+				"label": "Color",
+				"extract": "Extract from image",
+				"dialog": {
+					"title": "Select color",
+					"description": "Select color for your recipe",
+					"cancel": "Cancel",
+					"select": "Select"
+				}
+			},
 			"save": "Save recipe"
 		},
 		"invalid": "Invalid recipe data",

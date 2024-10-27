@@ -37,7 +37,7 @@ const loadImage = (imageUrl: string, onLoad: (image: HTMLImageElement) => void) 
 }
 
 export const getColorFromImage = (imageUrl?: string, resizedImageSize = 128) => {
-	if (!imageUrl) return
+	if (!imageUrl) return Promise.resolve(undefined)
 
 	loadImage(imageUrl, image => {
 		colorExtractWorker.postMessage({
