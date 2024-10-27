@@ -60,7 +60,7 @@
 	},
 	"devDependencies": {
 		"@ceski23/eslint-config": "github:ceski23/eslint-config#feat/flat-config",
-		"@ceski23/vite-plugin-svg-sprite": "^1.0.0",
+		"@ceski23/vite-plugin-svg-sprite": "^1.0.2",
 		"@lingual/i18n-check": "^0.3.1",
 		"@tanstack/eslint-plugin-router": "^1.74.5",
 		"@tanstack/router-devtools": "^1.32.12",
