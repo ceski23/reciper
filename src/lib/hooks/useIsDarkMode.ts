@@ -1,5 +1,5 @@
+import { useMediaQuery } from '@uidotdev/usehooks'
 import { settingsStore } from 'lib/stores/settings'
-import { useMediaQuery } from './useMediaQuery'
 
 export const useIsDarkMode = () => {
 	const isSystemDarkMode = useMediaQuery('(prefers-color-scheme: dark)')

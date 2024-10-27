@@ -1,3 +1,4 @@
+import { useListSelection } from '@hooks/useListSelection'
 import { styled } from '@macaron-css/react'
 import { useIsMutating, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -9,7 +10,7 @@ import { Notification, useNotifications } from 'features/notifications'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
 import { ImportFromUrlDialog } from 'features/recipes/components/ImportFromUrlDialog'
 import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
-import { recipesQuery, useAddRecipes, useSyncRecipes } from 'features/recipes/recipes'
+import { recipesQuery, useAddRecipes, useDeleteRecipe, useSyncRecipes } from 'features/recipes/recipes'
 import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
@@ -29,6 +30,7 @@ export const Recipes: FunctionComponent = () => {
 	const notifications = useNotifications()
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
+	const deleteRecipe = useDeleteRecipe()
 	const [container, setContainer] = useState<HTMLElement | null>(null)
 	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
 	const [isUrlDialogOpen, setIsUrlDialogOpen] = useState(false)
@@ -38,6 +40,7 @@ export const Recipes: FunctionComponent = () => {
 	const syncRecipes = useSyncRecipes()
 	const isSyncing = useIsMutating({ exact: true, mutationKey: ['syncRecipes'] }) > 0
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
+	const selection = useListSelection()
 
 	const handleRecipesSync = async () => {
 		if (accountProvider === undefined || recipes.data === undefined) {
@@ -78,42 +81,81 @@ export const Recipes: FunctionComponent = () => {
 		<Fragment>
 			<TopAppBar
 				configuration="small"
-				title={t('paths.recipes')}
+				title={selection.isSelecting ? t('recipes.selection.selected', { count: selection.selectedItems.length }) : t('paths.recipes')}
 				progress={isSyncing}
 				container={container}
 				elevation={isListScrolled ? 'onScroll' : 'flat'}
 				onBackClick={() => navigate({ from: recipesIndexRoute.fullPath, to: '../', params: {} })}
-				options={[
-					(
+				leadingButton={selection.isSelecting
+					? (
 						<IconButton
-							key="view"
-							icon={recipesViewMode === 'list' ? 'viewGrid' : 'viewList'}
-							title={recipesViewMode === 'list' ? t('recipes.view.grid') : t('recipes.view.list')}
-							onClick={() => setRecipesViewMode(prev => prev === 'grid' ? 'list' : 'grid')}
+							icon="close"
+							title={t('recipes.selection.reset')}
+							onClick={selection.resetSelection}
 						/>
-					),
-					(
-						<Menu.Root
-							key="more"
-							open={isMoreOpen}
-							setOpen={setIsMoreOpen}
-							trigger={(
-								<IconButton
-									icon="more"
-									title={t('recipes.moreOptions')}
-									isSelected={isMoreOpen}
-								/>
-							)}
-						>
-							<Menu.Item
-								text={t('recipes.sync.menuItem')}
-								icon="sync"
-								onClick={handleRecipesSync}
-								disabled={accountProvider === undefined || recipes.data === undefined || isSyncing}
+					)
+					: undefined}
+				options={selection.isSelecting
+					? (
+						<Fragment>
+							<IconButton
+								icon="delete"
+								title={t('recipes.delete.menuItem')}
+								onClick={() => {
+									selection.selectedItems.forEach(id => deleteRecipe.mutate(id))
+									selection.resetSelection()
+								}}
 							/>
-						</Menu.Root>
-					),
-				]}
+							<IconButton
+								icon="share"
+								title={t('recipes.sharing.menuItem')}
+								onClick={() => {
+									navigator.share({
+										text: recipes.data
+											?.filter(recipe => selection.selectedItems.includes(recipe.id))
+											.map(recipe => recipe.url)
+											.join('\n'),
+									}).catch(
+										(error: DOMException | TypeError) => {
+											error.name !== 'AbortError' && notifications.notify(t('recipes.sharing.error'))
+										},
+									)
+								}}
+							/>
+						</Fragment>
+					)
+					: (
+						<Fragment>
+							<IconButton
+								icon={recipesViewMode === 'list' ? 'viewGrid' : 'viewList'}
+								title={recipesViewMode === 'list' ? t('recipes.view.grid') : t('recipes.view.list')}
+								onClick={() => setRecipesViewMode(prev => prev === 'grid' ? 'list' : 'grid')}
+							/>
+							<Menu.Root
+								open={isMoreOpen}
+								setOpen={setIsMoreOpen}
+								trigger={(
+									<IconButton
+										icon="more"
+										title={t('recipes.moreOptions')}
+										isSelected={isMoreOpen}
+									/>
+								)}
+							>
+								<Menu.Item
+									text={t('recipes.sync.menuItem')}
+									icon="sync"
+									onClick={handleRecipesSync}
+									disabled={accountProvider === undefined || recipes.data === undefined || isSyncing}
+								/>
+								<Menu.Item
+									text={t('recipes.selection.start')}
+									icon="select_all"
+									onClick={selection.startSelection}
+								/>
+							</Menu.Root>
+						</Fragment>
+					)}
 			/>
 			{recipes.status === 'pending'
 				? (
@@ -146,12 +188,14 @@ export const Recipes: FunctionComponent = () => {
 						virtual={{ overscan: 10 }}
 						ref={setContainer}
 						scrollRestorationId="recipesList"
+						selectionStore={selection.selectionStore}
 					>
 						{renderProbe}
 						{recipes.data.map(recipe => (
 							<RecipeListItem
 								key={recipe.id}
 								recipe={recipe}
+								isSelectionMode={selection.isSelecting}
 							/>
 						))}
 					</List.Root>

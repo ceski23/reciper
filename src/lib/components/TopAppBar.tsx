@@ -24,6 +24,7 @@ type TopAppBarProps = {
 	container?: HTMLElement | null
 	elevation?: ComponentProps<typeof AppBarBase>['elevation']
 	onBackClick: () => void
+	leadingButton?: ReactNode
 }
 
 const getVarName = (variable: string) => variable.match(/var\((.*)\)/)?.[1] ?? ''
@@ -58,6 +59,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	elevation,
 	container,
 	onBackClick,
+	leadingButton,
 }) => {
 	const { t } = useTranslation()
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
@@ -77,11 +79,13 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 					/>
 				</Helmet>
 				<AppBarBase elevation={elevation ?? (isContentScrolled ? 'onScroll' : 'flat')}>
-					<IconButton
-						icon="backArrow"
-						title={t('navigation.goBack')}
-						onClick={onBackClick}
-					/>
+					{leadingButton ?? (
+						<IconButton
+							icon="backArrow"
+							title={t('navigation.goBack')}
+							onClick={onBackClick}
+						/>
+					)}
 					{scrollContainer && (
 						<PageTitle
 							render={(

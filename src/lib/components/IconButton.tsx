@@ -1,7 +1,7 @@
 import * as Ariakit from '@ariakit/react'
-import { useLongPress } from '@hooks/useLongPress'
 import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
+import { useLongPress } from '@uidotdev/usehooks'
 import mergeProps from 'merge-props'
 import { type ComponentProps, forwardRef, useCallback, useState } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
@@ -26,7 +26,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(({
 		setIsTooltipOpen(true)
 		navigator.vibrate(1)
 	}, [])
-	const longPressHandlers = useLongPress(handleLongPress, 700)
+	const longPressHandlers = useLongPress(handleLongPress, { threshold: 700 })
 
 	return (
 		<Tooltip

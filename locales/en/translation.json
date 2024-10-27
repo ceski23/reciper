@@ -87,7 +87,13 @@
 			"list": "Show as list",
 			"grid": "Show as grid"
 		},
-		"listLoadError": "Couldn't load recipes"
+		"listLoadError": "Couldn't load recipes",
+		"selection": {
+			"start": "Select recipes",
+			"reset": "Reset selection",
+			"selected_one": "1 selected",
+			"selected_other": "{{count}} selected"
+		}
 	},
 	"newRecipe": {
 		"title": "New recipe",
