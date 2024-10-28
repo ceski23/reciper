@@ -2,7 +2,7 @@ import { useListSelection } from '@hooks/useListSelection'
 import { styled } from '@macaron-css/react'
 import { useIsMutating, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
+import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as recipesIndexRoute } from 'routes/recipes/index'
 import { RecipeCard } from 'features/home/components/RecipeCard'
@@ -22,6 +22,7 @@ import { TopAppBar } from 'lib/components/TopAppBar'
 import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { accountStore } from 'lib/stores/account'
 import { uiStore } from 'lib/stores/ui'
+import { SampleRecipesBanner } from './SampleRecipesBanner'
 
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
@@ -55,27 +56,6 @@ export const Recipes: FunctionComponent = () => {
 			onSuccess: ({ syncStatus }) => setSyncStatus(syncStatus),
 		})
 	}
-
-	useEffect(() => {
-		if (recipes.data?.length === 0) {
-			const id = setTimeout(() => {
-				notifications.notify(t('recipes.sampleRecipes.text'), {
-					id: 'samples',
-					duration: Number.POSITIVE_INFINITY,
-					action: {
-						label: t('recipes.sampleRecipes.add'),
-						onClick: () => {
-							addRecipes.mutate(sampleRecipes, {
-								onSuccess: () => notifications.hide('samples'),
-							})
-						},
-					},
-				})
-			}, 2000)
-
-			return () => clearTimeout(id)
-		}
-	}, [recipes.data?.length, addRecipes, t, notifications])
 
 	return (
 		<Fragment>
@@ -191,6 +171,10 @@ export const Recipes: FunctionComponent = () => {
 						selectionStore={selection.selectionStore}
 					>
 						{renderProbe}
+						<SampleRecipesBanner
+							show={recipes.data?.length === 0}
+							onAddClick={() => addRecipes.mutate(sampleRecipes)}
+						/>
 						{recipes.data.map(recipe => (
 							<RecipeListItem
 								key={recipe.id}

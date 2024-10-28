@@ -72,7 +72,8 @@
 		},
 		"sampleRecipes": {
 			"text": "Nie masz zapisanych żadnych przepisów. Może chcesz dodać kilka przykładowych?",
-			"add": "Dodaj"
+			"add": "Dodaj",
+			"dismiss": "Ignoruj"
 		},
 		"sync": {
 			"menuItem": "Synchronizuj przepisy",

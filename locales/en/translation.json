@@ -62,7 +62,8 @@
 		},
 		"sampleRecipes": {
 			"text": "You have no recipes saved. Do you want to add some sample recipes?",
-			"add": "Add"
+			"add": "Add",
+			"dismiss": "Dismiss"
 		},
 		"sync": {
 			"menuItem": "Sync recipes",
