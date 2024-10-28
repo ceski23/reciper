@@ -40,7 +40,21 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 		setValue,
 	} = useForm<RecipeFormValues>({
 		resolver: valibotResolver(recipeFormSchema()),
-		defaultValues: initialValues,
+		defaultValues: initialValues ?? {
+			name: undefined,
+			image: null,
+			calories: null,
+			color: null,
+			description: null,
+			gallery: [],
+			ingredients: [],
+			instructions: [],
+			prepTime: null,
+			rating: null,
+			servings: null,
+			tags: [],
+			url: null,
+		},
 	})
 	const ingredientsFields = useFieldArray({
 		control,
@@ -84,7 +98,6 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 				<TextField
 					label={t('newRecipe.fields.color.label')}
 					name="color"
-					required
 					control={control}
 					leadingIcon={(
 						<ColorPicker

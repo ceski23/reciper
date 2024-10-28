@@ -1,3 +1,4 @@
+import { Typography } from '@components/Typography'
 import {
 	closestCenter,
 	DndContext,
@@ -12,8 +13,9 @@ import {
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
 import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { styled } from '@macaron-css/react'
+import { theme } from '@styles/theme'
 import { type FunctionComponent, useState } from 'react'
-import { type Control, useFieldArray } from 'react-hook-form'
+import { type Control, useFieldArray, useFormState } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import type { RecipeFormValues } from 'features/recipes/form/scheme'
 import { SortableContainer } from 'features/recipes/form/SortableContainer'
@@ -38,6 +40,8 @@ export const InstructionsFields: FunctionComponent<InstructionsFieldsProps> = ({
 		useSensor(TouchSensor),
 	)
 	const [draggedFieldId, setDraggedFieldId] = useState<UniqueIdentifier>()
+	const { errors } = useFormState({ control, name: `instructions.${groupIndex}.items` })
+	const rootError = errors.instructions?.at?.(groupIndex)?.items?.root
 
 	const handleDragStart = (event: DragEndEvent) => {
 		setDraggedFieldId(event.active.id)
@@ -66,6 +70,11 @@ export const InstructionsFields: FunctionComponent<InstructionsFieldsProps> = ({
 
 	return (
 		<Group>
+			{rootError && (
+				<ErrorText>
+					{rootError.message}
+				</ErrorText>
+			)}
 			<DndContext
 				sensors={sensors}
 				collisionDetection={closestCenter}
@@ -129,5 +138,12 @@ const Group = styled('div', {
 		flexDirection: 'column',
 		gap: 24,
 		flex: 1,
+	},
+})
+
+const ErrorText = styled(Typography.BodySmall, {
+	base: {
+		color: theme.colors.error,
+		marginTop: 8,
 	},
 })

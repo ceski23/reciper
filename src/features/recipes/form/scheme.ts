@@ -12,12 +12,15 @@ export const recipeFormSchema = () =>
 		),
 		ingredients: v.pipe(
 			v.array(v.object({
-				items: v.array(v.object({
-					text: v.pipe(
-						v.string(i18next.t('newRecipe.form.ingredients.required')),
-						v.minLength(1, i18next.t('newRecipe.form.ingredients.required')),
-					),
-				})),
+				items: v.pipe(
+					v.array(v.object({
+						text: v.pipe(
+							v.string(i18next.t('newRecipe.form.ingredients.required')),
+							v.minLength(1, i18next.t('newRecipe.form.ingredients.required')),
+						),
+					})),
+					v.minLength(1, i18next.t('newRecipe.form.ingredients.notEmpty')),
+				),
 				group: v.nullable(
 					v.pipe(v.string(), v.minLength(1)),
 				),
@@ -26,12 +29,15 @@ export const recipeFormSchema = () =>
 		),
 		instructions: v.pipe(
 			v.array(v.object({
-				items: v.array(v.object({
-					text: v.pipe(
-						v.string(i18next.t('newRecipe.form.instructions.required')),
-						v.minLength(1, i18next.t('newRecipe.form.instructions.required')),
-					),
-				})),
+				items: v.pipe(
+					v.array(v.object({
+						text: v.pipe(
+							v.string(i18next.t('newRecipe.form.instructions.required')),
+							v.minLength(1, i18next.t('newRecipe.form.instructions.required')),
+						),
+					})),
+					v.minLength(1, i18next.t('newRecipe.form.instructions.notEmpty')),
+				),
 				group: v.nullable(
 					v.pipe(v.string(), v.minLength(1)),
 				),
