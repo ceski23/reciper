@@ -14,16 +14,17 @@ type RecipeInsightsProps = {
 	items: Array<InsightItem>
 }
 
-export const RecipeInsights: FunctionComponent<RecipeInsightsProps> = ({ items }) => (
-	<Container items={items.length < 3 ? 'few' : 'many'}>
-		{items.map(item => (
-			<Item key={item.text}>
-				<StyledIcon name={item.icon} />
-				<Text>{item.text}</Text>
-			</Item>
-		))}
-	</Container>
-)
+export const RecipeInsights: FunctionComponent<RecipeInsightsProps> = ({ items }) =>
+	items.length > 0 && (
+		<Container items={items.length < 3 ? 'few' : 'many'}>
+			{items.map(item => (
+				<Item key={item.text}>
+					<StyledIcon name={item.icon} />
+					<Text>{item.text}</Text>
+				</Item>
+			))}
+		</Container>
+	)
 
 const Container = styled('div', {
 	base: {
