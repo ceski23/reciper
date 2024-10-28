@@ -161,7 +161,7 @@
 			},
 			"color": {
 				"label": "Kolor",
-				"extract": "Pobierz z obrazu",
+				"extract": "Pobierz kolor z obrazu",
 				"dialog": {
 					"title": "Wybierz kolor",
 					"description": "Wybierz kolor dla swojego przepisu",

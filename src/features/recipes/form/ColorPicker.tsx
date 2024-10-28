@@ -2,7 +2,7 @@ import { Button } from '@components/Button'
 import { AnimateDialog } from '@components/dialog/AnimateDialog'
 import { SimpleDialog } from '@components/dialog/Dialog'
 import { styled } from '@macaron-css/react'
-import { Fragment, type FunctionComponent, useState } from 'react'
+import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { HexColorPicker } from 'react-colorful'
 import { useTranslation } from 'react-i18next'
 
@@ -15,6 +15,10 @@ export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ color, onColo
 	const { t } = useTranslation()
 	const [isOpen, setIsOpen] = useState(false)
 	const [localColor, setLocalColor] = useState(color)
+
+	useEffect(() => {
+		setLocalColor(color)
+	}, [color])
 
 	return (
 		<Fragment>
@@ -35,6 +39,7 @@ export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ color, onColo
 							/>
 						</ExtraContent>
 					)}
+					onClose={() => setIsOpen(false)}
 					actions={[
 						(
 							<Button

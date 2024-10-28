@@ -147,7 +147,7 @@
 			},
 			"color": {
 				"label": "Color",
-				"extract": "Extract from image",
+				"extract": "Extract color from image",
 				"dialog": {
 					"title": "Select color",
 					"description": "Select color for your recipe",

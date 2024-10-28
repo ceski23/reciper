@@ -95,7 +95,7 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 					trailingAddon={(
 						<IconButton
 							title={t('newRecipe.fields.color.extract')}
-							icon="palette"
+							icon="colorize"
 							onClick={async () => {
 								const image = getValues('image')
 								const color = await getColorFromImage(image ?? undefined)
