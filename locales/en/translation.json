@@ -181,7 +181,8 @@
 				"invalid": "Calories must be positive number"
 			},
 			"tags": {
-				"notEmpty": "Tag must not be empty"
+				"notEmpty": "Tag must not be empty",
+				"unique": "Tags must be unique"
 			},
 			"servings": {
 				"invalid": "Servings must be positive number"

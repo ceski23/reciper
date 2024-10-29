@@ -162,9 +162,16 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 				</Horizontal>
 			</FormSection>
 			<FormSection>
-				<Typography.TitleMedium>
-					{t('newRecipe.fields.tags.title')}
-				</Typography.TitleMedium>
+				<div>
+					<Typography.TitleMedium>
+						{t('newRecipe.fields.tags.title')}
+					</Typography.TitleMedium>
+					{errors.tags?.message && (
+						<ErrorText>
+							{errors.tags.message}
+						</ErrorText>
+					)}
+				</div>
 				{tagsFields.fields.length > 0 && (
 					<CompositeProvider>
 						<TagsContainer>

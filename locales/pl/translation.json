@@ -195,7 +195,8 @@
 				"invalid": "Kalorie muszą być liczbą większą od zera"
 			},
 			"tags": {
-				"notEmpty": "Tag nie może być pusty"
+				"notEmpty": "Tag nie może być pusty",
+				"unique": "Tagi muszą być unikalne"
 			},
 			"servings": {
 				"invalid": "Porcje muszą być liczbą większą od zera"

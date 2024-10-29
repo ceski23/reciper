@@ -44,22 +44,54 @@ export const recipeFormSchema = () =>
 			})),
 			v.minLength(1, i18next.t('newRecipe.form.ingredients.notEmpty')),
 		),
-		prepTime: v.nullable(v.pipe(v.unknown(), v.transform(Number))),
+		prepTime: v.nullable(
+			v.pipe(
+				v.unknown(),
+				v.transform(Number),
+				v.number(),
+				v.minValue(0),
+			),
+		),
 		url: v.nullable(
 			v.pipe(v.string(), v.minLength(1), v.url(i18next.t('newRecipe.form.url.invalid'))),
 		),
-		calories: v.nullable(v.pipe(v.unknown(), v.transform(Number))),
+		calories: v.nullable(
+			v.pipe(
+				v.unknown(),
+				v.transform(Number),
+				v.number(),
+				v.minValue(0),
+			),
+		),
 		tags: v.nullable(
-			v.array(
-				v.object({
-					text: v.pipe(v.string(i18next.t('newRecipe.form.tags.notEmpty')), v.minLength(1)),
-				}),
+			v.pipe(
+				v.array(
+					v.object({
+						text: v.pipe(v.string(i18next.t('newRecipe.form.tags.notEmpty')), v.minLength(1)),
+					}),
+				),
+				v.check(array =>
+					array
+						.map(item => item.text)
+						.some((item, index, arr) => arr.indexOf(item) !== index) === false, i18next.t('newRecipe.form.tags.unique')),
 			),
 			[],
 		),
-		servings: v.nullable(v.pipe(v.unknown(), v.transform(Number))),
+		servings: v.nullable(
+			v.pipe(
+				v.unknown(),
+				v.transform(Number),
+				v.number(),
+				v.minValue(1),
+			),
+		),
 		rating: v.nullable(
-			v.pipe(v.unknown(), v.transform(Number)),
+			v.pipe(
+				v.unknown(),
+				v.transform(Number),
+				v.number(),
+				v.minValue(0),
+			),
 		),
 		gallery: v.nullable(
 			v.array(
