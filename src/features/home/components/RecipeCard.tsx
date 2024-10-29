@@ -1,3 +1,4 @@
+import { Icon } from '@components/Icon'
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
 import { createLink } from '@tanstack/react-router'
@@ -43,7 +44,16 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 			{...eventHandlers}
 		>
 			{renderRipples}
-			<RecipeImage src={recipe.image} />
+			{recipe.image
+				? <RecipeImage src={recipe.image} />
+				: (
+					<RecipeImageFallback>
+						<Icon
+							name="recipes"
+							size={80}
+						/>
+					</RecipeImageFallback>
+				)}
 			<Info>
 				<Name>
 					{recipe.name}
@@ -79,6 +89,19 @@ const RecipeImage = styled('img', {
 		flex: 1,
 		minHeight: 0,
 		objectFit: 'cover',
+	},
+})
+
+const RecipeImageFallback = styled('div', {
+	base: {
+		display: 'flex',
+		width: '100%',
+		height: '100%',
+		borderRadius: 8,
+		backgroundColor: theme.colors.secondaryContainer,
+		color: theme.colors.onSecondaryContainer,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 })
 

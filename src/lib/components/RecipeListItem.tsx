@@ -71,11 +71,20 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 						<CheckboxIcon name="check" />
 					</Ariakit.Checkbox>
 				)
-				: (
+				: recipe.image
+				? (
 					<RecipeImage
 						src={recipe.image}
 						onClick={handleLeadingElementClick}
 					/>
+				)
+				: (
+					<RecipeImageFallback>
+						<Icon
+							name="recipes"
+							size={32}
+						/>
+					</RecipeImageFallback>
 				)}
 			size="3line"
 			to="/recipes/$id"
@@ -92,6 +101,19 @@ const RecipeImage = styled('img', {
 		height: 56,
 		borderRadius: 8,
 		objectFit: 'cover',
+	},
+})
+
+const RecipeImageFallback = styled('div', {
+	base: {
+		display: 'flex',
+		width: 56,
+		height: 56,
+		borderRadius: 8,
+		backgroundColor: theme.colors.secondaryContainer,
+		color: theme.colors.onSecondaryContainer,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 })
 
