@@ -4,26 +4,28 @@ import { SimpleDialog } from '@components/dialog/Dialog'
 import { styled } from '@macaron-css/react'
 import { Fragment, type FunctionComponent, useEffect, useState } from 'react'
 import { HexColorPicker } from 'react-colorful'
+import { type Control, useController } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { type RecipeFormValues } from './scheme'
 
 type ColorPickerProps = {
-	color?: string
-	onColorChange: (color?: string) => void
+	control: Control<RecipeFormValues>
 }
 
-export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ color, onColorChange }) => {
+export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ control }) => {
 	const { t } = useTranslation()
 	const [isOpen, setIsOpen] = useState(false)
-	const [localColor, setLocalColor] = useState(color)
+	const { field } = useController({ control, name: 'color' })
+	const [localColor, setLocalColor] = useState(field.value)
 
 	useEffect(() => {
-		setLocalColor(color)
-	}, [color])
+		setLocalColor(field.value)
+	}, [field.value])
 
 	return (
 		<Fragment>
 			<Color
-				style={{ backgroundColor: color }}
+				style={{ backgroundColor: field.value ?? undefined }}
 				onClick={() => setIsOpen(true)}
 				type="button"
 			/>
@@ -34,7 +36,7 @@ export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ color, onColo
 					extraContent={(
 						<ExtraContent>
 							<HexColorPicker
-								color={localColor}
+								color={localColor ?? undefined}
 								onChange={setLocalColor}
 							/>
 						</ExtraContent>
@@ -58,7 +60,7 @@ export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ color, onColo
 								type="button"
 								onClick={() => {
 									setIsOpen(false)
-									onColorChange(localColor)
+									field.onChange(localColor)
 								}}
 							>
 								{t('newRecipe.fields.color.dialog.select')}

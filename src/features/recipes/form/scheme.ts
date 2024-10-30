@@ -91,6 +91,7 @@ export const recipeFormSchema = () =>
 				v.transform(Number),
 				v.number(),
 				v.minValue(0),
+				v.maxValue(5),
 			),
 		),
 		gallery: v.nullable(

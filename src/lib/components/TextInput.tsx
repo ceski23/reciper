@@ -1,5 +1,8 @@
 import { styled } from '@macaron-css/react'
-import { type ComponentProps, forwardRef, type ReactElement, type ReactNode, useId } from 'react'
+import { type MaskitoOptions } from '@maskito/core'
+import { useMaskito } from '@maskito/react'
+import mergeRefs from 'merge-refs'
+import { type ComponentProps, forwardRef, type ReactElement, type ReactNode, type RefCallback, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { styleUtils, theme } from 'lib/styles'
@@ -21,6 +24,7 @@ export type TextInputProps = {
 	className?: string
 	hasError?: boolean
 	isSelected?: boolean
+	mask?: MaskitoOptions
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
@@ -37,7 +41,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 	inputProps,
 	className,
 	isSelected,
+	mask,
 }, ref) => {
+	const maskitoRef = useMaskito({ options: mask }) as RefCallback<HTMLInputElement>
 	const { t } = useTranslation()
 	const fieldId = useId()
 	const supportingTextId = useId()
@@ -72,9 +78,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 					</FieldAddon>
 				)}
 				<FieldInput
-					ref={ref}
+					ref={mergeRefs(ref, maskitoRef)}
 					value={value}
-					onChange={event => onValueChange?.(event.currentTarget.value)}
+					onInput={event => onValueChange?.(event.currentTarget.value)}
 					placeholder={placeholder}
 					id={fieldId}
 					disabled={disabled}

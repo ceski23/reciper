@@ -3,3 +3,7 @@ export const parseValidNumber = (text?: string | null) => {
 
 	return Number.isNaN(number) ? undefined : number
 }
+
+export const getSeparator = (locale: string, separatorType: 'decimal' | 'group') => {
+	return new Intl.NumberFormat(locale).formatToParts(1000.1).find(part => part.type === separatorType)!.value
+}

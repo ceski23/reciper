@@ -1,7 +1,10 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
+import { NumberField } from '@components/form/NumberField'
 import { Icon } from '@components/Icon'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
+import { type MaskitoOptions, type MaskitoPostprocessor } from '@maskito/core'
+import { maskitoPrefixPostprocessorGenerator } from '@maskito/kit'
 import { getColorFromImage } from '@utils/images'
 import { Fragment, type FunctionComponent, Suspense, useState } from 'react'
 import React from 'react'
@@ -27,6 +30,21 @@ type RecipeFormProps = {
 	onSubmit: (values: RecipeFormValues) => void
 }
 
+const lowerCasePostprocessor: MaskitoPostprocessor = ({ value, selection }) => {
+	return {
+		value: value.toLowerCase(),
+		selection,
+	}
+}
+
+const hexColorMask: MaskitoOptions = {
+	mask: /^#[0-9a-fA-F]{0,6}$/,
+	postprocessors: [
+		maskitoPrefixPostprocessorGenerator('#'),
+		lowerCasePostprocessor,
+	],
+}
+
 export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, initialValues }) => {
 	const { t } = useTranslation()
 	const [isAddTagDialogOpen, setIsAddTagDialogOpen] = useState(false)
@@ -34,10 +52,10 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 		handleSubmit,
 		control,
 		formState: { errors },
-		watch,
 		getValues,
 		trigger,
 		setValue,
+		watch,
 	} = useForm<RecipeFormValues>({
 		resolver: valibotResolver(recipeFormSchema()),
 		defaultValues: initialValues ?? {
@@ -68,9 +86,14 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 		control,
 		name: 'tags',
 	})
-	const prepTime = watch('prepTime')
-	const color = watch('color')
 	const [previewUrl, setPreviewUrl] = useState<string | null>(getValues('image'))
+	const [prepTimeAddon, setPrepTimeAddon] = useState(() => t('newRecipe.fields.prepTime.unit', { count: getValues('prepTime') ?? 0 }))
+
+	watch((value, { name }) => {
+		if (name === 'prepTime') {
+			setPrepTimeAddon(t('newRecipe.fields.prepTime.unit', { count: value.prepTime ?? 0 }))
+		}
+	})
 
 	return (
 		<Form
@@ -99,12 +122,8 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 					label={t('newRecipe.fields.color.label')}
 					name="color"
 					control={control}
-					leadingIcon={(
-						<ColorPicker
-							color={color ?? undefined}
-							onColorChange={newColor => setValue('color', newColor ?? null)}
-						/>
-					)}
+					mask={hexColorMask}
+					leadingIcon={<ColorPicker control={control} />}
 					trailingAddon={(
 						<IconButton
 							title={t('newRecipe.fields.color.extract')}
@@ -135,29 +154,35 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 					name="url"
 					control={control}
 				/>
-				<TextField
+				<NumberField
 					label={t('newRecipe.fields.rating.label')}
 					leadingIcon="star"
 					name="rating"
 					control={control}
+					min={0}
+					max={5}
 				/>
-				<TextField
+				<NumberField
 					label={t('newRecipe.fields.prepTime.label')}
-					trailingAddon={t('newRecipe.fields.prepTime.unit', { count: Number(prepTime ?? 0) })}
+					trailingAddon={prepTimeAddon}
 					name="prepTime"
 					control={control}
+					min={0}
 				/>
 				<Horizontal>
-					<TextField
+					<NumberField
 						label={t('newRecipe.fields.servings')}
 						name="servings"
 						control={control}
+						min={0}
 					/>
-					<TextField
+					<NumberField
 						label={t('newRecipe.fields.calories')}
 						trailingAddon="kcal"
 						name="calories"
 						control={control}
+						min={0}
+						precision={0}
 					/>
 				</Horizontal>
 			</FormSection>
