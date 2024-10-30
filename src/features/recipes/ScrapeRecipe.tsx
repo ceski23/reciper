@@ -4,6 +4,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as scrapeRecipeRoute } from 'routes/recipes/scrape'
+import { match, P } from 'ts-pattern'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
 import { scrapeRecipe } from 'features/recipes/providers/scrapper'
@@ -25,51 +26,53 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { url } = scrapeRecipeRoute.useSearch()
-	const { data: recipe, status, isError } = useQuery({
+	const query = useQuery({
 		queryKey: ['scraped', url],
 		queryFn: () => scrapeRecipe(url).catch(),
 		retry: false,
 	})
 	const addRecipe = useAddRecipe()
 
-	useApplyDynamicTheme(useDynamicTheme(recipe?.color))
+	useApplyDynamicTheme(useDynamicTheme(query.data?.color))
 	useWakelock()
 
 	return (
 		<Fragment>
 			<TopAppBar
 				configuration="large"
-				title={recipe?.name}
+				title={query.data?.name}
 				onBackClick={() => history.length > 1 ? history.back() : window.close()}
 			/>
 			{renderProbe}
-			{status !== 'success' && <RecipeContentSkeleton />}
-			{status === 'success' && (
-				<Fragment>
-					<RecipeContent recipe={recipe} />
-					<ContentOverlayPortal>
-						<FabContainer>
-							<FloatingActionButton
-								icon="save"
-								label={t('scraping.save')}
-								type="button"
-								variant="primary"
-								size={isListScrolled ? undefined : 'expanded'}
-								onClick={() =>
-									addRecipe.mutate(recipe, {
-										onSuccess: ({ id }) =>
-											navigate({
-												to: '/recipes/$id',
-												params: { id },
-												replace: true,
-											}),
-									})}
-							/>
-						</FabContainer>
-					</ContentOverlayPortal>
-				</Fragment>
-			)}
-			<AnimateDialog open={isError}>
+			{match(query)
+				.with(P.not({ status: 'success' }), () => <RecipeContentSkeleton />)
+				.with({ status: 'success' }, ({ data }) => (
+					<Fragment>
+						<RecipeContent recipe={data} />
+						<ContentOverlayPortal>
+							<FabContainer>
+								<FloatingActionButton
+									icon="save"
+									label={t('scraping.save')}
+									type="button"
+									variant="primary"
+									size={isListScrolled ? undefined : 'expanded'}
+									onClick={() =>
+										addRecipe.mutate(data, {
+											onSuccess: ({ id }) =>
+												navigate({
+													to: '/recipes/$id',
+													params: { id },
+													replace: true,
+												}),
+										})}
+								/>
+							</FabContainer>
+						</ContentOverlayPortal>
+					</Fragment>
+				))
+				.exhaustive()}
+			<AnimateDialog open={query.isError}>
 				<SimpleDialog
 					title={t('scraping.title')}
 					description={t('scraping.error', { website: isValidUrl(url) ? new URL(url).host : undefined })}

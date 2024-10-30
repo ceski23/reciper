@@ -60,6 +60,7 @@
 		"react-photoswipe-gallery": "^3.0.1",
 		"schema-dts": "^1.1.2",
 		"stan-js": "^1.2.1",
+		"ts-pattern": "^5.5.0",
 		"valibot": "^0.42.1",
 		"virtua": "^0.31.0"
 	},

@@ -4,6 +4,7 @@ import { useNavigate, useRouter } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as recipeRoute } from 'routes/recipes/$id'
+import { match } from 'ts-pattern'
 import { useNotifications } from 'features/notifications'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
@@ -22,22 +23,22 @@ export const Recipe: FunctionComponent = () => {
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const { notify } = useNotifications()
 	const { id } = recipeRoute.useParams()
-	const { data: recipe, status } = useQuery(recipeQuery(id))
+	const query = useQuery(recipeQuery(id))
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const history = useRouter().history
 	const navigate = useNavigate()
 
-	useApplyDynamicTheme(useDynamicTheme(recipe?.color))
+	useApplyDynamicTheme(useDynamicTheme(query.data?.color))
 	useWakelock()
 
 	const handleShareRecipe = () => {
-		navigator.share({ url: recipe?.url }).catch((error: DOMException | TypeError) => {
+		navigator.share({ url: query.data?.url }).catch((error: DOMException | TypeError) => {
 			error.name !== 'AbortError' && notify(t('recipes.sharing.error'))
 		})
 	}
 
-	if (status === 'error') {
+	if (query.status === 'error') {
 		notify(t('recipes.loadError'), { id: 'recipeError' })
 		history.back()
 
@@ -48,7 +49,7 @@ export const Recipe: FunctionComponent = () => {
 		<Fragment>
 			<TopAppBar
 				configuration="large"
-				title={recipe?.name}
+				title={query.data?.name}
 				onBackClick={() => history.back()}
 				options={(
 					<Menu.Root
@@ -83,40 +84,45 @@ export const Recipe: FunctionComponent = () => {
 					</Menu.Root>
 				)}
 			/>
-			{status === 'success' && (
-				<AnimateDialog open={isDeleteDialogOpen}>
-					<SimpleDialog
-						title={t('recipes.delete.title')}
-						description={t('recipes.delete.confirmation', { name: recipe.name })}
-						onClose={() => setIsDeleteDialogOpen(false)}
-						actions={[
-							(
-								<Button
-									key="cancel"
-									variant="text"
-									onClick={() => setIsDeleteDialogOpen(false)}
-								>
-									{t('recipes.delete.cancel')}
-								</Button>
-							),
-							(
-								<Button
-									key="delete"
-									variant="filled"
-									onClick={() => {
-										deleteRecipeMutation.mutate(recipe.id, {
-											onSuccess: () => history.back(),
-										})
-									}}
-								>
-									{t('recipes.delete.delete')}
-								</Button>
-							),
-						]}
-					/>
-				</AnimateDialog>
-			)}
-			{status === 'pending' ? <RecipeContentSkeleton /> : <RecipeContent recipe={recipe} />}
+			{match(query)
+				.with({ status: 'pending' }, () => <RecipeContentSkeleton />)
+				.with({ status: 'success' }, ({ data }) => (
+					<Fragment>
+						<AnimateDialog open={isDeleteDialogOpen}>
+							<SimpleDialog
+								title={t('recipes.delete.title')}
+								description={t('recipes.delete.confirmation', { name: data.name })}
+								onClose={() => setIsDeleteDialogOpen(false)}
+								actions={[
+									(
+										<Button
+											key="cancel"
+											variant="text"
+											onClick={() => setIsDeleteDialogOpen(false)}
+										>
+											{t('recipes.delete.cancel')}
+										</Button>
+									),
+									(
+										<Button
+											key="delete"
+											variant="filled"
+											onClick={() => {
+												deleteRecipeMutation.mutate(data.id, {
+													onSuccess: () => history.back(),
+												})
+											}}
+										>
+											{t('recipes.delete.delete')}
+										</Button>
+									),
+								]}
+							/>
+						</AnimateDialog>
+						<RecipeContent recipe={data} />
+					</Fragment>
+				))
+				.exhaustive()}
 		</Fragment>
 	)
 }

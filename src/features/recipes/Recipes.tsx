@@ -5,6 +5,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as recipesIndexRoute } from 'routes/recipes/index'
+import { match, P } from 'ts-pattern'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { Notification, useNotifications } from 'features/notifications'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
@@ -137,21 +138,19 @@ export const Recipes: FunctionComponent = () => {
 						</Fragment>
 					)}
 			/>
-			{recipes.status === 'pending'
-				? (
+			{match([recipes, recipesViewMode])
+				.with([{ status: 'pending' }, P._], () => (
 					<div>
 						{Array.from({ length: 8 }, (_, index) => <RecipeListItemSkeleton key={index} />)}
 					</div>
-				)
-				: recipes.status === 'error'
-				? (
+				))
+				.with([{ status: 'error' }, P._], () => (
 					<Notification
 						content={t('recipes.listLoadError')}
 						duration={Number.POSITIVE_INFINITY}
 					/>
-				)
-				: recipesViewMode === 'grid'
-				? (
+				))
+				.with([{ status: 'success' }, 'grid'], ([recipes]) => (
 					<RecipesGrid>
 						{renderProbe}
 						{recipes.data.map(recipe => (
@@ -162,8 +161,8 @@ export const Recipes: FunctionComponent = () => {
 							/>
 						))}
 					</RecipesGrid>
-				)
-				: (
+				))
+				.with([{ status: 'success' }, 'list'], ([recipes]) => (
 					<List.Root
 						virtual={{ overscan: 10 }}
 						ref={setContainer}
@@ -172,7 +171,7 @@ export const Recipes: FunctionComponent = () => {
 					>
 						{renderProbe}
 						<SampleRecipesBanner
-							show={recipes.data?.length === 0}
+							show={recipes.data.length === 0}
 							onAddClick={() => addRecipes.mutate(sampleRecipes)}
 						/>
 						{recipes.data.map(recipe => (
@@ -183,7 +182,8 @@ export const Recipes: FunctionComponent = () => {
 							/>
 						))}
 					</List.Root>
-				)}
+				))
+				.exhaustive()}
 			<ContentOverlayPortal>
 				<FabContainer>
 					<FloatingActionButton
