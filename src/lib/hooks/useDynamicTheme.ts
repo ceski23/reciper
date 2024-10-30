@@ -1,4 +1,4 @@
-import { assignInlineVars } from '@macaron-css/core/dist/dynamic'
+import { assignInlineVars } from '@macaron-css/core/dynamic'
 import { settingsStore } from '@stores/settings'
 import { createSchemes } from 'generateColors'
 import { useMemo } from 'react'

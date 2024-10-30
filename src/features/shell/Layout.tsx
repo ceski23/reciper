@@ -1,5 +1,5 @@
 import { createTheme, createVar } from '@macaron-css/core'
-import { setElementVars } from '@macaron-css/core/dist/dynamic'
+import { setElementVars } from '@macaron-css/core/dynamic'
 import { styled } from '@macaron-css/react'
 import { Outlet, ScrollRestoration } from '@tanstack/react-router'
 import { type FunctionComponent, lazy, Suspense, useLayoutEffect } from 'react'
