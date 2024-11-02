@@ -59,44 +59,47 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 	}
 
 	return (
-		<AnimatedListItem
+		<animated.div
 			style={style}
 			ref={ref}
-			overline={provider?.name}
-			title={recipe.name}
-			text={details}
-			leadingElement={isSelected
-				? (
-					<Ariakit.Checkbox render={<Checkbox onClick={handleLeadingElementClick} />}>
-						<CheckboxIcon name="check" />
-					</Ariakit.Checkbox>
-				)
-				: recipe.image
-				? (
-					<RecipeImage
-						src={recipe.image}
-						onClick={handleLeadingElementClick}
-					/>
-				)
-				: (
-					<RecipeImageFallback>
-						<Icon
-							name="recipes"
-							size={32}
+		>
+			<AnimatedListItem
+				overline={provider?.name}
+				title={recipe.name}
+				text={details}
+				leadingElement={isSelected
+					? (
+						<Ariakit.Checkbox render={<Checkbox onClick={handleLeadingElementClick} />}>
+							<CheckboxIcon name="check" />
+						</Ariakit.Checkbox>
+					)
+					: recipe.image
+					? (
+						<RecipeImage
+							src={recipe.image}
+							onClick={handleLeadingElementClick}
 						/>
-					</RecipeImageFallback>
+					)
+					: (
+						<RecipeImageFallback>
+							<Icon
+								name="recipes"
+								size={32}
+							/>
+						</RecipeImageFallback>
+					)}
+				size="3line"
+				onClick={isSelectionMode ? toggleSelection : undefined}
+				variant="clickable"
+				render={isSelectionMode ? undefined : (
+					<Link
+						to="/recipes/$id"
+						params={{ id: recipe.id }}
+					/>
 				)}
-			size="3line"
-			onClick={isSelectionMode ? toggleSelection : undefined}
-			variant="clickable"
-			render={isSelectionMode ? undefined : (
-				<Link
-					to="/recipes/$id"
-					params={{ id: recipe.id }}
-				/>
-			)}
-			{...eventHandlers}
-		/>
+				{...eventHandlers}
+			/>
+		</animated.div>
 	)
 }
 
