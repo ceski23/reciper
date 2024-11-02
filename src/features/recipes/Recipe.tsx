@@ -73,7 +73,7 @@ export const Recipe: FunctionComponent = () => {
 								text={t('recipes.sharing.menuItem')}
 								icon="share"
 								onClick={handleShareRecipe}
-								disabled={status !== 'success'}
+								disabled={query.status !== 'success'}
 							/>
 						)}
 						<Menu.Item
