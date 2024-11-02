@@ -59,7 +59,7 @@ const parseJsons = (elems: NodeListOf<Element>) => {
 			} else if (parsed['@type'] === 'Recipe') {
 				jsons.push(parsed)
 			} else if (Array.isArray(parsed)) {
-				jsons.push(...parsed.filter(x => x['@type'] === 'Recipe'))
+				jsons.push(...parsed.filter(x => x['@type'] === 'Recipe' || x['@type'].includes('Recipe')))
 			}
 		}
 	}
@@ -77,11 +77,15 @@ const getRating = (data: SchemaRecipe['aggregateRating']) => {
 const parseTags = (schemaRecipe: SchemaRecipe) => {
 	const tags: Array<string> = []
 
-	const category = schemaRecipe.recipeCategory?.toString()
-	if (category) tags.push(category.toLocaleLowerCase())
+	const category = Array.isArray(schemaRecipe.recipeCategory)
+		? schemaRecipe.recipeCategory.map(item => item.toLocaleLowerCase())
+		: [schemaRecipe.recipeCategory?.toString().toLocaleLowerCase()]
+	if (category) tags.push(...category)
 
-	const cuisine = schemaRecipe.recipeCuisine?.toString()
-	if (cuisine) tags.push(cuisine.toLocaleLowerCase())
+	const cuisine = Array.isArray(schemaRecipe.recipeCuisine)
+		? schemaRecipe.recipeCuisine.map(item => item.toLocaleLowerCase())
+		: [schemaRecipe.recipeCuisine?.toString().toLocaleLowerCase()]
+	if (cuisine) tags.push(...cuisine)
 
 	const keywords = schemaRecipe.keywords?.toString()
 	if (keywords) {
