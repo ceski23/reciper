@@ -1,3 +1,4 @@
+import { Link } from '@components/Link'
 import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,27 +22,30 @@ export const Settings: FunctionComponent = () => {
 				onBackClick={() => navigate({ to: '/settings' })}
 			/>
 			<List.Root>
-				<List.LinkItem
+				<List.SimpleItem
 					leadingElement="palette"
 					iconColor={theme.colors.primary}
 					title={t('settings.theme.title')}
 					text={t('settings.theme.text')}
-					to="/settings/theme"
+					variant="clickable"
+					render={<Link to="/settings/theme" />}
 				/>
-				<List.LinkItem
+				<List.SimpleItem
 					leadingElement="account"
 					iconColor={theme.colors.primary}
 					title={t('settings.account.title')}
 					text={t('settings.account.text')}
-					to="/settings/account"
+					variant="clickable"
+					render={<Link to="/settings/account" />}
 				/>
-				<List.LinkItem
+				<List.SimpleItem
 					leadingElement="scale"
 					iconColor={theme.colors.primary}
 					title={t('settings.units.title')}
 					text={t('settings.account.text')}
-					to="/settings/units"
 					isDisabled
+					variant="clickable"
+					render={<Link to="/settings/units" />}
 				/>
 				<List.SimpleItem
 					leadingElement="language"
@@ -50,7 +54,7 @@ export const Settings: FunctionComponent = () => {
 					text={t('settings.language.text')}
 					onClick={() => setIsLanguageDialogOpen(true)}
 				/>
-				<List.LinkItem
+				<List.SimpleItem
 					leadingElement="info"
 					iconColor={theme.colors.primary}
 					title={t('settings.about.title')}

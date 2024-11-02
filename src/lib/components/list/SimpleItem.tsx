@@ -1,7 +1,5 @@
-import { CompositeItem } from '@ariakit/react'
-import { useRipples } from '@hooks/useRipples'
-import { styled } from '@macaron-css/react'
-import mergeProps from 'merge-props'
+import * as Ariakit from '@ariakit/react'
+import { Ripples } from '@components/Ripples'
 import { type ComponentProps, forwardRef, type ReactNode } from 'react'
 import { ListItemContainer } from './ListItemContainer'
 import { ListItemContent, type ListItemContentProps } from './ListItemContent'
@@ -9,6 +7,7 @@ import { ListItemContent, type ListItemContentProps } from './ListItemContent'
 type SimpleItemProps = {
 	trailingElement?: ReactNode
 	onClick?: VoidFunction
+	isDisabled?: boolean
 }
 
 export const SimpleItem = forwardRef<
@@ -21,23 +20,32 @@ export const SimpleItem = forwardRef<
 	iconColor,
 	trailingElement,
 	overline,
+	isDisabled,
+	render,
+	variant,
 	...props
 }, ref) => {
-	const { eventHandlers, renderRipples } = useRipples()
+	const isClickable = variant === 'clickable' || props.onClick
 
 	return (
 		<ListItemContainer
 			aria-label={title}
 			ref={ref}
-			{...(props.onClick !== undefined
-				? {
-					variant: 'clickable',
-					...mergeProps(props, eventHandlers),
-					render: <Button />,
-				}
-				: props)}
+			variant={isDisabled ? 'disabled' : (isClickable ? 'clickable' : 'nonClickable')}
+			render={isClickable
+				? (
+					<Ripples
+						render={(
+							<Ariakit.CompositeItem
+								disabled={isDisabled}
+								render={render}
+							/>
+						)}
+					/>
+				)
+				: render}
+			{...props}
 		>
-			{renderRipples}
 			<ListItemContent
 				overline={overline}
 				title={title}
@@ -49,10 +57,4 @@ export const SimpleItem = forwardRef<
 			{trailingElement}
 		</ListItemContainer>
 	)
-})
-
-const Button = styled(CompositeItem, {
-	base: {
-		position: 'relative',
-	},
 })

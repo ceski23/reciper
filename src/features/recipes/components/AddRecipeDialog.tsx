@@ -1,3 +1,4 @@
+import { Link } from '@components/Link'
 import type { FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from 'lib/components/Button'
@@ -41,9 +42,10 @@ export const AddRecipeDialog: FunctionComponent<AddRecipeDialogProps> = withDial
 			]}
 			extraContent={(
 				<List.Root>
-					<List.LinkItem
-						to="/recipes/new"
+					<List.SimpleItem
 						title={t('recipes.addRecipe.addManually')}
+						variant="clickable"
+						render={<Link to="/recipes/new" />}
 						leadingElement={(
 							<Icon
 								name="pencil"

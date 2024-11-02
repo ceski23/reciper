@@ -1,5 +1,4 @@
 import { styled } from '@macaron-css/react'
-import { useNavigate } from '@tanstack/react-router'
 import { sum } from 'radash'
 import { Fragment, type FunctionComponent, type SetStateAction, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,7 +34,7 @@ export const Search: FunctionComponent = () => {
 	const matches = useRecipesSearch(deferredParams)
 	const [filtersModalState, setFiltersModalState] = useState<SheetState>('close')
 	const searchBarRef = useRef<HTMLInputElement>(null)
-	const navigate = useNavigate()
+	const navigate = searchRecipeRoute.useNavigate()
 	const filtersCount = sum([
 		maxPreparationTime !== undefined ? 1 : 0,
 		ingredients.length > 0 ? 1 : 0,

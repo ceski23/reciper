@@ -1,7 +1,8 @@
+import * as Ariakit from '@ariakit/react'
 import { Icon } from '@components/Icon'
+import { Link } from '@components/Link'
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
-import { createLink } from '@tanstack/react-router'
 import type { CSSProperties, FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Recipe } from 'features/recipes/types'
@@ -38,10 +39,14 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 				...dynamicStyles,
 				...style,
 			}}
-			ref={ref}
-			to="/recipes/$id"
-			params={{ id: recipe.id }}
 			{...eventHandlers}
+			render={(
+				<Link
+					ref={ref}
+					to="/recipes/$id"
+					params={{ id: recipe.id }}
+				/>
+			)}
 		>
 			{renderRipples}
 			{recipe.image
@@ -66,7 +71,7 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 	)
 }
 
-const Card = createLink(styled(animated.a, {
+const Card = styled(animated(Ariakit.Role), {
 	base: {
 		width: 220,
 		height: 250,
@@ -81,7 +86,7 @@ const Card = createLink(styled(animated.a, {
 		textDecoration: 'unset',
 		position: 'relative',
 	},
-}))
+})
 
 const RecipeImage = styled('img', {
 	base: {

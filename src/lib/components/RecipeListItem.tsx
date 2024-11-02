@@ -1,12 +1,13 @@
 import { useCheckboxContext } from '@ariakit/react'
 import * as Ariakit from '@ariakit/react'
 import { Icon } from '@components/Icon'
+import { Link } from '@components/Link'
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
 import { theme } from '@styles/theme'
 import { useLongPress } from '@uidotdev/usehooks'
 import { toggle } from 'radash'
-import { type FunctionComponent, type ReactNode, useMemo } from 'react'
+import { type FunctionComponent, type ReactNode } from 'react'
 import * as providers from 'features/recipes/providers/websites'
 import type { Recipe } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
@@ -47,7 +48,6 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 		event.preventDefault()
 		toggleSelection()
 	})
-	const Component = useMemo(() => isSelectionMode ? AnimatedListItem2 : AnimatedListItem, [isSelectionMode])
 
 	const handleLeadingElementClick = (event: React.MouseEvent) => {
 		if (!store) return
@@ -59,7 +59,7 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 	}
 
 	return (
-		<Component
+		<AnimatedListItem
 			style={style}
 			ref={ref}
 			overline={provider?.name}
@@ -87,9 +87,14 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 					</RecipeImageFallback>
 				)}
 			size="3line"
-			to="/recipes/$id"
-			params={{ id: recipe.id }}
 			onClick={isSelectionMode ? toggleSelection : undefined}
+			variant="clickable"
+			render={isSelectionMode ? undefined : (
+				<Link
+					to="/recipes/$id"
+					params={{ id: recipe.id }}
+				/>
+			)}
 			{...eventHandlers}
 		/>
 	)
@@ -135,5 +140,4 @@ const CheckboxIcon = styled(Icon, {
 	},
 })
 
-const AnimatedListItem = animated(List.LinkItem)
-const AnimatedListItem2 = animated(List.SimpleItem)
+const AnimatedListItem = animated(List.SimpleItem)
