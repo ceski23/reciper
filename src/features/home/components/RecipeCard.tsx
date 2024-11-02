@@ -34,6 +34,7 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 
 	return (
 		<Card
+			ref={ref}
 			style={{
 				...customStyle,
 				...dynamicStyles,
@@ -42,7 +43,6 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 			{...eventHandlers}
 			render={(
 				<Link
-					ref={ref}
 					to="/recipes/$id"
 					params={{ id: recipe.id }}
 				/>
