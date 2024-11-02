@@ -10,6 +10,7 @@ import { Typography } from 'lib/components/Typography'
 import { useDynamicTheme } from 'lib/hooks'
 import { useRipples } from 'lib/hooks/useRipples'
 import { theme } from 'lib/styles'
+import { isDefined } from 'lib/utils'
 
 type RecipeCardProps = {
 	recipe: Recipe
@@ -30,7 +31,7 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 	const details = [
 		t('recipes.details.ingredients', { count: recipe.ingredients.length }),
 		recipe.prepTime ? t('recipes.details.prepTime', { count: recipe.prepTime }) : undefined,
-	].filter(item => item !== undefined).join('  •  ')
+	].filter(isDefined).join('  •  ')
 
 	return (
 		<Card

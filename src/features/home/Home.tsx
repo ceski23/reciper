@@ -1,7 +1,7 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
-import { counting, isEmpty } from 'radash'
+import { counting, isEmpty, sort } from 'radash'
 import { type FunctionComponent, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
@@ -28,20 +28,18 @@ export const Home: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const recipes = useQuery(recipesQuery())
 	const getRecentRecipes = (recipes: Array<Recipe>, amount: number) =>
-		[...recipes]
-			.sort((a, b) => b.addedDate - a.addedDate)
+		sort(recipes, recipe => recipe.addedDate, true)
 			.slice(0, amount)
 	const getTopRecipes = (recipes: Array<Recipe>, amount: number) =>
-		recipes
-			.filter(recipeHasRating)
-			.sort((a, b) => b.rating - a.rating)
+		sort(recipes.filter(recipeHasRating), recipe => recipe.rating, true)
 			.slice(0, amount)
 	const getMostCommonTags = (recipes: Array<Recipe>, amount: number) =>
-		Object
-			.entries(counting(recipes.flatMap(recipe => recipe.tags), tag => tag))
-			.sort(([, a], [, b]) => b - a)
-			.slice(0, amount)
-			.map(([key]) => key)
+		sort(
+			Object
+				.entries(counting(recipes.flatMap(recipe => recipe.tags), tag => tag)),
+			([, count]) => count,
+			true,
+		).slice(0, amount).map(([key]) => key)
 
 	return (
 		<Container>
