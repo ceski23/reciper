@@ -34,45 +34,48 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 	].filter(isDefined).join('  •  ')
 
 	return (
-		<Card
+		<animated.div
 			ref={ref}
-			style={{
-				...customStyle,
-				...dynamicStyles,
-				...style,
-			}}
-			{...eventHandlers}
-			render={(
-				<Link
-					to="/recipes/$id"
-					params={{ id: recipe.id }}
-				/>
-			)}
+			style={style}
 		>
-			{renderRipples}
-			{recipe.image
-				? <RecipeImage src={recipe.image} />
-				: (
-					<RecipeImageFallback>
-						<Icon
-							name="recipes"
-							size={80}
-						/>
-					</RecipeImageFallback>
+			<Card
+				style={{
+					...customStyle,
+					...dynamicStyles,
+				}}
+				{...eventHandlers}
+				render={(
+					<Link
+						to="/recipes/$id"
+						params={{ id: recipe.id }}
+					/>
 				)}
-			<Info>
-				<Name>
-					{recipe.name}
-				</Name>
-				<Details>
-					{details}
-				</Details>
-			</Info>
-		</Card>
+			>
+				{renderRipples}
+				{recipe.image
+					? <RecipeImage src={recipe.image} />
+					: (
+						<RecipeImageFallback>
+							<Icon
+								name="recipes"
+								size={80}
+							/>
+						</RecipeImageFallback>
+					)}
+				<Info>
+					<Name>
+						{recipe.name}
+					</Name>
+					<Details>
+						{details}
+					</Details>
+				</Info>
+			</Card>
+		</animated.div>
 	)
 }
 
-const Card = styled(animated(Ariakit.Role), {
+const Card = styled(Ariakit.Role, {
 	base: {
 		width: 220,
 		height: 250,
