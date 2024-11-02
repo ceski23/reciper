@@ -305,7 +305,7 @@
 		},
 		"about": {
 			"title": "O aplikacji",
-			"version": "Wersja {{version}}"
+			"version": "Wersja aplikacji {{version}}"
 		},
 		"language": {
 			"title": "Język",

@@ -57,7 +57,6 @@ export const Settings: FunctionComponent = () => {
 				<List.SimpleItem
 					leadingElement="info"
 					iconColor={theme.colors.primary}
-					title={t('settings.about.title')}
 					text={t('settings.about.version', { version: `${__APP_VERSION__}-${__COMMIT_HASH__}` })}
 				/>
 			</List.Root>

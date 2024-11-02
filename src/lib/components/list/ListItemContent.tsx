@@ -8,7 +8,7 @@ import { Typography } from '../Typography'
 export type ListItemContentProps = {
 	leadingElement?: SvgSpriteIconName | ReactElement
 	iconColor?: string
-	title: string
+	title?: string
 	text?: ReactNode
 	hasWrappedText?: boolean
 	overline?: string
@@ -34,9 +34,9 @@ export const ListItemContent: FunctionComponent<ListItemContentProps> = ({
 					/>
 				)
 				: leadingElement}
-			<Content variant={text === undefined ? 'dense' : 'normal'}>
+			<Content variant={text === undefined || title === undefined ? 'dense' : 'normal'}>
 				{overline && <Overline>{overline}</Overline>}
-				<Title>{title}</Title>
+				{title && <Title>{title}</Title>}
 				{text && <TextComponent>{text}</TextComponent>}
 			</Content>
 		</Fragment>
