@@ -40,7 +40,7 @@
 			"servings_one": "{{count}} serving",
 			"servings_other": "{{count}} servings"
 		},
-		"mostCommonTags": "Most common tags",
+		"tags": "Tags",
 		"gallery": "Gallery",
 		"steps": {
 			"title": "Steps",

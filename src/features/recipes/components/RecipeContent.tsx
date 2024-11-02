@@ -65,7 +65,7 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 			{recipe.tags.length > 0 && (
 				<Section>
 					<Typography.TitleLarge>
-						{t('recipes.mostCommonTags')}
+						{t('recipes.tags')}
 					</Typography.TitleLarge>
 					<CompositeProvider>
 						<TagsContainer>

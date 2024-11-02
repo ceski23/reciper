@@ -50,7 +50,7 @@
 			"servings_many": "{{count}} porcji",
 			"servings_other": "{{count}} porcji"
 		},
-		"mostCommonTags": "Najczęstsze tagi",
+		"tags": "Tagi",
 		"gallery": "Galeria",
 		"steps": {
 			"title": "Przygotowywanie",
