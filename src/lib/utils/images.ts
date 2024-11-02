@@ -26,25 +26,26 @@ const imageToBuffer = (image: HTMLImageElement, resizedImageSize: number) => {
 	return imageData?.data.buffer
 }
 
-const loadImage = (imageUrl: string, onLoad: (image: HTMLImageElement) => void) => {
+const loadImage = async (imageUrl: string): Promise<HTMLImageElement> => {
 	const image = new Image()
 	image.crossOrigin = 'Anonymous'
 	image.src = import.meta.env.VITE_CORS_PROXY !== undefined
 		? import.meta.env.VITE_CORS_PROXY + encodeURIComponent(imageUrl)
 		: imageUrl
 
-	image.addEventListener('load', () => onLoad(image), { once: true })
+	return new Promise((resolve, reject) => {
+		image.addEventListener('load', () => resolve(image), { once: true })
+		image.addEventListener('error', () => reject(), { once: true })
+	})
 }
 
-export const getColorFromImage = (imageUrl?: string, resizedImageSize = 128) => {
-	if (!imageUrl) return Promise.resolve(undefined)
+export const getColorFromImage = async (imageUrl?: string, resizedImageSize = 128) => {
+	if (!imageUrl) return
 
-	loadImage(imageUrl, image => {
-		colorExtractWorker.postMessage({
-			buffer: imageToBuffer(image, resizedImageSize),
-			url: imageUrl,
-			size: resizedImageSize,
-		})
+	colorExtractWorker.postMessage({
+		buffer: imageToBuffer(await loadImage(imageUrl), resizedImageSize),
+		url: imageUrl,
+		size: resizedImageSize,
 	})
 
 	return new Promise<string>(resolve =>

@@ -10,6 +10,7 @@ import { Fragment, type FunctionComponent, Suspense, useState } from 'react'
 import React from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { useNotifications } from 'features/notifications'
 import { AddTagDialog } from 'features/recipes/form/AddTagDialog'
 import { ColorPicker } from 'features/recipes/form/ColorPicker'
 import { IngredientsFields } from 'features/recipes/form/IngredientsFields'
@@ -48,6 +49,7 @@ const hexColorMask: MaskitoOptions = {
 export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, initialValues }) => {
 	const { t } = useTranslation()
 	const [isAddTagDialogOpen, setIsAddTagDialogOpen] = useState(false)
+	const notifications = useNotifications()
 	const {
 		handleSubmit,
 		control,
@@ -87,13 +89,17 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 		name: 'tags',
 	})
 	const [previewUrl, setPreviewUrl] = useState<string | null>(getValues('image'))
-	const [prepTimeAddon, setPrepTimeAddon] = useState(() => t('newRecipe.fields.prepTime.unit', { count: getValues('prepTime') ?? 0 }))
 
-	watch((value, { name }) => {
-		if (name === 'prepTime') {
-			setPrepTimeAddon(t('newRecipe.fields.prepTime.unit', { count: value.prepTime ?? 0 }))
+	const handleColorExtraction = async () => {
+		const image = getValues('image')
+		try {
+			const color = await getColorFromImage(image ?? undefined)
+
+			color && setValue('color', color)
+		} catch (error) {
+			notifications.notify('Could not extract color from image', { duration: Number.POSITIVE_INFINITY })
 		}
-	})
+	}
 
 	return (
 		<Form
@@ -124,18 +130,15 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 					control={control}
 					mask={hexColorMask}
 					leadingIcon={<ColorPicker control={control} />}
-					trailingAddon={(
-						<IconButton
-							title={t('newRecipe.fields.color.extract')}
-							icon="colorize"
-							onClick={async () => {
-								const image = getValues('image')
-								const color = await getColorFromImage(image ?? undefined)
-
-								color && setValue('color', color)
-							}}
-						/>
-					)}
+					trailingAddon={previewUrl
+						? (
+							<IconButton
+								title={t('newRecipe.fields.color.extract')}
+								icon="colorize"
+								onClick={handleColorExtraction}
+							/>
+						)
+						: undefined}
 				/>
 				<TextField
 					label={t('newRecipe.fields.name')}
@@ -164,7 +167,7 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 				/>
 				<NumberField
 					label={t('newRecipe.fields.prepTime.label')}
-					trailingAddon={prepTimeAddon}
+					trailingAddon={t('newRecipe.fields.prepTime.unit', { count: watch('prepTime') ?? 0 })}
 					name="prepTime"
 					control={control}
 					min={0}
