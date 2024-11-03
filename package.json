@@ -97,7 +97,7 @@
 	"lint-staged": {
 		"*": [
 			"eslint",
-			"dprint check"
+			"dprint check --allow-no-files"
 		]
 	}
 }
