@@ -3,7 +3,10 @@ import { Icon } from '@components/Icon'
 import { useImageDimensions } from '@hooks/useImageDimensions'
 import { styled } from '@macaron-css/react'
 import { type FunctionComponent } from 'react'
-import { Gallery, Item } from 'react-photoswipe-gallery'
+import React from 'react'
+
+const Gallery = React.lazy(() => import('react-photoswipe-gallery').then(module => ({ default: module.Gallery })))
+const Item = React.lazy(() => import('react-photoswipe-gallery').then(module => ({ default: module.Item })))
 
 type ImagePreviewProps = {
 	image: string

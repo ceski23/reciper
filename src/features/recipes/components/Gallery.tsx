@@ -1,12 +1,15 @@
 import 'photoswipe/dist/photoswipe.css'
 import * as Ariakit from '@ariakit/react'
+import { Skeleton } from '@components/Skeleton'
 import { styled } from '@macaron-css/react'
 import { useBlocker } from '@tanstack/react-router'
 import type PhotoSwipe from 'photoswipe'
 import type { EventCallback } from 'photoswipe'
-import { type FunctionComponent, useCallback, useRef, useState } from 'react'
-import { Gallery as PhotoSwipeGallery } from 'react-photoswipe-gallery'
+import { type FunctionComponent, Suspense, useCallback, useRef, useState } from 'react'
+import React from 'react'
 import { GalleryItem } from './GalleryItem'
+
+const PhotoSwipeGallery = React.lazy(() => import('react-photoswipe-gallery').then(module => ({ default: module.Gallery })))
 
 type GalleryProps = {
 	images: Array<string>
@@ -37,31 +40,44 @@ export const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
 	// }, [])
 
 	return (
-		<PhotoSwipeGallery
-			plugins={photoswipe => {
-				galleryRef.current = photoswipe.pswp
-			}}
-			options={{ escKey: !('CloseWatcher' in globalThis) }}
-			// onOpen={'CloseWatcher' in globalThis ? handleGalleryOpen : undefined}
-			onOpen={handleGalleryOpen}
-		>
-			<Ariakit.CompositeProvider>
+		<Suspense
+			fallback={(
 				<ImagesGrid>
-					{images.map(image => (
-						<GalleryItem
-							key={image}
-							image={image}
+					{Array.from({ length: 6 }, (_, index) => (
+						<Skeleton
+							key={index}
+							style={{ aspectRatio: '1', width: '100%', height: '100%' }}
 						/>
 					))}
 				</ImagesGrid>
-			</Ariakit.CompositeProvider>
-		</PhotoSwipeGallery>
+			)}
+		>
+			<PhotoSwipeGallery
+				plugins={photoswipe => {
+					galleryRef.current = photoswipe.pswp
+				}}
+				options={{ escKey: !('CloseWatcher' in globalThis) }}
+				// onOpen={'CloseWatcher' in globalThis ? handleGalleryOpen : undefined}
+				onOpen={handleGalleryOpen}
+			>
+				<Ariakit.CompositeProvider>
+					<ImagesGrid render={<Ariakit.Composite />}>
+						{images.map(image => (
+							<GalleryItem
+								key={image}
+								image={image}
+							/>
+						))}
+					</ImagesGrid>
+				</Ariakit.CompositeProvider>
+			</PhotoSwipeGallery>
+		</Suspense>
 	)
 }
 
 export default Gallery
 
-const ImagesGrid = styled(Ariakit.Composite, {
+const ImagesGrid = styled(Ariakit.Role, {
 	base: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',

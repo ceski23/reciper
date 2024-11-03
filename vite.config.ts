@@ -8,7 +8,7 @@ import { ManifestOptions, VitePWA } from 'vite-plugin-pwa'
 import child from 'node:child_process'
 import svgSprite from '@ceski23/vite-plugin-svg-sprite'
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
-import { visualizer } from 'rollup-plugin-visualizer'
+import { SondaRollupPlugin } from 'sonda'
 
 const pwaManifest: Partial<ManifestOptions> = {
 	short_name: 'Reciper',
@@ -51,6 +51,7 @@ const pwaManifest: Partial<ManifestOptions> = {
 
 export default defineConfig({
 	build: {
+		sourcemap: true,
 		rollupOptions: {
 			output: {
 				manualChunks: id => {
@@ -64,6 +65,10 @@ export default defineConfig({
 
 					if (id.includes('node_modules/@tanstack/')) {
 						return 'tanstack'
+					}
+
+					if (id.includes('node_modules/@material/material-color-utilities/')) {
+						return 'material-color'
 					}
 				},
 			},
@@ -103,7 +108,7 @@ export default defineConfig({
 			manifest: pwaManifest,
 		}),
 		TanStackRouterVite(),
-		visualizer(),
+		SondaRollupPlugin({ detailed: true }),
 	],
 	test: {
 		environment: 'happy-dom',

@@ -85,7 +85,7 @@
 		"i18next-locales-sync": "^2.1.0",
 		"lint-staged": "^15.2.10",
 		"patch-package": "^8.0.0",
-		"rollup-plugin-visualizer": "^5.12.0",
+		"sonda": "^0.4.1",
 		"tsx": "^4.19.2",
 		"typescript": "^5.6.3",
 		"vite": "^5.4.10",

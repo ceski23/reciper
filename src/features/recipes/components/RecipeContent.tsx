@@ -1,20 +1,18 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import { group } from 'radash'
-import { type CSSProperties, type FunctionComponent, lazy, Suspense } from 'react'
+import { type CSSProperties, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IngredientsSection } from 'features/recipes/components/IngredientsSection'
 import { type InsightItem, RecipeInsights } from 'features/recipes/components/RecipeInsights'
 import { StepsSection } from 'features/recipes/components/StepsSection'
 import type { Recipe } from 'features/recipes/types'
 import { Chip } from 'lib/components/Chip'
-import { Skeleton } from 'lib/components/Skeleton'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
-
-const Gallery = lazy(() => import('./Gallery'))
-const RecipeCover = lazy(() => import('./RecipeCover'))
+import Gallery from './Gallery'
+import RecipeCover from './RecipeCover'
 
 type RecipeContentProps = {
 	recipe: Recipe
@@ -51,11 +49,7 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 
 	return (
 		<ContentContainer style={style}>
-			{recipe.image && (
-				<Suspense fallback={<Skeleton style={{ height: '200px' }} />}>
-					<RecipeCover image={recipe.image} />
-				</Suspense>
-			)}
+			{recipe.image && <RecipeCover image={recipe.image} />}
 			<RecipeInsights items={[prepTime, calories, rating, servings].filter(isDefined)} />
 			{recipe.description && (
 				<Description>
@@ -105,9 +99,7 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 					<Typography.TitleLarge>
 						{t('recipes.gallery')}
 					</Typography.TitleLarge>
-					<Suspense>
-						<Gallery images={recipe.gallery} />
-					</Suspense>
+					<Gallery images={recipe.gallery} />
 				</Section>
 			)}
 		</ContentContainer>

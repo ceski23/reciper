@@ -7,7 +7,6 @@ import { type MaskitoOptions, type MaskitoPostprocessor } from '@maskito/core'
 import { maskitoPrefixPostprocessorGenerator } from '@maskito/kit'
 import { getColorFromImage } from '@utils/images'
 import { Fragment, type FunctionComponent, Suspense, useState } from 'react'
-import React from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useNotifications } from 'features/notifications'
@@ -22,8 +21,7 @@ import { TextField } from 'lib/components/form/TextField'
 import { IconButton } from 'lib/components/IconButton'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles/theme'
-
-const ImagePreview = React.lazy(() => import('./ImagePreview'))
+import ImagePreview from './ImagePreview'
 
 type RecipeFormProps = {
 	id?: string

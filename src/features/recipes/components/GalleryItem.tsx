@@ -1,8 +1,10 @@
 import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import type { FunctionComponent } from 'react'
-import { Item } from 'react-photoswipe-gallery'
+import React from 'react'
 import { useImageDimensions } from 'lib/hooks/useImageDimensions'
+
+const Item = React.lazy(() => import('react-photoswipe-gallery').then(module => ({ default: module.Item })))
 
 type GalleryItemProps = {
 	image: string
