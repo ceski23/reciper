@@ -1,0 +1,155 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should scrape recipes using LD+JSON format > should scrape valid recipe for Gofry bananowe 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "Gofry bananowe to idealny sposób na wykorzystanie
+				dojrzałych bananów w swojej kuchni. Wyróżniają się prostotą przygotowania - wystarczy kilka składników i
+				parę minut, aby przygotować pyszne i pożywne gofry, które zachwycą całą Twoją rodzinę.",
+  "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-5-768x1151.jpg",
+  "ingredients": [
+    {
+      "text": "1 duży, dojrzały banan (ewentualnie 2 małe)",
+    },
+    {
+      "text": "190 g mąki pszennej",
+    },
+    {
+      "text": "40 ml oleju",
+    },
+    {
+      "text": "1 duże jajko",
+    },
+    {
+      "text": "1 łyżeczka proszku do pieczenia",
+    },
+    {
+      "text": "szczypta cynamonu",
+    },
+    {
+      "text": "150 ml mleka",
+    },
+    {
+      "text": "cukier puder do oprószenia",
+    },
+    {
+      "text": "owoce do dekoracji",
+    },
+  ],
+  "instructions": [
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-7.jpg",
+      "text": "Zaczynamy od przygotowania ciasta na
+						gofry bananowe.
+						Dojrzałego dużego banana (lub dwa małe) rozgniatamy np. za pomocą widelca lub tłuczka do
+							ziemniaków.",
+    },
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-1.jpg",
+      "text": "Dodajemy mąkę pszenną tortową (190 g),
+						olej lub roztopione masło (40 ml), duże jajko, proszek do pieczenia (1 płaska łyżeczka), cynamon
+						(szczypta) oraz mleko (150 ml).
+						PS. Nie używam w tym przepisie cukru, bo użyłam słodkiego, dojrzałego banana, ale jeśli
+							chcesz to dodaj 1 łyżkę cukru białego lub pudru.",
+    },
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-2.jpg",
+      "text": "Całość mieszamy za pomocą rózgi
+						kuchennej jedynie do momentu połączenia się składników. Ciasto ma wyjść nieco gęste.
+						Odstawiamy je na 5-10 minut, aby się lekko napuszyło.",
+    },
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-3.jpg",
+      "text": "Smażymy gofry w rozgrzanej gofrownicy
+						aż będą ładnie rumiane.
+						Podajemy z ulubionymi dodatkami. U mnie z serkiem homogenizowanym waniliowym i świeżymi
+							owocami. Smacznego!",
+    },
+  ],
+  "name": "poprostupycha.com.pl",
+  "prepTime": 10,
+  "rating": 4.6,
+  "servings": 6,
+  "tags": [
+    "gofry",
+  ],
+}
+`;
+
+exports[`should scrape recipes using Microdata format > should scrape valid recipe for Gofry bananowe 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "Gofry bananowe to idealny sposób na wykorzystanie
+				dojrzałych bananów w swojej kuchni. Wyróżniają się prostotą przygotowania - wystarczy kilka składników i
+				parę minut, aby przygotować pyszne i pożywne gofry, które zachwycą całą Twoją rodzinę.",
+  "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-5-768x1151.jpg",
+  "ingredients": [
+    {
+      "text": "1 duży, dojrzały banan (ewentualnie 2 małe)",
+    },
+    {
+      "text": "190 g mąki pszennej",
+    },
+    {
+      "text": "40 ml oleju",
+    },
+    {
+      "text": "1 duże jajko",
+    },
+    {
+      "text": "1 łyżeczka proszku do pieczenia",
+    },
+    {
+      "text": "szczypta cynamonu",
+    },
+    {
+      "text": "150 ml mleka",
+    },
+    {
+      "text": "cukier puder do oprószenia",
+    },
+    {
+      "text": "owoce do dekoracji",
+    },
+  ],
+  "instructions": [
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-7.jpg",
+      "text": "Zaczynamy od przygotowania ciasta na
+						gofry bananowe.
+						Dojrzałego dużego banana (lub dwa małe) rozgniatamy np. za pomocą widelca lub tłuczka do
+							ziemniaków.",
+    },
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-1.jpg",
+      "text": "Dodajemy mąkę pszenną tortową (190 g),
+						olej lub roztopione masło (40 ml), duże jajko, proszek do pieczenia (1 płaska łyżeczka), cynamon
+						(szczypta) oraz mleko (150 ml).
+						PS. Nie używam w tym przepisie cukru, bo użyłam słodkiego, dojrzałego banana, ale jeśli
+							chcesz to dodaj 1 łyżkę cukru białego lub pudru.",
+    },
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-2.jpg",
+      "text": "Całość mieszamy za pomocą rózgi
+						kuchennej jedynie do momentu połączenia się składników. Ciasto ma wyjść nieco gęste.
+						Odstawiamy je na 5-10 minut, aby się lekko napuszyło.",
+    },
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-3.jpg",
+      "text": "Smażymy gofry w rozgrzanej gofrownicy
+						aż będą ładnie rumiane.
+						Podajemy z ulubionymi dodatkami. U mnie z serkiem homogenizowanym waniliowym i świeżymi
+							owocami. Smacznego!",
+    },
+  ],
+  "name": "poprostupycha.com.pl",
+  "prepTime": 10,
+  "rating": 4.6,
+  "servings": 6,
+  "tags": [
+    "gofry",
+  ],
+}
+`;

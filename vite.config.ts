@@ -1,7 +1,7 @@
 import packageConfig from './package.json'
 import { macaronVitePlugin } from '@macaron-css/vite'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import i18nextLoader from 'vite-plugin-i18next-loader'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { ManifestOptions, VitePWA } from 'vite-plugin-pwa'
@@ -105,4 +105,9 @@ export default defineConfig({
 		TanStackRouterVite(),
 		visualizer(),
 	],
+	test: {
+		environment: 'happy-dom',
+		setupFiles: ['./src/vitest.setup.ts'],
+		watch: false,
+	},
 })

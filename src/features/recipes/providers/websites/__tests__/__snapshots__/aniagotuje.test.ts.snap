@@ -1,0 +1,498 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should parse recipes from aniagotuje > should parse recipe for Placki dyniowe 1`] = `
+{
+  "calories": 270,
+  "color": "#ffffff",
+  "description": "Tarta dyniowa to świetna propozycja na słodki wypiek z dynią w roli głównej. Przepis na dyniową tartę jest sprawdzony i godny polecenia. To ciasto, które można udekorować i podać na wiele pysznych sposobów.",
+  "gallery": [],
+  "image": "https://cdn.aniagotuje.com/pictures/articles/2024/09/68056971-v-1500x1500.jpg",
+  "ingredients": [
+    {
+      "text": "mąka pszenna uniwersalna 240 g - 1,5 szklanki",
+    },
+    {
+      "text": "masło 150 g",
+    },
+    {
+      "text": "cukier puder 60 g",
+    },
+    {
+      "text": "śmietana kwaśna 12-18 % 20 g",
+    },
+    {
+      "text": "dynia pieczona 500 g",
+    },
+    {
+      "text": "jajka małe 2 sztuki",
+    },
+    {
+      "text": "twaróg mielony 150 g",
+    },
+    {
+      "text": "cukier trzcinowy 40 g",
+    },
+    {
+      "text": "kisiel pomarańczowy bez cukru 40 g",
+    },
+    {
+      "text": "cynamon 1/4 łyżeczki",
+    },
+  ],
+  "instructions": [
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/09/68066308-v-1080x1080.jpg",
+      "text": "Przygotuj ciasto kruche do spodu tarty. W dużej misce umieść razem: 240 gramów mąki pszennej uniwersalnej; 60 gramów cukru pudru; 150 gramów zimnego masła pokrojonego w kostkę; 20 gramów ziemnej śmietany kwaśnej 18 %.
+  Porada: Możesz też dać 180 gramów mąki pszennej uniwersalnej oraz 60 gramów mąki krupczatki. Jeśli chcesz pominąć śmietanę w składnikach, daj wówczas jedno żółtko jajka.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/09/68066321-v-1080x1080.jpg",
+      "text": "Ciasto wyrabiaj dłońmi lub mikserem z hakami do ciasta kruchego. Na początku może Ci się wydawać, że ciasto jest zbyt sypkie, jednak w trakcie rozcierania masła powinno połączyć się w zwartą kulę. Wolę wyrabiać ciasto w dużej misce, ale możesz też zrobić to na desce, czystym blacie lub na stolnicy. Wyrabianie ciasta, by zrobiło się jednolite może trochę potrwać. Nie zrażaj się, jeśli ciasto zacznie się mocno kleić od sporej ilości masła. Po schłodzeniu w lodówce będzie idealnie plastyczne. Kulę ciasta lekko spłaszcz, zawiń w przezroczystą folię spożywczą i odłóż na godzinę do lodówki.
+  Porada: Przy tych proporcjach składników ciasto powinno wyjść idealne. Jeśli jednak dodasz za dużo mąki i okaże się, że ciasto nie łączy się w kulę, zalecam dodać łyżeczkę lodowatej wody lub odrobinę kwaśnej śmietany 18 %.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/09/68066347-v-1080x1080.jpg",
+      "text": "Formę pod tatrę o średnicy 24-26 cm (ceramiczna, szklana lub metalowa) dokładnie wysmaruj od środka masłem. Schłodzone ciasto tylko lekko oprósz mąką. Rozwałkuj je (najlepiej przez arkusz papieru do pieczenia) na placek o średnicy nieco większej niż średnica formy. Placek ciasta umieść w formie tak, by idealnie wypełnić ciastem wnętrze formy oraz boki. Jeśli ciasto lekko wystaje nad brzegi, to nie musisz go odcinać, chyba, że różnica jest za duża. Dno z ciastem ponakłuwaj widelcem. 
+  Formę z ciastem umieść w lodówce na około 20 minut lub nawet w zamrażalniku na 10 minut. W tym czasie możesz już zacząć nagrzewać piekarnik. Ustaw 200 stopni z opcją pieczenia góra/dół. Schłodzoną formę ze spodem umieść w piekarniku nagrzanym do 200 stopni. Od razu po zamknięciu komory obniż temperaturę do 180 stopni. Spód piecz tak do 20-25 minut, aż zrobi się lekko rumiany. Jeśli w trakcie pieczenia środek ciasta zacznie się wybrzuszać, wystarczy otworzyć piekarnik i na środku nakłuć raz ciasto widelcem. Spód powinien ponownie opaść. Upieczony spód można od razu wyjąć z piekarnika i odstawić w formie do przestudzenia.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/09/68066417-v-1080x1355.jpg",
+      "text": "Dynię umyj, wydrąż z nasion i obierz ze skóry. Jeśli masz dynię Hokkaido, to skóry nie obierasz, tylko pieczesz ją razem z miąższem, ponieważ jest jadalna. Użyłam dyni prowansalskiej. Pokroiłam ją na mniejsze kawałki wielkości około 5 cm. Kawałki dyni wyłóż na blaszkę z papierem do pieczenia i umieść na środkowej półce w piekarniku nagrzanym do 175 stopni (pieczenie góra/dół). Dynię piecz około 25-35 minut, do jej miękkości. Sprawdzaj ją widelcem.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/09/68066334-v-1080x1080.jpg",
+      "text": "W jednym naczyniu umieść razem: 500 gramów kawałków upieczonej dyni; 2 małe lub jedno duże jajko; 150 gramów mielonego twarogu lub serka puszystego np. jogurtowego; 40 gramów (lub więcej) cukru trzynowego (lub zwykłego albo erytrolu); saszetkę kisielu pomarańczowego bez cukru (proszek o wadze 38-40 g); 1/4 łyżeczki cynamonu. Wszystkie składniki zmiksuj na gładko w kielichu blendera lub też blenderem ręcznym typu żyrafa. 
+  Porady: Możesz dodatkowo dosypać saszetkę cukru wanilinowego lub też dodać odrobinę pasty albo esencji waniliowej. Kisiel w saszetce można zastąpić zwykłą skrobią ziemniaczaną o wadze do 40 gramów. Zamiast cynamonu zaś polecam wsypać do masy nie więcej niż płaską łyżeczkę dobrej jakości przyprawy do piernika lub do szarlotki.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/09/68066360-v-1080x1080.jpg",
+      "text": "Masę dyniową przelej/przełóż do formy z podpieczonym wcześniej spodem (może być jeszcze ciepły). 
+  Porada: Wierzch masy można posypać cynamonem lub mieszanką cukru brązowego i cynamonu. Można też wyłożyć cienkie plasterki jabłek, świeżej dyni lub gruszek i dopiero posypać całość cukrem/cynamonem. Tym razem tego nie robiłam.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/09/68066373-v-1080x1080.jpg",
+      "text": "Formę ponownie umieść w nagrzanym piekarniku z opcją pieczenia góra/dół (temperatura 175 stopni), na środkowej półce. Tartę dyniową piecz przez około 35-45 minut. Czas jest orientacyjny i zależy od tego jak piekarnik grzeje, jaka użyta została forma oraz jak gęsta wyszła masa dyniowa.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/09/68066387-v-1080x1527.jpg",
+      "text": "Na tarcie dyniowej można wyłożyć kandyzowane owoce lub też bitą śmietanę albo bezy. Świetnie pasuje też karmel lub ulubiona masa krówkowa. 
+  Porada: Bezy wykładaj na tartę przed podaniem, ponieważ z czasem będą się od spodu rozpuszczać.",
+    },
+  ],
+  "name": "Tarta dyniowa",
+  "prepTime": 90,
+  "rating": 4.8,
+  "servings": undefined,
+  "tags": [
+    "tarta dyniowa",
+    "ciasta i torty",
+    "halloween",
+    "wegetariańska",
+  ],
+}
+`;
+
+exports[`should parse recipes from aniagotuje > should parse recipe for Tarta dyniowa 1`] = `
+{
+  "calories": 370,
+  "color": "#ffffff",
+  "description": "Tort truskawkowy na jasnym biszkopcie, z pysznym i super prostym do zrobienia kremem śmietanowym z mascarpone to rewelacyjny pomysł na deser oraz na urodzinowy tort. Ten przepis sprawdzi się przez cały rok.",
+  "gallery": [],
+  "image": "https://cdn.aniagotuje.com/pictures/articles/2022/06/28889245-v-1500x1500.jpg",
+  "ingredients": [
+    {
+      "group": "Składniki na biszkopt",
+      "text": "niepełna szklanka mąki pszennej tortowej - około 140 g",
+    },
+    {
+      "group": "Składniki na biszkopt",
+      "text": "1/3 szklanki mąki ziemniaczanej - do 50 g skrobi",
+    },
+    {
+      "group": "Składniki na biszkopt",
+      "text": "7 większych jajek - do 400 g po rozbiciu",
+    },
+    {
+      "group": "Składniki na biszkopt",
+      "text": "3/4 szklanki drobnego cukru - około 150 g",
+    },
+    {
+      "group": "Składniki na krem z mascarpone",
+      "text": "750 g serka mascarpone",
+    },
+    {
+      "group": "Składniki na krem z mascarpone",
+      "text": "600 ml śmietanki kremówki 36%",
+    },
+    {
+      "group": "Składniki na krem z mascarpone",
+      "text": "120 g cukru pudru",
+    },
+    {
+      "group": "Pozostałe składniki",
+      "text": "700 g truskawek - świeże lub mrożone",
+    },
+    {
+      "group": "Pozostałe składniki",
+      "text": "2 łyżki drobnego cukru - do 35 g",
+    },
+    {
+      "group": "Pozostałe składniki",
+      "text": "3 łyżki soku z cytryny",
+    },
+    {
+      "group": "Do dekoracji",
+      "text": "świeże truskawki; listki mięty; pokruszone mini bezy - u mnie z orzechami",
+    },
+  ],
+  "instructions": [
+    {
+      "group": "Tort truskawkowy",
+      "text": "Szklanka ma u mnie pojemność 250 ml.
+Jajka wyjmij z lodówki na godzinę przed szykowaniem biszkoptu.
+Serek mascarpone oraz śmietanka kremówka 36 % powinny być trzymane w lodówce. Oba te składniki muszą być mocno schłodzone.",
+    },
+    {
+      "group": "Tort truskawkowy",
+      "text": "Forma do pieczenia: tortownica o średnicy 26 cm.
+Pieczenie: 180 stopni, środkowa półka z opcją pieczenia góra/dół
+Czas pieczenia: około 30 minut.",
+    },
+    {
+      "group": "Tort truskawkowy",
+      "text": "Kalorie policzone zostały na podstawie użytych przeze mnie składników. Jest to więc orientacyjna liczba kalorii, ponieważ Twoje składniki mogą mieć inną liczbę kalorii niż te, których użyłam ja. Z podanej ilości składników otrzymasz tort truskawkowy o wadze minimum 2000 gramów. Zanim zaczniesz szykować przepis na tort z truskawkami, polecam najpierw przeczytać cały przepis, by przygotować się odpowiednio wcześniej do kolejnych etapów wykonania. Można bowiem upiec wcześniej biszkopt lub też z wyprzedzeniem przygotować sobie krem i trzymać go w lodówce.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "W pierwszej kolejności upiecz biszkopt. Możesz to zrobić nawet na dwa dni przed szykowaniem całego tortu truskawkowego. Jeśli potrzebujesz super szczegółowej instrukcji, to zapraszam tu - przepis na biszkopt , gdzie podaję bardzo dokładny przepis na taki sam biszkopt. Poniżej zaś skrócona instrukcja wykonania.
+
+Aby zrobić biszkopt, w osobnej misce wymieszaj ze sobą obie mąki np. przy pomocy rózgi kuchennej. Można je też razem przesiać przez sitko.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Oddziel żółtka od białek. Białka umieść w czystym i suchym naczyniu i zacznij je ubijać przy pomocy miksera zaczynając od mniejszych obrotów. Stopniowo je zwiększaj. Białka ubijaj tak chwilę, by nie przebić pęcherzyków powietrza, a następnie zacznij dodawać cukier drobny. Po każdej łyżce miksuj białko na najwyższych obrotach, aż cukier połączy się z pianą i całkowicie się w niej rozpuści. Proces ubijania jest dość długi i może trwać łącznie nawet kilkanaście minut. Pod koniec ubijania powinna powstać gładka, gęsta i bardzo błyszcząca masa białkowa (zupełnie jak na bezę).",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Na koniec dodaj też odłożone do osobnej miski żółtka i dalej miksuj całość jeszcze chwilę, by białka gładko połączyły się z żółtkami. Obroty miksera zmniejsz do minimum (lub użyj szpatułki). Do piany jajecznej dodaj mieszankę mąk. Całość zamieszaj dokładnie, ale nie za długo, tylko do połączenia składników.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Dno tortownicy o średnicy 26 cm wystarczy wyłożyć papierem do pieczenia i zapiąć obręcz. Boków formy niczym nie smarujemy. Ciasto biszkoptowe przełóż do tortownicy i delikatnie wyrównaj jego powierzchnię. Biszkopt piecz około 30 minut (raczej nie dłużej niż 35 minut) w piekarniku nagrzanym do 170 stopni z termoobiegiem (do suchego patyczka). Z grzałką góra/dół piekarnik nagrzej wcześniej do 180 stopni. Biszkopt możesz wyjąć z piekarnika od razu po upieczeniu. Odczekaj przynajmniej 10 minut zanim wyjmiesz go z formy. Ostrożnie oddziel płaskim nożem brzegi ciasta od wewnętrznej części formy. Biszkopt odwróć do studzenia na drugą stronę. Jest ona równa i ładniej będzie wyglądała jako góra tortu. Ta górna zaś wyrówna się pod ciężarem ciasta.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Porada",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": ": Biszkopt ten można upiec nawet na trzy dni przed planowanym podaniem tortu. Przestudzony biszkopt zawiń luźno w papier śniadaniowy i trzymaj w torbie spożywczej w suchym i chłodnym miejscu.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Po całkowitym przestudzeniu biszkopt podziel na trzy blaty (placki z biszkoptu) np. specjalnym nożem strunowym do krojenia blatów. Na pierwszy blat (spód tortu) kładę smażone truskawki. Aby je zrobić w małym garnku, czy nawet na patelni, umieść 500 gramów umytych i odszypułkowanych truskawek. Warto je wcześniej drobno pokroić (kostka lub plasterki). Na patelni umieść też dwie łyżki cukru. Ustaw średnią moc palnika i zacznij smażyć truskawki, cały czas mieszając je np. przy pomocy drewnianej łyżki. W ciągu 10-15 minut całkowicie zmiękną. Pod koniec smażenia dodaj do nich trzy łyżki świeżo wyciśniętego soku z cytryny. Zamieszaj całość i wyłącz.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Porada",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": ": Można też sięgnąć po truskawki mrożone. Zalecam rozmrozić je wcześniej i przed smażeniem odlać rozpuszczoną glazurę. W ostateczności do posmarowania spodu można też użyć dżemu truskawkowego. Wystarczy słoiczek o wadze około 350 gramów.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Gorące truskawki warto przelać do osobnego naczynia, by szybciej przestygły. Wyszło mi dokładnie 375 gramów smażonych truskawek (razem z sokiem). Dokładnie tak samo możesz postępować z malinami, jagodami oraz z obranymi ze skórki morelami, czy brzoskwiniami.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Dolny blat biszkoptu - spód, umieść na paterze, czy też na specjalnym jednorazowym "talerzu" papierowym do podawania tortów. Ponieważ na ten blat wykładasz smażone truskawki, które mają dużo soku/syropu, to tego blatu nie nasączasz ponczem. Przestudzone, gęste truskawki rozłóż w miarę równo po całym spodzie. Jeśli wydaje Ci się, że wyszło ich za dużo, to nadmiar możesz śmiało zostawić do udekorowania drugiego blatu.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Na warstwę smażonych truskawek wykładasz jeszcze krem śmietankowy z mascarpone. Aby go zrobić należy umieścić razem w jednym, wysokim naczyniu wszystkie składniki. Będzie to: 750 gramów dobrze schłodzonego serka mascarpone (np. jedno opakowanie 500 gramów + jedno opakowanie 250 gramów); 600 ml śmietanki kremówki 36%; 120 gramów cukru pudru - 12 płaskich łyżek. Rozpocznij ubijanie kremu. Najpierw na niższych obrotach miksera. Po chwili zwiększaj obroty, aż do maksymalnej mocy. Krem powinien być gotowy błyskawicznie. Masa jest dobrze ubita, gdy zaczyna stanowić opór na mieszadłach miksera oraz po nałożeniu na palec zachowuje strukturę - nie rozlewa się, nie przemieszcza. Przy tak tłustej śmietance z serkiem wystarczy nawet tylko minuta ubijania.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Porada : Na 20-30 minut przed miksowaniem, naczynie ze składnikami warto umieścić dodatkowo w komorze zamrażalnika. Krem można śmiało przygotować nawet dzień wcześniej i trzymać w lodówce pod przykryciem. Jeśli wolisz śmietankę 30 %, to możesz jej użyć. Taką śmietankę warto jednak najpierw ubić na sztywno z całym cukrem pudrem, a na koniec łyżka po łyżce wmiksować też mascarpone. Krem wyjdzie trochę mniej kaloryczny, a do tego bardziej puszysty.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Na warstwę smażonych truskawek zacznij wykładać około 1/4 całego kremu. Ostrożnie i delikatnie wyrównaj powierzchnię. Na krem wyłóż drugi blat biszkoptowy. Ten blat polecam już nasączyć ponczem. Do nasączenia tego tortu używam tylko przegotowanej wody wymieszanej z sokiem z cytryny (na 100 ml wody daję dwie łyżki soku z cytryny). Biszkopt nasącz z umiarem np. przy pomocy małej łyżeczki lub też przy użyciu specjalnej butelki z dziurkami.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Na drugim blacie rozsmaruj delikatnie kolejną warstwę kremu. Znowu około 1/4 kremu lub tym razem już trochę więcej. Druga porcję kremu możesz też wymieszać z kawałkami świeżych truskawek lub rozłożyć je na wierzchu w formie cienkich plasterków. Na kremie umieść trzeci, ostatni blat biszkoptowy. Ten blat również należy nasączyć.
+
+Porada : Wody z cytryną na poncz nie podawałam już w wykazie składników. Możesz też nasączyć blaty biszkoptowe wodą z cukrem i alkoholem, czy nawet jasnym napojem gazowanym.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Trzeci blat przykryj warstwą kremu, zaś pozostały krem rozprowadź też na bokach tortu. Kremu jest bardzo dużo, zatem śmiało wystarczy Ci go do otynkowania całego tortu truskawkowego. Z reszty truskawek polecam wykonać dekorację. Truskawki pokrój w plasterki nie grubsze niż 4 mm (kroisz wzdłuż truskawki). Plasterki przykładaj do boków tortu przy samym dole i wciskaj lekko w krem, by powstał wzór jak na zdjęciu poniżej.",
+    },
+    {
+      "group": "Tort truskawkowy przepis",
+      "text": "Górę tortu udekorowałam kawałkami truskawek, listkami mięty oraz pokruszonymi bezami. Tym razem były to mini bezy pieczone z orzechami ziemnymi.",
+    },
+  ],
+  "name": "Tort truskawkowy",
+  "prepTime": 90,
+  "rating": 4.8,
+  "servings": 10,
+  "tags": [
+    "tort truskawkowy",
+    "ciasta i torty",
+    "sylwester",
+    "walentynki",
+    "wegetariańska",
+  ],
+}
+`;
+
+exports[`should parse recipes from aniagotuje > should parse recipe for Tort truskawkowy 1`] = `
+{
+  "calories": 63,
+  "color": "#ffffff",
+  "description": "Zupa krem z pieczonych pomidorów to super prosta i niesamowicie szybka do zrobienia zupa krem. Przepis nie zawiera bulionu, mięsa, nabiału czy mąki. Zupa wychodzi wspaniała i aromatyczna. Wygląda też świetnie.",
+  "gallery": [],
+  "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/69537700-v-1500x1500.jpg",
+  "ingredients": [
+    {
+      "text": "dowolne pomidory - najlepiej różne odmiany 1,5 kg",
+    },
+    {
+      "text": "główka czosnku 1 sztuka",
+    },
+    {
+      "text": "duża cebula około 170 g",
+    },
+    {
+      "text": "oliwa z oliwek 4 łyżki",
+    },
+    {
+      "text": "sól 1 płaska łyżeczka",
+    },
+    {
+      "text": "pieprz pół łyżeczki",
+    },
+    {
+      "text": "listki bazylii do dekoracji",
+    },
+  ],
+  "instructions": [
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/69537721-v-1080x1510.jpg",
+      "text": "Zacznij już nagrzewać piekarnik do 200 stopni z opcją pieczenia góra/dół.
+    1,5 kilograma świeżych pomidorów (najlepiej mieszanka różnych odmian) umyj i pokrój na mniejsze kawałki. Tylko pomidorki mini zostaw w całości. Płytką blaszkę wysmaruj od środka łyżką oliwy. Na tak przygotowaną blaszkę włóż kawałki pomidorów, skórką do formy. Cebulę obierz i pokrój np. na osiem mniejszych kawałków i wyłóż pomiędzy kawałki pomidorów. W główce czosnku tylko odetnij górną końcówkę, by można było potem z łatwością wycisnąć upieczone ząbki. Główkę czosnku umieść na środku formy.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/69537734-v-1080x1191.jpg",
+      "text": "Całość polej resztą oliwy (3 łyżki) i posyp solą (płaska łyżeczka) oraz pieprzem (pół łyżeczki).",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/69537747-v-1080x1413.jpg",
+      "text": "Formę umieść w piekarniku nagrzanym do 200 stopni z pieczeniem góra/dół lub do 185 stopni z funkcją termoobiegu. Formę kładź na kratce/ruszcie z wyposażenia piekarnika umieszczonym mniej więcej na środku piekarnika lub nawet na półce niżej. Warzywa piecz tak około 50 minut (można nieco dłużej). Jeśli przypiekają się za szybko, to obniż temperaturę lub formę przenieś na niższą półkę.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/69537760-v-1080x1080.jpg",
+      "text": "Ostrożnie wyjmij formę/blaszkę z piekarnika, ponieważ pomidory z pewnością puściły sporo soku. Usuń szypułki i ewentualne gałązki z pomidorów. Skórki nie zdejmuję, ponieważ blender próżniowy miksuje je idealnie na gładko. Można je jednak usunąć. Główkę czosnku wyjmij i wyciśnij z niej upieczone, miękkie ząbki czosnku. Całą zawartość z blaszki przełóż do dużego naczynia lub do kielicha blendera próżniowego (pomidory, cebulę, wyciśnięty czosnek i cały sok z oliwą, który zebrał się na blaszce). 
+    Składniki zupy wystarczy już tylko zmiksować na gładko. Można to też zrobić np. przy użyciu blendera ręcznego typu żyrafa. Jeśli jednak masz blender próżniowy z dużym kielichem, to zalecam zmiksować całość właśnie przy pomocy takiego urządzenia. Ustawiam prawie minimalną moc i w ciągu niecałej minuty mam już idealnie gładką i kremową zupę.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/69537786-v-1080x1605.jpg",
+      "text": "Dopiero po zmiksowaniu sprawdź smak zupy i zdecyduj, czy chcesz do niej dodać więcej soli, pieprzu, czy nawet szczyptę cukru lub soku z cytryny. Zupa krem z pieczonych pomidorów świetnie smakuje udekorowana listkami bazylii, oregano lub natką pietruszki. Do tego grzanki (mogą być też bezglutenowe), ulubione pieczywo lub paluchy chlebowe oraz chlust oliwy i świeżo mielony pieprz. W wersji z nabiałem można dodać np: ser ricotta, ser feta, mozzarellę, mascarpone, starty parmezan lub śmietankę kremówkę.",
+    },
+  ],
+  "name": "Zupa krem z pieczonych pomidorów",
+  "prepTime": 15,
+  "rating": 4.9,
+  "servings": undefined,
+  "tags": [
+    "zupa krem z pieczonych pomidorów",
+    "zupy",
+    "kolacja",
+    "obiad",
+    "bezglutenowa",
+    "wegańska",
+    "wegetariańska",
+  ],
+}
+`;
+
+exports[`should parse recipes from aniagotuje > should parse recipe for Wołowina po burgundzku 1`] = `
+{
+  "calories": 205,
+  "color": "#ffffff",
+  "description": "Wołowina po burgundzku to niesamowicie pyszne danie z kuchni francuskiej. Przepis polecam miłośnikom wołowiny z subtelnym smakiem czerwonego wina. Długo duszone mięso wychodzi soczyste i bardzo aromatyczne.",
+  "gallery": [],
+  "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68732916-v-1500x1500.jpg",
+  "ingredients": [
+    {
+      "text": "wołowina - łopatka, mostek lub karczek 1500 g",
+    },
+    {
+      "text": "boczek surowy wędzony lub parzony 250 g",
+    },
+    {
+      "text": "czerwone, wytrawne wino np. Merlot 500 ml",
+    },
+    {
+      "text": "domowy bulion wołowy 500 ml",
+    },
+    {
+      "text": "pieczarki białe np. malutkie 350 g",
+    },
+    {
+      "text": "marchew 150 g",
+    },
+    {
+      "text": "cebula 200 g",
+    },
+    {
+      "text": "czosnek 4 ząbki",
+    },
+    {
+      "text": "koncentrat pomidorowy 2 łyżki",
+    },
+    {
+      "text": "olej rośliny do smażenia 2 łyżki",
+    },
+    {
+      "text": "masło klarowane 2 łyżki - około 30 g",
+    },
+    {
+      "text": "mąka pszenna np. uniwersalna 2 łyżki - około 30 g",
+    },
+    {
+      "text": "świeży tymianek kilka gałązek",
+    },
+    {
+      "text": "natka pietruszki kilka gałązek",
+    },
+    {
+      "text": "listek laurowy 2 sztuki",
+    },
+    {
+      "text": "sól pół łyżeczki",
+    },
+    {
+      "text": "pieprz 1/3 łyżeczki",
+    },
+  ],
+  "instructions": [
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68732949-v-1080x1080.jpg",
+      "text": "Na dużą patelnię wyłóż dwie łyżki oleju roślinnego do smażenia oraz 250 gramów wędzonego (surowy lub parzony) boczku pokrojonego w kostkę. Całość podsmażaj około 10 minut na średniej lub nieco wyższej mocy, aż boczek ładnie się zarumieni. Po tym czasie przełóż go szczypcami go garnka (lub naczynia żaroodpornego) i odstaw na bok. Na pozostawionym tłuszczu będziesz podsmażać wołowinę.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68732962-v-1080x1080.jpg",
+      "text": "1,5 kg wołowiny (u mnie 1000 gramów łopatki i 500 gramów karczku) pokrój na kawałki wielkości do 2 cm. Na nagrzaną patelnię z tłuszczem kładź porcję mięsa i podsmażaj przez około dwie minuty na stronę na wyższej mocy palnika (bez przykrywki). Zarumienione mięso przekładaj szczypcami do garnka w którym jest już boczek. Wołowinę podsmażałam tak w trzech turach. Patelni nadal nie wyłączaj.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68732975-v-1080x1080.jpg",
+      "text": "Na nagrzaną patelnię z resztami tłuszczu (w razie potrzeby dodaj nieco oleju) wyłóż jeszcze obraną i pokroją w półplasterki marchew oraz obraną i pokrojoną na większe kawałki cebulę (u mnie 200 gramów cebulek szalotek). Warzywa smaż około cztery minuty na wyższej mocy. Na koniec dodaj też obrane i pokrojone w plasterki cztery ząbki czosnku, a po chwili całość przełóż do garnka mięsem. Patelnia nie będzie już potrzebna. 
+    W garnku umieść też dwa listki laurowe oraz pół łyżeczki soli i 1/3 łyżeczki pieprzu, a także dwie łyżki mąki pszennej. Całość wymieszaj i "smaż" w garnku przez pięć minut. 
+  Porada: Jeśli nie chcesz lub nie możesz używać mąki pszennej, to zastąp ja mąką lub skrobią kukurydzianą.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68732988-v-1080x1381.jpg",
+      "text": "Jeśli masz naczynie gotowe do zapiekania to nie przenosisz składników. Jeśli tak jak ja użyłaś/eś zwykłego garnka, to całość przekładasz do dużego naczynia do zapiekania z przykrywką. Do przygotowanych składników wlej 500 ml czerwonego (najlepiej wytrawnego lub ewentualnie półwytrawnego wina) np. Merlot, Pinot Noir. Wlej też 500 ml domowego bulionu wołowego. Dodaj również dwie łyżki koncentratu pomidorowego, a także po kilka gałązek tymianku i natki pietruszki (natkę można na tym etapie pominąć). 
+  Porady: W tym momencie można też dodać do 40 gramów cebulek marynowanych. Domowy bulion wołowy zamień w ostateczności na wodę z dobrej jakości ekologiczną kostką wołową. Jeśli wolisz mniej intensywny smak wina w daniu, to wlej mniej wina, za to więcej bulionu.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68733001-v-1080x1203.jpg",
+      "text": "Całość tylko lekko zamieszaj, przykryj przykrywką i umieść w piekarniku nagrzanym do 175 stopni (pieczenie góra/dół). Wybierz środkową lub nieco niższą półkę. Wołowinę po burgundzku "piecz" tak minimum dwie godziny (możesz sprawdzić po tym czasie, czy miękkość mięsa i sos Ci odpowiada), ale nie dłużej niż łącznie trzy godziny. Po tym czasie warto usunąć sztywne "gałązki" po tymianku.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68733014-v-1080x1168.jpg",
+      "text": "Pod koniec pieczenia podsmaż pieczarki. Na nagrzaną patelnię wyłóż dwie łyżki masła klarowanego oraz 350 gramów oczyszczonych pieczarek (małe w całości, lub duże pokrojone na mniejsze kawałki). Podsmażaj je przez 10 minut, przemieszczając je na patelni w trakcie smażenia. Ostrożnie wysuń naczynie z wołowiną w sosie i dodaj podsmażone pieczarki.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68732936-v-1080x1587.jpg",
+      "text": "Całość wymieszaj i odstaw do piekarnika (można już bez przykrywki) na ostatnie 20 minut pieczenia. Wołowinę po burgundzku podawaj ze świeżą natką pietruszki i ulubionym pieczywem. Świetnie smakuje z ziemniakami w dowolnej formie, z makaronami lub z ryżem albo z kaszą. 
+    Po przestudzeniu danie trzymaj w lodówce nawet do tygodnia. Można je podgrzewać na płycie lub w piekarniku.",
+    },
+  ],
+  "name": "Wołowina po burgundzku",
+  "prepTime": 120,
+  "rating": 4.8,
+  "servings": undefined,
+  "tags": [
+    "wołowina po burgundzku",
+    "dania mięsne",
+    "kolacja",
+    "obiad",
+    "sylwester",
+    "wigilia i święta",
+  ],
+}
+`;
+
+exports[`should parse recipes from aniagotuje > should parse recipe for Zupa krem z pieczonych pomidorów 1`] = `
+{
+  "calories": 226,
+  "color": "#ffffff",
+  "description": "Placki dyniowe smażone z pieczonej i zmiksowanej na puree dyni, to przepyszny pomysł na deser lub na śniadanie albo kolację. Przepis jest bardzo prosty. Aby usmażyć te placuszki potrzebujesz kilka składników.",
+  "gallery": [],
+  "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68724529-v-1500x1500.jpg",
+  "ingredients": [
+    {
+      "text": "dynia pieczona lub gotowana - pulpa 250 g",
+    },
+    {
+      "text": "mąka pszenna tortowa 160 g - 1 szklanka",
+    },
+    {
+      "text": "cukier drobny 50 g",
+    },
+    {
+      "text": "duże jajka 2 sztuki",
+    },
+    {
+      "text": "proszek do pieczenia pół łyżeczki",
+    },
+    {
+      "text": "masło klarowane do smażenia 20 g",
+    },
+  ],
+  "instructions": [
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68724458-v-1080x1315.jpg",
+      "text": "Dynia pieczona: Miałam już wcześniej upieczoną i zmiksowaną dynię (trzymana w szklanym pojemniku lodówce). Jeśli jednak musisz najpierw upiec swoją dynię, to w pierwszej kolejności dynię umyj, pokrój, wydrąż z nasion i obierz ze skóry. Jeśli masz dynię Hokkaido (jak u mnie), to skóry nie obierasz, tylko pieczesz ją razem z miąższem, ponieważ jest jadalna. Dynię okrój na mniejsze kawałki wielkości około 5 cm. Kawałki dyni wyłóż na blaszkę z papierem do pieczenia i umieść na środkowej półce w piekarniku nagrzanym do 175 stopni (pieczenie góra/dół). Dynię piecz około 25-35 minut, do jej miękkości, a po lekkim przestudzeniu zmiksuj na gładko np. przy pomocy blendera ręcznego typu żyrafa. 
+    Dynia gotowana: Kawałki dyni można też ugotować w garnku na niskiej mocy palnika, pod przykrywką z minimalną ilością wody. Po rozgotowaniu i zmiksowaniu ugotowanej dyni trzeba ją ponownie umieścić w garnku lub na patelni i mieszać na niskiej mocy palnika, by odparować jak najwięcej wody. Pulpa ma być gęsta. Do placków należy ją całkowicie przestudzić.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68724471-v-1080x1080.jpg",
+      "text": "Bardzo dokładnie oddziel białka od żółtek. Białka bez najmniejszych śladów żółtka umieść w osobnym, czystym i suchym naczyniu. Żółtka dodaj do miski ze zmiksowaną na gładką upieczoną dynią (250 gramów). Zarówno pulpa z dyni, jak i żółta mają mieć temperaturę pomieszczenia. Wymieszaj dynię z żółtkami.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68724484-v-1080x1080.jpg",
+      "text": "Do żółtek i dyni wsyp 160 gramów mąki pszennej tortowej wymieszanej z połową małej łyżeczki proszku do pieczenia. Całość dokładnie wymieszaj. Powinno Ci powstać gęste, jednolite ciasto. 
+  Porada: Do ciasta można dodać szczyptę cynamonu lub też odrobinę aromatu waniliowego, czy też pomarańczowego.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68724497-v-1080x1080.jpg",
+      "text": "Do naczynia z białkami wsyp 50 gramów cukru drobnego. Całość od razu miksuj razem najpierw na niższych, a po chwili na najwyższych już obrotach. Najlepszy będzie do tego robot stojący, ponieważ miksowanie trwa przynajmniej kilka minut. Powinna powstać bardzo puszysta i lekka "chmurka bezowa". Cukier ma całkowicie rozpuścić się w białku. Taką pianę dodawaj w trzech partiach do miski z ciastem. Po każdej porcji mieszaj całość szpatułką. Na koniec otrzymasz ładnie napuszone ciasto, idealne do smażenia placków. 
+  Porada: Do ciasta można tez zetrzeć odrobinę skórki z cytryny, pomarańczy lub mandarynki.",
+    },
+    {
+      "image": "https://cdn.aniagotuje.com/pictures/articles/2024/10/68724510-v-1080x1080.jpg",
+      "text": "Zacznij nagrzewać patelnię. Ustaw średnią moc i poczekaj, aż ciepło rozprowadzi się równo po całej powierzchni użytkowej patelni. Na patelnię wyłóż trochę masła klarowanego lub oleju roślinnego do smażenia. Tłuszcz rozprowadź po całej patelni. Pozwól, by olej dobrze się nagrzał. Dzięki temu placki nie chłoną tłuszczu. 
+  Przy pomocy dużej łyżki nakładaj porcje na placki i kładź na patelnię. Ciasto rozprowadź do średnicy około 10 cm. Po około 2-3 minutach ostrożnie przełóż każdy placek na drugą stronę, która potrzebuje zazwyczaj trochę mniej czasu na usmażenie. Placki dyniowe są gotowe do zdjęcia z patelni, gdy z obu stron są ładnie zarumienione i wyrośnięte. Jeśli rumienią się za szybko, to zmniejsz moc palnika. To jak długo będą się smażyć zależy do patelni i jej grubości oraz od ustawionej mocy palnika. Placki wyrastają jeszcze w trakcie smażenia, wiec daj im trochę czasu na dosmażenie. W taki sposób usmaż je wszystkie.
+  Placki dyniowe podawaj np. z cukrem pudrem, bitą śmietaną, ulubionym dżemem lub świeżymi owocami albo syropem, czy miodem.",
+    },
+  ],
+  "name": "Placki dyniowe",
+  "prepTime": 35,
+  "rating": 5,
+  "servings": 10,
+  "tags": [
+    "placki dyniowe",
+    "naleśniki i placki",
+    "kolacja",
+    "śniadanie",
+    "halloween",
+    "wegetariańska",
+  ],
+}
+`;

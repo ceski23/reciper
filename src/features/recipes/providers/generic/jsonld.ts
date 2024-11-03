@@ -94,7 +94,7 @@ const parseTags = (schemaRecipe: SchemaRecipe) => {
 		)
 	}
 
-	return Array.from(new Set(tags))
+	return Array.from(new Set(tags)).filter(isDefined)
 }
 
 const parseGallery = (schemaRecipe: SchemaRecipe): Array<string> | undefined => {

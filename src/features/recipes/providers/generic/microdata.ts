@@ -26,7 +26,7 @@ const getInstructions = (element: Element) =>
 	Array
 		.from(element.querySelectorAll('[itemprop="recipeInstructions"], [itemprop="itemListElement"][itemtype="http://schema.org/HowToStep"]'))
 		.map(elem => {
-			const text = elem.querySelector('[itemprop=text]')?.textContent?.trim()
+			const text = elem.querySelector('[itemprop=text]')?.textContent?.trim() ?? elem.textContent?.trim()
 			const image = Array.from(elem.querySelectorAll('[itemprop="image"]')).filter(elem =>
 				// exclude elements with svg loaders fallbacks
 				!elem.getAttribute('src')?.includes('data:image/svg')

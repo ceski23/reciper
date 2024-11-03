@@ -1,0 +1,504 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should parse recipes from kwestiasmaku > should parse recipe for Babeczki twarogowe z jabłkami 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "Filety drobiowe w kremowym sosie bazyliowym z pomidorkami koktajlowymi.",
+  "gallery": [
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/kurczak-w-sosie-bazyliowym-01.jpg",
+  ],
+  "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/kurczak-w-sosie-bazyliowym-00.jpg",
+  "ingredients": [
+    {
+      "text": "650 g filetów z piersi kurczaka",
+    },
+    {
+      "text": "sól, pieprz, 1/3 łyżeczki papryki w proszku",
+    },
+    {
+      "text": "1 łyżki mąki",
+    },
+    {
+      "text": "2 - 3 ząbki czosnku",
+    },
+    {
+      "text": "1 doniczka bazylii",
+    },
+    {
+      "text": "2 łyżki tartego parmezanu",
+    },
+    {
+      "text": "3 łyżki oliwy",
+    },
+    {
+      "text": "200 g pomidorków koktajlowych",
+    },
+    {
+      "text": "80 ml bulionu drobiowego",
+    },
+    {
+      "text": "80 ml śmietanki 30%",
+    },
+  ],
+  "instructions": [
+    {
+      "text": "Filety umyć, osuszyć, oczyścić z błonek i kostek. Poporcjować mięso na mniejsze kawałki:
+                            przekroić wzdłuż na 2 cieńsze filety, odciąć polędwiczki, następnie rozbić tłuczkiem w
+                            najgrubszej części na filety podobnej grubości.",
+    },
+    {
+      "text": "Doprawić solą, pieprzem oraz papryką, następnie oprószyć mąką.",
+    },
+    {
+      "text": "W rozdrabniaczu (mini melakserze) zmiksować obrany czosnek, listki bazylii, parmezan i 2
+                            łyżki oliwy. Otrzymane pesto doprawić solą i pieprzem.",
+    },
+    {
+      "text": "Rozgrzać dużą patelnię, wlać 1 łyżkę oliwy i stopniowo wkładać filety. Smażyć po ok. 3
+                            minuty z każdej strony, aż kurczak ładnie się zrumieni. W razie potrzeby można obsmażać na
+                            raty.",
+    },
+    {
+      "text": "Dodać pokrojone pomidorki koktajlowe i rozmieścić je wkoło kurczaka, następnie smażyć przez
+                            minutę.",
+    },
+    {
+      "text": "Na patelnię z kurczakiem wlać bulion i zagotować. Gotować przez ok. 1 minutę, następnie
+                            przewrócić filety na drugą stronę i powtórzyć gotowanie.",
+    },
+    {
+      "text": "Dodać śmietankę, wymieszać, a następnie zagotować.",
+    },
+    {
+      "text": "Dodać zmiksowane pesto i wymieszać je z sosem, zagotować i odstawić z ognia.",
+    },
+  ],
+  "name": "Kurczak w sosie bazyliowym z pomidorkami koktajlowymi",
+  "prepTime": undefined,
+  "rating": 4.74,
+  "servings": 4,
+  "tags": [
+    "filety drobiowe",
+    "szybki obiad",
+    "obiad na niedzielę",
+    "kuchnia włoska",
+    "dania główne",
+    "kurczak",
+    "pomidorki koktajlowe",
+    "pesto",
+  ],
+}
+`;
+
+exports[`should parse recipes from kwestiasmaku > should parse recipe for Clafoutis 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "Clafoutis czyli rodzaj pieczonego naleśnika z dużą ilością owoców.",
+  "gallery": [
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/clafoutis-01.jpg",
+  ],
+  "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/clafoutis-00.jpg",
+  "ingredients": [
+    {
+      "text": "500 g mieszanki owoców: truskawek, malin i borówek amerykańskich",
+    },
+    {
+      "text": "3 jajka + 2 żółtka (temp. pokojowa)",
+    },
+    {
+      "text": "90 g cukru",
+    },
+    {
+      "text": "120 g mąki pszennej",
+    },
+    {
+      "text": "szczypta soli",
+    },
+    {
+      "text": "70 g roztopionego masła (ostudzonego)",
+    },
+    {
+      "text": "300 ml letniego (lekko ciepłego) mleka",
+    },
+    {
+      "text": "1 łyżeczka ekstraktu z wanilii",
+    },
+    {
+      "text": "cukier puder",
+    },
+    {
+      "text": "dla chętnych: lody waniliowe do podania",
+    },
+  ],
+  "instructions": [
+    {
+      "text": "Piekarnik nagrzać do 175 stopni C. Przygotować naczynie żaroodporne o
+                            średnicy ok. 23 cm lub 20 x 30 cm. Posmarować je masłem i wysypać mąką.",
+    },
+    {
+      "text": "Truskawki i borówki opłukać, osuszyć. Truskawki pokroić na połówki jeśli są duże. Wymieszać
+                            wszystkie owoce: truskawki, borówki i maliny.",
+    },
+    {
+      "text": "Jajka i żółtka dokładnie ubić z cukrem na jasną i puszystą masę. Następnie dodać mąkę oraz
+                            sól i zmiksować do połączenia się składników.",
+    },
+    {
+      "text": "Dodać masło (roztopione i ostudzone) i energicznie zmiksować. Teraz dodawać w małych
+                            ilościach mleko (letnie, lekko ciepłe) i ciągle ubijać. Na koniec dodać ekstrakt z wanilii.",
+    },
+    {
+      "text": "Mieszankę wylać do przygotowanej formy i rozłożyć owoce. Piec przez ok. 40 - 45
+                              minut. Jeśli pod koniec naleśnik będzie już za bardzo się rumienił, można
+                            zmniejszyć temp. do 170 stopni C.",
+    },
+    {
+      "text": "Posypać cukrem pudrem i podawać np. z lodami.",
+    },
+  ],
+  "name": "Clafoutis",
+  "prepTime": undefined,
+  "rating": 5,
+  "servings": 4,
+  "tags": [
+    "kuchnia francuska",
+    "owoce",
+    "maliny",
+    "truskawki",
+    "borówka amerykańska",
+  ],
+}
+`;
+
+exports[`should parse recipes from kwestiasmaku > should parse recipe for Krem Pomidorowy 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "Zupa krem z pomidorów. Pyszna z grzankami z mozzarellą oraz pesto bazyliowym.",
+  "gallery": [
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/krem-pomidorowy-01.jpg",
+  ],
+  "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/krem-pomidorowy-00.jpg",
+  "ingredients": [
+    {
+      "group": undefined,
+      "text": "2 łyżki oliwy extra vergine",
+    },
+    {
+      "group": undefined,
+      "text": "1 cebula",
+    },
+    {
+      "group": undefined,
+      "text": "2 ząbki czosnku",
+    },
+    {
+      "group": undefined,
+      "text": "1 marchewka",
+    },
+    {
+      "group": undefined,
+      "text": "1 łyżeczka oregano",
+    },
+    {
+      "group": undefined,
+      "text": "1 łyżeczka słodkiej papryki",
+    },
+    {
+      "group": undefined,
+      "text": "szczypta ostrej papryki",
+    },
+    {
+      "group": undefined,
+      "text": "szczypta cukru",
+    },
+    {
+      "group": undefined,
+      "text": "60 ml białego wina (dla chętnych)",
+    },
+    {
+      "group": undefined,
+      "text": "2 świeże pomidory",
+    },
+    {
+      "group": undefined,
+      "text": "500 ml bulionu jarzynowego",
+    },
+    {
+      "group": undefined,
+      "text": "2 x 400 g (2 puszki) krojonych pomidorów",
+    },
+    {
+      "group": "Grzanki z mozzarellą",
+      "text": "1 ciabatta lub bagietka",
+    },
+    {
+      "group": "Grzanki z mozzarellą",
+      "text": "200 g tartej mozzarelli",
+    },
+    {
+      "group": "Pesto bazyliowe",
+      "text": "1 pęczek bazylii (z jednej "doniczki")",
+    },
+    {
+      "group": "Pesto bazyliowe",
+      "text": "1 ząbek czosku",
+    },
+    {
+      "group": "Pesto bazyliowe",
+      "text": "10 g sera parmezan lub grana padano",
+    },
+    {
+      "group": "Pesto bazyliowe",
+      "text": "3 łyżki orzechów (np. pinii, nerkowców lub dowolnych)",
+    },
+    {
+      "group": "Pesto bazyliowe",
+      "text": "70 ml oliwy extra vergine",
+    },
+  ],
+  "instructions": [
+    {
+      "group": undefined,
+      "text": "W garnku podgrzać oliwę, dodać pokrojoną w kosteczkę cebulę, przepołowiony i obrany czosnek
+                            oraz obraną i pokrojoną na cienkie plasterki marchewkę. Smażyć co chwilę mieszając przez
+                            około 4 - 5 minut.",
+    },
+    {
+      "group": undefined,
+      "text": "Dodać oregano, słodką oraz ostrą paprykę, cukier i wymieszać. Wlać wino jeśli go używamy i
+                            gotować przez minutę.",
+    },
+    {
+      "group": undefined,
+      "text": "Świeże pomidory obrać i pokroić w kostkę, dodać do garnka. Gotować przez 2 minuty, doprawić
+                            solą oraz pieprzem.",
+    },
+    {
+      "group": undefined,
+      "text": "Wlać gorący bulion i zagotować. Dodać krojone pomidory z puszki i gotować przez ok. 10 - 12
+                            minut.",
+    },
+    {
+      "group": undefined,
+      "text": "Zmiksować w blenderze kielichowym na krem, sprawdzić jeszcze doprawienie solą oraz pieprzem
+                            i podawać z grzankami z mozzarellą oraz pesto.",
+    },
+    {
+      "group": "Grzanki z mozzarellą i pesto",
+      "text": "Nagrzać grill w piekarniku. Pieczywo pokroić na kromki, posypać tartą mozzarellą.",
+    },
+    {
+      "group": "Grzanki z mozzarellą i pesto",
+      "text": "Przygotować pesto : liście bazylii oderwać i umieścić w mini rozdrabniaczu -
+                            melakserze, dodać obrany czosnek, ser, orzechy oraz oliwę. Doprawić solą oraz pieprzem i
+                            zmiksować na pesto.",
+    },
+    {
+      "group": "Grzanki z mozzarellą i pesto",
+      "text": "Wstawić grzanki do piekarnika i piec aż pieczywo i ser będą zrumienione, przez około 4
+                            minuty.",
+    },
+    {
+      "group": "Grzanki z mozzarellą i pesto",
+      "text": "Po upieczeniu posmarować pesto i podawać z gorącą zupą krem.",
+    },
+  ],
+  "name": "Krem pomidorowy",
+  "prepTime": undefined,
+  "rating": 5,
+  "servings": 4,
+  "tags": [
+    "zupy",
+    "zupa pomidorowa",
+    "zupy krem",
+    "pomidory",
+    "przepisy fit",
+  ],
+}
+`;
+
+exports[`should parse recipes from kwestiasmaku > should parse recipe for Kurczak w sosie bazyliowym z pomidorkami koktajlowymi 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": undefined,
+  "gallery": [
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/babeczki-twarogowe-z-jablkami-01.jpg",
+  ],
+  "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/babeczki-twarogowe-z-jablkami-00.jpg",
+  "ingredients": [
+    {
+      "text": "250 g twarogu wiejskiego",
+    },
+    {
+      "text": "4 jajka",
+    },
+    {
+      "text": "1 kg jabłek*",
+    },
+    {
+      "text": "150 g cukru (3/4 szklanki)",
+    },
+    {
+      "text": "1 łyżeczka ekstraktu waniliowego",
+    },
+    {
+      "text": "skórka z cytryny lub pomarańczy",
+    },
+    {
+      "text": "60 ml (1/4 szklanki) oleju roślinnego",
+    },
+    {
+      "text": "300 g mąki pszennej",
+    },
+    {
+      "text": "2 łyżeczki proszku do pieczenia",
+    },
+  ],
+  "instructions": [
+    {
+      "text": "Jajka i twaróg wyjąć wcześniej z lodówki i ogrzać w temp. pokojowej. Twaróg wyłożyć na
+                            talerz i rozgnieść praską.",
+    },
+    {
+      "text": "Jabłka obrać, pokroić na ósemki, usunąć gniazda nasienne, następnie pokroić na plasterki.",
+    },
+    {
+      "text": "Piekarnik nagrzać do 200 stopni C. Formę na muffiny wyłoży papilotkami.",
+    },
+    {
+      "text": "Jajka ubijać z cukrem na jasną i puszystą masę, przez około 5 - 7 minut. Dodać wanilię,
+                            skórkę z cytryny, twaróg oraz olej roślinny i zmiksować na mniejszych obrotach miksera, do
+                            połączenia się składników.",
+    },
+    {
+      "text": "Dodać mąkę oraz proszek do pieczenia i ponownie zmiksować na małych obrotach miksera, tylko
+                            do połączenia się składników w jednolite ciasto.",
+    },
+    {
+      "text": "Do masy dodać około 2/3 ilości jabłek i wymieszać łyżką. Wyłożyć do foremek starając się
+                            wyłożyć jak najwięcej ciasta z górką. Na wierzch dać resztę jabłek delikatnie wciskając je w
+                            ciasto.",
+    },
+    {
+      "text": "Wstawić do nagrzanego piekarnika i piec przez ok. 25 minut (do suchego
+                            patyczka). Po upieczeniu można posypać cukrem pudrem i/lub cynamonem.",
+    },
+  ],
+  "name": "Babeczki twarogowe z jabłkami",
+  "prepTime": undefined,
+  "rating": 4.5,
+  "servings": 12,
+  "tags": [
+    "jabłka",
+    "muffiny i babeczki",
+    "twaróg",
+  ],
+}
+`;
+
+exports[`should parse recipes from kwestiasmaku > should parse recipe for Wiosenna sałatka ziemniaczana ze szparagami i rzodkiewkami 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "Do sałatki można podać jajko sadzone lub dodać do niej pokrojone, ugotowane na twardo jajko.
+                        Inną opcją jest też dodatek sera feta lub sałatkowego.",
+  "gallery": [
+    "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/wiosenna-salatka-ziemniaczana-03.jpg",
+  ],
+  "image": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/wiosenna-salatka-ziemniaczana-00.jpg",
+  "ingredients": [
+    {
+      "group": undefined,
+      "text": "500 g ziemniaków",
+    },
+    {
+      "group": undefined,
+      "text": "1 pęczek zielonych szparagów",
+    },
+    {
+      "group": undefined,
+      "text": "pół główki sałaty masłowej",
+    },
+    {
+      "group": undefined,
+      "text": "1 pęczek rzodkiewki",
+    },
+    {
+      "group": undefined,
+      "text": "2 - 3 młode cebulki",
+    },
+    {
+      "group": undefined,
+      "text": "szczypiorek",
+    },
+    {
+      "group": "Sos bazyliowy",
+      "text": "listki z 1 doniczki bazylii",
+    },
+    {
+      "group": "Sos bazyliowy",
+      "text": "0,5 ząbka czosnku",
+    },
+    {
+      "group": "Sos bazyliowy",
+      "text": "4 łyżki oliwy extra",
+    },
+    {
+      "group": "Sos bazyliowy",
+      "text": "sól i pieprz",
+    },
+    {
+      "group": "Sos bazyliowy",
+      "text": "2 łyżki majonezu",
+    },
+  ],
+  "instructions": [
+    {
+      "text": "Ziemniaki obrać i ugotować w osolonej wodzie.",
+    },
+    {
+      "text": "Szaparagi umyć, odłamać twarde końce (są łykowate i należy je usunąć). Szparagi cienko obrać
+                            obieraczką do połowy długości zaczynając od grubszego końca. Pokroić na kawałki.",
+    },
+    {
+      "text": "Szparagi gotować w lekko osolonej wodzie, przez ok. 3 minuty.",
+    },
+    {
+      "text": "Sałatę opłukać i osuszyć. Rzodkiewki umyć, przyciąć na końcach, pokroić na plasterki.
+                            Cebulkę i szczypiorek pokroić.",
+    },
+    {
+      "text": "Ziemniaki i szparagi odcedzić. Ziemniaki pokroić na plasterki.",
+    },
+    {
+      "text": "Przygotować sos bazyliowy : zmiksować wszystkie składniki oprócz majonezu w
+                            rozdrabniaczu (mini melakserze), na koniec wymieszać łyżką z majonezem.",
+    },
+    {
+      "text": "W salaterkach układać warstwami: porwane liście sałaty, ziemniaki, szparagi, rzodkiewki,
+                            cebulę i szczypiorek. Skrapiać też sosem. Jeśli sałatkę podajemy od razu, można też
+                            doprawiać składniki solą oraz pieprzem.",
+    },
+  ],
+  "name": "Wiosenna sałatka ziemniaczana ze szparagami i rzodkiewkami",
+  "prepTime": undefined,
+  "rating": 4.89,
+  "servings": 2,
+  "tags": [
+    "lunche",
+    "sałatki",
+    "lekkie kolacje",
+    "rzodkiewka",
+    "szparagi",
+    "ziemniaki",
+    "przepisy fit",
+    "wegetariańskie",
+    "majówka",
+    "grill",
+  ],
+}
+`;

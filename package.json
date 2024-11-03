@@ -14,7 +14,8 @@
 		"detect-circular-deps": "dpdm src/main.tsx",
 		"generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg",
 		"i18n:check": "i18n-check --locales ./locales --source en --format i18next",
-		"i18n:sync": "i18next-locales-sync --primaryLanguage en --secondaryLanguages pl --localesFolder ./locales --spaces 4 --useEmptyString"
+		"i18n:sync": "i18next-locales-sync --primaryLanguage en --secondaryLanguages pl --localesFolder ./locales --spaces 4 --useEmptyString",
+		"test:unit": "vitest"
 	},
 	"dependencies": {
 		"@ariakit/react": "^0.4.13",
@@ -79,6 +80,7 @@
 		"dpdm": "^3.14.0",
 		"dprint": "^0.47.5",
 		"eslint": "^8.57.1",
+		"happy-dom": "^15.8.0",
 		"husky": "^9.1.6",
 		"i18next-locales-sync": "^2.1.0",
 		"lint-staged": "^15.2.10",
@@ -89,7 +91,8 @@
 		"vite": "^5.4.10",
 		"vite-plugin-i18next-loader": "^2.0.14",
 		"vite-plugin-pwa": "^0.20.5",
-		"vite-tsconfig-paths": "^5.0.1"
+		"vite-tsconfig-paths": "^5.0.1",
+		"vitest": "^2.1.4"
 	},
 	"lint-staged": {
 		"*": [
