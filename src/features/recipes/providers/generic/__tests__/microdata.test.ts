@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { createRecipe } from 'features/recipes/providers/websites/__tests__/utils'
 import { extractMicrodata } from '../microdata'
 import { recipe1 } from './microdata.fixtures'
 
@@ -6,7 +7,10 @@ describe('should scrape recipes using Microdata format', () => {
 	const scrapeRecipe = async (data: string) => extractMicrodata(new DOMParser().parseFromString(data, 'text/html'))
 
 	it('should scrape valid recipe for Gofry bananowe', async () => {
-		expect(await scrapeRecipe(recipe1)).toMatchSnapshot()
+		const partialRecipe = await scrapeRecipe(recipe1)
+
+		expect(partialRecipe).toMatchSnapshot()
+		expect(createRecipe(partialRecipe)).toBeValidRecipe()
 	})
 
 	it('should not found recipe', async () => {

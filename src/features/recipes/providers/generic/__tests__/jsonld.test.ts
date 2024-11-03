@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { createRecipe } from 'features/recipes/providers/websites/__tests__/utils'
 import { extractJsonLD } from '../jsonld'
 import { recipe1, recipe2, recipe3, recipe4, recipe5 } from './jsonld.fixtures'
 
@@ -6,23 +7,38 @@ describe('should scrape recipes using LD+JSON format', () => {
 	const scrapeRecipe = async (data: string) => extractJsonLD(new DOMParser().parseFromString(data, 'text/html'))
 
 	it('should scrape valid recipe for Shepherd’s Pie', async () => {
-		expect(await scrapeRecipe(recipe1)).toMatchSnapshot()
+		const partialRecipe = await scrapeRecipe(recipe1)
+
+		expect(partialRecipe).toMatchSnapshot()
+		expect(createRecipe(partialRecipe)).toBeValidRecipe()
 	})
 
 	it('should scrape valid recipe for Homemade Buttery Flaky Pie Crust', async () => {
-		expect(await scrapeRecipe(recipe2)).toMatchSnapshot()
+		const partialRecipe = await scrapeRecipe(recipe2)
+
+		expect(partialRecipe).toMatchSnapshot()
+		expect(createRecipe(partialRecipe)).toBeValidRecipe()
 	})
 
 	it('should scrape valid recipe for Pecan Pie', async () => {
-		expect(await scrapeRecipe(recipe3)).toMatchSnapshot()
+		const partialRecipe = await scrapeRecipe(recipe3)
+
+		expect(partialRecipe).toMatchSnapshot()
+		expect(createRecipe(partialRecipe)).toBeValidRecipe()
 	})
 
 	it('should scrape valid recipe for Apple Cranberry Pie', async () => {
-		expect(await scrapeRecipe(recipe4)).toMatchSnapshot()
+		const partialRecipe = await scrapeRecipe(recipe4)
+
+		expect(partialRecipe).toMatchSnapshot()
+		expect(createRecipe(partialRecipe)).toBeValidRecipe()
 	})
 
 	it('should scrape valid recipe for Creamy Chicken Casserole', async () => {
-		expect(await scrapeRecipe(recipe5)).toMatchSnapshot()
+		const partialRecipe = await scrapeRecipe(recipe5)
+
+		expect(partialRecipe).toMatchSnapshot()
+		expect(createRecipe(partialRecipe)).toBeValidRecipe()
 	})
 
 	it('should not found recipe', async () => {
