@@ -5,7 +5,8 @@
 		"settings": "Ustawienia",
 		"theme": "Wygląd",
 		"account": "Konto i synchronizacja",
-		"units": "Jednostki"
+		"units": "Jednostki",
+		"search": "Szukaj"
 	},
 	"appUpdate": {
 		"updateAvailable": "Dostępna jest aktualizacja aplikacji",

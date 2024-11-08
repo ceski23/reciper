@@ -92,7 +92,7 @@ export const Home: FunctionComponent = () => {
 										<StyledChip
 											text={tag}
 											variant="outlined"
-											to="/recipes/search"
+											to="/search"
 											search={{ query: tag }}
 										/>
 									)}

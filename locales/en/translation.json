@@ -5,7 +5,8 @@
 		"settings": "Settings",
 		"theme": "Theme",
 		"account": "Account and sync",
-		"units": "Units"
+		"units": "Units",
+		"search": "Search"
 	},
 	"appUpdate": {
 		"updateAvailable": "App update available",

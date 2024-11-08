@@ -78,6 +78,7 @@ export const Layout: FunctionComponent = () => {
 				ref={navbarRef}
 				segments={[
 					{ icon: 'home', to: '/', label: t('paths.home') },
+					{ icon: 'search', to: '/search', label: t('paths.search') },
 					{ icon: 'recipes', to: '/recipes', label: t('paths.recipes') },
 					{ icon: 'settings', to: '/settings', label: t('paths.settings') },
 				]}

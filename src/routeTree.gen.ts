@@ -11,13 +11,13 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SearchImport } from './routes/search'
 import { Route as IndexImport } from './routes/index'
 import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as RecipesIndexImport } from './routes/recipes/index'
 import { Route as SettingsUnitsImport } from './routes/settings/units'
 import { Route as SettingsThemeImport } from './routes/settings/theme'
 import { Route as SettingsAccountImport } from './routes/settings/account'
-import { Route as RecipesSearchImport } from './routes/recipes/search'
 import { Route as RecipesScrapeImport } from './routes/recipes/scrape'
 import { Route as RecipesNewImport } from './routes/recipes/new'
 import { Route as RecipesIdImport } from './routes/recipes/$id'
@@ -25,6 +25,12 @@ import { Route as AuthGoogleImport } from './routes/auth/google'
 import { Route as RecipesIdEditImport } from './routes/recipes_/$id.edit'
 
 // Create/Update Routes
+
+const SearchRoute = SearchImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -59,12 +65,6 @@ const SettingsThemeRoute = SettingsThemeImport.update({
 const SettingsAccountRoute = SettingsAccountImport.update({
   id: '/settings/account',
   path: '/settings/account',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const RecipesSearchRoute = RecipesSearchImport.update({
-  id: '/recipes/search',
-  path: '/recipes/search',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -109,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchImport
+      parentRoute: typeof rootRoute
+    }
     '/auth/google': {
       id: '/auth/google'
       path: '/auth/google'
@@ -135,13 +142,6 @@ declare module '@tanstack/react-router' {
       path: '/recipes/scrape'
       fullPath: '/recipes/scrape'
       preLoaderRoute: typeof RecipesScrapeImport
-      parentRoute: typeof rootRoute
-    }
-    '/recipes/search': {
-      id: '/recipes/search'
-      path: '/recipes/search'
-      fullPath: '/recipes/search'
-      preLoaderRoute: typeof RecipesSearchImport
       parentRoute: typeof rootRoute
     }
     '/settings/account': {
@@ -193,11 +193,11 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/search': typeof SearchRoute
   '/auth/google': typeof AuthGoogleRoute
   '/recipes/$id': typeof RecipesIdRoute
   '/recipes/new': typeof RecipesNewRoute
   '/recipes/scrape': typeof RecipesScrapeRoute
-  '/recipes/search': typeof RecipesSearchRoute
   '/settings/account': typeof SettingsAccountRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/settings/units': typeof SettingsUnitsRoute
@@ -208,11 +208,11 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/search': typeof SearchRoute
   '/auth/google': typeof AuthGoogleRoute
   '/recipes/$id': typeof RecipesIdRoute
   '/recipes/new': typeof RecipesNewRoute
   '/recipes/scrape': typeof RecipesScrapeRoute
-  '/recipes/search': typeof RecipesSearchRoute
   '/settings/account': typeof SettingsAccountRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/settings/units': typeof SettingsUnitsRoute
@@ -224,11 +224,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/search': typeof SearchRoute
   '/auth/google': typeof AuthGoogleRoute
   '/recipes/$id': typeof RecipesIdRoute
   '/recipes/new': typeof RecipesNewRoute
   '/recipes/scrape': typeof RecipesScrapeRoute
-  '/recipes/search': typeof RecipesSearchRoute
   '/settings/account': typeof SettingsAccountRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/settings/units': typeof SettingsUnitsRoute
@@ -241,11 +241,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/search'
     | '/auth/google'
     | '/recipes/$id'
     | '/recipes/new'
     | '/recipes/scrape'
-    | '/recipes/search'
     | '/settings/account'
     | '/settings/theme'
     | '/settings/units'
@@ -255,11 +255,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/search'
     | '/auth/google'
     | '/recipes/$id'
     | '/recipes/new'
     | '/recipes/scrape'
-    | '/recipes/search'
     | '/settings/account'
     | '/settings/theme'
     | '/settings/units'
@@ -269,11 +269,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/search'
     | '/auth/google'
     | '/recipes/$id'
     | '/recipes/new'
     | '/recipes/scrape'
-    | '/recipes/search'
     | '/settings/account'
     | '/settings/theme'
     | '/settings/units'
@@ -285,11 +285,11 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SearchRoute: typeof SearchRoute
   AuthGoogleRoute: typeof AuthGoogleRoute
   RecipesIdRoute: typeof RecipesIdRoute
   RecipesNewRoute: typeof RecipesNewRoute
   RecipesScrapeRoute: typeof RecipesScrapeRoute
-  RecipesSearchRoute: typeof RecipesSearchRoute
   SettingsAccountRoute: typeof SettingsAccountRoute
   SettingsThemeRoute: typeof SettingsThemeRoute
   SettingsUnitsRoute: typeof SettingsUnitsRoute
@@ -300,11 +300,11 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SearchRoute: SearchRoute,
   AuthGoogleRoute: AuthGoogleRoute,
   RecipesIdRoute: RecipesIdRoute,
   RecipesNewRoute: RecipesNewRoute,
   RecipesScrapeRoute: RecipesScrapeRoute,
-  RecipesSearchRoute: RecipesSearchRoute,
   SettingsAccountRoute: SettingsAccountRoute,
   SettingsThemeRoute: SettingsThemeRoute,
   SettingsUnitsRoute: SettingsUnitsRoute,
@@ -324,11 +324,11 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/search",
         "/auth/google",
         "/recipes/$id",
         "/recipes/new",
         "/recipes/scrape",
-        "/recipes/search",
         "/settings/account",
         "/settings/theme",
         "/settings/units",
@@ -339,6 +339,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/search": {
+      "filePath": "search.tsx"
     },
     "/auth/google": {
       "filePath": "auth/google.tsx"
@@ -351,9 +354,6 @@ export const routeTree = rootRoute
     },
     "/recipes/scrape": {
       "filePath": "recipes/scrape.tsx"
-    },
-    "/recipes/search": {
-      "filePath": "recipes/search.tsx"
     },
     "/settings/account": {
       "filePath": "settings/account.tsx"

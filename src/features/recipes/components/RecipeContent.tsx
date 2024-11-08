@@ -70,7 +70,7 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 										<Tag
 											text={tag}
 											variant="outlined"
-											to="/recipes/search"
+											to="/search"
 											search={{ query: tag }}
 										/>
 									)}

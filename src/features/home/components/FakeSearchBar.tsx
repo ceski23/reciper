@@ -22,7 +22,7 @@ export const FakeSearchBar: FunctionComponent<FakeSearchBarProps> = ({ leadingIc
 	return (
 		<SearchBarBase
 			{...eventHandlers}
-			onClick={() => navigate({ to: '/recipes/search' })}
+			onClick={() => navigate({ to: '/search' })}
 			style={style}
 		>
 			{renderRipples}
