@@ -94,6 +94,9 @@
 			"reset": "Reset selection",
 			"selected_one": "1 selected",
 			"selected_other": "{{count}} selected"
+		},
+		"rescrape": {
+			"menuItem": "Rescrape recipe"
 		}
 	},
 	"newRecipe": {

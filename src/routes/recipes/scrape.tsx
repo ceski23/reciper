@@ -8,6 +8,7 @@ export const Route = createFileRoute('/recipes/scrape')({
 		v.parse(
 			v.object({
 				url: v.optional(v.pipe(v.string(), v.url())),
+				id: v.optional(v.string()),
 			}),
 			search,
 		),

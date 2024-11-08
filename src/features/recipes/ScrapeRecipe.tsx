@@ -5,10 +5,12 @@ import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as scrapeRecipeRoute } from 'routes/recipes/scrape'
 import { match, P } from 'ts-pattern'
+import { useNotifications } from 'features/notifications'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
 import { scrapeRecipe } from 'features/recipes/providers/scrapper'
-import { useAddRecipe } from 'features/recipes/recipes'
+import { useAddRecipe, useEditRecipe } from 'features/recipes/recipes'
+import { type Recipe } from 'features/recipes/types'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { AnimateDialog } from 'lib/components/dialog/AnimateDialog'
 import { SimpleDialog } from 'lib/components/dialog/Dialog'
@@ -25,16 +27,31 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	const navigate = useNavigate()
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
-	const { url } = scrapeRecipeRoute.useSearch()
+	const { url, id } = scrapeRecipeRoute.useSearch()
 	const query = useQuery({
 		queryKey: ['scraped', url],
 		queryFn: () => scrapeRecipe(url).catch(),
 		retry: false,
 	})
 	const addRecipe = useAddRecipe()
+	const editRecipe = useEditRecipe()
+	const { notify } = useNotifications()
 
 	useApplyDynamicTheme(useDynamicTheme(query.data?.color))
 	useWakelock()
+
+	const handleRecipeSave = (recipe: Recipe) => {
+		const mutation = id === undefined ? addRecipe : editRecipe
+
+		mutation.mutate(recipe, {
+			onSuccess: savedRecipe => {
+				if (id !== undefined) {
+					notify(t('editRecipe.success'))
+				}
+				navigate({ to: '/recipes/$id', params: { id: savedRecipe.id }, replace: true })
+			},
+		})
+	}
 
 	return (
 		<Fragment>
@@ -57,15 +74,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 									type="button"
 									variant="primary"
 									size={isListScrolled ? undefined : 'expanded'}
-									onClick={() =>
-										addRecipe.mutate(data, {
-											onSuccess: ({ id }) =>
-												navigate({
-													to: '/recipes/$id',
-													params: { id },
-													replace: true,
-												}),
-										})}
+									onClick={() => handleRecipeSave(data)}
 								/>
 							</FabContainer>
 						</ContentOverlayPortal>

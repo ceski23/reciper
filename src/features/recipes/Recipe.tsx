@@ -1,9 +1,10 @@
 import { AnimateDialog } from '@components/dialog/AnimateDialog'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate, useRouter } from '@tanstack/react-router'
+import { useRouter } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as recipeRoute } from 'routes/recipes/$id'
+import { Route as scrapeRoute } from 'routes/recipes/scrape'
 import { match } from 'ts-pattern'
 import { useNotifications } from 'features/notifications'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
@@ -27,7 +28,7 @@ export const Recipe: FunctionComponent = () => {
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 	const deleteRecipeMutation = useDeleteRecipe()
 	const history = useRouter().history
-	const navigate = useNavigate()
+	const navigate = recipeRoute.useNavigate()
 
 	useApplyDynamicTheme(useDynamicTheme(query.data?.color))
 	useWakelock()
@@ -66,7 +67,7 @@ export const Recipe: FunctionComponent = () => {
 						<Menu.Item
 							text={t('recipes.edit')}
 							icon="pencil"
-							onClick={() => navigate({ from: recipeRoute.fullPath, to: 'edit' })}
+							onClick={() => navigate({ to: 'edit' })}
 						/>
 						{navigator.share !== undefined && (
 							<Menu.Item
@@ -81,6 +82,22 @@ export const Recipe: FunctionComponent = () => {
 							icon="delete"
 							onClick={() => setIsDeleteDialogOpen(true)}
 						/>
+						{query.data?.url !== undefined && (
+							<Menu.Item
+								text={t('recipes.rescrape.menuItem')}
+								icon="sync"
+								onClick={() => {
+									if (query.data?.url === undefined) {
+										return
+									}
+
+									return navigate({
+										to: scrapeRoute.fullPath,
+										search: { url: query.data.url, id: query.data.id },
+									})
+								}}
+							/>
+						)}
 					</Menu.Root>
 				)}
 			/>

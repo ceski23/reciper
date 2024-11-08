@@ -106,6 +106,9 @@
 			"selected_few": "{{count}} wybrane",
 			"selected_many": "{{count}} wybranych",
 			"selected_other": "{{count}} wybranych"
+		},
+		"rescrape": {
+			"menuItem": "Pobierz ponownie przepis"
 		}
 	},
 	"newRecipe": {
