@@ -1,190 +1,300 @@
+import { getColorFromImage } from '@utils/images'
+import { parseValidNumber } from '@utils/numbers'
 import { decodeHTML5Strict } from 'entities'
 import { parse, toSeconds } from 'iso8601-duration'
-import type { HowToStep, ImageObject, Recipe as SchemaRecipe } from 'schema-dts'
-import { isArrayOf, isDefined, isString } from 'lib/utils'
-import { getColorFromImage } from 'lib/utils/images'
+import {
+	type AggregateRating,
+	type CreativeWork,
+	type DefinedTerm,
+	type Duration,
+	type Energy,
+	type Graph,
+	type HowToStep,
+	type ImageObject,
+	type ItemList,
+	type NutritionInformation,
+	type PronounceableText,
+	type QuantitativeValue,
+	type Recipe as RecipeSchemaType,
+	type Role,
+	type Text,
+	type Thing,
+} from 'schema-dts'
+import { type Recipe } from 'features/recipes/types'
+import { isDefined } from 'lib/utils'
 
-function isHowToStepArray(instructions: SchemaRecipe['recipeInstructions']): instructions is Array<HowToStep> {
-	return Array.isArray(instructions) && instructions[0]['@type'] === 'HowToStep'
+type SchemaValue<T> = T | Role<T> | ReadonlyArray<T | Role<T>>
+
+type IdReference = {
+	'@id': string
 }
 
-const isImageObject = (val: unknown): val is ImageObject => (
-	!!val && typeof val === 'object' && ('@type' in val) && val['@type'] === 'ImageObject'
-)
-
-const parseInstructions = (instructions: SchemaRecipe['recipeInstructions']): Array<string> | undefined => {
-	if (Array.isArray(instructions) && instructions.length === 1) instructions = instructions[0]
-
-	if (Array.isArray(instructions) && instructions.length === 1) instructions = instructions[0]
-
-	if (!instructions) return []
-
-	if (typeof instructions === 'string') return [instructions]
-
-	if ('@type' in instructions && instructions['@type'] === 'HowToSection') {
-		const steps = instructions.steps ?? instructions.itemListElement
-		if (!steps) return []
-		if (typeof steps === 'string') return [steps]
-
-		if ('@type' in steps || '@id' in steps) return undefined
-
-		return steps.map(i => {
-			if (typeof i === 'string') return i
-			if ('@type' in i && i['@type'] === 'HowToStep') return i.description?.toString() || i.text?.toString()
-			return undefined
-		}).filter(isDefined)
-	}
-
-	if (isHowToStepArray(instructions)) {
-		return instructions.map(i => {
-			if ('@type' in i && i['@type'] === 'HowToStep') return i.description?.toString() || i.text?.toString()
-			return undefined
-		}).filter(isDefined)
-	}
-
-	if (Array.isArray(instructions) && typeof instructions[0] === 'string') return instructions
-
-	return []
+type Instruction = {
+	text: string
+	group?: string
+	image?: string
 }
 
-const parseJsons = (elems: NodeListOf<Element>) => {
-	const jsons = []
+const getFirstItem = <T>(value: T | Array<T> | undefined): T | undefined => value instanceof Array ? value.at(0) : value
 
-	for (const elem of elems) {
-		if (elem.textContent) {
-			const parsed = JSON.parse(elem.textContent)
+const isGraph = (value: unknown): value is Graph => isDefined(value) && typeof value === 'object' && ('@graph' in value)
 
-			if ('@graph' in parsed && Array.isArray(parsed['@graph'])) {
-				jsons.push(...parsed['@graph'].filter(x => x['@type'] === 'Recipe'))
-			} else if (parsed['@type'] === 'Recipe') {
-				jsons.push(parsed)
-			} else if (Array.isArray(parsed)) {
-				jsons.push(...parsed.filter(x => x['@type'] === 'Recipe' || x['@type'].includes('Recipe')))
-			}
-		}
-	}
+const isRecipe = (value: Thing): value is RecipeSchemaType =>
+	typeof value === 'object' && '@type' in value
+	&& (value['@type'] === 'Recipe' || Array.isArray(value['@type']) && value['@type'].includes('Recipe'))
 
-	return jsons
-}
+const parseStringValue = (value: SchemaValue<Text> | undefined): string | Array<string> | undefined => {
+	if (!isDefined(value)) return undefined
 
-const getRating = (data: SchemaRecipe['aggregateRating']) => {
-	if (!(data && '@type' in data && data['@type'] === 'AggregateRating')) return undefined
-	if (!data.ratingValue) return undefined
+	if (typeof value === 'string') return decodeHTML5Strict(value)
 
-	return Number.parseFloat(data.ratingValue?.toString())
-}
-
-const parseTags = (schemaRecipe: SchemaRecipe) => {
-	const tags: Array<string> = []
-
-	const category = Array.isArray(schemaRecipe.recipeCategory)
-		? schemaRecipe.recipeCategory.map(item => item.toLocaleLowerCase())
-		: [schemaRecipe.recipeCategory?.toString().toLocaleLowerCase()]
-	if (category) tags.push(...category)
-
-	const cuisine = Array.isArray(schemaRecipe.recipeCuisine)
-		? schemaRecipe.recipeCuisine.map(item => item.toLocaleLowerCase())
-		: [schemaRecipe.recipeCuisine?.toString().toLocaleLowerCase()]
-	if (cuisine) tags.push(...cuisine)
-
-	const keywords = schemaRecipe.keywords?.toString()
-	if (keywords) {
-		tags.push(
-			...keywords.split(',').map(text => text.toLocaleLowerCase().trim()),
-		)
-	}
-
-	return Array.from(new Set(tags)).filter(isDefined)
-}
-
-const parseGallery = (schemaRecipe: SchemaRecipe): Array<string> | undefined => {
-	const images = schemaRecipe.image
-	if (!images) return undefined
-
-	if (Array.isArray(images)) {
-		// Array of strings
-		if (isArrayOf(images, isString)) return images
-
-		// Array of ImageObject
-		if (isArrayOf(images, isImageObject)) {
-			return images
-				.map(img => String(img.url ?? ''))
-				.filter(isDefined)
-		}
-	} else {
-		// String
-		if (isString(images)) return [images]
-
-		// ImageObject
-		if (isImageObject(images)) return images.url ? [images.url.toString()] : undefined
+	if (value instanceof Array) {
+		return value.filter(isDefined).map(item => decodeHTML5Strict(item.toString()))
 	}
 
 	return undefined
 }
 
-export const extractJsonLD = async (doc: Document) => {
-	const elems = doc.querySelectorAll('[type="application/ld+json"]')
-	const data = parseJsons(elems)[0]
+const parseNumberValue = (value: SchemaValue<string | number | PronounceableText> | undefined): number | undefined => {
+	if (!isDefined(value)) return undefined
 
-	if (!data) {
-		throw Error('No JSON-LD data available')
+	if (typeof value === 'string') {
+		return parseValidNumber(value)
 	}
 
-	const schemaRecipe = data as SchemaRecipe
+	if (typeof value === 'number') return value
 
-	const { name } = schemaRecipe
-	// if (!name) throw Error('Couldn\'t find recipe name');
-
-	const { description } = schemaRecipe
-	let { image } = schemaRecipe
-	if (image !== undefined) {
-		if (Array.isArray(image)) image = image[0]
-		if (typeof image === 'string') image = image.toString()
-		// @ts-expect-error TODO: better narrow types
-		else if (!!image && '@type' in image) image = image.url
+	if (value instanceof Array) {
+		return undefined
 	}
 
-	const ingredientsData = schemaRecipe.recipeIngredient
-	// if (!ingredientsData) throw Error('Couldn\'t find ingredients');
-	const ingredientsArray = Array.from(ingredientsData as Array<string> ?? [])
-	const ingredients = ingredientsArray?.map(i => ({ text: i }))
+	return undefined
+}
 
-	// FIXME: Better instructions parsing
-	const instructions = parseInstructions(schemaRecipe.recipeInstructions)
-		?.map(i => ({ text: decodeHTML5Strict(i.trim()) }))
-	// if (!instructions) throw Error('Couldn\'t find or parse instructions');
+const parseImageValue = (value: SchemaValue<string | ImageObject | IdReference> | undefined): string | Array<string> | undefined => {
+	if (!isDefined(value)) return undefined
 
-	let prepTimeISO = schemaRecipe.totalTime ?? schemaRecipe.prepTime
-	// FIXME: Better duration recognition
-	if (prepTimeISO !== undefined && typeof prepTimeISO !== 'string') prepTimeISO = undefined
-	const prepTime = prepTimeISO ? Math.round(toSeconds(parse(prepTimeISO)) / 60) : undefined
+	return (value instanceof Array ? value : [value])
+		.map(image => {
+			// String
+			if (typeof image === 'string') return image
 
-	let servings = schemaRecipe.recipeYield
-		? Number.parseInt(schemaRecipe.recipeYield.toString(), 10)
-		: undefined
-	if (Number.isNaN(servings)) servings = undefined
+			// ImageObject
+			if ('@type' in image && image['@type'] === 'ImageObject') {
+				return getFirstItem(parseStringValue(image.url))
+			}
 
-	const caloriesText = (schemaRecipe.nutrition && '@type' in schemaRecipe.nutrition)
-		// @ts-expect-error TODO: better narrow types
-		? schemaRecipe.nutrition.calories?.toString().replace('kcal', '').trim()
-		: undefined
-	let calories = caloriesText ? Number.parseInt(caloriesText, 10) : undefined
-	if (Number.isNaN(calories)) calories = undefined
+			return undefined
+		})
+		.filter(isDefined)
+}
 
-	const color = image ? await getColorFromImage(image.toString()) : undefined
+const parseEnergyValue = (value: SchemaValue<Energy | IdReference> | undefined) => {
+	if (!isDefined(value)) return undefined
+
+	if (value instanceof Array) {
+		return undefined
+	}
+
+	if (typeof value === 'string') {
+		return value
+	}
+
+	return undefined
+}
+
+const parseNutritionValue = (value: SchemaValue<NutritionInformation | IdReference> | undefined) => {
+	if (!isDefined(value)) return undefined
+
+	return (value instanceof Array ? value : [value])
+		.map(nutrition => {
+			if ('@type' in nutrition && nutrition['@type'] === 'NutritionInformation') {
+				return {
+					calories: parseEnergyValue(nutrition.calories),
+					// TODO: parse more nutrition information
+				}
+			}
+
+			return undefined
+		})
+		.filter(isDefined)
+		.at(0)
+}
+
+const parseCalories = (value: string | undefined): number | undefined => value ? parseInt(value.replace('kcal', ''), 10) : undefined
+
+const parseRecipeYieldValue = (value: SchemaValue<IdReference | Text | QuantitativeValue> | undefined): number | Array<number> | undefined => {
+	if (!isDefined(value)) return undefined
+
+	return (value instanceof Array ? value : [value])
+		.map(yieldValue => {
+			if (typeof yieldValue === 'string') {
+				return parseValidNumber(yieldValue)
+			}
+
+			if ('@type' in yieldValue && yieldValue['@type'] === 'QuantitativeValue') {
+				return undefined
+			}
+
+			return undefined
+		})
+		.filter(isDefined)
+}
+
+const parseRatingValue = (value: SchemaValue<IdReference | AggregateRating> | undefined): number | undefined => {
+	if (!isDefined(value)) return undefined
+
+	return (value instanceof Array ? value : [value])
+		.map(rating => {
+			if ('@type' in rating && rating['@type'] === 'AggregateRating') {
+				return parseNumberValue(rating.ratingValue)
+			}
+
+			return undefined
+		})
+		.filter(isDefined)
+		.at(0)
+}
+
+const parseDurationValue = (value: SchemaValue<IdReference | Duration> | undefined): number | undefined => {
+	if (!isDefined(value)) return undefined
+
+	if (value instanceof Array) {
+		return undefined
+	}
+
+	if (typeof value === 'string') {
+		return Math.round(toSeconds(parse(value)) / 60)
+	}
+
+	if ('@type' in value && value['@type'] === 'Duration') {
+		return undefined
+	}
+}
+
+const gatherTags = (...values: Array<SchemaValue<IdReference | Text | DefinedTerm> | undefined>): Array<string> | undefined =>
+	values.flatMap(value => {
+		if (!isDefined(value)) return []
+
+		return (value instanceof Array ? value : [value])
+			.flatMap(tag => {
+				if (typeof tag === 'string') {
+					return tag.toLocaleLowerCase().split(',')
+				}
+
+				if ('@type' in tag && tag['@type'] === 'DefinedTerm') {
+					return getFirstItem(parseStringValue(tag.name))?.toLocaleLowerCase().split(',')
+				}
+
+				return undefined
+			})
+			.filter(isDefined)
+			.map(tag => tag.trim())
+	})
+
+const parseIngredients = (value: SchemaValue<Text> | undefined): Array<{ text: string }> => {
+	const ingredients = parseStringValue(value)
+
+	if (!ingredients) return []
+
+	return (ingredients instanceof Array ? ingredients : [ingredients])
+		.map(ingredient => ({ text: ingredient }))
+}
+
+const parseHowToStepValue = (value: HowToStep): Instruction | undefined => {
+	const text = getFirstItem(parseStringValue(value.text))
+	const image = getFirstItem(parseImageValue(value.image))
+
+	if (text === undefined) return undefined
+
+	if (image === undefined) return { text }
 
 	return {
-		name: name ? name.toString() : undefined,
-		description: description ? decodeHTML5Strict(description.toString()) : undefined,
-		image: image?.toString(),
-		ingredients: Array.isArray(ingredients) ? ingredients : [ingredients],
-		instructions,
-		prepTime,
-		tags: parseTags(schemaRecipe),
-		servings,
-		calories,
-		color,
-		rating: getRating(schemaRecipe.aggregateRating),
-		gallery: parseGallery(schemaRecipe),
+		text,
+		image,
 	}
+}
+
+const parseInstructions = (value: SchemaValue<CreativeWork | ItemList | Text | IdReference> | undefined): Array<Instruction> => {
+	return (value instanceof Array ? value : [value])
+		.flatMap(item => {
+			if (!isDefined(item)) return undefined
+
+			if (typeof item === 'string') return { text: item.trim() }
+
+			if ('@type' in item && item['@type'] === 'HowToStep') {
+				return [parseHowToStepValue(item)].filter(isDefined)
+			}
+
+			if ('@type' in item && item['@type'] === 'HowToSection') {
+				const steps = item.steps ?? item.itemListElement
+
+				if (!steps) return []
+
+				if (typeof steps === 'string') return [{ text: steps.trim() }]
+
+				if (steps instanceof Array) {
+					return steps.map(step => {
+						if (typeof step === 'string') return { text: step.trim() }
+
+						if ('@type' in step && step['@type'] === 'HowToStep') return parseHowToStepValue(step)
+
+						return undefined
+					})
+				}
+			}
+
+			return undefined
+		})
+		.filter(isDefined) ?? []
+}
+
+export const parseRecipeItem = async (item: RecipeSchemaType): Promise<Partial<Recipe>> => {
+	const name = getFirstItem(parseStringValue(item.name))
+	const description = getFirstItem(parseStringValue(item.description))
+	const parsedImageField = parseImageValue(item.image)
+	const image = getFirstItem(parsedImageField)
+	const gallery = Array.isArray(parsedImageField) ? parsedImageField : (parsedImageField ? [parsedImageField] : undefined)
+	const color = image ? await getColorFromImage(image).catch(() => undefined) : undefined
+	const nutrition = parseNutritionValue(item.nutrition)
+	const calories = parseCalories(nutrition?.calories)
+	const recipeYield = parseRecipeYieldValue(item.recipeYield)
+	const servings = getFirstItem(recipeYield)
+	const rating = parseRatingValue(item.aggregateRating)
+	const prepTime = parseDurationValue(item.totalTime ?? item.prepTime ?? item.timeRequired)
+	const tags = gatherTags(item.recipeCategory, item.recipeCuisine, item.keywords)
+	const ingredients = parseIngredients(item.recipeIngredient)
+	const instructions = parseInstructions(item.recipeInstructions)
+
+	return {
+		name,
+		description,
+		image,
+		gallery,
+		color,
+		calories,
+		servings,
+		rating,
+		prepTime,
+		tags,
+		ingredients,
+		instructions,
+	}
+}
+
+export const extractJsonLD = async (doc: Document): Promise<Partial<Recipe> | undefined> => {
+	const elements = doc.querySelectorAll('[type="application/ld+json"]')
+
+	const recipeLeaf = Array.from(elements).flatMap(element => {
+		const parsed = JSON.parse(element.textContent ?? '{}') as Graph | Thing | Array<Thing>
+		const schemaItems = isGraph(parsed) ? parsed['@graph'] : Array.isArray(parsed) ? parsed : [parsed]
+
+		return schemaItems.filter(isRecipe)
+	}).at(0)
+
+	if (recipeLeaf === undefined) {
+		return undefined
+	}
+
+	return parseRecipeItem(recipeLeaf)
 }

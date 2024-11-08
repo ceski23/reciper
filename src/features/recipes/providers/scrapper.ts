@@ -14,6 +14,13 @@ export type RecipesProvider = {
 
 export class InvalidRecipeError extends Error {}
 
+const createRecipe = (url: URL, recipe: Record<string, unknown> | undefined) => ({
+	id: nanoid(),
+	url: url.toString(),
+	addedDate: new Date().getTime(),
+	...recipe,
+})
+
 export const scrapeRecipe = async (url?: string): Promise<Recipe> => {
 	if (url === undefined) throw new Error('Invalid url')
 
@@ -23,17 +30,17 @@ export const scrapeRecipe = async (url?: string): Promise<Recipe> => {
 		: recipeUrl.toString()
 	const doc = new DOMParser().parseFromString(await fetch(targetUrl).then(res => res.text()), 'text/html')
 	const provider = Object.values(providers).find(provider => provider.matcher.test(String(recipeUrl)))
-	const recipe = provider
-		? await provider.scrape(doc)
-		: await Promise.any([
-			extractJsonLD(doc),
-			extractMicrodata(doc),
-		])
 
-	return v.parseAsync(recipeScheme, {
-		id: nanoid(),
-		url: recipeUrl.toString(),
-		addedDate: new Date().getTime(),
-		...recipe,
-	})
+	if (provider !== undefined) {
+		return v.parseAsync(recipeScheme, createRecipe(recipeUrl, await provider.scrape(doc)))
+	}
+
+	const recipeData = (await Promise.allSettled([
+		extractJsonLD(doc),
+		extractMicrodata(doc),
+	]))
+		.filter(item => item.status === 'fulfilled')
+		.find(item => item.value !== undefined)?.value
+
+	return v.parseAsync(recipeScheme, createRecipe(recipeUrl, recipeData))
 }

@@ -14,7 +14,7 @@ export const useImageDimensions = (imageUrl: string): Dimensions | undefined => 
 		const image = new Image()
 		image.crossOrigin = 'Anonymous'
 		image.src = import.meta.env.VITE_CORS_PROXY !== undefined
-			? import.meta.env.VITE_CORS_PROXY + encodeURIComponent(imageUrl)
+			? import.meta.env.VITE_CORS_PROXY + encodeURIComponent(imageUrl.replace(/ /g, '%20'))
 			: imageUrl
 
 		const handleImageLoad = () =>

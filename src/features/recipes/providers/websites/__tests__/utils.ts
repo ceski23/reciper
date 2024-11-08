@@ -7,7 +7,7 @@ export const scrapeRecipe = async (provider: RecipesProvider, content: string) =
 	return provider.scrape(document)
 }
 
-export const createRecipe = (partialRecipe: Awaited<ReturnType<typeof scrapeRecipe>>) => ({
+export const createRecipe = (partialRecipe: Awaited<ReturnType<typeof scrapeRecipe>> | undefined) => ({
 	...partialRecipe,
 	id: nanoid(),
 	addedDate: new Date().getTime(),

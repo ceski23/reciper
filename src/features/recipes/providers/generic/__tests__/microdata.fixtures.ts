@@ -387,3 +387,546 @@ export const recipe1 = /* html */ `
 	</div>
 </article>
 `
+
+// https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis
+export const recipe2 = /* html */ `
+<article class="recipe-print-mobile" itemscope="" itemtype="http://schema.org/Recipe">
+    <meta itemprop="commentCount" content="19">
+    <meta itemprop="recipeCategory" content="Ciasta czekoladowe, Serniki i ciasta z serem">
+    <div class="recipe-vote sr-only" itemprop="aggregateRating" itemscope="itemscope"
+        itemtype="http://schema.org/AggregateRating">
+        <meta itemprop="bestRating" content="5">
+        <meta itemprop="worstRating" content="1">
+        <meta itemprop="ratingValue" content="4.98">
+        <meta itemprop="ratingCount" content="42">
+    </div>
+    <header class="ws-header">
+        <h1 class="ws-header__title h2" itemprop="name">Sernik Izaura</h1>
+    </header>
+    <div class="ws-main-grid mt-6 mt-lg-10" data-main-grid="">
+        <section class="ws-recipe-intro" itemprop="description">
+            <p>W jaki sposób połączyć&nbsp; dwa ulubione ciasta w&nbsp;jedno? Poznaj przepis na sernik Izaura łączący
+                w&nbsp;sobie to co najlepsze w&nbsp;klasycznym smaku sernika oraz mocno czekoladowym murzynku! Chcesz
+                więcej? Nie zapomnij o&nbsp;pysznej polewie z&nbsp;dodatkiem wiórek kokosowych! Sernik Izaura zachwyci
+                każdego! Jestem przekonana, że to pyszne ciasto w&nbsp;mig zniknie z&nbsp;Twojego stołu 😊.&nbsp;</p>
+        </section>
+        <section class="ws-recipe-details mt-8">
+            <dl class="ws-recipe-details__top row">
+                <div class="ws-recipe-details__top__item col d-flex justify-content-center align-items-center">
+                    <hr class="ws-recipe-details__top__item__spacer">
+                    <dt class="ws-recipe-details__top__item__title">
+                        <span class="ws-recipe-details__top__item__title__icon icon-stopwatch"></span>
+                        <span class="sr-only">Czas potrzebny na przygotowanie przepisu</span>
+                    </dt>
+                    <dd class="ws-recipe-details__top__item__desc">
+                        <time itemprop="totalTime" content="PT90M">
+                            01:30
+                        </time>
+                    </dd>
+                    <hr class="ws-recipe-details__top__item__spacer">
+                </div>
+                <div class="ws-recipe-details__top__item col d-flex justify-content-center align-items-center">
+                    <hr class="ws-recipe-details__top__item__spacer">
+                    <dt class="ws-recipe-details__top__item__title">
+                        <span class="ws-recipe-details__top__item__title__icon icon-chefs-hat"></span>
+                        <span class="sr-only">Poziom trudności</span>
+                    </dt>
+                    <dd class="ws-recipe-details__top__item__desc">
+                        Łatwy
+                    </dd>
+                    <hr class="ws-recipe-details__top__item__spacer">
+                </div>
+            </dl>
+        </section>
+        <aside class="ws-sidebar" data-sidebar="">
+            <div class="ws-sidebar__inner">
+                <section class="ws-sidebar__section
+        --expanded
+    --collapsible
+        --ingredients" data-sidebar-section="" data-is-collapsible="true" data-is-initially-collapsed="false"
+                    data-is-sticky-on-mobile="true">
+                    <div class="ws-sidebar__section__heading ws-sidebar__section__heading__h3"
+                        data-sidebar-section-heading="">
+                        <span class="d-flex align-items-center w-100 pr-3">Składniki&nbsp;<span
+                                class="icon-cake ml-auto"></span>&nbsp;<span class="font-weight-normal"
+                                itemprop="recipeYield">24</span></span>
+                        <span class="ws-sidebar__section__heading__icon icon-chevron-down"></span>
+                    </div>
+                    <div class="ws-sidebar__section__content" data-sidebar-section-content=""
+                        style="max-height: 416px;">
+                        <div class="ws-sidebar__section__content-wrapper">
+                            <span class="ingredients-list__heading">
+                                Ciasto kakaowe:
+                            </span>
+                            <ul class="ingredients-list">
+                                <li itemprop="recipeIngredient">
+                                    250 g masła irlandzkiego Kerrygold
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    200 g cukru
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    50 ml wody
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    3 łyżki ciemnego kakao
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    200 g mąki pszennej Polka typ 450
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    2 łyżeczki Proszku do pieczenia Dr.&nbsp;Oetkera
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    4 jajka
+                                </li>
+                            </ul>
+                            <span class="ingredients-list__heading">
+                                Masa serowa:
+                            </span>
+                            <ul class="ingredients-list">
+                                <li itemprop="recipeIngredient">
+                                    1 kg twarogu sernikowego
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    230 g cukru
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    5 jajek
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    100 g roztopionego masła irlandzkiego Kerrygold
+                                </li>
+                                <li itemprop="recipeIngredient">
+                                    2 budynie śmietankowe Dr.&nbsp;Oetkera
+                                </li>
+                            </ul>
+                            <span class="ingredients-list__heading">
+                                Dodatkowo:
+                            </span>
+                            <ul class="ingredients-list">
+                                <li itemprop="recipeIngredient">
+                                    Kilka łyżek wiórków kokosowych
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </aside>
+        <main class="ws-recipe-instructions">
+            <div>
+                <meta itemprop="description"
+                    content="<p>W jaki spos&amp;oacute;b połączyć&amp;nbsp; dwa ulubione ciasta w jedno? Poznaj przepis na sernik Izaura łączący w sobie to co najlepsze w klasycznym smaku sernika oraz mocno czekoladowym murzynku! Chcesz więcej? Nie zapomnij o pysznej polewie z dodatkiem wi&amp;oacute;rek kokosowych! Sernik Izaura zachwyci każdego! Jestem przekonana, że to pyszne ciasto w mig zniknie z Twojego stołu 😊.&amp;nbsp;</p>">
+                <div itemprop="recipeInstructions" itemscope="" itemtype="http://schema.org/HowToSection">
+                    <meta itemprop="url"
+                        content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                    <meta itemprop="position" content="1">
+                    <meta itemprop="name" content="Przygotowanie ciasta kakaowego:">
+                    <h2 class="mb-8 h4">
+                        Przygotowanie ciasta kakaowego:
+                    </h2>
+                    <ul class="list-unstyled">
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="1">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 1</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Formę o&nbsp;wymiarach 25 x 35 cm wyłóż papierem do pieczenia.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-1-1.jpg"
+                                    alt="forma 25 x 35 cm wyłożona papierem do pieczenia"
+                                    class="ws-step-basic__media__img" data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-1-1.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-1-1.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="2">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 2</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Do garnka przełóż masło i&nbsp;rozpuść je z&nbsp;cukrem.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-1-2.jpg"
+                                    alt="na kuchence bosch rozpuszczone masło z cukrem obok kakao w miseczce i woda w naczyniu"
+                                    class="ws-step-basic__media__img" data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-1-2.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-1-2.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="3">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 3</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Dodaj wodę i&nbsp;kakao, wymieszaj do połączenia się składników.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-2.jpg"
+                                    alt="w rondelku masa kakaowa i rózga kuchenna" class="ws-step-basic__media__img"
+                                    data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-2.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-2.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="4">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 4</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Odlej okolo 100 ml masy czekoladowej na polewę i&nbsp;odstaw.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-3.jpg"
+                                    alt="na blacie ciasto czekoladowe obok naczynie z polewą kakaową"
+                                    class="ws-step-basic__media__img" data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-3.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-3.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="5">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 5</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Do przestudzonej masy dodaj żółtka oraz wymieszną z&nbsp;proszkiem do pieczenia
+                                        mąkę. Wymieszaj do uzyskania jednolitej konsystencji.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-4.jpg"
+                                    alt="w rondelku masa czekoladowa obok na blacie żółtka w miseczce i polewa w naczyniu"
+                                    class="ws-step-basic__media__img" data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-4.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-4.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="6">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 6</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Białka ubij na sztywną pianę i&nbsp;dodaj do ciasta.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-5.jpg"
+                                    alt="na blacie w barnku nieupieczone ciasto czekoladowe obok w misie bosch ubite białka"
+                                    class="ws-step-basic__media__img" data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-5.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-5.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row mt-5 mb-3 ws-step-product">
+                                <div class="col-12  col-lg-8 ws-step-product__left">
+                                    <div class="ws-step-product__content">
+                                        <h3 class="ws-step-basic__title ws-step-product__title">Tradycyjne masło
+                                            irlandzkie Kerrygold</h3>
+                                        <h3 class="ws-step-product__description">Nasze masło jest wyśmienite nie tylko
+                                            do pieczywa, idealnie nadaje się do gotowania, pieczenia, wzbogacania zup i
+                                            sosów. Całkowicie naturalne, nie zawiera konserwantów oraz sztucznych
+                                            dodatków. Masło wytwarzane jest na bazie śmietanki z mleka krowiego.
+                                            Charakteryzuje je pełna zawartość tłuszczu 82%, kremowy smak oraz wysoka
+                                            zawartość beta karotenu.</h3>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-4 ws-step-product__right">
+                                    <div class="ws-step-product__img-container">
+                                        <img src="https://wszystkiegoslodkiego.pl/storage/images/202417/kerrygold-200g-gold-wiz-front-2021-1.jpg"
+                                            alt="Tradycyjne masło irlandzkie Kerrygold" class="ws-step-product__img">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div itemprop="recipeInstructions" itemscope="" itemtype="http://schema.org/HowToSection">
+                    <meta itemprop="url"
+                        content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                    <meta itemprop="position" content="2">
+                    <meta itemprop="name" content="Przygotowanie masy serowej:">
+                    <h2 class="mb-8 h4">
+                        Przygotowanie masy serowej:
+                    </h2>
+                    <ul class="list-unstyled">
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="1">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 7</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Białka oddziel od żółtek. Do miski przełóż twaróg z&nbsp;cukrem, żółtakami
+                                        i&nbsp;budyniami. Na końcu dodaj roztopione masło.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-6.jpg"
+                                    alt="w misie bosch twaróg sernikowy z cukrem i żółtkami, w miseczce białka oraz budyń śmietankowy Dr. Oetkera"
+                                    class="ws-step-basic__media__img" data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-6.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-6.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="2">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 8</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Masę serową dokładnie zmiksuj.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-7.jpg"
+                                    alt="w robocie kuchennym bosch przygotowana masa serowa na sernik"
+                                    class="ws-step-basic__media__img" data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-7.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-7.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="3">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 9</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Białka ubij na sztywną pianę i&nbsp;wymieszaj z&nbsp;masą serową.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-8.jpg"
+                                    alt="w misce masa serowa z ubitymi białkami" class="ws-step-basic__media__img"
+                                    data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-8.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-8.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="4">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 10</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Do formy przełóż ciasto czekoladowe naprzemiennie z&nbsp;serowym. Na koniec przy
+                                        użyciu łyżki i&nbsp;drewnianego patyczka pomieszaj delikatnie ciasto tworząc esy
+                                        floresy.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-9.jpg"
+                                    alt="w wyłożonej papierem formie nieupieczony sernik izaura"
+                                    class="ws-step-basic__media__img" data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-9.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-9.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="5">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 11</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Wstaw do nagrzanego do 160°C piekarnika i&nbsp;piecz około 45 - 50 minut.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-10.jpg"
+                                    alt="upieczony sernik izaura w formie bez polewy" class="ws-step-basic__media__img"
+                                    data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-10.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-10.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                        </li>
+                        <li class="ws-step-basic --has-media" data-recipe-step="" data-step-type="basic"
+                            itemprop="itemListElement" itemscope="" itemtype="http://schema.org/HowToStep">
+                            <meta itemprop="url"
+                                content="https://wszystkiegoslodkiego.pl/przepisy/ciasta-czekoladowe/sernik-izaura-sprawdzony-przepis">
+                            <meta itemprop="position" content="6">
+                            <div class="ws-step-basic__content-wrapper">
+                                <h3 class="ws-step-basic__title" itemprop="name">Krok 12</h3>
+                                <div class="ws-step-basic__desc" itemprop="text">
+                                    <p>Na upieczone ciasto przelej przygotowaną wcześniej polewę i&nbsp;posyp wiórkami
+                                        kokosowymi Bakal.</p>
+                                </div>
+                            </div>
+                            <div class="ws-step ws-step-basic__media__wrapper d-print-none" data-recipe-media=""
+                                data-media-type="image">
+                                <img data-placeholder-background="#e5e5e5"
+                                    data-src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-11.jpg"
+                                    alt="w foremce sernik izaura z polewą i wiórkami kokosowymi"
+                                    class="ws-step-basic__media__img" data-step-img="" itemprop="image"
+                                    content="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-11.jpg"
+                                    style="background: rgb(229, 229, 229);"
+                                    src="https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-11.jpg"
+                                    data-loaded="true">
+                                <button class="ws-step-basic__media__close-btn btn btn-primary" data-media-close-btn="">
+                                    <span class="icon-close"></span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row mt-5 mb-3 ws-step-product">
+                                <div class="col-12  col-lg-8 ws-step-product__left">
+                                    <div class="ws-step-product__content">
+                                        <h3 class="ws-step-basic__title ws-step-product__title">Mąka pszenna Polka do
+                                            ciast</h3>
+                                        <h3 class="ws-step-product__description">Najdelikatniejsza i najbielsza mąka.
+                                            Doskonale sprawdzi się przy pieczeniu biszkoptów, puszystych tortów,
+                                            muślinowych bab ucieranych. Ta mąka ma małą zawartość popiołu, który określa
+                                            jej typ. Chodzi o zawartość składników mineralnych, które dostają się do
+                                            mąki poprzez choćby zmielenie okrywy ziarna. Dlatego jest lekka – jak to
+                                            mówimy w żargonie kulinarnym – i sprawdzi się wszędzie tam, gdzie nie trzeba
+                                            dodawać proszku do pieczenia, a jedynie ubite białka. Doskonale się
+                                            napowietrza przy przesiewaniu, co sprawia, że ciasto po upieczeniu jest
+                                            niezwykle puszyste. Bardzo łatwo też wyrabia się z niej ciasto, które
+                                            później fantastycznie rośnie.</h3>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-4 ws-step-product__right">
+                                    <div class="ws-step-product__img-container">
+                                        <img src="https://wszystkiegoslodkiego.pl/storage/images/202443/maka-pszenna-polka-do-ciast-52.jpg"
+                                            alt="Mąka pszenna Polka do ciast" class="ws-step-product__img">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+</article>
+`

@@ -572,3 +572,121 @@ export const recipe5 = /* html */ `
 }
 </script>
 `
+
+export const recipe6 = /* html */ `
+<script id="allrecipes-schema_1-0" class="comp allrecipes-schema mntl-schema-unified" type="application/ld+json">
+[
+   {
+      "@context":"http://schema.org",
+      "@type":[
+         "Recipe"
+      ],
+      "headline":"Tuscan Chicken Casserole",
+      "datePublished":"2024-10-29T12:13:39.301-04:00",
+      "dateModified":"2024-10-29T12:13:39.301-04:00",
+      "author":[
+         {
+            "@type":"Person",
+            "name":"Yolanda Gutierrez",
+            "url":"https://www.allrecipes.com/yolanda-gutierrez-7113606"
+         }
+      ],
+      "description":"This Tuscan chicken casserole, boneless chicken breasts in a creamy cheese and sun-dried tomato sauce with spinach and mushrooms, requires little enough hands-on time to make for weeknight dinner.",
+      "image":{
+         "@type":"ImageObject",
+         "url":"https://www.allrecipes.com/thmb/0TPMTnN9PmtWYJngclEUOsom_cs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8735197_Tuscan-Chicken-Casserole_Yolanda-Gutierrez_4x3-01bc05f1c1514461834e94c8f8c8e3c2.jpg",
+         "height":1125,
+         "width":1500
+      },
+      "publisher":{
+         "@type":"Organization",
+         "name":"Allrecipes",
+         "url":"https://www.allrecipes.com",
+         "logo":{
+            "@type":"ImageObject",
+            "url":"https://www.allrecipes.com/thmb/Z9lwz1y0B5aX-cemPiTgpn5YB0k=/112x112/filters:no_upscale():max_bytes(150000):strip_icc()/allrecipes_logo_schema-867c69d2999b439a9eba923a445ccfe3.png",
+            "width":112,
+            "height":112
+         },
+         "brand":"Allrecipes",
+         "publishingPrinciples":"https://www.allrecipes.com/about-us-6648102#toc-editorial-guidelines",
+         "sameAs":[
+            "https://www.facebook.com/allrecipes",
+            "https://www.instagram.com/allrecipes/",
+            "https://www.pinterest.com/allrecipes/",
+            "https://www.tiktok.com/@allrecipes",
+            "https://www.youtube.com/user/allrecipes/videos",
+            "https://twitter.com/Allrecipes",
+            "https://flipboard.com/@Allrecipes",
+            "https://en.wikipedia.org/wiki/Allrecipes.com",
+            "http://linkedin.com/company/allrecipes.com"
+         ]
+      },
+      "name":"Tuscan Chicken Casserole",
+      "aggregateRating":{
+         "@type":"AggregateRating",
+         "ratingValue":"4",
+         "ratingCount":"3"
+      },
+      "cookTime":"PT20M",
+      "nutrition":{
+         "@type":"NutritionInformation",
+         "calories":"597 kcal",
+         "carbohydrateContent":"13 g",
+         "cholesterolContent":"184 mg",
+         "fiberContent":"2 g",
+         "proteinContent":"48 g",
+         "saturatedFatContent":"19 g",
+         "sodiumContent":"814 mg",
+         "sugarContent":"6 g",
+         "fatContent":"40 g",
+         "unsaturatedFatContent":"0 g"
+      },
+      "prepTime":"PT20M",
+      "recipeCategory":[
+         "Dinner",
+         "Entree"
+      ],
+      "recipeCuisine":[
+         "Italian"
+      ],
+      "recipeIngredient":[
+         "1 pound skinless, boneless chicken breasts",
+         "1 teaspoon Italian seasoning",
+         "1/2 teaspoon paprika",
+         "1/2 teaspoon onion powder",
+         "1/2 teaspoon red pepper flakes",
+         "1/2 teaspoon garlic powder",
+         "salt and freshly ground black pepper to taste",
+         "2 cups fresh spinach",
+         "1 (4 ounce) can sliced mushrooms, drained",
+         "1/2 cup chopped sun-dried tomatoes",
+         "3/4 cup shredded mozzarella cheese",
+         "1/4 cup freshly grated parmesan cheese"
+      ],
+      "recipeInstructions":[
+         {
+            "@type":"HowToStep",
+            "text":"Preheat the oven to 425 degrees F (220 degrees C). Spray an 8x8-inch baking dish with nonstick cooking spray."
+         },
+         {
+            "@type":"HowToStep",
+            "text":"Season both sides of chicken with Italian seasoning, paprika, onion powder, pepper flakes, garlic powder, salt and pepper. Place in the prepared pan. Place spinach over chicken, mushrooms over spinach, and sun-dried tomatoes over mushrooms. Top with mozzarella and Parmesan cheese."
+         },
+         {
+            "@type":"HowToStep",
+            "text":"For sauce, beat cream, Parmesan cheese, garlic, cream cheese, chicken bouillon, chicken broth, and oil together in a bowl until just combined. Season with salt and pepper. Pour mixture over chicken."
+         },
+         {
+            "@type":"HowToStep",
+            "text":"Bake casserole in the preheated oven until bubbly, chicken is no longer pink, and juices run clear, 20 to 25 minutes.  An instant-read thermometer inserted in the center of chicken should read 165 degrees F (74 degrees C)."
+         }
+      ],
+      "recipeYield":[
+         "4"
+      ],
+      "totalTime":"PT40M"
+   }
+]
+</script>
+`

@@ -17,7 +17,7 @@ export const getTextFromNode = (startNode: Node) => {
 			finalText = _getTextFromNode(childNode, finalText)
 		}
 
-		return finalText
+		return finalText.replace(/\s+/g, ' ').trim()
 	}
 
 	return _getTextFromNode(startNode, '').trim()

@@ -13,7 +13,7 @@ export const kwestiasmaku: RecipesProvider = {
 	matcher: /https:\/\/www\.kwestiasmaku\.com\/.*/,
 	scrape: async doc => {
 		const partialRecipe = await extractMicrodata(doc)
-		const color = partialRecipe.image ? await getColorFromImage(partialRecipe.image) : undefined
+		const color = partialRecipe?.image ? await getColorFromImage(partialRecipe.image).catch(() => undefined) : undefined
 		const description = doc.querySelector('.field-name-field-uwagi-wstepne')?.textContent?.trim()
 
 		const tags = Array

@@ -43,29 +43,22 @@ exports[`should parse recipes from kwestiasmaku > should parse recipe for Babecz
   ],
   "instructions": [
     {
-      "text": "Filety umyć, osuszyć, oczyścić z błonek i kostek. Poporcjować mięso na mniejsze kawałki:
-                            przekroić wzdłuż na 2 cieńsze filety, odciąć polędwiczki, następnie rozbić tłuczkiem w
-                            najgrubszej części na filety podobnej grubości.",
+      "text": "Filety umyć, osuszyć, oczyścić z błonek i kostek. Poporcjować mięso na mniejsze kawałki: przekroić wzdłuż na 2 cieńsze filety, odciąć polędwiczki, następnie rozbić tłuczkiem w najgrubszej części na filety podobnej grubości.",
     },
     {
       "text": "Doprawić solą, pieprzem oraz papryką, następnie oprószyć mąką.",
     },
     {
-      "text": "W rozdrabniaczu (mini melakserze) zmiksować obrany czosnek, listki bazylii, parmezan i 2
-                            łyżki oliwy. Otrzymane pesto doprawić solą i pieprzem.",
+      "text": "W rozdrabniaczu (mini melakserze) zmiksować obrany czosnek, listki bazylii, parmezan i 2 łyżki oliwy. Otrzymane pesto doprawić solą i pieprzem.",
     },
     {
-      "text": "Rozgrzać dużą patelnię, wlać 1 łyżkę oliwy i stopniowo wkładać filety. Smażyć po ok. 3
-                            minuty z każdej strony, aż kurczak ładnie się zrumieni. W razie potrzeby można obsmażać na
-                            raty.",
+      "text": "Rozgrzać dużą patelnię, wlać 1 łyżkę oliwy i stopniowo wkładać filety. Smażyć po ok. 3 minuty z każdej strony, aż kurczak ładnie się zrumieni. W razie potrzeby można obsmażać na raty.",
     },
     {
-      "text": "Dodać pokrojone pomidorki koktajlowe i rozmieścić je wkoło kurczaka, następnie smażyć przez
-                            minutę.",
+      "text": "Dodać pokrojone pomidorki koktajlowe i rozmieścić je wkoło kurczaka, następnie smażyć przez minutę.",
     },
     {
-      "text": "Na patelnię z kurczakiem wlać bulion i zagotować. Gotować przez ok. 1 minutę, następnie
-                            przewrócić filety na drugą stronę i powtórzyć gotowanie.",
+      "text": "Na patelnię z kurczakiem wlać bulion i zagotować. Gotować przez ok. 1 minutę, następnie przewrócić filety na drugą stronę i powtórzyć gotowanie.",
     },
     {
       "text": "Dodać śmietankę, wymieszać, a następnie zagotować.",
@@ -134,25 +127,19 @@ exports[`should parse recipes from kwestiasmaku > should parse recipe for Clafou
   ],
   "instructions": [
     {
-      "text": "Piekarnik nagrzać do 175 stopni C. Przygotować naczynie żaroodporne o
-                            średnicy ok. 23 cm lub 20 x 30 cm. Posmarować je masłem i wysypać mąką.",
+      "text": "Piekarnik nagrzać do 175 stopni C. Przygotować naczynie żaroodporne o średnicy ok. 23 cm lub 20 x 30 cm. Posmarować je masłem i wysypać mąką.",
     },
     {
-      "text": "Truskawki i borówki opłukać, osuszyć. Truskawki pokroić na połówki jeśli są duże. Wymieszać
-                            wszystkie owoce: truskawki, borówki i maliny.",
+      "text": "Truskawki i borówki opłukać, osuszyć. Truskawki pokroić na połówki jeśli są duże. Wymieszać wszystkie owoce: truskawki, borówki i maliny.",
     },
     {
-      "text": "Jajka i żółtka dokładnie ubić z cukrem na jasną i puszystą masę. Następnie dodać mąkę oraz
-                            sól i zmiksować do połączenia się składników.",
+      "text": "Jajka i żółtka dokładnie ubić z cukrem na jasną i puszystą masę. Następnie dodać mąkę oraz sól i zmiksować do połączenia się składników.",
     },
     {
-      "text": "Dodać masło (roztopione i ostudzone) i energicznie zmiksować. Teraz dodawać w małych
-                            ilościach mleko (letnie, lekko ciepłe) i ciągle ubijać. Na koniec dodać ekstrakt z wanilii.",
+      "text": "Dodać masło (roztopione i ostudzone) i energicznie zmiksować. Teraz dodawać w małych ilościach mleko (letnie, lekko ciepłe) i ciągle ubijać. Na koniec dodać ekstrakt z wanilii.",
     },
     {
-      "text": "Mieszankę wylać do przygotowanej formy i rozłożyć owoce. Piec przez ok. 40 - 45
-                              minut. Jeśli pod koniec naleśnik będzie już za bardzo się rumienił, można
-                            zmniejszyć temp. do 170 stopni C.",
+      "text": "Mieszankę wylać do przygotowanej formy i rozłożyć owoce. Piec przez ok. 40 - 45 minut. Jeśli pod koniec naleśnik będzie już za bardzo się rumienił, można zmniejszyć temp. do 170 stopni C.",
     },
     {
       "text": "Posypać cukrem pudrem i podawać np. z lodami.",
@@ -262,29 +249,23 @@ exports[`should parse recipes from kwestiasmaku > should parse recipe for Krem P
   "instructions": [
     {
       "group": undefined,
-      "text": "W garnku podgrzać oliwę, dodać pokrojoną w kosteczkę cebulę, przepołowiony i obrany czosnek
-                            oraz obraną i pokrojoną na cienkie plasterki marchewkę. Smażyć co chwilę mieszając przez
-                            około 4 - 5 minut.",
+      "text": "W garnku podgrzać oliwę, dodać pokrojoną w kosteczkę cebulę, przepołowiony i obrany czosnek oraz obraną i pokrojoną na cienkie plasterki marchewkę. Smażyć co chwilę mieszając przez około 4 - 5 minut.",
     },
     {
       "group": undefined,
-      "text": "Dodać oregano, słodką oraz ostrą paprykę, cukier i wymieszać. Wlać wino jeśli go używamy i
-                            gotować przez minutę.",
+      "text": "Dodać oregano, słodką oraz ostrą paprykę, cukier i wymieszać. Wlać wino jeśli go używamy i gotować przez minutę.",
     },
     {
       "group": undefined,
-      "text": "Świeże pomidory obrać i pokroić w kostkę, dodać do garnka. Gotować przez 2 minuty, doprawić
-                            solą oraz pieprzem.",
+      "text": "Świeże pomidory obrać i pokroić w kostkę, dodać do garnka. Gotować przez 2 minuty, doprawić solą oraz pieprzem.",
     },
     {
       "group": undefined,
-      "text": "Wlać gorący bulion i zagotować. Dodać krojone pomidory z puszki i gotować przez ok. 10 - 12
-                            minut.",
+      "text": "Wlać gorący bulion i zagotować. Dodać krojone pomidory z puszki i gotować przez ok. 10 - 12 minut.",
     },
     {
       "group": undefined,
-      "text": "Zmiksować w blenderze kielichowym na krem, sprawdzić jeszcze doprawienie solą oraz pieprzem
-                            i podawać z grzankami z mozzarellą oraz pesto.",
+      "text": "Zmiksować w blenderze kielichowym na krem, sprawdzić jeszcze doprawienie solą oraz pieprzem i podawać z grzankami z mozzarellą oraz pesto.",
     },
     {
       "group": "Grzanki z mozzarellą i pesto",
@@ -292,14 +273,11 @@ exports[`should parse recipes from kwestiasmaku > should parse recipe for Krem P
     },
     {
       "group": "Grzanki z mozzarellą i pesto",
-      "text": "Przygotować pesto : liście bazylii oderwać i umieścić w mini rozdrabniaczu -
-                            melakserze, dodać obrany czosnek, ser, orzechy oraz oliwę. Doprawić solą oraz pieprzem i
-                            zmiksować na pesto.",
+      "text": "Przygotować pesto : liście bazylii oderwać i umieścić w mini rozdrabniaczu - melakserze, dodać obrany czosnek, ser, orzechy oraz oliwę. Doprawić solą oraz pieprzem i zmiksować na pesto.",
     },
     {
       "group": "Grzanki z mozzarellą i pesto",
-      "text": "Wstawić grzanki do piekarnika i piec aż pieczywo i ser będą zrumienione, przez około 4
-                            minuty.",
+      "text": "Wstawić grzanki do piekarnika i piec aż pieczywo i ser będą zrumienione, przez około 4 minuty.",
     },
     {
       "group": "Grzanki z mozzarellą i pesto",
@@ -360,8 +338,7 @@ exports[`should parse recipes from kwestiasmaku > should parse recipe for Kurcza
   ],
   "instructions": [
     {
-      "text": "Jajka i twaróg wyjąć wcześniej z lodówki i ogrzać w temp. pokojowej. Twaróg wyłożyć na
-                            talerz i rozgnieść praską.",
+      "text": "Jajka i twaróg wyjąć wcześniej z lodówki i ogrzać w temp. pokojowej. Twaróg wyłożyć na talerz i rozgnieść praską.",
     },
     {
       "text": "Jabłka obrać, pokroić na ósemki, usunąć gniazda nasienne, następnie pokroić na plasterki.",
@@ -370,22 +347,16 @@ exports[`should parse recipes from kwestiasmaku > should parse recipe for Kurcza
       "text": "Piekarnik nagrzać do 200 stopni C. Formę na muffiny wyłoży papilotkami.",
     },
     {
-      "text": "Jajka ubijać z cukrem na jasną i puszystą masę, przez około 5 - 7 minut. Dodać wanilię,
-                            skórkę z cytryny, twaróg oraz olej roślinny i zmiksować na mniejszych obrotach miksera, do
-                            połączenia się składników.",
+      "text": "Jajka ubijać z cukrem na jasną i puszystą masę, przez około 5 - 7 minut. Dodać wanilię, skórkę z cytryny, twaróg oraz olej roślinny i zmiksować na mniejszych obrotach miksera, do połączenia się składników.",
     },
     {
-      "text": "Dodać mąkę oraz proszek do pieczenia i ponownie zmiksować na małych obrotach miksera, tylko
-                            do połączenia się składników w jednolite ciasto.",
+      "text": "Dodać mąkę oraz proszek do pieczenia i ponownie zmiksować na małych obrotach miksera, tylko do połączenia się składników w jednolite ciasto.",
     },
     {
-      "text": "Do masy dodać około 2/3 ilości jabłek i wymieszać łyżką. Wyłożyć do foremek starając się
-                            wyłożyć jak najwięcej ciasta z górką. Na wierzch dać resztę jabłek delikatnie wciskając je w
-                            ciasto.",
+      "text": "Do masy dodać około 2/3 ilości jabłek i wymieszać łyżką. Wyłożyć do foremek starając się wyłożyć jak najwięcej ciasta z górką. Na wierzch dać resztę jabłek delikatnie wciskając je w ciasto.",
     },
     {
-      "text": "Wstawić do nagrzanego piekarnika i piec przez ok. 25 minut (do suchego
-                            patyczka). Po upieczeniu można posypać cukrem pudrem i/lub cynamonem.",
+      "text": "Wstawić do nagrzanego piekarnika i piec przez ok. 25 minut (do suchego patyczka). Po upieczeniu można posypać cukrem pudrem i/lub cynamonem.",
     },
   ],
   "name": "Babeczki twarogowe z jabłkami",
@@ -461,27 +432,22 @@ exports[`should parse recipes from kwestiasmaku > should parse recipe for Wiosen
       "text": "Ziemniaki obrać i ugotować w osolonej wodzie.",
     },
     {
-      "text": "Szaparagi umyć, odłamać twarde końce (są łykowate i należy je usunąć). Szparagi cienko obrać
-                            obieraczką do połowy długości zaczynając od grubszego końca. Pokroić na kawałki.",
+      "text": "Szaparagi umyć, odłamać twarde końce (są łykowate i należy je usunąć). Szparagi cienko obrać obieraczką do połowy długości zaczynając od grubszego końca. Pokroić na kawałki.",
     },
     {
       "text": "Szparagi gotować w lekko osolonej wodzie, przez ok. 3 minuty.",
     },
     {
-      "text": "Sałatę opłukać i osuszyć. Rzodkiewki umyć, przyciąć na końcach, pokroić na plasterki.
-                            Cebulkę i szczypiorek pokroić.",
+      "text": "Sałatę opłukać i osuszyć. Rzodkiewki umyć, przyciąć na końcach, pokroić na plasterki. Cebulkę i szczypiorek pokroić.",
     },
     {
       "text": "Ziemniaki i szparagi odcedzić. Ziemniaki pokroić na plasterki.",
     },
     {
-      "text": "Przygotować sos bazyliowy : zmiksować wszystkie składniki oprócz majonezu w
-                            rozdrabniaczu (mini melakserze), na koniec wymieszać łyżką z majonezem.",
+      "text": "Przygotować sos bazyliowy : zmiksować wszystkie składniki oprócz majonezu w rozdrabniaczu (mini melakserze), na koniec wymieszać łyżką z majonezem.",
     },
     {
-      "text": "W salaterkach układać warstwami: porwane liście sałaty, ziemniaki, szparagi, rzodkiewki,
-                            cebulę i szczypiorek. Skrapiać też sosem. Jeśli sałatkę podajemy od razu, można też
-                            doprawiać składniki solą oraz pieprzem.",
+      "text": "W salaterkach układać warstwami: porwane liście sałaty, ziemniaki, szparagi, rzodkiewki, cebulę i szczypiorek. Skrapiać też sosem. Jeśli sałatkę podajemy od razu, można też doprawiać składniki solą oraz pieprzem.",
     },
   ],
   "name": "Wiosenna sałatka ziemniaczana ze szparagami i rzodkiewkami",

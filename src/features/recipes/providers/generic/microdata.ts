@@ -1,128 +1,147 @@
+import { getTextFromNode } from '@utils/dom'
+import { getColorFromImage } from '@utils/images'
+import { parseValidNumber } from '@utils/numbers'
 import { decodeHTML5Strict } from 'entities'
 import { parse, toSeconds } from 'iso8601-duration'
-import type { Recipe } from 'features/recipes/types'
+import { unique } from 'radash'
+import { type Recipe } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
-import { getTextFromNode } from 'lib/utils/dom'
-import { getColorFromImage } from 'lib/utils/images'
-import { parseValidNumber } from 'lib/utils/numbers'
 
-const getMetaData = (element: Element | null) => {
+const getDataFromElement = (element: Element | null) => {
 	if (element === null) return undefined
-	if (element.tagName === 'META') return element.getAttribute('content') ?? undefined
+	if (element.tagName === 'META' || element.tagName === 'TIME') return element.getAttribute('content') ?? undefined
 
 	return getTextFromNode(element)
 }
 
-const getTags = (root: Element) => {
-	const tags = getMetaData(root.querySelector('[itemprop="keywords"]'))?.split(',')
-	const category = getMetaData(root.querySelector('[itemprop="recipeCategory"]'))?.split(',')
+const cleanDocument = (doc: Document) => {
+	const elements = doc.querySelectorAll('[itemtype]')
 
-	return [tags, category]
-		.filter(isDefined)
-		.flatMap(texts => texts.map(text => text.toLocaleLowerCase().trim()))
+	for (const element of elements) {
+		if (element.getAttribute('itemtype')?.includes('Organization')) {
+			element.remove()
+		}
+	}
+
+	return doc
 }
 
-const getInstructions = (element: Element) =>
-	Array
-		.from(element.querySelectorAll('[itemprop="recipeInstructions"], [itemprop="itemListElement"][itemtype="http://schema.org/HowToStep"]'))
-		.map(elem => {
-			const text = elem.querySelector('[itemprop=text]')?.textContent?.trim() ?? elem.textContent?.trim()
-			const image = Array.from(elem.querySelectorAll('[itemprop="image"]')).filter(elem =>
-				// exclude elements with svg loaders fallbacks
-				!elem.getAttribute('src')?.includes('data:image/svg')
-			).at(0)?.getAttribute('src')
-				?? elem.querySelector('[itemprop="image"]')?.getAttribute('data-src') ?? undefined
+const parseImageElement = (imageElement: Element | null) => {
+	const src = imageElement?.getAttribute('src')
+	const content = imageElement?.getAttribute('content')
 
-			return (text
-				? ({
-					text: decodeHTML5Strict(text),
-					image,
-				})
-				: undefined)
-		})
-		.filter(isDefined)
+	return content ?? src ?? undefined
+}
 
-const findMainImage = (doc: Document) => {
+const findMainImage = (doc: Document): string | undefined => {
 	const metaElement = doc.querySelector('meta[itemprop="image"]')
 
-	if (metaElement) return metaElement.getAttribute('content') ?? undefined
+	if (metaElement !== null) {
+		return metaElement.getAttribute('content') ?? undefined
+	}
 
-	const imageElements = Array.from(doc.querySelectorAll('img[itemprop="image"]')).filter(elem =>
+	const imageElements = Array.from(doc.querySelectorAll('img[itemprop="image"]')).filter(element =>
 		// exclude elements with svg loaders fallbacks
-		!elem.getAttribute('src')?.includes('data:image/svg')
+		!element.getAttribute('src')?.includes('data:image/svg')
 	)
 
-	return imageElements.at(0)?.getAttribute('src') ?? undefined
+	return imageElements.find(image => image.getAttribute('src') !== null)?.getAttribute('src') ?? undefined
 }
 
-export const extractMicrodata = async (doc: Document) => {
-	const root = doc.querySelector('[itemscope][itemtype="https://schema.org/Recipe"], [itemscope][itemtype="http://schema.org/Recipe"]')
-	if (!root) throw Error('Couldn\'t find recipe')
+const findPrepTime = (doc: Document): number | undefined =>
+	Array
+		.from(doc.querySelectorAll('[itemprop="prepTime"], [itemprop="totalTime"]'))
+		.map(element => {
+			const time = getDataFromElement(element)
 
-	const nameElement = root.querySelector('[itemprop="name"]')
-	const name = (nameElement?.tagName === 'META') ? nameElement.getAttribute('content') : nameElement?.textContent?.trim()
-
-	const descriptionElement = root.querySelector('[itemprop="description"]')
-	const description = descriptionElement ? getMetaData(descriptionElement)?.trim() : undefined
-
-	const image = findMainImage(doc)
-
-	const instructionSections = Array.from(root.querySelectorAll('[itemprop="recipeInstructions"][itemtype="http://schema.org/HowToSection"]'))
-	const instructions: Recipe['instructions'] = instructionSections.length > 0
-		? instructionSections.flatMap(sectionElement => {
-			const sectionTitle = sectionElement.querySelector('[itemprop="name"]')?.getAttribute('content') ?? undefined
-
-			return getInstructions(sectionElement).map(data => ({
-				...data,
-				group: sectionTitle,
-			}))
+			return time !== undefined
+				? Math.round(toSeconds(parse(time)) / 60)
+				: undefined
 		})
-		: getInstructions(root)
+		.find(isDefined)
 
-	const prepTimeISO = root.querySelector('[itemprop="prepTime"]')?.getAttribute('content') ?? undefined
-	const prepTime = prepTimeISO ? Math.round(toSeconds(parse(prepTimeISO)) / 60) : undefined
+const findTags = (doc: Document) => {
+	const keywords = getDataFromElement(doc.querySelector('[itemprop="keywords"]'))?.split(',') ?? []
+	const category = getDataFromElement(doc.querySelector('[itemprop="recipeCategory"]'))?.split(',') ?? []
 
-	const totalTimeISO = root.querySelector('[itemprop="totalTime"]')?.getAttribute('content') ?? undefined
-	const totalTime = totalTimeISO ? Math.round(toSeconds(parse(totalTimeISO)) / 60) : undefined
+	return unique(
+		[...keywords, ...category]
+			.filter(isDefined)
+			.map(text => text.trim().toLocaleLowerCase()),
+	)
+}
 
-	// Rating
-	const ratingElement = root.querySelector('[itemprop="ratingValue"]')
-	const rating = (ratingElement?.textContent)
-		? Number.parseFloat(ratingElement.textContent)
-		: undefined
+const findIngredients = (doc: Document) =>
+	Array
+		.from(doc.querySelectorAll('[itemprop="recipeIngredient"]'))
+		.map(element => getDataFromElement(element))
+		.filter(isDefined)
+		.map(text => ({ text }))
 
-	// Nutrition
-	const caloriesElement = root.querySelector('[itemprop="calories"]')
-	const calories = (caloriesElement?.textContent)
-		? Number.parseInt(caloriesElement.textContent, 10)
-		: undefined
+const findInstructions = (sectionElement: Element | Document) =>
+	Array
+		.from(
+			sectionElement.querySelectorAll('[itemprop="recipeInstructions"], [itemprop="itemListElement"][itemtype="http://schema.org/HowToStep"]'),
+		)
+		.map(element => {
+			const text = getDataFromElement(element.querySelector('[itemprop=text]')) ?? getDataFromElement(element)
+			const image = parseImageElement(element.querySelector('[itemprop="image"]'))
 
-	// TODO: keywords, nutrition, recipeCategory, recipeCuisine
-
-	const ingredientsElements = root.querySelectorAll('[itemprop="recipeIngredient"]')
-	const ingredients = Array
-		.from(ingredientsElements)
-		.map(elem => (elem.textContent ? ({ text: elem.textContent?.trim() }) : undefined))
+			return text
+				? {
+					text: decodeHTML5Strict(text),
+					image,
+				}
+				: undefined
+		})
 		.filter(isDefined)
 
-	const tags = Array.from(new Set(getTags(root)))
+const findInstructionsSections = (doc: Document) => {
+	const instructionSections = Array.from(doc.querySelectorAll('[itemprop="recipeInstructions"][itemtype="http://schema.org/HowToSection"]'))
 
-	const servingsElement = root.querySelector('[itemprop="recipeYield"]')
-	const servings = parseValidNumber(getMetaData(servingsElement))
+	return instructionSections.length > 0
+		? instructionSections.flatMap(sectionElement => {
+			const group = getDataFromElement(sectionElement.querySelector('[itemprop="name"]'))
 
-	const color = image ? await getColorFromImage(image.toString()) : undefined
+			return findInstructions(sectionElement).map(step => ({
+				...step,
+				group: group?.endsWith(':') ? group.slice(0, -1) : group,
+			}))
+		})
+		: findInstructions(doc)
+}
+
+export const extractMicrodata = async (doc: Document): Promise<Partial<Recipe> | undefined> => {
+	const cleanedDoc = cleanDocument(doc)
+	const rootElement = cleanedDoc.querySelector('[itemscope][itemtype$="Recipe"]')
+
+	if (rootElement === null) {
+		return undefined
+	}
+
+	const name = getDataFromElement(rootElement.querySelector('[itemprop="name"]'))
+	const description = getDataFromElement(rootElement.querySelector('[itemprop="description"]'))
+	const image = findMainImage(cleanedDoc)
+	const color = image !== undefined ? await getColorFromImage(image) : undefined
+	const prepTime = findPrepTime(cleanedDoc)
+	const rating = parseValidNumber(getDataFromElement(rootElement.querySelector('[itemprop="ratingValue"]')))
+	const servings = parseValidNumber(getDataFromElement(rootElement.querySelector('[itemprop="recipeYield"]')))
+	const calories = parseValidNumber(getDataFromElement(rootElement.querySelector('[itemprop="calories"]')))
+	const tags = findTags(cleanedDoc)
+	const ingredients = findIngredients(cleanedDoc)
+	const instructions = findInstructionsSections(cleanedDoc)
 
 	return {
-		name: name ?? undefined,
-		ingredients,
+		name,
 		description,
 		image,
-		prepTime: prepTime ?? totalTime,
-		instructions,
+		prepTime,
 		rating,
-		calories,
-		tags,
 		servings,
 		color,
-	} satisfies Partial<Recipe>
+		calories,
+		tags,
+		ingredients,
+		instructions,
+	}
 }

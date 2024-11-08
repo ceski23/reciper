@@ -393,21 +393,26 @@ exports[`should scrape recipes using LD+JSON format > should scrape valid recipe
       "text": "Place the potatoes in a pot on the stove and cover with cold water. Turn the heat to high and bring to a boil. Cook for 13 to 15 minutes, or until the potatoes are soft when pierced with a fork.",
     },
     {
+      "image": "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/12/How-to-Make-Shepherds-Pie-1.jpg",
       "text": "Drain the potatoes in a colander, then return to the pot. Add the milk, butter, salt and pepper and mash until creamy.",
     },
     {
+      "image": "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/12/How-to-Make-Shepherds-Pie.jpg",
       "text": "Preheat your oven to 400°F (200°C). In a large oven-safe saute pan, heat the oil on medium heat. Add the onion and garlic and saute for a minute. Then add the diced carrots, diced celery, and lamb. Cook for 8 to 10 minutes or until the meat is browned. Use your spatula to break up the meat while cooking.",
     },
     {
       "text": "Drain the fat from the pan and add the broth, tomato paste, Worcestershire sauce, rosemary, thyme, salt and pepper. Simmer for about 5 minutes, until the sauce is slightly thickened.",
     },
     {
+      "image": "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/12/How-to-Make-Shepherds-Pie-4.jpg",
       "text": "Add the frozen peas and stir together. Turn off the stove and use the back of your spatula to flatten the meat mixture into a single layer.",
     },
     {
+      "image": "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/12/How-to-Make-Shepherds-Pie-5.jpg",
       "text": "Dollop the mashed potatoes on top of the meat and use a spoon or spatula to spread it flat to the edges. If desired, create texture in the potato topping with a spoon or fork.",
     },
     {
+      "image": "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/12/How-to-Make-Shepherds-Pie-6.jpg",
       "text": "Bake the shepherd's pie until slightly golden, about 25 to 30 minutes. You can broil the top for 1 to 2 minutes as well.",
     },
   ],
@@ -421,6 +426,79 @@ exports[`should scrape recipes using LD+JSON format > should scrape valid recipe
     "irish",
     "shepherd's pie",
     "shepherd's pie recipe",
+  ],
+}
+`;
+
+exports[`should scrape recipes using LD+JSON format > should scrape valid recipe for Tuscan Chicken Casserole 1`] = `
+{
+  "calories": 597,
+  "color": "#ffffff",
+  "description": "This Tuscan chicken casserole, boneless chicken breasts in a creamy cheese and sun-dried tomato sauce with spinach and mushrooms, requires little enough hands-on time to make for weeknight dinner.",
+  "gallery": [
+    "https://www.allrecipes.com/thmb/0TPMTnN9PmtWYJngclEUOsom_cs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8735197_Tuscan-Chicken-Casserole_Yolanda-Gutierrez_4x3-01bc05f1c1514461834e94c8f8c8e3c2.jpg",
+  ],
+  "image": "https://www.allrecipes.com/thmb/0TPMTnN9PmtWYJngclEUOsom_cs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8735197_Tuscan-Chicken-Casserole_Yolanda-Gutierrez_4x3-01bc05f1c1514461834e94c8f8c8e3c2.jpg",
+  "ingredients": [
+    {
+      "text": "1 pound skinless, boneless chicken breasts",
+    },
+    {
+      "text": "1 teaspoon Italian seasoning",
+    },
+    {
+      "text": "1/2 teaspoon paprika",
+    },
+    {
+      "text": "1/2 teaspoon onion powder",
+    },
+    {
+      "text": "1/2 teaspoon red pepper flakes",
+    },
+    {
+      "text": "1/2 teaspoon garlic powder",
+    },
+    {
+      "text": "salt and freshly ground black pepper to taste",
+    },
+    {
+      "text": "2 cups fresh spinach",
+    },
+    {
+      "text": "1 (4 ounce) can sliced mushrooms, drained",
+    },
+    {
+      "text": "1/2 cup chopped sun-dried tomatoes",
+    },
+    {
+      "text": "3/4 cup shredded mozzarella cheese",
+    },
+    {
+      "text": "1/4 cup freshly grated parmesan cheese",
+    },
+  ],
+  "instructions": [
+    {
+      "text": "Preheat the oven to 425 degrees F (220 degrees C). Spray an 8x8-inch baking dish with nonstick cooking spray.",
+    },
+    {
+      "text": "Season both sides of chicken with Italian seasoning, paprika, onion powder, pepper flakes, garlic powder, salt and pepper. Place in the prepared pan. Place spinach over chicken, mushrooms over spinach, and sun-dried tomatoes over mushrooms. Top with mozzarella and Parmesan cheese.",
+    },
+    {
+      "text": "For sauce, beat cream, Parmesan cheese, garlic, cream cheese, chicken bouillon, chicken broth, and oil together in a bowl until just combined. Season with salt and pepper. Pour mixture over chicken.",
+    },
+    {
+      "text": "Bake casserole in the preheated oven until bubbly, chicken is no longer pink, and juices run clear, 20 to 25 minutes.  An instant-read thermometer inserted in the center of chicken should read 165 degrees F (74 degrees C).",
+    },
+  ],
+  "name": "Tuscan Chicken Casserole",
+  "prepTime": 40,
+  "rating": 4,
+  "servings": 4,
+  "tags": [
+    "dinner",
+    "entree",
+    "italian",
   ],
 }
 `;

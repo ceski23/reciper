@@ -30,7 +30,7 @@ const loadImage = async (imageUrl: string): Promise<HTMLImageElement> => {
 	const image = new Image()
 	image.crossOrigin = 'Anonymous'
 	image.src = import.meta.env.VITE_CORS_PROXY !== undefined
-		? import.meta.env.VITE_CORS_PROXY + encodeURIComponent(imageUrl)
+		? import.meta.env.VITE_CORS_PROXY + encodeURIComponent(imageUrl.replace(/ /g, '%20'))
 		: imageUrl
 
 	return new Promise((resolve, reject) => {

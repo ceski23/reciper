@@ -12,15 +12,15 @@ export const aniagotuje: RecipesProvider = {
 	matcher: /https:\/\/aniagotuje\.pl\/.*/,
 	scrape: async doc => {
 		const partialRecipe = await extractMicrodata(doc)
-		const color = partialRecipe.image ? await getColorFromImage(partialRecipe.image) : undefined
+		const color = partialRecipe?.image ? await getColorFromImage(partialRecipe.image).catch(() => undefined) : undefined
 		const name = doc.querySelector('.article-content [itemprop="name"]')?.textContent?.trim()
 
 		return {
 			...partialRecipe,
 			color,
 			name,
-			ingredients: parseIngredients(doc) ?? partialRecipe.ingredients,
-			instructions: parseInstructions(doc) ?? partialRecipe.instructions,
+			ingredients: parseIngredients(doc) ?? partialRecipe?.ingredients,
+			instructions: parseInstructions(doc) ?? partialRecipe?.instructions,
 			gallery: parseImages(doc),
 		}
 	},

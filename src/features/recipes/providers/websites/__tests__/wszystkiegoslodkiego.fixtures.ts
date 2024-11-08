@@ -1,3 +1,4 @@
+// https://wszystkiegoslodkiego.pl/przepisy/babki-i-ciasta-ucierane/ciasto-z-dyni
 export const recipe1 = /* html */ `
 <article class="recipe-print-mobile" itemscope="" itemtype="http://schema.org/Recipe">
     <meta itemprop="commentCount" content="0">

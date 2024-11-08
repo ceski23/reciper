@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { createRecipe } from 'features/recipes/providers/websites/__tests__/utils'
 import { extractMicrodata } from '../microdata'
-import { recipe1 } from './microdata.fixtures'
+import { recipe1, recipe2 } from './microdata.fixtures'
 
 describe('should scrape recipes using Microdata format', () => {
 	const scrapeRecipe = async (data: string) => extractMicrodata(new DOMParser().parseFromString(data, 'text/html'))
@@ -13,12 +13,21 @@ describe('should scrape recipes using Microdata format', () => {
 		expect(createRecipe(partialRecipe)).toBeValidRecipe()
 	})
 
+	it('should scrape valid recipe for Sernik Izaura', async () => {
+		const partialRecipe = await scrapeRecipe(recipe2)
+
+		expect(partialRecipe).toMatchSnapshot()
+		expect(createRecipe(partialRecipe)).toBeValidRecipe()
+	})
+
 	it('should not found recipe', async () => {
-		await expect(scrapeRecipe(/* html */ `
-          <div>
-            <p>This is not recipe</p>
-          </div>
-        `)).rejects.toThrow('Couldn\'t find recipe')
+		const recipe = await scrapeRecipe(/* html */ `
+			<div>
+				<p>This is not recipe</p>
+			</div>
+		`)
+
+		expect(recipe).toBeUndefined()
 	})
 
 	it('should detect recipe\'s title', async () => {
@@ -29,7 +38,7 @@ describe('should scrape recipes using Microdata format', () => {
                 </div>
             `)
 
-			expect(recipe.name).toBe('Test recipe')
+			expect(recipe?.name).toBe('Test recipe')
 		}
 		{
 			const recipe = await scrapeRecipe(/* html */ `
@@ -38,7 +47,7 @@ describe('should scrape recipes using Microdata format', () => {
                 </div>
             `)
 
-			expect(recipe.name).toBe('Test recipe')
+			expect(recipe?.name).toBe('Test recipe')
 		}
 	})
 
@@ -50,7 +59,7 @@ describe('should scrape recipes using Microdata format', () => {
                 </div>
             `)
 
-			expect(recipe.image).toBe('test.jpg')
+			expect(recipe?.image).toBe('test.jpg')
 		}
 		{
 			const recipe = await scrapeRecipe(/* html */ `
@@ -59,7 +68,7 @@ describe('should scrape recipes using Microdata format', () => {
                 </div>
             `)
 
-			expect(recipe.image).toBe('test.jpg')
+			expect(recipe?.image).toBe('test.jpg')
 		}
 	})
 
@@ -71,7 +80,7 @@ describe('should scrape recipes using Microdata format', () => {
                 </div>
             `)
 
-			expect(recipe.description).toBe('Testing test')
+			expect(recipe?.description).toBe('Testing test')
 		}
 		{
 			const recipe = await scrapeRecipe(/* html */ `
@@ -80,7 +89,7 @@ describe('should scrape recipes using Microdata format', () => {
                 </div>
             `)
 
-			expect(recipe.description).toBe('Testing test')
+			expect(recipe?.description).toBe('Testing test')
 		}
 	})
 
@@ -92,7 +101,7 @@ describe('should scrape recipes using Microdata format', () => {
                 </div>
             `)
 
-			expect(recipe.instructions).toEqual([
+			expect(recipe?.instructions).toEqual([
 				{ text: 'Test test test' },
 			])
 		}
@@ -105,7 +114,7 @@ describe('should scrape recipes using Microdata format', () => {
                 </div>
             `)
 
-			expect(recipe.instructions).toEqual([
+			expect(recipe?.instructions).toEqual([
 				{ text: 'Test1' },
 				{ text: 'Test2' },
 				{ text: 'Test3' },
@@ -120,7 +129,7 @@ describe('should scrape recipes using Microdata format', () => {
           </div>
         `)
 
-		expect(recipe.prepTime).toBe(10)
+		expect(recipe?.prepTime).toBe(10)
 	})
 
 	it('should detect recipe\'s rating', async () => {
@@ -130,7 +139,7 @@ describe('should scrape recipes using Microdata format', () => {
           </div>
         `)
 
-		expect(recipe.rating).toBe(4.8)
+		expect(recipe?.rating).toBe(4.8)
 	})
 
 	it('should detect recipe\'s calories', async () => {
@@ -140,7 +149,7 @@ describe('should scrape recipes using Microdata format', () => {
           </div>
         `)
 
-		expect(recipe.calories).toBe(540)
+		expect(recipe?.calories).toBe(540)
 	})
 
 	it('should detect recipe\'s ingredients', async () => {
@@ -151,7 +160,7 @@ describe('should scrape recipes using Microdata format', () => {
           </div>
         `)
 
-		expect(recipe.ingredients).toStrictEqual([
+		expect(recipe?.ingredients).toStrictEqual([
 			{ text: 'Test1' },
 			{ text: 'Test2' },
 		])

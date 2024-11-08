@@ -1,5 +1,8 @@
-export const parseValidNumber = (text?: string | null) => {
-	const number = Number.parseInt(text ?? '', 10)
+export const parseValidNumber = (text?: string | null, decimal = true): number | undefined => {
+	if (text === '' || text === null || text === undefined) return undefined
+
+	const parser = decimal ? Number.parseFloat : Number.parseInt
+	const number = parser(text, 10)
 
 	return Number.isNaN(number) ? undefined : number
 }
