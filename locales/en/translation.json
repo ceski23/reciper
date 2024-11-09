@@ -211,7 +211,9 @@
 		"title": "Scraping error",
 		"error": "Couldn't scrape this recipe. Website {{website}} might not be supported.",
 		"save": "Save recipe",
-		"close": "Close"
+		"close": "Close",
+		"showIssues": "Show error details",
+		"hideIssues": "Hide error details"
 	},
 	"home": {
 		"searchBarPlaceholder": "What do you want to eat?",

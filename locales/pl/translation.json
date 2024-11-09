@@ -225,7 +225,9 @@
 		"title": "Import przepisu",
 		"error": "Nie można pobrać tego przepisu. Strona {{website}} może nie być obsługiwana.",
 		"save": "Zapisz przepis",
-		"close": "Zamknij"
+		"close": "Zamknij",
+		"showIssues": "Pokaż szczegóły błędu",
+		"hideIssues": "Ukryj szczegóły błędu"
 	},
 	"home": {
 		"searchBarPlaceholder": "Na co masz ochotę?",
