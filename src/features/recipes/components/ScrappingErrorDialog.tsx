@@ -5,7 +5,7 @@ import { withDialogAnimation } from '@components/dialog/withDialogAnimation'
 import { styled } from '@macaron-css/react'
 import { theme } from '@styles/theme'
 import { isValidUrl } from '@utils/urls'
-import { type FunctionComponent } from 'react'
+import { Fragment, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as v from 'valibot'
 import { type recipeScheme } from 'features/recipes/types'
@@ -14,7 +14,7 @@ type ScrappingErrorDialogProps = {
 	open?: boolean
 	onClose: () => void
 	url?: string
-	error: v.ValiError<typeof recipeScheme>
+	error?: v.ValiError<typeof recipeScheme>
 }
 
 export const ScrappingErrorDialog: FunctionComponent<ScrappingErrorDialogProps> = withDialogAnimation(({
@@ -27,7 +27,9 @@ export const ScrappingErrorDialog: FunctionComponent<ScrappingErrorDialogProps> 
 	const { t } = useTranslation()
 	const disclosure = Ariakit.useDisclosureStore()
 	const isOpen = Ariakit.useStoreState(disclosure, state => state.open)
-	const errorText = Object.entries(v.flatten(error.issues).nested ?? {}).map(([name, errors]) => `${name}: ${errors?.join(', ')}`).join('\n')
+	const errorText = error
+		? Object.entries(v.flatten(error.issues).nested ?? {}).map(([name, errors]) => `${name}: ${errors?.join(', ')}`).join('\n')
+		: undefined
 
 	return (
 		<SimpleDialog
@@ -36,30 +38,34 @@ export const ScrappingErrorDialog: FunctionComponent<ScrappingErrorDialogProps> 
 			onClose={onClose}
 			title={t('scraping.title')}
 			description={t('scraping.error', { website: isValidUrl(url) ? new URL(url).host : undefined })}
-			extraContent={(
-				<DisclosureContainer>
-					<Disclosure
-						alwaysVisible
-						store={disclosure}
-					>
-						<DisclosureInner>
-							<ErrorsBox>
-								{errorText}
-							</ErrorsBox>
-						</DisclosureInner>
-					</Disclosure>
-				</DisclosureContainer>
-			)}
+			extraContent={error !== undefined
+				? (
+					<DisclosureContainer>
+						<Disclosure
+							alwaysVisible
+							store={disclosure}
+						>
+							<DisclosureInner>
+								<ErrorsBox>
+									{errorText}
+								</ErrorsBox>
+							</DisclosureInner>
+						</Disclosure>
+					</DisclosureContainer>
+				)
+				: undefined}
 			actions={[
-				(
-					<Ariakit.Disclosure
-						key="toggle"
-						store={disclosure}
-						render={<Button variant="text" />}
-					>
-						{isOpen ? t('scraping.hideIssues') : t('scraping.showIssues')}
-					</Ariakit.Disclosure>
-				),
+				error !== undefined
+					? (
+						<Ariakit.Disclosure
+							key="toggle"
+							store={disclosure}
+							render={<Button variant="text" />}
+						>
+							{isOpen ? t('scraping.hideIssues') : t('scraping.showIssues')}
+						</Ariakit.Disclosure>
+					)
+					: <Fragment />,
 				{
 					label: t('scraping.close'),
 					onClick: onClose,

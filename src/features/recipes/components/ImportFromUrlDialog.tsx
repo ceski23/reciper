@@ -79,6 +79,7 @@ export const ImportFromUrlDialog: FunctionComponent<ImportFromUrlDialogProps> = 
 						label={t('recipes.addRecipe.addByUrl.label')}
 						control={control}
 						name="url"
+						inputProps={{ type: 'url' }}
 					/>
 				</Form>
 			)}

@@ -80,14 +80,12 @@ export const ScrapeRecipe: FunctionComponent = () => {
 					</Fragment>
 				))
 				.exhaustive()}
-			{v.isValiError<typeof recipeScheme>(query.error) && (
-				<ScrappingErrorDialog
-					open={query.isError}
-					onClose={() => history.length > 1 ? history.back() : window.close()}
-					url={url}
-					error={query.error}
-				/>
-			)}
+			<ScrappingErrorDialog
+				open={query.isError}
+				onClose={() => history.length > 1 ? history.back() : window.close()}
+				url={url}
+				error={v.isValiError<typeof recipeScheme>(query.error) ? query.error : undefined}
+			/>
 		</Fragment>
 	)
 }
