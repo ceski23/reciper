@@ -116,8 +116,8 @@
 		"title": "Nowy przepis",
 		"fields": {
 			"cover": "Zdjęcie",
-			"name": "Nazwa przepisu",
-			"description": "Opis przepisu",
+			"name": "Nazwa",
+			"description": "Opis",
 			"url": "Adres URL",
 			"prepTime": {
 				"label": "Czas przygotowywania",

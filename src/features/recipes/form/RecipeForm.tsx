@@ -1,5 +1,6 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { NumberField } from '@components/form/NumberField'
+import { TextAreaField } from '@components/form/TextAreaField'
 import { Icon } from '@components/Icon'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
@@ -107,6 +108,12 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 		>
 			<FormSection>
 				<TextField
+					label={t('newRecipe.fields.name')}
+					name="name"
+					required
+					control={control}
+				/>
+				<TextField
 					label={t('newRecipe.fields.cover')}
 					name="image"
 					control={control}
@@ -138,16 +145,11 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 						)
 						: undefined}
 				/>
-				<TextField
-					label={t('newRecipe.fields.name')}
-					name="name"
-					required
-					control={control}
-				/>
-				<TextField
+				<TextAreaField
 					label={t('newRecipe.fields.description')}
 					name="description"
 					control={control}
+					textAreaProps={{ rows: 4 }}
 				/>
 				<TextField
 					label={t('newRecipe.fields.url')}

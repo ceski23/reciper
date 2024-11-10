@@ -104,9 +104,9 @@
 		"title": "New recipe",
 		"fields": {
 			"cover": "Cover image",
-			"name": "Recipe name",
-			"description": "Recipe description",
-			"url": "Recipe url",
+			"name": "Name",
+			"description": "Description",
+			"url": "URL",
 			"prepTime": {
 				"label": "Preparation time",
 				"unit_one": "minute",
