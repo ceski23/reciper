@@ -2,16 +2,21 @@ import { useIsContainerScrolled } from '@hooks/useIsContainerScrolled'
 import { styled } from '@macaron-css/react'
 import { animated } from '@react-spring/web'
 import { uiStore } from '@stores/ui'
-import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useCallback, useEffect, useState } from 'react'
+import { interpolate, modeRgb, serializeRgb, useMode } from 'culori/fn'
+import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'lib/styles'
+import { isDefined } from 'lib/utils'
 import { AnimatedTitle } from './AnimatedTitle'
 import { HeaderPortal } from './HeaderPortal'
 import { IconButton } from './IconButton'
 import { ProgressIndicator } from './ProgressIndicator'
 import { Skeleton } from './Skeleton'
 import { Typography } from './Typography'
+
+// eslint-disable-next-line react-hooks/rules-of-hooks
+useMode(modeRgb)
 
 type TopAppBarProps = {
 	configuration: 'small' | 'medium' | 'large'
@@ -38,6 +43,7 @@ const useAppBarColor = (isContentScrolled: boolean, elevation: ComponentProps<ty
 		[isContentScrolled, elevation],
 	)
 	const [themeColor, setThemeColor] = useState(() => getColor())
+	const lastColor = useRef(themeColor)
 
 	useEffect(() => {
 		setThemeColor(getColor())
@@ -48,7 +54,37 @@ const useAppBarColor = (isContentScrolled: boolean, elevation: ComponentProps<ty
 		return () => styleObserver.disconnect()
 	}, [getColor])
 
+	useEffect(() => {
+		if (themeColor === '') return
+
+		const interpolator = interpolate([lastColor.current || themeColor, themeColor])
+
+		setColorsSeries(
+			Array
+				.from({ length: 30 }, (_, i) => interpolator(i / 30))
+				.map(serializeRgb)
+				.filter(isDefined),
+			10,
+			color => document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color),
+		)
+
+		lastColor.current = themeColor
+	}, [themeColor])
+
 	return themeColor
+}
+
+const setColorsSeries = (colors: Array<string>, delay: number, callback: (color: string) => void) => {
+	const timerId = setInterval(() => {
+		const color = colors.shift()
+
+		if (color === undefined) {
+			clearInterval(timerId)
+			return
+		}
+
+		callback(color)
+	}, delay)
 }
 
 export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
@@ -65,18 +101,16 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	const [isContentScrolled, setIsContentScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsContentScrolled)
 	const { mainContent } = uiStore.useStore()
-	const themeColor = useAppBarColor(isContentScrolled, elevation)
 	const scrollContainer = container ?? mainContent
+
+	useAppBarColor(isContentScrolled, elevation)
 
 	return (
 		<Fragment>
 			{renderProbe}
 			<HeaderPortal>
 				<Helmet>
-					<meta
-						name="theme-color"
-						content={themeColor}
-					/>
+					<meta name="theme-color" />
 				</Helmet>
 				<AppBarBase elevation={elevation ?? (isContentScrolled ? 'onScroll' : 'flat')}>
 					{leadingButton ?? (
@@ -139,7 +173,7 @@ const AppBarBase = styled('div', {
 		gridTemplateColumns: '[leading-icon] 48px [title] 1fr [trailing-icons] auto',
 		alignItems: 'center',
 		gap: 4,
-		transition: 'background-color .3s',
+		transition: 'background-color .3s linear',
 	},
 	variants: {
 		elevation: {
