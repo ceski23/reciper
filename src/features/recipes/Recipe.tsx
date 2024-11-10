@@ -34,9 +34,31 @@ export const Recipe: FunctionComponent = () => {
 	useWakelock()
 
 	const handleShareRecipe = () => {
-		navigator.share({ url: query.data?.url }).catch((error: DOMException | TypeError) => {
-			error.name !== 'AbortError' && notify(t('recipes.sharing.error'))
-		})
+		if (query.data === undefined) {
+			return
+		}
+
+		try {
+			if (query.data.url !== undefined) {
+				return navigator.share({ url: query.data.url })
+			}
+
+			navigator.share({
+				title: query.data.name,
+				text: [
+					query.data.name,
+					query.data.description,
+					'',
+					query.data.ingredients.map(ingredient => `- ${ingredient.text}`).join('\n'),
+					'',
+					query.data.instructions.map(instruction => `- ${instruction.text}`).join('\n'),
+				].join('\n'),
+			})
+		} catch (error) {
+			if (error instanceof Error && error.name !== 'AbortError') {
+				notify(t('recipes.sharing.error'))
+			}
+		}
 	}
 
 	if (query.status === 'error') {
