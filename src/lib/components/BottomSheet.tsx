@@ -22,15 +22,23 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 	onStateChange,
 	children,
 	disableDrag,
-	gap = 100,
+	gap = 32,
 	title,
 }) => {
+	const handleHeight = 36
 	const [sheetHeight, setSheetHeight] = useState(0)
 	const [showBackdrop, setShowBackdrop] = useState(false)
+	// eslint-disable-next-line react/hook-use-state
+	const [resizeObserver] = useState(() => new ResizeObserver(([entry]) => setSheetHeight(entry.borderBoxSize.at(0)?.blockSize ?? 0 + handleHeight)))
 
 	const measuredRef = useCallback((node: HTMLElement | null) => {
-		if (node) setSheetHeight(node.getBoundingClientRect().height)
-	}, [])
+		if (node) {
+			resizeObserver.observe(node)
+			return
+		}
+
+		resizeObserver.disconnect()
+	}, [resizeObserver])
 
 	const backdropStyles = useSpring({ opacity: state !== 'close' ? 1 : 0 })
 	const [{ y }, api] = useSpring({
@@ -109,12 +117,11 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 			onClose={() => onStateChange('close')}
 			render={(
 				<Container
-					ref={measuredRef}
 					{...bind()}
 					style={{ y }}
 				>
 					<Handle />
-					<Content>
+					<Content ref={measuredRef}>
 						<Ariakit.DialogHeading render={<Title />}>
 							{title}
 						</Ariakit.DialogHeading>
@@ -156,6 +163,7 @@ const Handle = styled('div', {
 		height: 4,
 		borderRadius: 100,
 		margin: 16,
+		cursor: 'ns-resize',
 	},
 })
 
@@ -174,7 +182,7 @@ const Content = styled('div', {
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
-		flex: 1,
 		paddingInline: 32,
+		paddingBottom: 120,
 	},
 })
