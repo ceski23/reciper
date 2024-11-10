@@ -20,7 +20,6 @@ import { List } from 'lib/components/list'
 import { Menu } from 'lib/components/menu'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopAppBar } from 'lib/components/TopAppBar'
-import { useIsContainerScrolled } from 'lib/hooks/useIsContainerScrolled'
 import { accountStore } from 'lib/stores/account'
 import { uiStore } from 'lib/stores/ui'
 import { SampleRecipesBanner } from './SampleRecipesBanner'
@@ -28,7 +27,6 @@ import { SampleRecipesBanner } from './SampleRecipesBanner'
 export const Recipes: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const [isListScrolled, setIsListScrolled] = useState(false)
-	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const notifications = useNotifications()
 	const recipes = useQuery(recipesQuery())
 	const addRecipes = useAddRecipes()
@@ -152,7 +150,6 @@ export const Recipes: FunctionComponent = () => {
 				))
 				.with([{ status: 'success' }, 'grid'], ([recipes]) => (
 					<RecipesGrid>
-						{renderProbe}
 						{recipes.data.map(recipe => (
 							<RecipeCard
 								key={recipe.id}
@@ -168,8 +165,8 @@ export const Recipes: FunctionComponent = () => {
 						ref={setContainer}
 						scrollRestorationId="recipesList"
 						selectionStore={selection.selectionStore}
+						onIsScrolledChange={setIsListScrolled}
 					>
-						{renderProbe}
 						<SampleRecipesBanner
 							show={recipes.data.length === 0}
 							onAddClick={() => addRecipes.mutate(sampleRecipes)}
