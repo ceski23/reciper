@@ -5,7 +5,6 @@ import { Link } from '@components/Link'
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
 import { theme } from '@styles/theme'
-import { useLongPress } from '@uidotdev/usehooks'
 import { toggle } from 'radash'
 import { type FunctionComponent, type ReactNode } from 'react'
 import * as providers from 'features/recipes/providers/websites'
@@ -43,11 +42,6 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 	const store = useCheckboxContext() as Ariakit.CheckboxStore<Array<string>> | undefined
 	const isSelected = store?.useState().value.includes(recipe.id)
 	const toggleSelection = () => store?.setValue(prev => toggle(prev, recipe.id))
-	const eventHandlers = useLongPress(event => {
-		event.stopPropagation()
-		event.preventDefault()
-		toggleSelection()
-	})
 
 	const handleLeadingElementClick = (event: React.MouseEvent) => {
 		if (!store) return
@@ -97,7 +91,6 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 						params={{ id: recipe.id }}
 					/>
 				)}
-				{...eventHandlers}
 			/>
 		</animated.div>
 	)
