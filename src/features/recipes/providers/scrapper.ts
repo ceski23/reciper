@@ -14,14 +14,14 @@ export type RecipesProvider = {
 
 export class InvalidRecipeError extends Error {}
 
-const createRecipe = (url: URL, recipe: Record<string, unknown> | undefined) => ({
-	id: nanoid(),
+const createRecipe = (url: URL, recipe: Record<string, unknown> | undefined, id?: string) => ({
+	id: id ?? nanoid(),
 	url: url.toString(),
 	addedDate: new Date().getTime(),
 	...recipe,
 })
 
-export const scrapeRecipe = async (url?: string): Promise<Recipe> => {
+export const scrapeRecipe = async (url?: string, id?: string): Promise<Recipe> => {
 	if (url === undefined) throw new Error('Invalid url')
 
 	const recipeUrl = new URL(url)
@@ -42,5 +42,5 @@ export const scrapeRecipe = async (url?: string): Promise<Recipe> => {
 		.filter(item => item.status === 'fulfilled')
 		.find(item => item.value !== undefined)?.value
 
-	return v.parseAsync(recipeScheme, createRecipe(recipeUrl, recipeData))
+	return v.parseAsync(recipeScheme, createRecipe(recipeUrl, recipeData, id))
 }

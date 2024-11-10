@@ -29,7 +29,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	const { url, id } = scrapeRecipeRoute.useSearch()
 	const query = useQuery({
 		queryKey: ['scraped', url],
-		queryFn: () => scrapeRecipe(url).catch(),
+		queryFn: () => scrapeRecipe(url, id).catch(),
 		retry: false,
 	})
 	const addRecipe = useAddRecipe()
