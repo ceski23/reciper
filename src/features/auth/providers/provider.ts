@@ -62,7 +62,13 @@ export abstract class AccountProvider {
 									id: 'errorLogout',
 									content: i18next.t('auth.logoutError.text'),
 									duration: Number.POSITIVE_INFINITY,
-									action: { label: i18next.t('auth.logoutError.action') },
+									action: {
+										label: i18next.t('auth.logoutError.action'),
+										onClick: () =>
+											notificationsStore.actions.setNotifications(prev =>
+												prev.filter(notification => notification.id !== 'errorLogout')
+											),
+									},
 								})
 							)
 							if (error instanceof HTTPError) {
@@ -72,7 +78,13 @@ export abstract class AccountProvider {
 										id: 'errorLogoutError',
 										content: text,
 										duration: Number.POSITIVE_INFINITY,
-										action: { label: i18next.t('auth.logoutError.action') },
+										action: {
+											label: i18next.t('auth.logoutError.action'),
+											onClick: () =>
+												notificationsStore.actions.setNotifications(prev =>
+													prev.filter(notification => notification.id !== 'errorLogoutError')
+												),
+										},
 									})
 								)
 							}
