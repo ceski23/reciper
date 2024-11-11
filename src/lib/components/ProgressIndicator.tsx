@@ -1,4 +1,4 @@
-import { keyframes } from '@macaron-css/core'
+import { createVar, keyframes } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import type { ComponentProps, FunctionComponent } from 'react'
 import { theme } from 'lib/styles'
@@ -111,4 +111,76 @@ const LinearIndicator = styled('div', {
 	},
 })
 
-export const ProgressIndicator = { Linear }
+type CircularProgressIndicatorProps = ComponentProps<'svg'> & {
+	// TODO: add support for determinate progress
+	// max?: number
+	// value?: number
+}
+
+const Circular: FunctionComponent<CircularProgressIndicatorProps> = props => (
+	// eslint-disable-next-line jsx-a11y/prefer-tag-over-role
+	<SpinnerBase
+		viewBox="0 0 66 66"
+		fill="none"
+		strokeWidth={6}
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		role="progressbar"
+		color={theme.colors.primary}
+		{...props}
+	>
+		<SpinnerIndicator
+			cx={33}
+			cy={33}
+			r={30}
+		/>
+	</SpinnerBase>
+)
+
+const spinningAnimation = keyframes({
+	'0%': {
+		rotate: '0deg',
+	},
+	'100%': {
+		rotate: '270deg',
+	},
+})
+
+const offset = createVar('strokeDashoffset')
+const duration = createVar('animationDuration')
+
+const dashAnimation = keyframes({
+	'0%': {
+		strokeDashoffset: offset,
+	},
+	'50%': {
+		strokeDashoffset: `calc(${offset} / 4)`,
+		transform: 'rotate(135deg)',
+	},
+	'100%': {
+		strokeDashoffset: offset,
+		transform: 'rotate(450deg)',
+	},
+})
+
+const SpinnerBase = styled('svg', {
+	base: {
+		animation: `${spinningAnimation} ${duration} linear infinite`,
+		vars: {
+			[offset]: '187px',
+			[duration]: '1.4s',
+		},
+	},
+})
+
+const SpinnerIndicator = styled('circle', {
+	base: {
+		strokeDasharray: offset,
+		strokeDashoffset: 0,
+		transformOrigin: 'center',
+		stroke: 'currentColor',
+		animation: `${dashAnimation} ${duration} ease-in-out infinite`,
+	},
+})
+
+export const ProgressIndicator = { Linear, Circular }
