@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
-import { computeStyle } from '@utils/dom'
-import { forwardRef, useMemo } from 'react'
+import { getVariableColorValue } from '@utils/dom'
+import { forwardRef, useLayoutEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'lib/styles'
@@ -16,7 +16,14 @@ type TopSearchBarProps = {
 
 export const TopSearchBar = forwardRef<HTMLInputElement, TopSearchBarProps>(({ onQueryChange, query, placeholder, onBackClick }, ref) => {
 	const { t } = useTranslation()
-	const themeColor = useMemo(() => computeStyle('backgroundColor', theme.colors.surfaceContainerHigh), [])
+	const [themeColor, setThemeColor] = useState<string>()
+
+	useLayoutEffect(() => {
+		const styleObserver = new MutationObserver(() => setThemeColor(getVariableColorValue(theme.colors.surfaceContainerHigh)))
+		styleObserver.observe(document.head, { childList: true })
+
+		return () => styleObserver.disconnect()
+	}, [])
 
 	return (
 		<AppBarBase>
