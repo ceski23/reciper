@@ -127,6 +127,9 @@ const Tag = styled(Chip, {
 	base: {
 		flex: '1 0 auto',
 		textDecoration: 'unset',
+		':last-child': {
+			flexGrow: 0,
+		},
 	},
 })
 

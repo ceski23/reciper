@@ -182,6 +182,7 @@ export const ChipBase = styled(Button, {
 		withCloseIcon: {
 			true: {
 				paddingRight: 8,
+				justifyContent: 'space-between',
 			},
 		},
 	},
