@@ -51,6 +51,7 @@ export const NotificationsViewport: FunctionComponent<NotificationViewportProps>
 		leave: { opacity: 0 },
 		exitBeforeEnter: true,
 		config: { duration: 200 },
+		keys: notification => notification.id,
 	})
 
 	useEffect(() => {

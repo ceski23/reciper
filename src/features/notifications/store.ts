@@ -5,6 +5,7 @@ export type NotificationOptions = {
 	content: string
 	duration: number
 	dismissable?: boolean
+	loading?: boolean
 	action?: {
 		label: string
 		onClick?: VoidFunction

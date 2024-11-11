@@ -1,3 +1,4 @@
+import { ProgressIndicator } from '@components/ProgressIndicator'
 import { styled } from '@macaron-css/react'
 import { animated, to, useSpring } from '@react-spring/web'
 import { useDrag } from '@use-gesture/react'
@@ -8,7 +9,14 @@ import { styleUtils, theme } from 'lib/styles'
 import { Icon } from './Icon'
 import { Typography } from './Typography'
 
-export const Snackbar = forwardRef<HTMLOutputElement, NotificationComponentProps>(({ action, dismissable, content, onHide, style }, ref) => {
+export const Snackbar = forwardRef<HTMLOutputElement, NotificationComponentProps>(({
+	action,
+	dismissable,
+	content,
+	onHide,
+	style,
+	loading,
+}, ref) => {
 	const { t } = useTranslation()
 	const [{ x, opacity }, api] = useSpring(() => ({ x: 0, opacity: 1 }))
 	const bind = useDrag(({ last, movement: [x], currentTarget }) => {
@@ -32,7 +40,7 @@ export const Snackbar = forwardRef<HTMLOutputElement, NotificationComponentProps
 
 	return (
 		<SnackbarBase
-			variant={(action !== undefined || dismissable) ? 'withAction' : 'textOnly'}
+			variant={((action !== undefined || dismissable) && !loading) ? 'withAction' : 'textOnly'}
 			ref={ref}
 			{...bind()}
 			style={{
@@ -42,13 +50,22 @@ export const Snackbar = forwardRef<HTMLOutputElement, NotificationComponentProps
 			}}
 		>
 			<Text>{content}</Text>
-			{action && (
-				<ActionButton onClick={action.onClick}>
-					<Typography.LabelLarge>
-						{action.label}
-					</Typography.LabelLarge>
-				</ActionButton>
-			)}
+			{loading
+				? (
+					<ProgressIndicator.Circular
+						width={24}
+						color={theme.colors.inverseOnSurface}
+					/>
+				)
+				: action
+				? (
+					<ActionButton onClick={action.onClick}>
+						<Typography.LabelLarge>
+							{action.label}
+						</Typography.LabelLarge>
+					</ActionButton>
+				)
+				: undefined}
 			{dismissable && (
 				<DismissButton
 					aria-label={t('notifications.close')}
