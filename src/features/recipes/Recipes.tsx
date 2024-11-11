@@ -6,12 +6,12 @@ import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as recipesIndexRoute } from 'routes/recipes/index'
 import { match, P } from 'ts-pattern'
-import { RecipeCard } from 'features/home/components/RecipeCard'
 import { Notification, useNotifications } from 'features/notifications'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
 import { ImportFromUrlDialog } from 'features/recipes/components/ImportFromUrlDialog'
 import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
 import { recipesQuery, useAddRecipes, useDeleteRecipe, useSyncRecipes } from 'features/recipes/recipes'
+import { RecipesGrid } from 'features/recipes/RecipesGrid'
 import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
@@ -148,17 +148,7 @@ export const Recipes: FunctionComponent = () => {
 						duration={Number.POSITIVE_INFINITY}
 					/>
 				))
-				.with([{ status: 'success' }, 'grid'], ([recipes]) => (
-					<RecipesGrid>
-						{recipes.data.map(recipe => (
-							<RecipeCard
-								key={recipe.id}
-								recipe={recipe}
-								style={{ width: '100%' }}
-							/>
-						))}
-					</RecipesGrid>
-				))
+				.with([{ status: 'success' }, 'grid'], ([recipes]) => <RecipesGrid recipes={recipes.data} />)
 				.with([{ status: 'success' }, 'list'], ([recipes]) => (
 					<List.Root
 						virtual={{ overscan: 10 }}
@@ -215,15 +205,5 @@ const FabContainer = styled('div', {
 		paddingInline: 16,
 		paddingBottom: 16,
 		justifyContent: 'flex-end',
-	},
-})
-
-const RecipesGrid = styled('div', {
-	base: {
-		display: 'grid',
-		gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-		gap: 16,
-		margin: 16,
-		marginTop: 0,
 	},
 })

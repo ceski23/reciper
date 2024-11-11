@@ -1,13 +1,13 @@
 import * as Ariakit from '@ariakit/react'
 import { Icon } from '@components/Icon'
 import { Link } from '@components/Link'
+import { useDynamicTheme } from '@hooks/useDynamicTheme'
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
 import type { CSSProperties, FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Recipe } from 'features/recipes/types'
 import { Typography } from 'lib/components/Typography'
-import { useDynamicTheme } from 'lib/hooks'
 import { useRipples } from 'lib/hooks/useRipples'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
@@ -15,13 +15,15 @@ import { isDefined } from 'lib/utils'
 type RecipeCardProps = {
 	recipe: Recipe
 	style?: CSSProperties
+	wrapperStyle?: CSSProperties
+	withDynamicColor?: boolean
 }
 
-export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: customStyle }) => {
+export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: customStyle, withDynamicColor, wrapperStyle }) => {
 	const { t } = useTranslation()
 	const { eventHandlers, renderRipples } = useRipples()
 	const [ref, inView] = useInView()
-	const dynamicStyles = useDynamicTheme(recipe.color)
+	const dynamicStyles = useDynamicTheme(withDynamicColor ? recipe.color : undefined)
 	const style = useSpring({
 		to: {
 			opacity: inView ? 1 : 0,
@@ -36,7 +38,10 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 	return (
 		<animated.div
 			ref={ref}
-			style={style}
+			style={{
+				...wrapperStyle,
+				...style,
+			}}
 		>
 			<Card
 				style={{
@@ -77,7 +82,7 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 
 const Card = styled(Ariakit.Role, {
 	base: {
-		width: 220,
+		width: '100%',
 		height: 250,
 		backgroundColor: theme.colors.surfaceContainerHighest,
 		color: theme.colors.onSurface,

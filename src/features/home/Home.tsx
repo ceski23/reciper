@@ -79,6 +79,8 @@ export const Home: FunctionComponent = () => {
 							<RecipeCard
 								key={recipe.id}
 								recipe={recipe}
+								style={{ width: 220 }}
+								withDynamicColor
 							/>
 						))}
 					</CardsList>
