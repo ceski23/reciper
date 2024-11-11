@@ -1,8 +1,9 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
+import { getVariableColorValue } from '@utils/dom'
 import { counting, isEmpty, sort } from 'radash'
-import { type FunctionComponent, useMemo } from 'react'
+import { type FunctionComponent, useLayoutEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { RecipeCard } from 'features/home/components/RecipeCard'
@@ -16,7 +17,6 @@ import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
-import { computeStyle } from 'lib/utils/dom'
 import { FakeSearchBar } from './components/FakeSearchBar'
 import { RecipeCardSkeleton } from './components/RecipeCardSkeleton'
 import { TagsSkeleton } from './components/TagsSkeleton'
@@ -24,7 +24,7 @@ import { TagsSkeleton } from './components/TagsSkeleton'
 const recipeHasRating = (recipe: Recipe): recipe is Recipe & Required<Pick<Recipe, 'rating'>> => isDefined(recipe.rating)
 
 export const Home: FunctionComponent = () => {
-	const themeColor = useMemo(() => computeStyle('backgroundColor', theme.colors.background), [])
+	const [themeColor, setThemeColor] = useState<string>()
 	const { t } = useTranslation()
 	const recipes = useQuery(recipesQuery())
 	const getRecentRecipes = (recipes: Array<Recipe>, amount: number) =>
@@ -40,6 +40,13 @@ export const Home: FunctionComponent = () => {
 			([, count]) => count,
 			true,
 		).slice(0, amount).map(([key]) => key)
+
+	useLayoutEffect(() => {
+		const styleObserver = new MutationObserver(() => setThemeColor(getVariableColorValue(theme.colors.background)))
+		styleObserver.observe(document.head, { childList: true })
+
+		return () => styleObserver.disconnect()
+	}, [])
 
 	return (
 		<Container>

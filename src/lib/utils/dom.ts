@@ -41,3 +41,10 @@ export const isElementNode = (node: Node | Element): node is Element => (
 export const isTextNode = (node: Node | Element): node is Text => (
 	node.nodeType === Node.TEXT_NODE
 )
+
+const getVarName = (variable: string) => variable.match(/var\((.*)\)/)?.[1] ?? ''
+
+export const getVariableColorValue = (variableName: string) =>
+	window
+		.getComputedStyle(document.body)
+		.getPropertyValue(getVarName(variableName))
