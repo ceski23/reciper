@@ -30,6 +30,11 @@ const parseImageElement = (imageElement: Element | null) => {
 	const src = imageElement?.getAttribute('src')
 	const content = imageElement?.getAttribute('content')
 
+	// exclude elements with svg loaders fallbacks
+	if (isDefined(src) && src.startsWith('data:image/svg')) {
+		return content ?? undefined
+	}
+
 	return content ?? src ?? undefined
 }
 
@@ -85,7 +90,10 @@ const findInstructions = (sectionElement: Element | Document) =>
 		)
 		.map(element => {
 			const text = getDataFromElement(element.querySelector('[itemprop=text]')) ?? getDataFromElement(element)
-			const image = parseImageElement(element.querySelector('[itemprop="image"]'))
+			const image = Array
+				.from(element.querySelectorAll('[itemprop="image"]'))
+				.map(parseImageElement)
+				.find(isDefined)
 
 			return text
 				? {
