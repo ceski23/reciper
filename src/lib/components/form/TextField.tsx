@@ -1,7 +1,7 @@
 import { type Control, Controller, type ControllerRenderProps, type FieldValues, type Path } from 'react-hook-form'
 import { TextInput, type TextInputProps } from '../TextInput'
 
-export type TextFieldProps<
+type TextFieldProps<
 	TFormShape extends FieldValues,
 	TFieldName extends Path<TFormShape>,
 > = Omit<TextInputProps, keyof ControllerRenderProps<TFormShape, TFieldName>> & {

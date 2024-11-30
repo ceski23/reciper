@@ -12,7 +12,7 @@ type ImagePreviewProps = {
 	image: string
 }
 
-export const ImagePreview: FunctionComponent<ImagePreviewProps> = ({ image }) => {
+const ImagePreview: FunctionComponent<ImagePreviewProps> = ({ image }) => {
 	const dimensions = useImageDimensions(image)
 
 	return dimensions

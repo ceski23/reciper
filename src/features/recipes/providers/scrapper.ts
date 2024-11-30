@@ -12,8 +12,6 @@ export type RecipesProvider = {
 	scrape: (doc: Document) => Promise<Partial<Recipe>>
 }
 
-export class InvalidRecipeError extends Error {}
-
 const createRecipe = (url: URL, recipe: Record<string, unknown> | undefined, id?: string) => ({
 	id: id ?? nanoid(),
 	url: url.toString(),

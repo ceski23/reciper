@@ -62,7 +62,7 @@ export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase
 	)
 })
 
-export const ChipBase = styled(Button, {
+const ChipBase = styled(Button, {
 	base: {
 		backgroundColor: theme.colors.surfaceContainerLow,
 		border: 'none',
@@ -191,13 +191,13 @@ export const ChipBase = styled(Button, {
 	},
 })
 
-export const Label = styled(Typography.LabelLarge, {
+const Label = styled(Typography.LabelLarge, {
 	base: {
 		color: theme.colors.onSurface,
 	},
 })
 
-export const ChipIcon = styled(Icon, {
+const ChipIcon = styled(Icon, {
 	base: {
 		width: 18,
 		height: 18,
@@ -217,7 +217,7 @@ export const ChipIcon = styled(Icon, {
 	},
 })
 
-export const CloseButton = styled('span', {
+const CloseButton = styled('span', {
 	base: {
 		width: 18,
 		height: 18,

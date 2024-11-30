@@ -1,7 +1,7 @@
 import { type Control, Controller, type ControllerRenderProps, type FieldValues, type Path } from 'react-hook-form'
 import { NumberInput, type NumberInputProps } from '../NumberInput'
 
-export type NumberFieldProps<
+type NumberFieldProps<
 	TFormShape extends FieldValues,
 	TFieldName extends Path<TFormShape>,
 > = Omit<NumberInputProps, keyof ControllerRenderProps<TFormShape, TFieldName>> & {

@@ -25,16 +25,16 @@ const ReactQueryDevtools = import.meta.env.PROD
 	? () => null
 	: lazy(() => import('@tanstack/react-query-devtools').then(res => ({ default: res.ReactQueryDevtools })))
 
-export const lightThemeClass = createTheme(theme, {
+const lightThemeClass = createTheme(theme, {
 	colors: schemes.light,
 })
 
-export const darkThemeClass = createTheme(theme, {
+const darkThemeClass = createTheme(theme, {
 	colors: schemes.dark,
 })
 
-export const navigationMenuHeight = createVar('navigation-menu-height')
-export const headerHeight = createVar('header-height')
+const navigationMenuHeight = createVar('navigation-menu-height')
+const headerHeight = createVar('header-height')
 
 export const Layout: FunctionComponent = () => {
 	useScreenNavigationAnimations()

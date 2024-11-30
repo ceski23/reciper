@@ -249,7 +249,7 @@ const parseInstructions = (value: SchemaValue<CreativeWork | ItemList | Text | I
 		.filter(isDefined) ?? []
 }
 
-export const parseRecipeItem = async (item: RecipeSchemaType): Promise<Partial<Recipe>> => {
+const parseRecipeItem = async (item: RecipeSchemaType): Promise<Partial<Recipe>> => {
 	const name = getFirstItem(parseStringValue(item.name))
 	const description = getFirstItem(parseStringValue(item.description))
 	const parsedImageField = parseImageValue(item.image)

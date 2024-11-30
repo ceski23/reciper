@@ -18,7 +18,7 @@ type IngredientWithQuantity = {
 	quantity: number
 }
 
-export type IngredientWithQuantityAndType = IngredientWithQuantity & {
+type IngredientWithQuantityAndType = IngredientWithQuantity & {
 	type: IngredientName
 }
 

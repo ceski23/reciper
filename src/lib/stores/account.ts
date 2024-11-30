@@ -4,7 +4,7 @@ import { storage } from 'stan-js/storage'
 import { type AccountProvider, type UserInfo } from 'features/auth/providers'
 import { GoogleProvider } from 'features/auth/providers/google/provider'
 
-export type AccountData = {
+type AccountData = {
 	provider: string | undefined
 	accessToken: string | undefined
 	refreshToken: string | undefined

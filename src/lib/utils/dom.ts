@@ -23,23 +23,8 @@ export const getTextFromNode = (startNode: Node) => {
 	return _getTextFromNode(startNode, '').trim()
 }
 
-export const computeStyle = <TStyle extends keyof CSSStyleDeclaration>(style: TStyle, value: CSSStyleDeclaration[TStyle]) => {
-	const tempElement = document.createElement('div')
-	tempElement.style[style] = value
-	document.documentElement.append(tempElement)
-
-	const computedValue = window.getComputedStyle(tempElement)[style]
-	tempElement.remove()
-
-	return computedValue
-}
-
 export const isElementNode = (node: Node | Element): node is Element => (
 	node.nodeType === Node.ELEMENT_NODE
-)
-
-export const isTextNode = (node: Node | Element): node is Text => (
-	node.nodeType === Node.TEXT_NODE
 )
 
 const getVarName = (variable: string) => variable.match(/var\((.*)\)/)?.[1] ?? ''

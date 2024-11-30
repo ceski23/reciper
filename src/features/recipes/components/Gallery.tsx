@@ -15,7 +15,7 @@ type GalleryProps = {
 	images: Array<string>
 }
 
-export const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
+const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
 	const galleryRef = useRef<PhotoSwipe>()
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false)
 
