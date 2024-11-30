@@ -15,7 +15,8 @@
 		"generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg",
 		"i18n:check": "i18n-check --locales ./locales --source en --format i18next",
 		"i18n:sync": "i18next-locales-sync --primaryLanguage en --secondaryLanguages pl --localesFolder ./locales --spaces 4 --useEmptyString",
-		"test:unit": "vitest"
+		"test:unit": "vitest",
+		"knip": "knip"
 	},
 	"dependencies": {
 		"@ariakit/react": "^0.4.13",
@@ -50,7 +51,6 @@
 		"merge-props": "^6.0.0",
 		"merge-refs": "^1.3.0",
 		"nanoid": "^5.0.8",
-		"optics-ts": "^2.4.1",
 		"photoswipe": "^5.4.4",
 		"radash": "^12.1.0",
 		"react": "^18.3.1",
@@ -79,12 +79,14 @@
 		"@types/react-dom": "^18.3.1",
 		"@vite-pwa/assets-generator": "^0.2.6",
 		"@vitejs/plugin-react": "^4.3.3",
+		"@vitest/expect": "^2.1.6",
 		"dpdm": "^3.14.0",
 		"dprint": "^0.47.5",
 		"eslint": "^8.57.1",
 		"happy-dom": "^15.8.0",
 		"husky": "^9.1.6",
 		"i18next-locales-sync": "^2.1.0",
+		"knip": "^5.38.3",
 		"lint-staged": "^15.2.10",
 		"patch-package": "^8.0.0",
 		"sonda": "^0.4.1",

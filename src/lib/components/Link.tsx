@@ -4,7 +4,7 @@ import * as Ariakit from '@ariakit/react'
 import { createLink, type LinkComponent } from '@tanstack/react-router'
 import { forwardRef } from 'react'
 
-export const LinkBase = forwardRef<HTMLDivElement, Ariakit.RoleProps>(({
+const LinkBase = forwardRef<HTMLDivElement, Ariakit.RoleProps>(({
 	render,
 	...props
 }, ref) => (

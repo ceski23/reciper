@@ -1,0 +1,8 @@
+{
+	"$schema": "https://unpkg.com/knip@5/schema.json",
+	"entry": [
+		"src/main.tsx",
+		"src/lib/colorExtractWorker.ts" // https://github.com/webpro-nl/knip/issues/237
+	],
+	"ignore": ["src/routeTree.gen.ts"]
+}

@@ -9,7 +9,7 @@ type RadioGroupItemProps = {
 	label: string
 }
 
-export const RadioGroupItem: FunctionComponent<RadioGroupItemProps & ComponentProps<typeof Item>> = ({
+const RadioGroupItem: FunctionComponent<RadioGroupItemProps & ComponentProps<typeof Item>> = ({
 	label,
 	...props
 }) => {

@@ -1,7 +1,7 @@
 import { createStore } from 'stan-js'
 import { storage } from 'stan-js/storage'
 
-export type UIState = {
+type UIState = {
 	header: HTMLElement | null
 	overlayContainer: HTMLElement | null
 	mainContent: HTMLElement | null
