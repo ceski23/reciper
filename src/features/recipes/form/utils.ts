@@ -1,4 +1,4 @@
-import { group, mapValues } from 'radash'
+import { group, mapValues } from 'radashi'
 import type { RecipeFormValues } from 'features/recipes/form/scheme'
 import type { Recipe } from 'features/recipes/types'
 

@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { group } from 'radash'
+import { group } from 'radashi'
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Recipe } from 'features/recipes/types'

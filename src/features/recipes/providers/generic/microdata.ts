@@ -3,7 +3,7 @@ import { getColorFromImage } from '@utils/images'
 import { parseValidNumber } from '@utils/numbers'
 import { decodeHTML5Strict } from 'entities'
 import { parse, toSeconds } from 'iso8601-duration'
-import { unique } from 'radash'
+import { unique } from 'radashi'
 import { type Recipe } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
 

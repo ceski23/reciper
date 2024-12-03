@@ -1,6 +1,6 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import { group } from 'radash'
+import { group } from 'radashi'
 import { type CSSProperties, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IngredientsSection } from 'features/recipes/components/IngredientsSection'

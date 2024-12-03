@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { sum } from 'radash'
+import { sum } from 'radashi'
 import { Fragment, type FunctionComponent, type SetStateAction, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as searchRecipeRoute } from 'routes/search'

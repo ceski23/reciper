@@ -1,7 +1,7 @@
 import { useResizeObserver } from '@hooks/useResizeObserver'
 import { styled } from '@macaron-css/react'
 import { useElementScrollRestoration } from '@tanstack/react-router'
-import { cluster } from 'radash'
+import { cluster } from 'radashi'
 import { type FunctionComponent, useCallback, useMemo, useState } from 'react'
 import { VList, type VListHandle } from 'virtua'
 import { RecipeCard } from 'features/home/components/RecipeCard'
