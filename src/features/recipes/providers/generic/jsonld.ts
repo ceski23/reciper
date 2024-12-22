@@ -157,7 +157,7 @@ const parseRatingValue = (value: SchemaValue<IdReference | AggregateRating> | un
 }
 
 const parseDurationValue = (value: SchemaValue<IdReference | Duration> | undefined): number | undefined => {
-	if (!isDefined(value)) return undefined
+	if (!isDefined(value) || value === '') return undefined
 
 	if (value instanceof Array) {
 		return undefined

@@ -162,17 +162,32 @@ describe('should scrape recipes using LD+JSON format', () => {
 	})
 
 	it('should detect recipe\'s preparation time', async () => {
-		const recipe = await scrapeRecipe(/* html */ `
-	        <script type="application/ld+json">
-			{
-				"@context": "https://schema.org/",
-				"@type": "Recipe",
-				"prepTime": "PT10M"
-			}
-	        </script>
-		`)
+		{
+			const recipe = await scrapeRecipe(/* html */ `
+				<script type="application/ld+json">
+				{
+					"@context": "https://schema.org/",
+					"@type": "Recipe",
+					"prepTime": "PT10M"
+				}
+				</script>
+			`)
 
-		expect(recipe?.prepTime).toBe(10)
+			expect(recipe?.prepTime).toBe(10)
+		}
+		{
+			const recipe = await scrapeRecipe(/* html */ `
+				<script type="application/ld+json">
+				{
+					"@context": "https://schema.org/",
+					"@type": "Recipe",
+					"prepTime": ""
+				}
+				</script>
+			`)
+
+			expect(recipe?.prepTime).toBe(undefined)
+		}
 	})
 
 	it('should detect recipe\'s servings', async () => {
