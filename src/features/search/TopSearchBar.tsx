@@ -1,11 +1,12 @@
+import { IconButton } from '@components/IconButton'
+import { typography } from '@components/Typography'
 import { styled } from '@macaron-css/react'
+import { mq } from '@styles/utils'
 import { getVariableColorValue } from '@utils/dom'
 import { forwardRef, useLayoutEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'lib/styles'
-import { IconButton } from './IconButton'
-import { typography } from './Typography'
 
 type TopSearchBarProps = {
 	query: string
@@ -69,6 +70,16 @@ const AppBarBase = styled('div', {
 		background: theme.colors.surfaceContainerHigh,
 		borderBottom: `1px solid ${theme.colors.outline}`,
 		viewTransitionName: 'searchbar',
+		'@media': {
+			[mq.atLeast('md')]: {
+				borderRadius: 28,
+				borderBottom: 'none',
+				marginTop: 16,
+				marginInline: 16,
+				width: 'calc(100% - 32px)',
+				paddingBlock: 4,
+			},
+		},
 	},
 })
 

@@ -1,6 +1,7 @@
 import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import { animated, useSpring } from '@react-spring/web'
+import { mq } from '@styles/utils'
 import { useDrag } from '@use-gesture/react'
 import { type FunctionComponent, type ReactNode, useCallback, useEffect, useState } from 'react'
 import { styleUtils, theme } from 'lib/styles'
@@ -15,6 +16,7 @@ type BottomSheetProps = {
 	gap?: number
 	children?: ReactNode
 	title: string
+	className?: string
 }
 
 export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
@@ -24,6 +26,7 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 	disableDrag,
 	gap = 32,
 	title,
+	className,
 }) => {
 	const handleHeight = 36
 	const [sheetHeight, setSheetHeight] = useState(0)
@@ -113,6 +116,7 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 		<Ariakit.Dialog
 			open={showBackdrop}
 			unmountOnHide
+			className={className}
 			backdrop={<DialogOverlay style={backdropStyles} />}
 			onClose={() => onStateChange('close')}
 			render={(
@@ -153,6 +157,12 @@ const Container = styled(animated.div, {
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
+		'@media': {
+			[mq.atLeast('md')]: {
+				left: '50%',
+				translate: '-50% 0',
+			},
+		},
 	},
 })
 

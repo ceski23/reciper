@@ -31,10 +31,10 @@ export const ListItemContainer = styled(Role.div, {
 				cursor: 'pointer',
 				outline: 'none',
 				':hover': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.08),
+					backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.08),
 				},
 				':focus-visible': {
-					backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
+					backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.12),
 				},
 			},
 			nonClickable: {},

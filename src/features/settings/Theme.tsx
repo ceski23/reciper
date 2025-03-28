@@ -1,4 +1,6 @@
+import { styled } from '@macaron-css/react'
 import { useReducedMotion } from '@react-spring/web'
+import { mq } from '@styles/utils'
 import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,7 +24,7 @@ export const Theme: FunctionComponent = () => {
 				title={t('paths.theme')}
 				onBackClick={() => navigate({ to: '/settings' })}
 			/>
-			<List.Root>
+			<StyledList>
 				<List.SimpleItem
 					leadingElement="brightness"
 					iconColor={theme.colors.primary}
@@ -51,7 +53,7 @@ export const Theme: FunctionComponent = () => {
 					}}
 					isDisabled={isReducedMotion}
 				/>
-			</List.Root>
+			</StyledList>
 			<ColorSchemeDialog
 				open={isColorSchemeDialogOpen}
 				onCancel={() => setIsColorSchemeDialogOpen(false)}
@@ -63,3 +65,16 @@ export const Theme: FunctionComponent = () => {
 		</Fragment>
 	)
 }
+
+const StyledList = styled(List.Root, {
+	base: {
+		'@media': {
+			[mq.atLeast('md')]: {
+				backgroundColor: theme.colors.surfaceContainerLow,
+				borderRadius: 12,
+				overflow: 'clip',
+				maxWidth: '800px',
+			},
+		},
+	},
+})

@@ -26,7 +26,7 @@ export const IngredientsFilter: FunctionComponent<IngredientsFilterProps> = ({ o
 									render={(
 										<FilterChip
 											text={ingredient.name}
-											icon={selectedIngredients.includes(name) ? 'check' : undefined}
+											leadingIcon={selectedIngredients.includes(name) ? 'check' : undefined}
 										/>
 									)}
 								/>

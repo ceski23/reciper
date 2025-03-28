@@ -1,8 +1,11 @@
-import { createTheme, createVar } from '@macaron-css/core'
+import { NavigationRail, type NavigationRailSegmentProps } from '@components/navigation/NavigationRail'
+import { useIsMobile } from '@hooks/useIsMobile'
+import { createTheme, createVar, fallbackVar } from '@macaron-css/core'
 import { setElementVars } from '@macaron-css/core/dynamic'
 import { styled } from '@macaron-css/react'
+import { mq } from '@styles/utils'
 import { Outlet, ScrollRestoration } from '@tanstack/react-router'
-import { type FunctionComponent, lazy, Suspense, useLayoutEffect } from 'react'
+import { type FunctionComponent, lazy, Suspense, useCallback, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NotificationsViewport } from 'features/notifications'
 import { NavigationBar } from 'lib/components/navigation/NavigationBar'
@@ -42,17 +45,29 @@ export const Layout: FunctionComponent = () => {
 	useAutoSyncRecipes()
 
 	const isDarkMode = useIsDarkMode()
+	const isMobile = useIsMobile()
 	const { t } = useTranslation()
-	const navbarRef = useResizeObserver<HTMLDivElement>(({ height }) => {
+	const navbarRef = useResizeObserver<HTMLDivElement>(size => {
 		setElementVars(document.documentElement, {
-			[navigationMenuHeight]: `${height ?? 0}px`,
+			[navigationMenuHeight]: `${size?.height ?? 0}px`,
 		})
 	})
-	const headerRef = useResizeObserver<HTMLElement>(({ height }) => {
+	const headerRef = useResizeObserver<HTMLElement>(size => {
 		setElementVars(document.documentElement, {
-			[headerHeight]: `${height ?? 0}px`,
+			[headerHeight]: `${size?.height ?? 0}px`,
 		})
 	})
+	const navigationDestinations: Array<NavigationRailSegmentProps> = [
+		{ icon: 'home', to: '/', label: t('paths.home') },
+		{ icon: 'search', to: '/search', label: t('paths.search') },
+		{ icon: 'recipes', to: '/recipes', label: t('paths.recipes') },
+		{ icon: 'settings', to: '/settings', label: t('paths.settings') },
+	]
+
+	const headerCallbackRef = useCallback((node: HTMLElement | null) => {
+		uiStore.actions.setHeader(node)
+		headerRef(node)
+	}, [headerRef])
 
 	useLayoutEffect(() => {
 		document.documentElement.classList.toggle(lightThemeClass, !isDarkMode)
@@ -61,28 +76,35 @@ export const Layout: FunctionComponent = () => {
 
 	return (
 		<LayoutBase>
-			<MainContent ref={uiStore.actions.setMainContent}>
-				<Outlet />
-			</MainContent>
+			{!isMobile && (
+				<NonMobileNavigation segmentsAlignment="middle">
+					{navigationDestinations.map(({ icon, to, badge, label }) => (
+						<NavigationRail.Segment
+							key={label}
+							icon={icon}
+							to={to}
+							badge={badge}
+							label={label}
+						/>
+					))}
+				</NonMobileNavigation>
+			)}
+			<NonMobileLayoutWrapper>
+				<MainContent ref={uiStore.actions.setMainContent}>
+					<Outlet />
+				</MainContent>
+				<Header ref={headerCallbackRef} />
+			</NonMobileLayoutWrapper>
 			<ContentOverlayContainer>
 				<NotificationsViewport notificationComponent={Snackbar} />
 				<div ref={uiStore.actions.setOverlayContainer} />
 			</ContentOverlayContainer>
-			<Header
-				ref={node => {
-					uiStore.actions.setHeader(node)
-					headerRef.current = node
-				}}
-			/>
-			<NavigationBar
-				ref={navbarRef}
-				segments={[
-					{ icon: 'home', to: '/', label: t('paths.home') },
-					{ icon: 'search', to: '/search', label: t('paths.search') },
-					{ icon: 'recipes', to: '/recipes', label: t('paths.recipes') },
-					{ icon: 'settings', to: '/settings', label: t('paths.settings') },
-				]}
-			/>
+			{isMobile && (
+				<NavigationBar
+					ref={navbarRef}
+					segments={navigationDestinations}
+				/>
+			)}
 			<AppUpdatePrompt />
 			<Suspense>
 				<TanStackRouterDevtools />
@@ -92,6 +114,26 @@ export const Layout: FunctionComponent = () => {
 		</LayoutBase>
 	)
 }
+
+const NonMobileNavigation = styled(NavigationRail.Root, {
+	base: {
+		height: '100%',
+	},
+})
+
+const NonMobileLayoutWrapper = styled('div', {
+	base: {
+		display: 'contents',
+		'@media': {
+			[mq.atLeast('md')]: {
+				display: 'flex',
+				flexDirection: 'column',
+				flex: 1,
+				height: '100%',
+			},
+		},
+	},
+})
 
 const LayoutBase = styled('div', {
 	base: {
@@ -103,6 +145,11 @@ const LayoutBase = styled('div', {
 		height: '100dvh',
 		width: '100vw',
 		backgroundColor: theme.colors.background,
+		'@media': {
+			[mq.atLeast('md')]: {
+				flexDirection: 'row',
+			},
+		},
 	},
 })
 
@@ -118,6 +165,13 @@ const MainContent = styled('main', {
 		paddingBottom: navigationMenuHeight,
 		scrollPaddingTop: `calc(${headerHeight} + 16px)`,
 		scrollPaddingBottom: `calc(${navigationMenuHeight} + 16px)`,
+		'@media': {
+			[mq.atLeast('md')]: {
+				paddingTop: 0,
+				paddingBottom: 0,
+				paddingInline: 16,
+			},
+		},
 	},
 })
 
@@ -128,6 +182,13 @@ const Header = styled('header', {
 		width: '100%',
 		position: 'fixed',
 		top: 0,
+		'@media': {
+			[mq.atLeast('md')]: {
+				position: 'relative',
+				order: -1,
+				marginBottom: -1,
+			},
+		},
 	},
 })
 
@@ -138,7 +199,7 @@ const ContentOverlayContainer = styled('div', {
 		display: 'flex',
 		flexDirection: 'column',
 		pointerEvents: 'none',
-		bottom: `max(${navigationMenuHeight}, env(keyboard-inset-height, 0))`,
+		bottom: `max(${fallbackVar(navigationMenuHeight, '0px')}, env(keyboard-inset-height, 0))`,
 		transition: 'bottom .2s',
 	},
 })

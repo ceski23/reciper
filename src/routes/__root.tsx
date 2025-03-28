@@ -1,7 +1,13 @@
-import { createRootRoute, Navigate } from '@tanstack/react-router'
+import { type QueryClient } from '@tanstack/react-query'
+import { createRootRouteWithContext, Navigate } from '@tanstack/react-router'
 import { Layout } from 'features/shell/Layout'
 
-export const Route = createRootRoute({
+type RouterContext = {
+	queryClient: QueryClient
+	title?: string
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
 	component: Layout,
 	notFoundComponent: () => (
 		<Navigate

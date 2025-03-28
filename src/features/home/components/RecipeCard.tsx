@@ -4,6 +4,7 @@ import { Link } from '@components/Link'
 import { useDynamicTheme } from '@hooks/useDynamicTheme'
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
+import { UnLazyImage } from '@unlazy/react'
 import type { CSSProperties, FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Recipe } from 'features/recipes/types'
@@ -58,7 +59,12 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 			>
 				{renderRipples}
 				{recipe.image
-					? <RecipeImage src={recipe.image} />
+					? (
+						<RecipeImage
+							src={recipe.image}
+							thumbhash={recipe.thumbhash}
+						/>
+					)
 					: (
 						<RecipeImageFallback>
 							<Icon
@@ -94,10 +100,11 @@ const Card = styled(Ariakit.Role, {
 		scrollSnapAlign: 'center',
 		textDecoration: 'unset',
 		position: 'relative',
+		transition: 'opacity .3s, filter .3s',
 	},
 })
 
-const RecipeImage = styled('img', {
+const RecipeImage = styled(UnLazyImage, {
 	base: {
 		width: '100%',
 		flex: 1,

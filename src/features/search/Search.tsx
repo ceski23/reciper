@@ -1,21 +1,20 @@
+import { useIsMobile } from '@hooks/useIsMobile'
 import { styled } from '@macaron-css/react'
+import { mq } from '@styles/utils'
 import { sum } from 'radashi'
 import { Fragment, type FunctionComponent, type SetStateAction, useDeferredValue, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as searchRecipeRoute } from 'routes/search'
 import * as v from 'valibot'
+import { Filters } from 'features/search/Filters'
 import { useRecipesSearch } from 'features/search/hooks/useRecipesSearch'
-import { IngredientsFilter } from 'features/search/IngredientsFilter'
-import { BottomSheet, type SheetState } from 'lib/components/BottomSheet'
-import { Button } from 'lib/components/Button'
+import { TopSearchBar } from 'features/search/TopSearchBar'
+import { type SheetState } from 'lib/components/BottomSheet'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { HeaderPortal } from 'lib/components/HeaderPortal'
-import { Icon } from 'lib/components/Icon'
 import { List } from 'lib/components/list'
 import { RecipeListItem } from 'lib/components/RecipeListItem'
-import { Slider } from 'lib/components/Slider'
-import { TopSearchBar } from 'lib/components/TopSearchBar'
 import { Typography } from 'lib/components/Typography'
 import { theme } from 'lib/styles'
 
@@ -33,8 +32,10 @@ export const Search: FunctionComponent = () => {
 	const deferredParams = useDeferredValue({ query, maxPreparationTime, ingredients })
 	const matches = useRecipesSearch(deferredParams)
 	const [filtersModalState, setFiltersModalState] = useState<SheetState>('close')
+	const [isListScrolled, setIsListScrolled] = useState(false)
 	const searchBarRef = useRef<HTMLInputElement>(null)
 	const navigate = searchRecipeRoute.useNavigate()
+	const isMobile = useIsMobile()
 	const filtersCount = sum([
 		maxPreparationTime !== undefined ? 1 : 0,
 		ingredients.length > 0 ? 1 : 0,
@@ -72,9 +73,10 @@ export const Search: FunctionComponent = () => {
 			<Container>
 				{matches.length > 0
 					? (
-						<List.Root
+						<RecipesList
 							virtual
 							scrollRestorationId="recipesSearchList"
+							onIsScrolledChange={setIsListScrolled}
 						>
 							{matches.map(match => (
 								<RecipeListItem
@@ -82,7 +84,7 @@ export const Search: FunctionComponent = () => {
 									recipe={match.entity}
 								/>
 							))}
-						</List.Root>
+						</RecipesList>
 					)
 					: (
 						<NoResultsContainer>
@@ -101,72 +103,15 @@ export const Search: FunctionComponent = () => {
 						variant="primary"
 						onClick={() => setFiltersModalState('open')}
 						badge={filtersCount > 0 ? String(filtersCount) : undefined}
+						size={isMobile ? (isListScrolled ? undefined : 'expanded') : 'expanded'}
 					/>
 				</FabContainer>
 			</ContentOverlayPortal>
-			<BottomSheet
-				title={t('search.filters.title')}
+			<Filters
 				state={filtersModalState}
 				onStateChange={setFiltersModalState}
-			>
-				<Filters>
-					<FilterSection>
-						<FilterSectionHeader>
-							<FilterIcon
-								name="cookie"
-								size={24}
-							/>
-							<Typography.TitleMedium>
-								{t('search.filters.requiredIngredients.title')}
-							</Typography.TitleMedium>
-						</FilterSectionHeader>
-						<IngredientsFilter
-							selectedIngredients={ingredients}
-							onSelectedIngredientsChange={ingredients => changeSearchParams(prev => ({ ...prev, ingredients }))}
-						/>
-					</FilterSection>
-					<FilterSection>
-						<FilterSectionHeader>
-							<FilterIcon
-								name="timer"
-								size={24}
-							/>
-							<Typography.TitleMedium>{t('search.filters.preparationTime.title')}</Typography.TitleMedium>
-						</FilterSectionHeader>
-						<TimeFilter onPointerDown={event => event.stopPropagation()}>
-							<Typography.LabelMedium>
-								{maxPreparationTime === undefined
-									? t('search.filters.preparationTime.noLimit')
-									: t('search.filters.preparationTime.upTo', { count: maxPreparationTime })}
-							</Typography.LabelMedium>
-							<Slider
-								label={t('search.filters.preparationTime.title')}
-								min={0}
-								max={120}
-								step={5}
-								value={maxPreparationTime ?? 0}
-								onValueCommit={time => {
-									if (time === maxPreparationTime) return
-
-									changeSearchParams(prev => ({
-										...prev,
-										maxPreparationTime: time === 0 ? undefined : time,
-									}))
-								}}
-							/>
-						</TimeFilter>
-					</FilterSection>
-					{filtersCount > 0 && (
-						<ClearFiltersButton
-							variant="outlined"
-							leftIcon="close"
-							onClick={() => changeSearchParams(({ query }) => ({ query }))}
-						>
-							{t('search.filters.clear')}
-						</ClearFiltersButton>
-					)}
-				</Filters>
-			</BottomSheet>
+				filtersCount={filtersCount}
+			/>
 		</Fragment>
 	)
 }
@@ -175,6 +120,11 @@ const Container = styled('div', {
 	base: {
 		flex: 1,
 		display: 'flex',
+		'@media': {
+			[mq.atLeast('md')]: {
+				paddingBlock: 16,
+			},
+		},
 	},
 })
 
@@ -198,50 +148,16 @@ const NoResultsContainer = styled('div', {
 	},
 })
 
-const Filters = styled('div', {
+const RecipesList = styled(List.Root, {
 	base: {
-		display: 'flex',
-		flexDirection: 'column',
-		marginTop: 32,
-		gap: 32,
-	},
-})
-
-const FilterSection = styled('div', {
-	base: {
-		display: 'flex',
-		flexDirection: 'column',
-		gap: 24,
-	},
-})
-
-const FilterSectionHeader = styled('div', {
-	base: {
-		display: 'flex',
-		flexDirection: 'row',
-		gap: 10,
-		alignItems: 'center',
-		color: theme.colors.onSurface,
-	},
-})
-
-const FilterIcon = styled(Icon, {
-	base: {
-		color: theme.colors.primary,
-	},
-})
-
-const TimeFilter = styled('div', {
-	base: {
-		display: 'grid',
-		gridTemplateColumns: '120px 1fr',
-		gap: 16,
-		color: theme.colors.onSurfaceVariant,
-	},
-})
-
-const ClearFiltersButton = styled(Button, {
-	base: {
-		marginTop: 16,
+		flex: 'unset',
+		'@media': {
+			[mq.atLeast('md')]: {
+				backgroundColor: theme.colors.surfaceContainerLow,
+				borderRadius: 12,
+				overflow: 'hidden',
+				maxWidth: '800px',
+			},
+		},
 	},
 })

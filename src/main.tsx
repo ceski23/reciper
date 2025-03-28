@@ -23,7 +23,13 @@ const queryClient = new QueryClient()
 
 const router = createRouter({
 	routeTree,
-	defaultViewTransition: true,
+	// TODO: Enable after fixing transitions in recipes view
+	// defaultViewTransition: true,
+	defaultPendingMs: 500,
+	context: {
+		queryClient,
+		title: undefined,
+	},
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

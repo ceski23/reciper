@@ -1,5 +1,7 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
+import { mq } from '@styles/utils'
+import { useMediaQuery } from '@uidotdev/usehooks'
 import { group } from 'radashi'
 import { type CSSProperties, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,6 +23,7 @@ type RecipeContentProps = {
 
 export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, style }) => {
 	const { t } = useTranslation()
+	const shouldShowTwoColumns = useMediaQuery(mq.atLeast('lg'))
 
 	const prepTime: InsightItem | undefined = recipe.prepTime
 		? {
@@ -49,59 +52,68 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 
 	return (
 		<ContentContainer style={style}>
-			{recipe.image && <RecipeCover image={recipe.image} />}
-			<RecipeInsights items={[prepTime, calories, rating, servings].filter(isDefined)} />
-			{recipe.description && (
-				<Description>
-					{recipe.description}
-				</Description>
-			)}
-			{recipe.tags.length > 0 && (
-				<Section>
-					<Typography.TitleLarge>
-						{t('recipes.tags')}
-					</Typography.TitleLarge>
-					<CompositeProvider>
-						<TagsContainer>
-							{recipe.tags.map(tag => (
-								<CompositeItem
-									key={tag}
-									render={(
-										<Tag
-											text={tag}
-											variant="outlined"
-											to="/search"
-											search={{ query: tag }}
-										/>
-									)}
-								/>
-							))}
-						</TagsContainer>
-					</CompositeProvider>
-				</Section>
-			)}
-			<IngredientsSection ingredients={recipe.ingredients} />
-			{Object
-				.entries(group(recipe.instructions, item => item.group ?? ''))
-				.map(([name, steps]) =>
-					steps
-						? (
-							<StepsSection
-								key={name}
-								name={name}
-								steps={recipe.instructions}
-							/>
-						)
-						: null
+			<ContentColumn>
+				{recipe.image && <RecipeCover image={recipe.image} />}
+				<RecipeInsights items={[prepTime, calories, rating, servings].filter(isDefined)} />
+				{recipe.description && (
+					<Description>
+						{recipe.description}
+					</Description>
 				)}
-			{recipe.gallery.length > 0 && (
-				<Section>
-					<Typography.TitleLarge>
-						{t('recipes.gallery')}
-					</Typography.TitleLarge>
-					<Gallery images={recipe.gallery} />
-				</Section>
-			)}
+				{recipe.tags.length > 0 && (
+					<Section>
+						<Typography.TitleLarge>
+							{t('recipes.tags')}
+						</Typography.TitleLarge>
+						<CompositeProvider>
+							<TagsContainer>
+								{recipe.tags.map(tag => (
+									<CompositeItem
+										key={tag}
+										render={(
+											<Tag
+												text={tag}
+												variant="outlined"
+												to="/search"
+												search={{ query: tag }}
+											/>
+										)}
+									/>
+								))}
+							</TagsContainer>
+						</CompositeProvider>
+					</Section>
+				)}
+				{!shouldShowTwoColumns ? <IngredientsSection ingredients={recipe.ingredients} /> : null}
+				{Object
+					.entries(group(recipe.instructions, item => item.group ?? ''))
+					.map(([name, steps]) =>
+						steps
+							? (
+								<StepsSection
+									key={name}
+									name={name}
+									steps={recipe.instructions}
+								/>
+							)
+							: null
+					)}
+				{recipe.gallery.length > 0 && (
+					<Section>
+						<Typography.TitleLarge>
+							{t('recipes.gallery')}
+						</Typography.TitleLarge>
+						<Gallery images={recipe.gallery} />
+					</Section>
+				)}
+			</ContentColumn>
+			{shouldShowTwoColumns
+				? (
+					<RightColumn>
+						<IngredientsSection ingredients={recipe.ingredients} />
+					</RightColumn>
+				)
+				: null}
 		</ContentContainer>
 	)
 }
@@ -109,10 +121,38 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 const ContentContainer = styled('div', {
 	base: {
 		display: 'flex',
-		flexDirection: 'column',
+		flexDirection: 'row',
 		paddingInline: 16,
 		paddingBottom: 32,
 		gap: 32,
+		'@media': {
+			[mq.atLeast('md')]: {
+				paddingInline: 0,
+			},
+			[mq.atLeast('lg')]: {
+				overflow: 'auto',
+			},
+			[mq.atLeast('xl')]: {
+				paddingInline: 0,
+			},
+		},
+	},
+})
+
+const ContentColumn = styled('div', {
+	base: {
+		display: 'flex',
+		flexDirection: 'column',
+		gap: 32,
+		flex: 1,
+	},
+})
+
+const RightColumn = styled(ContentColumn, {
+	base: {
+		position: 'sticky',
+		top: 0,
+		overflow: 'auto',
 	},
 })
 

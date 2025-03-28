@@ -6,7 +6,8 @@ import { valibotResolver } from '@hookform/resolvers/valibot'
 import { styled } from '@macaron-css/react'
 import { type MaskitoOptions, type MaskitoPostprocessor } from '@maskito/core'
 import { maskitoPrefixPostprocessorGenerator } from '@maskito/kit'
-import { getColorFromImage } from '@utils/images'
+import { mq } from '@styles/utils'
+import { generateThumbhash, getColorFromImage } from '@utils/images'
 import { Fragment, type FunctionComponent, Suspense, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -100,248 +101,270 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 		}
 	}
 
+	const handleCoverFieldBlur = async () => {
+		const isValid = await trigger('image')
+		const imageUrl = getValues('image')
+
+		setPreviewUrl(isValid ? imageUrl : null)
+
+		if (!isValid || !imageUrl) return
+
+		setValue('thumbhash', await generateThumbhash(imageUrl))
+	}
+
 	return (
 		<Form
 			noValidate
 			onSubmit={handleSubmit(onSubmit)}
 			id={id}
 		>
-			<FormSection>
-				<TextField
-					label={t('newRecipe.fields.name')}
-					name="name"
-					required
-					control={control}
-				/>
-				<TextField
-					label={t('newRecipe.fields.cover')}
-					name="image"
-					control={control}
-					leadingIcon={previewUrl && errors.image === undefined
-						? (
-							<Suspense fallback={<FallbackIcon name="image" />}>
-								<ImagePreview image={previewUrl} />
-							</Suspense>
-						)
-						: 'image'}
-					inputProps={{
-						onBlur: () => trigger('image').then(isValid => setPreviewUrl(isValid ? getValues('image') : null)),
-					}}
-					onValueChange={value => value === '' && setPreviewUrl(null)}
-				/>
-				<TextField
-					label={t('newRecipe.fields.color.label')}
-					name="color"
-					control={control}
-					mask={hexColorMask}
-					leadingIcon={<ColorPicker control={control} />}
-					trailingAddon={previewUrl
-						? (
-							<IconButton
-								title={t('newRecipe.fields.color.extract')}
-								icon="colorize"
-								onClick={handleColorExtraction}
-							/>
-						)
-						: undefined}
-				/>
-				<TextAreaField
-					label={t('newRecipe.fields.description')}
-					name="description"
-					control={control}
-					textAreaProps={{ rows: 4 }}
-				/>
-				<TextField
-					label={t('newRecipe.fields.url')}
-					leadingIcon="link"
-					name="url"
-					control={control}
-				/>
-				<NumberField
-					label={t('newRecipe.fields.rating.label')}
-					leadingIcon="star"
-					name="rating"
-					control={control}
-					min={0}
-					max={5}
-				/>
-				<NumberField
-					label={t('newRecipe.fields.prepTime.label')}
-					trailingAddon={t('newRecipe.fields.prepTime.unit', { count: watch('prepTime') ?? 0 })}
-					name="prepTime"
-					control={control}
-					min={0}
-				/>
-				<Horizontal>
+			<Column>
+				<FormSection>
+					<Typography.TitleMedium>
+						{t('newRecipe.fields.basicInfo')}
+					</Typography.TitleMedium>
+					<TextField
+						label={t('newRecipe.fields.name')}
+						name="name"
+						required
+						control={control}
+					/>
+					<TextField
+						label={t('newRecipe.fields.cover')}
+						name="image"
+						control={control}
+						leadingIcon={previewUrl && errors.image === undefined
+							? (
+								<Suspense fallback={<FallbackIcon name="image" />}>
+									<ImagePreview image={previewUrl} />
+								</Suspense>
+							)
+							: 'image'}
+						inputProps={{ onBlur: handleCoverFieldBlur }}
+						onValueChange={value => value === '' && setPreviewUrl(null)}
+					/>
+					<TextField
+						label={t('newRecipe.fields.color.label')}
+						name="color"
+						control={control}
+						mask={hexColorMask}
+						leadingIcon={<ColorPicker control={control} />}
+						trailingAddon={previewUrl
+							? (
+								<IconButton
+									title={t('newRecipe.fields.color.extract')}
+									icon="colorize"
+									onClick={handleColorExtraction}
+								/>
+							)
+							: undefined}
+					/>
+					<TextAreaField
+						label={t('newRecipe.fields.description')}
+						name="description"
+						control={control}
+						textAreaProps={{ rows: 4 }}
+					/>
+					<TextField
+						label={t('newRecipe.fields.url')}
+						leadingIcon="link"
+						name="url"
+						control={control}
+					/>
 					<NumberField
-						label={t('newRecipe.fields.servings')}
-						name="servings"
+						label={t('newRecipe.fields.rating.label')}
+						leadingIcon="star"
+						name="rating"
+						control={control}
+						min={0}
+						max={5}
+					/>
+					<NumberField
+						label={t('newRecipe.fields.prepTime.label')}
+						trailingAddon={t('newRecipe.fields.prepTime.unit', { count: watch('prepTime') ?? 0 })}
+						name="prepTime"
 						control={control}
 						min={0}
 					/>
-					<NumberField
-						label={t('newRecipe.fields.calories')}
-						trailingAddon="kcal"
-						name="calories"
-						control={control}
-						min={0}
-						precision={0}
+					<Horizontal>
+						<NumberField
+							label={t('newRecipe.fields.servings')}
+							name="servings"
+							control={control}
+							min={0}
+						/>
+						<NumberField
+							label={t('newRecipe.fields.calories')}
+							trailingAddon="kcal"
+							name="calories"
+							control={control}
+							min={0}
+							precision={0}
+						/>
+					</Horizontal>
+				</FormSection>
+				<FormSection>
+					<div>
+						<Typography.TitleMedium>
+							{t('newRecipe.fields.tags.title')}
+						</Typography.TitleMedium>
+						{errors.tags?.message && (
+							<ErrorText>
+								{errors.tags.message}
+							</ErrorText>
+						)}
+					</div>
+					{tagsFields.fields.length > 0 && (
+						<CompositeProvider>
+							<TagsContainer>
+								{tagsFields.fields.map((field, index) => (
+									<CompositeItem
+										key={field.id}
+										render={(
+											<Tag
+												text={field.text}
+												variant="outlined"
+												onClose={() => tagsFields.remove(index)}
+											/>
+										)}
+									/>
+								))}
+							</TagsContainer>
+						</CompositeProvider>
+					)}
+					<AddButton
+						leftIcon="plus"
+						type="button"
+						onClick={() => setIsAddTagDialogOpen(true)}
+					>
+						{t('newRecipe.fields.tags.addTag')}
+					</AddButton>
+					<AddTagDialog
+						open={isAddTagDialogOpen}
+						onClose={() => setIsAddTagDialogOpen(false)}
+						onAddTag={text => {
+							tagsFields.append({ text })
+							setIsAddTagDialogOpen(false)
+						}}
 					/>
-				</Horizontal>
-			</FormSection>
-			<FormSection>
-				<div>
-					<Typography.TitleMedium>
-						{t('newRecipe.fields.tags.title')}
-					</Typography.TitleMedium>
-					{errors.tags?.message && (
-						<ErrorText>
-							{errors.tags.message}
-						</ErrorText>
-					)}
-				</div>
-				{tagsFields.fields.length > 0 && (
-					<CompositeProvider>
-						<TagsContainer>
-							{tagsFields.fields.map((field, index) => (
-								<CompositeItem
-									key={field.id}
-									render={(
-										<Tag
-											text={field.text}
-											variant="outlined"
-											onClose={() => tagsFields.remove(index)}
-										/>
-									)}
-								/>
-							))}
-						</TagsContainer>
-					</CompositeProvider>
-				)}
-				<AddButton
-					leftIcon="plus"
-					type="button"
-					onClick={() => setIsAddTagDialogOpen(true)}
-				>
-					{t('newRecipe.fields.tags.addTag')}
-				</AddButton>
-				<AddTagDialog
-					open={isAddTagDialogOpen}
-					onClose={() => setIsAddTagDialogOpen(false)}
-					onAddTag={text => {
-						tagsFields.append({ text })
-						setIsAddTagDialogOpen(false)
-					}}
-				/>
-			</FormSection>
-			<FormSection>
-				<div>
-					<Typography.TitleMedium>
-						{t('newRecipe.fields.ingredients.title')}
-					</Typography.TitleMedium>
-					{errors.ingredients?.message && (
-						<ErrorText>
-							{errors.ingredients.message}
-						</ErrorText>
-					)}
-				</div>
-				{ingredientsFields.fields.map((field, index) => (
-					<Fragment key={field.id}>
-						<TextField
-							label={t('newRecipe.fields.ingredients.group.group', { index: index + 1 })}
-							name={`ingredients.${index}.group`}
-							control={control}
-							trailingAddon={(
-								<DeleteButton
-									icon="delete"
-									title={t('newRecipe.fields.ingredients.group.delete')}
-									onClick={() => ingredientsFields.remove(index)}
-								/>
-							)}
-						/>
-						<GroupContainer>
-							<VerticalLine />
-							<IngredientsFields
-								groupIndex={index}
+				</FormSection>
+			</Column>
+			<Column>
+				<FormSection>
+					<div>
+						<Typography.TitleMedium>
+							{t('newRecipe.fields.ingredients.title')}
+						</Typography.TitleMedium>
+						{errors.ingredients?.message && (
+							<ErrorText>
+								{errors.ingredients.message}
+							</ErrorText>
+						)}
+					</div>
+					{ingredientsFields.fields.map((field, index) => (
+						<Fragment key={field.id}>
+							<TextField
+								label={t('newRecipe.fields.ingredients.group.group', { index: index + 1 })}
+								name={`ingredients.${index}.group`}
 								control={control}
+								trailingAddon={(
+									<DeleteButton
+										icon="delete"
+										title={t('newRecipe.fields.ingredients.group.delete')}
+										onClick={() => ingredientsFields.remove(index)}
+									/>
+								)}
 							/>
-						</GroupContainer>
-					</Fragment>
-				))}
-				<AddButton
-					type="button"
-					leftIcon="plus"
-					onClick={() =>
-						ingredientsFields.append({
-							group: null,
-							items: [
-								{ text: '' },
-							],
-						})}
-				>
-					{t('newRecipe.fields.ingredients.group.add')}
-				</AddButton>
-			</FormSection>
-			<FormSection>
-				<div>
-					<Typography.TitleMedium>
-						{t('newRecipe.fields.steps.title')}
-					</Typography.TitleMedium>
-					{errors.instructions?.message && (
-						<ErrorText>
-							{errors.instructions.message}
-						</ErrorText>
-					)}
-				</div>
-				{instructionsFields.fields.map((field, index) => (
-					<Fragment key={field.id}>
-						<TextField
-							label={t('newRecipe.fields.steps.group.group', { index: index + 1 })}
-							name={`instructions.${index}.group`}
-							control={control}
-							trailingAddon={(
-								<DeleteButton
-									icon="delete"
-									title={t('newRecipe.fields.steps.group.delete')}
-									onClick={() => instructionsFields.remove(index)}
+							<GroupContainer>
+								<VerticalLine />
+								<IngredientsFields
+									groupIndex={index}
+									control={control}
 								/>
-							)}
-						/>
-						<GroupContainer>
-							<VerticalLine />
-							<InstructionsFields
-								groupIndex={index}
+							</GroupContainer>
+						</Fragment>
+					))}
+					<AddButton
+						type="button"
+						leftIcon="plus"
+						onClick={() =>
+							ingredientsFields.append({
+								group: null,
+								items: [
+									{ text: '' },
+								],
+							})}
+					>
+						{t('newRecipe.fields.ingredients.group.add')}
+					</AddButton>
+				</FormSection>
+				<FormSection>
+					<div>
+						<Typography.TitleMedium>
+							{t('newRecipe.fields.steps.title')}
+						</Typography.TitleMedium>
+						{errors.instructions?.message && (
+							<ErrorText>
+								{errors.instructions.message}
+							</ErrorText>
+						)}
+					</div>
+					{instructionsFields.fields.map((field, index) => (
+						<Fragment key={field.id}>
+							<TextField
+								label={t('newRecipe.fields.steps.group.group', { index: index + 1 })}
+								name={`instructions.${index}.group`}
 								control={control}
+								trailingAddon={(
+									<DeleteButton
+										icon="delete"
+										title={t('newRecipe.fields.steps.group.delete')}
+										onClick={() => instructionsFields.remove(index)}
+									/>
+								)}
 							/>
-						</GroupContainer>
-					</Fragment>
-				))}
-				<AddButton
-					type="button"
-					leftIcon="plus"
-					onClick={() =>
-						instructionsFields.append({
-							group: null,
-							items: [
-								{ text: '' },
-							],
-						})}
-				>
-					{t('newRecipe.fields.steps.group.add')}
-				</AddButton>
-			</FormSection>
+							<GroupContainer>
+								<VerticalLine />
+								<InstructionsFields
+									groupIndex={index}
+									control={control}
+								/>
+							</GroupContainer>
+						</Fragment>
+					))}
+					<AddButton
+						type="button"
+						leftIcon="plus"
+						onClick={() =>
+							instructionsFields.append({
+								group: null,
+								items: [
+									{ text: '' },
+								],
+							})}
+					>
+						{t('newRecipe.fields.steps.group.add')}
+					</AddButton>
+				</FormSection>
+			</Column>
 		</Form>
 	)
 }
 
 const Form = styled('form', {
 	base: {
-		display: 'flex',
-		flexDirection: 'column',
+		display: 'grid',
+		gridTemplateColumns: '1fr',
 		paddingBlock: 24,
 		paddingInline: 16,
 		paddingBottom: 96,
 		gap: 32,
+		'@media': {
+			[mq.atLeast('md')]: {
+				paddingInline: 0,
+				gridTemplateColumns: '1fr 1fr',
+			},
+		},
 	},
 })
 
@@ -354,6 +377,14 @@ const Horizontal = styled('div', {
 })
 
 const FormSection = styled('div', {
+	base: {
+		display: 'flex',
+		flexDirection: 'column',
+		gap: 24,
+	},
+})
+
+const Column = styled('div', {
 	base: {
 		display: 'flex',
 		flexDirection: 'column',

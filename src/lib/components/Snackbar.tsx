@@ -1,6 +1,7 @@
 import { ProgressIndicator } from '@components/ProgressIndicator'
 import { styled } from '@macaron-css/react'
 import { animated, to, useSpring } from '@react-spring/web'
+import { mq } from '@styles/utils'
 import { useDrag } from '@use-gesture/react'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -95,6 +96,12 @@ const SnackbarBase = styled(animated.output, {
 		paddingBlock: 4,
 		pointerEvents: 'auto',
 		touchAction: 'none',
+		'@media': {
+			[mq.atLeast('md')]: {
+				width: 'fit-content',
+				minWidth: 300,
+			},
+		},
 	},
 	variants: {
 		variant: {

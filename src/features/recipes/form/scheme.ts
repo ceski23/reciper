@@ -103,6 +103,9 @@ export const recipeFormSchema = () =>
 		color: v.nullable(
 			v.pipe(v.string(i18next.t('newRecipe.form.color.invalid')), v.hexColor(i18next.t('newRecipe.form.color.invalid'))),
 		),
+		thumbhash: v.nullable(
+			v.pipe(v.string(), v.minLength(1)),
+		),
 	})
 
 export type RecipeFormValues = v.InferOutput<ReturnType<typeof recipeFormSchema>>

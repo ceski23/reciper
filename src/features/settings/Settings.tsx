@@ -1,4 +1,6 @@
 import { Link } from '@components/Link'
+import { styled } from '@macaron-css/react'
+import { mq } from '@styles/utils'
 import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +23,7 @@ export const Settings: FunctionComponent = () => {
 				title={t('paths.settings')}
 				onBackClick={() => navigate({ to: '/settings' })}
 			/>
-			<List.Root>
+			<StyledList>
 				<List.SimpleItem
 					leadingElement="palette"
 					iconColor={theme.colors.primary}
@@ -54,12 +56,12 @@ export const Settings: FunctionComponent = () => {
 					text={t('settings.language.text')}
 					onClick={() => setIsLanguageDialogOpen(true)}
 				/>
-				<List.SimpleItem
-					leadingElement="info"
-					iconColor={theme.colors.primary}
-					text={t('settings.about.version', { version: `${__APP_VERSION__}-${__COMMIT_HASH__}` })}
-				/>
-			</List.Root>
+			</StyledList>
+			<List.SimpleItem
+				leadingElement="info"
+				iconColor={theme.colors.primary}
+				text={t('settings.about.version', { version: `${__APP_VERSION__}-${__COMMIT_HASH__}` })}
+			/>
 			<LanguageDialog
 				open={isLanguageDialogOpen}
 				onCancel={() => setIsLanguageDialogOpen(false)}
@@ -71,3 +73,16 @@ export const Settings: FunctionComponent = () => {
 		</Fragment>
 	)
 }
+
+const StyledList = styled(List.Root, {
+	base: {
+		'@media': {
+			[mq.atLeast('md')]: {
+				backgroundColor: theme.colors.surfaceContainerLow,
+				borderRadius: 12,
+				overflow: 'clip',
+				maxWidth: '800px',
+			},
+		},
+	},
+})

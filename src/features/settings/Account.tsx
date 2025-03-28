@@ -1,4 +1,5 @@
 import { styled } from '@macaron-css/react'
+import { mq } from '@styles/utils'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { type ChangeEventHandler, Fragment, type FunctionComponent } from 'react'
@@ -76,7 +77,7 @@ export const Account: FunctionComponent = () => {
 				title={t('paths.account')}
 				onBackClick={() => navigate({ to: '/settings' })}
 			/>
-			<List.Root>
+			<StyledList>
 				{userInfo === undefined
 					? (
 						<List.SimpleItem
@@ -118,7 +119,7 @@ export const Account: FunctionComponent = () => {
 						onCheckedChange: sync => setAccount(prev => ({ ...prev, sync })),
 					}}
 				/>
-			</List.Root>
+			</StyledList>
 			<QuickActionsSection>
 				<Typography.TitleMedium>
 					{t('settings.account.quickActions.title')}
@@ -167,6 +168,12 @@ const QuickActionsSection = styled('div', {
 		gap: 16,
 		paddingInline: 20,
 		paddingBlock: 20,
+		'@media': {
+			[mq.atLeast('md')]: {
+				paddingInline: 0,
+				maxWidth: '800px',
+			},
+		},
 	},
 })
 
@@ -184,5 +191,18 @@ const HiddenFileInput = styled('input', {
 		inset: 0,
 		opacity: 0,
 		cursor: 'pointer',
+	},
+})
+
+const StyledList = styled(List.Root, {
+	base: {
+		'@media': {
+			[mq.atLeast('md')]: {
+				backgroundColor: theme.colors.surfaceContainerLow,
+				borderRadius: 12,
+				overflow: 'clip',
+				maxWidth: '800px',
+			},
+		},
 	},
 })

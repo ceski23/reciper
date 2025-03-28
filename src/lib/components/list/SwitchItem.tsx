@@ -29,8 +29,7 @@ export const SwitchItem: FunctionComponent<
 
 	return (
 		<SwitchItemContainer
-			variant="clickable"
-			isDisabled={isDisabled}
+			variant={isDisabled ? 'disabled' : 'clickable'}
 			aria-label={title}
 			{...mergeProps(props, eventHandlers)}
 			render={<Container />}
@@ -61,13 +60,6 @@ const SwitchItemContainer = styled(ListItemContainer, {
 		selectors: {
 			'&:focus-within:has(> :focus-visible)': {
 				backgroundColor: styleUtils.blendWithColor(theme.colors.surface, theme.colors.onSurface, 0.12),
-			},
-		},
-	},
-	variants: {
-		isDisabled: {
-			true: {
-				opacity: 0.3,
 			},
 		},
 	},

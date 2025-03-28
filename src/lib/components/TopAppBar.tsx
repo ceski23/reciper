@@ -2,8 +2,20 @@ import { useIsContainerScrolled } from '@hooks/useIsContainerScrolled'
 import { styled } from '@macaron-css/react'
 import { animated } from '@react-spring/web'
 import { uiStore } from '@stores/ui'
+import { mq } from '@styles/utils'
 import { interpolate, modeRgb, serializeRgb, useMode } from 'culori/fn'
-import { type ComponentProps, Fragment, type FunctionComponent, type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import {
+	type ComponentProps,
+	Fragment,
+	type FunctionComponent,
+	type PropsWithChildren,
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react'
+import { createPortal } from 'react-dom'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'lib/styles'
@@ -87,6 +99,12 @@ const setColorsSeries = (colors: Array<string>, delay: number, callback: (color:
 	}, delay)
 }
 
+export const TopAppBarOptions: FunctionComponent<PropsWithChildren> = ({ children }) => {
+	const element = document.getElementById('app-bar-options')
+
+	return element ? createPortal(children, element) : null
+}
+
 export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	title,
 	configuration,
@@ -134,7 +152,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 							)}
 						/>
 					)}
-					<OptionsContainer>
+					<OptionsContainer id="app-bar-options">
 						{options}
 					</OptionsContainer>
 				</AppBarBase>
@@ -145,7 +163,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 					: undefined}
 			</HeaderPortal>
 			{configuration === 'large' && (
-				<ExtraContent>
+				<ExtraContent elevation={elevation ?? 'flat'}>
 					{title === undefined || scrollContainer === null ? <TitleSkeleton /> : (
 						<PageTitleLarge
 							render={(
@@ -212,7 +230,16 @@ const ExtraContent = styled('div', {
 		flexDirection: 'column',
 		paddingTop: 36,
 		paddingBottom: 28,
-		backgroundColor: theme.colors.surface,
+	},
+	variants: {
+		elevation: {
+			flat: {
+				backgroundColor: theme.colors.surface,
+			},
+			onScroll: {
+				backgroundColor: theme.colors.surfaceContainer,
+			},
+		},
 	},
 })
 
@@ -220,6 +247,11 @@ const PageTitleLarge = styled(animated(Typography.HeadlineMedium), {
 	base: {
 		color: theme.colors.onSurface,
 		paddingInline: 16,
+		'@media': {
+			[mq.atLeast('md')]: {
+				paddingInline: 0,
+			},
+		},
 	},
 })
 
@@ -228,5 +260,10 @@ const TitleSkeleton = styled(Skeleton, {
 		marginInline: 16,
 		minHeight: 36,
 		width: '50%',
+		'@media': {
+			[mq.atLeast('md')]: {
+				marginInline: 0,
+			},
+		},
 	},
 })

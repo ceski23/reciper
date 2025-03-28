@@ -1,4 +1,5 @@
 import { styled } from '@macaron-css/react'
+import { mq } from '@styles/utils'
 import type { FunctionComponent } from 'react'
 import { Skeleton } from 'lib/components/Skeleton'
 
@@ -25,5 +26,10 @@ const ContentContainer = styled('div', {
 		flexDirection: 'column',
 		paddingInline: 16,
 		gap: 32,
+		'@media': {
+			[mq.atLeast('md')]: {
+				paddingInline: 0,
+			},
+		},
 	},
 })

@@ -39,6 +39,7 @@
 		"@tanstack/react-router": "^1.85.0",
 		"@types/core-js": "^2.5.8",
 		"@uidotdev/usehooks": "^2.4.1",
+		"@unlazy/react": "^0.12.1",
 		"@use-gesture/react": "^10.3.1",
 		"core-js": "^3.39.0",
 		"culori": "^4.0.1",
@@ -62,6 +63,7 @@
 		"react-photoswipe-gallery": "^3.0.2",
 		"schema-dts": "^1.1.2",
 		"stan-js": "^1.6.0",
+		"thumbhash": "^0.1.1",
 		"ts-pattern": "^5.5.0",
 		"valibot": "^0.42.1",
 		"virtua": "^0.38.1"

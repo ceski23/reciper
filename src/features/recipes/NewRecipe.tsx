@@ -1,3 +1,4 @@
+import { useIsMobile } from '@hooks/useIsMobile'
 import { styled } from '@macaron-css/react'
 import { useNavigate } from '@tanstack/react-router'
 import { nanoid } from 'nanoid'
@@ -23,6 +24,7 @@ export const NewRecipe: FunctionComponent = () => {
 	const formId = useId()
 	const addRecipe = useAddRecipe()
 	const navigate = useNavigate()
+	const isMobile = useIsMobile()
 
 	const onSubmit = (values: RecipeFormValues) => {
 		try {
@@ -52,9 +54,10 @@ export const NewRecipe: FunctionComponent = () => {
 		<Fragment>
 			{renderProbe}
 			<TopAppBar
-				configuration="small"
+				configuration={isMobile ? 'small' : 'large'}
 				title={t('newRecipe.title')}
 				onBackClick={() => history.length > 1 ? history.back() : window.close()}
+				elevation={isMobile ? (isContentScrolled ? 'onScroll' : 'flat') : 'flat'}
 			/>
 			<RecipeForm
 				id={formId}
@@ -67,7 +70,7 @@ export const NewRecipe: FunctionComponent = () => {
 						label={t('newRecipe.fields.save')}
 						type="submit"
 						variant="primary"
-						size={isContentScrolled ? undefined : 'expanded'}
+						size={isMobile ? (isContentScrolled ? undefined : 'expanded') : 'expanded'}
 						form={formId}
 					/>
 				</FabContainer>

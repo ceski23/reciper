@@ -16,9 +16,15 @@ type NavigationRailRootProps = {
 	onMenuClick?: () => void
 }
 
-const NavigationRailRoot: FunctionComponent<NavigationRailRootProps> = ({ children, onMenuClick, fab, segmentsAlignment = 'top' }) => {
+const NavigationRailRoot: FunctionComponent<NavigationRailRootProps> = ({
+	children,
+	onMenuClick,
+	fab,
+	segmentsAlignment = 'top',
+	...props
+}) => {
 	return (
-		<RailContainer style={{ height: '100vh' }}>
+		<RailContainer {...props}>
 			<TopContainer>
 				{onMenuClick && (
 					<IconButton
@@ -38,7 +44,7 @@ const NavigationRailRoot: FunctionComponent<NavigationRailRootProps> = ({ childr
 	)
 }
 
-type NavigationRailSegmentProps = {
+export type NavigationRailSegmentProps = {
 	label: string
 	icon: SvgSpriteIconName
 	badge?: boolean | string
@@ -98,6 +104,7 @@ const RailContainer = styled(Ariakit.Role, {
 		paddingTop: 44,
 		paddingBottom: 56,
 		width: 80,
+		viewTransitionName: 'navbar',
 	},
 })
 
@@ -115,7 +122,7 @@ const RailNav = styled('nav', {
 		display: 'flex',
 		flexDirection: 'column',
 		padding: 5,
-		gap: 4,
+		gap: 16,
 		width: '100%',
 	},
 })
@@ -154,6 +161,7 @@ const SegmentBase = styled(Link, {
 		cursor: 'pointer',
 		textDecoration: 'none',
 		color: theme.colors.onSurfaceVariant,
+		minHeight: 56,
 		':focus-visible': {
 			outline: 'none',
 		},

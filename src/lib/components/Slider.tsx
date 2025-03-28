@@ -67,7 +67,7 @@ export const Slider: FunctionComponent<SliderProps> = ({
 	const [isHoldingThumb, setIsHoldingThumb] = useState(false)
 	const [thumbSize, setThumbSize] = useState(0)
 	const sliderRootRef = useRef<HTMLDivElement>(null)
-	const thumbRef = useResizeObserver<HTMLDivElement>(({ width }) => setThumbSize(width))
+	const thumbRef = useResizeObserver<HTMLDivElement>(rect => rect && setThumbSize(rect.width))
 	const getPercentage = useCallback((value: number) => linearScale([min, max], [0, 100])(value), [min, max])
 	const thumbOffset = useMemo(() => getThumbInBoundsOffset(thumbSize, getPercentage(internalValue), 1), [thumbSize, getPercentage, internalValue])
 	const spaceWidth = 7

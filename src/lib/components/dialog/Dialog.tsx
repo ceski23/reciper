@@ -83,7 +83,7 @@ const DialogOverlay = styled(animated.div, {
 const DialogContent = styled(animated(Ariakit.Dialog), {
 	base: {
 		minWidth: 280,
-		maxWidth: 560,
+		maxWidth: 400,
 		width: '80%',
 		display: 'grid',
 		gridTemplateColumns: '24px 1fr 24px',

@@ -98,5 +98,6 @@ const Container = styled('section', {
 		gap: 8,
 		viewTransitionName: 'notifications',
 		pointerEvents: 'none',
+		alignItems: 'flex-end',
 	},
 })

@@ -80,7 +80,7 @@ export default Gallery
 const ImagesGrid = styled(Ariakit.Role, {
 	base: {
 		display: 'grid',
-		gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+		gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 200px))',
 		gap: 16,
 	},
 })

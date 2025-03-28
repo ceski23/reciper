@@ -1,3 +1,5 @@
+import { rgbaToThumbHash } from 'thumbhash'
+
 const colorExtractWorker = new Worker(new URL('../colorExtractWorker.ts', import.meta.url), {
 	type: 'module',
 })
@@ -7,7 +9,7 @@ export type ColorExtractWorkerResponse = {
 	color: string
 }
 
-const imageToBuffer = (image: HTMLImageElement, resizedImageSize: number) => {
+export const imageToBuffer = (image: HTMLImageElement, resizedImageSize: number) => {
 	const sizeRatio = image.width / image.height
 	const { targetWidth, targetHeight } = image.width > image.height
 		? {
@@ -26,7 +28,7 @@ const imageToBuffer = (image: HTMLImageElement, resizedImageSize: number) => {
 	return imageData?.data.buffer
 }
 
-const loadImage = async (imageUrl: string): Promise<HTMLImageElement> => {
+export const loadImage = async (imageUrl: string): Promise<HTMLImageElement> => {
 	const image = new Image()
 	image.crossOrigin = 'Anonymous'
 	image.src = import.meta.env.VITE_CORS_PROXY !== undefined
@@ -53,4 +55,22 @@ export const getColorFromImage = async (imageUrl?: string, resizedImageSize = 12
 			if (event.data.url === imageUrl) resolve(event.data.color)
 		}, { once: true })
 	)
+}
+
+export async function bufferToBase64(buffer: Uint8Array) {
+	const base64url = await new Promise<string>(r => {
+		const reader = new FileReader()
+		reader.onload = () => r(reader.result as string)
+		reader.readAsDataURL(new Blob([buffer]))
+	})
+
+	return base64url.slice(base64url.indexOf(',') + 1)
+}
+
+export const generateThumbhash = async (imageUrl: string) => {
+	const data = imageToBuffer(await loadImage(imageUrl), 64)
+
+	if (!data) return null
+
+	return bufferToBase64(rgbaToThumbHash(64, 64, new Uint8ClampedArray(data)))
 }

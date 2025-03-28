@@ -115,6 +115,7 @@
 	"newRecipe": {
 		"title": "Nowy przepis",
 		"fields": {
+			"basicInfo": "Podstawowe informacje",
 			"cover": "Zdjęcie",
 			"name": "Nazwa",
 			"description": "Opis",

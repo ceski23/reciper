@@ -2,6 +2,7 @@ import { queryOptions, useMutation, useQueryClient } from '@tanstack/react-query
 import { clear, createStore, del, get, set, setMany, values } from 'idb-keyval'
 import * as v from 'valibot'
 import { type AccountProvider } from 'features/auth/providers'
+import { scrapeRecipe } from 'features/recipes/providers/scrapper'
 import { type Recipe, recipeScheme } from 'features/recipes/types'
 import { synchronizeRecipes, type SyncStatus } from 'lib/utils/synchronization'
 
@@ -95,3 +96,10 @@ export const useSyncRecipes = () => {
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['recipes'] }),
 	})
 }
+
+export const scrapeRecipeQuery = (url?: string, id?: string) =>
+	queryOptions({
+		queryKey: ['scraped', url],
+		queryFn: () => scrapeRecipe(url, id).catch(),
+		retry: false,
+	})

@@ -29,6 +29,7 @@ export const recipeScheme = v.object({
 	servings: v.optional(v.pipe(v.number(), v.minValue(1))),
 	gallery: v.optional(v.array(v.pipe(v.string(), v.minLength(1))), []),
 	addedDate: v.pipe(v.number(), v.minValue(1)),
+	thumbhash: v.optional(v.pipe(v.string(), v.minLength(1))),
 })
 
 export type Recipe = v.InferOutput<typeof recipeScheme>

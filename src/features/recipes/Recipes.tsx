@@ -1,3 +1,4 @@
+import { useIsMobile } from '@hooks/useIsMobile'
 import { useListSelection } from '@hooks/useListSelection'
 import { styled } from '@macaron-css/react'
 import { useIsMutating, useQuery } from '@tanstack/react-query'
@@ -5,20 +6,17 @@ import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route as recipesIndexRoute } from 'routes/recipes/index'
-import { match, P } from 'ts-pattern'
+import { match } from 'ts-pattern'
 import { Notification, useNotifications } from 'features/notifications'
 import { AddRecipeDialog } from 'features/recipes/components/AddRecipeDialog'
 import { ImportFromUrlDialog } from 'features/recipes/components/ImportFromUrlDialog'
-import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
 import { recipesQuery, useAddRecipes, useDeleteRecipe, useSyncRecipes } from 'features/recipes/recipes'
-import { RecipesGrid } from 'features/recipes/RecipesGrid'
+import { RecipesContainer } from 'features/recipes/RecipesContainer'
 import { sampleRecipes } from 'features/recipes/samples'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
 import { IconButton } from 'lib/components/IconButton'
-import { List } from 'lib/components/list'
 import { Menu } from 'lib/components/menu'
-import { RecipeListItem } from 'lib/components/RecipeListItem'
 import { TopAppBar } from 'lib/components/TopAppBar'
 import { accountStore } from 'lib/stores/account'
 import { uiStore } from 'lib/stores/ui'
@@ -41,6 +39,7 @@ export const Recipes: FunctionComponent = () => {
 	const isSyncing = useIsMutating({ exact: true, mutationKey: ['syncRecipes'] }) > 0
 	const [isMoreOpen, setIsMoreOpen] = useState(false)
 	const selection = useListSelection()
+	const isMobile = useIsMobile()
 
 	const handleRecipesSync = async () => {
 		if (accountProvider === undefined || recipes.data === undefined) {
@@ -59,11 +58,11 @@ export const Recipes: FunctionComponent = () => {
 	return (
 		<Fragment>
 			<TopAppBar
-				configuration="small"
+				configuration={isMobile ? 'small' : 'large'}
 				title={selection.isSelecting ? t('recipes.selection.selected', { count: selection.selectedItems.length }) : t('paths.recipes')}
 				progress={isSyncing}
 				container={container}
-				elevation={isListScrolled ? 'onScroll' : 'flat'}
+				elevation={isMobile ? (isListScrolled ? 'onScroll' : 'flat') : 'flat'}
 				onBackClick={() => navigate({ from: recipesIndexRoute.fullPath, to: '../', params: {} })}
 				leadingButton={selection.isSelecting
 					? (
@@ -105,11 +104,13 @@ export const Recipes: FunctionComponent = () => {
 					)
 					: (
 						<Fragment>
-							<IconButton
-								icon={recipesViewMode === 'list' ? 'viewGrid' : 'viewList'}
-								title={recipesViewMode === 'list' ? t('recipes.view.grid') : t('recipes.view.list')}
-								onClick={() => setRecipesViewMode(prev => prev === 'grid' ? 'list' : 'grid')}
-							/>
+							{isMobile && (
+								<IconButton
+									icon={recipesViewMode === 'list' ? 'viewGrid' : 'viewList'}
+									title={recipesViewMode === 'list' ? t('recipes.view.grid') : t('recipes.view.list')}
+									onClick={() => setRecipesViewMode(prev => prev === 'grid' ? 'list' : 'grid')}
+								/>
+							)}
 							<Menu.Root
 								open={isMoreOpen}
 								setOpen={setIsMoreOpen}
@@ -136,39 +137,30 @@ export const Recipes: FunctionComponent = () => {
 						</Fragment>
 					)}
 			/>
-			{match([recipes, recipesViewMode])
-				.with([{ status: 'pending' }, P._], () => (
-					<div>
-						{Array.from({ length: 8 }, (_, index) => <RecipeListItemSkeleton key={index} />)}
-					</div>
-				))
-				.with([{ status: 'error' }, P._], () => (
+			{match([recipes])
+				.with([{ status: 'pending' }], () => <RecipesContainer isLoading />)
+				.with([{ status: 'error' }], () => (
 					<Notification
 						content={t('recipes.listLoadError')}
 						duration={Number.POSITIVE_INFINITY}
 					/>
 				))
-				.with([{ status: 'success' }, 'grid'], ([recipes]) => <RecipesGrid recipes={recipes.data} />)
-				.with([{ status: 'success' }, 'list'], ([recipes]) => (
-					<List.Root
-						virtual={{ overscan: 10 }}
+				.with([{ status: 'success' }], ([recipes]) => (
+					<RecipesContainer
+						recipes={recipes.data}
 						ref={setContainer}
-						scrollRestorationId="recipesList"
-						selectionStore={selection.selectionStore}
-						onIsScrolledChange={setIsListScrolled}
-					>
-						<SampleRecipesBanner
-							show={recipes.data.length === 0}
-							onAddClick={() => addRecipes.mutate(sampleRecipes)}
-						/>
-						{recipes.data.map(recipe => (
-							<RecipeListItem
-								key={recipe.id}
-								recipe={recipe}
-								isSelectionMode={selection.isSelecting}
+						listProps={{
+							onIsScrolledChange: setIsListScrolled,
+							selectionStore: selection.selectionStore,
+							isSelecting: selection.isSelecting,
+						}}
+						listHeader={(
+							<SampleRecipesBanner
+								show={recipes.data.length === 0}
+								onAddClick={() => addRecipes.mutate(sampleRecipes)}
 							/>
-						))}
-					</List.Root>
+						)}
+					/>
 				))
 				.exhaustive()}
 			<ContentOverlayPortal>
@@ -178,7 +170,7 @@ export const Recipes: FunctionComponent = () => {
 						label={t('recipes.addRecipe.cta')}
 						type="button"
 						variant="primary"
-						size={isListScrolled ? undefined : 'expanded'}
+						size={isMobile ? (isListScrolled ? undefined : 'expanded') : 'expanded'}
 						onClick={() => setIsAddDialogOpen(true)}
 					/>
 				</FabContainer>

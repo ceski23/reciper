@@ -11,13 +11,15 @@ import { Typography } from './Typography'
 
 type ChipProps = ToOptions & {
 	text: string
-	icon?: SvgSpriteIconName
+	leadingIcon?: SvgSpriteIconName
+	trailingIcon?: SvgSpriteIconName
 	onClose?: VoidFunction
 }
 
 export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase> & ChipProps>(({
 	text,
-	icon,
+	leadingIcon,
+	trailingIcon,
 	onClose,
 	...props
 }, ref) => {
@@ -25,38 +27,45 @@ export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase
 
 	return (
 		<ChipBase
-			withLeadingIcon={icon !== undefined}
-			withCloseIcon={onClose !== undefined}
+			withLeadingIcon={leadingIcon !== undefined}
+			withTrailingIcon={onClose !== undefined || trailingIcon !== undefined}
 			ref={ref}
 			// @ts-expect-error TS is shouting but it works
 			as={props.to !== undefined ? Link : undefined}
 			{...mergeProps(props, eventHandlers)}
 		>
-			{icon && (
-				<ChipIcon
-					name={icon}
+			{leadingIcon && (
+				<LeadingChipIcon
+					name={leadingIcon}
 					variant={props.disabled ? 'disabled' : 'primary'}
 				/>
 			)}
 			<Label>
 				{text}
 			</Label>
-			{onClose && (
-				// eslint-disable-next-line jsx-a11y/prefer-tag-over-role
-				<CloseButton
-					role="button"
-					title="Close"
-					onClick={event => {
-						event.stopPropagation()
-						onClose()
-					}}
-				>
+			{onClose
+				? (
+					// eslint-disable-next-line jsx-a11y/prefer-tag-over-role
+					<CloseButton
+						role="button"
+						title="Close"
+						onClick={event => {
+							event.stopPropagation()
+							onClose()
+						}}
+					>
+						<Icon
+							name="close"
+							size={18}
+						/>
+					</CloseButton>
+				)
+				: trailingIcon && (
 					<Icon
-						name="close"
+						name={trailingIcon}
 						size={18}
 					/>
-				</CloseButton>
-			)}
+				)}
 			{renderRipples}
 		</ChipBase>
 	)
@@ -64,7 +73,7 @@ export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase
 
 const ChipBase = styled(Button, {
 	base: {
-		backgroundColor: theme.colors.surfaceContainerLow,
+		backgroundColor: 'transparent',
 		border: 'none',
 		paddingInline: 16,
 		paddingBlock: 6,
@@ -179,7 +188,7 @@ const ChipBase = styled(Button, {
 				paddingLeft: 8,
 			},
 		},
-		withCloseIcon: {
+		withTrailingIcon: {
 			true: {
 				paddingRight: 8,
 				justifyContent: 'space-between',
@@ -197,7 +206,7 @@ const Label = styled(Typography.LabelLarge, {
 	},
 })
 
-const ChipIcon = styled(Icon, {
+const LeadingChipIcon = styled(Icon, {
 	base: {
 		width: 18,
 		height: 18,

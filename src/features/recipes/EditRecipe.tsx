@@ -1,3 +1,4 @@
+import { useIsMobile } from '@hooks/useIsMobile'
 import { styled } from '@macaron-css/react'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -26,6 +27,7 @@ export const EditRecipe: FunctionComponent = () => {
 	const navigate = useNavigate()
 	const { id } = editRecipeRoute.useParams()
 	const { data: recipe } = useQuery(recipeQuery(id))
+	const isMobile = useIsMobile()
 
 	const onSubmit = async (values: RecipeFormValues, originalRecipe: Recipe) => {
 		try {
@@ -49,9 +51,10 @@ export const EditRecipe: FunctionComponent = () => {
 		<Fragment>
 			{renderProbe}
 			<TopAppBar
-				configuration="small"
+				configuration={isMobile ? 'small' : 'large'}
 				title={t('editRecipe.title')}
 				onBackClick={() => history.length > 1 ? history.back() : window.close()}
+				elevation={isMobile ? (isContentScrolled ? 'onScroll' : 'flat') : 'flat'}
 			/>
 			{recipe && (
 				<Fragment>
@@ -67,7 +70,7 @@ export const EditRecipe: FunctionComponent = () => {
 								label={t('editRecipe.save')}
 								type="submit"
 								variant="primary"
-								size={isContentScrolled ? undefined : 'expanded'}
+								size={isMobile ? (isContentScrolled ? undefined : 'expanded') : 'expanded'}
 								form={formId}
 							/>
 						</FabContainer>

@@ -5,6 +5,7 @@ import { Link } from '@components/Link'
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
 import { theme } from '@styles/theme'
+import { UnLazyImage } from '@unlazy/react'
 import { toggle } from 'radashi'
 import { type FunctionComponent, type ReactNode } from 'react'
 import * as providers from 'features/recipes/providers/websites'
@@ -72,6 +73,7 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 						<RecipeImage
 							src={recipe.image}
 							onClick={handleLeadingElementClick}
+							thumbhash={recipe.thumbhash}
 						/>
 					)
 					: (
@@ -96,7 +98,7 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 	)
 }
 
-const RecipeImage = styled('img', {
+const RecipeImage = styled(UnLazyImage, {
 	base: {
 		width: 56,
 		height: 56,

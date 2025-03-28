@@ -40,7 +40,7 @@ export const ColorSchemeDialog: FunctionComponent<ColorSchemeDialogProps> = with
 			icon="brightness"
 			title={t('settings.theme.colorScheme.dialog.title')}
 			description={t('settings.theme.colorScheme.dialog.description')}
-			closeOnClickOutside={false}
+			onClose={onCancel}
 			extraContent={(
 				<RadioGroup.Provider
 					setValue={handleRadioChange}

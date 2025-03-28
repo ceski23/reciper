@@ -103,6 +103,7 @@
 	"newRecipe": {
 		"title": "New recipe",
 		"fields": {
+			"basicInfo": "Basic info",
 			"cover": "Cover image",
 			"name": "Name",
 			"description": "Description",

@@ -1,5 +1,6 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
+import { mq } from '@styles/utils'
 import { useQuery } from '@tanstack/react-query'
 import { getVariableColorValue } from '@utils/dom'
 import { counting, isEmpty, sort } from 'radashi'
@@ -56,11 +57,12 @@ export const Home: FunctionComponent = () => {
 					content={themeColor}
 				/>
 			</Helmet>
-			<FakeSearchBar
-				leadingIcon="search"
-				placeholder={t('home.searchBarPlaceholder')}
-				style={{ gridColumn: '2' }}
-			/>
+			<PaddedSection>
+				<FakeSearchBar
+					leadingIcon="search"
+					placeholder={t('home.searchBarPlaceholder')}
+				/>
+			</PaddedSection>
 			{recipes.status === 'success' && isEmpty(recipes.data) && (
 				<EmptyState>
 					<Typography.TitleLarge>
@@ -69,7 +71,7 @@ export const Home: FunctionComponent = () => {
 				</EmptyState>
 			)}
 			{(recipes.isLoading || !isEmpty(recipes.data)) && (
-				<FullbleedSection>
+				<CarouselSection>
 					<Typography.TitleMedium style={{ paddingInline: 16 }}>
 						{t('home.recentRecipes')}
 					</Typography.TitleMedium>
@@ -84,63 +86,65 @@ export const Home: FunctionComponent = () => {
 							/>
 						))}
 					</CardsList>
-				</FullbleedSection>
+				</CarouselSection>
 			)}
-			{(recipes.isLoading || !isEmpty(recipes.data)) && (
-				<Section>
-					<Typography.TitleMedium>
-						{t('home.mostCommonTags')}
-					</Typography.TitleMedium>
-					<CompositeProvider>
-						<TagsContainer>
-							{recipes.status === 'pending' && <TagsSkeleton />}
-							{recipes.status === 'success' && getMostCommonTags(recipes.data, 15).map(tag => (
-								<CompositeItem
-									key={tag}
-									render={(
-										<StyledChip
-											text={tag}
-											variant="outlined"
-											to="/search"
-											search={{ query: tag }}
-										/>
+			<Columns>
+				{(recipes.isLoading || !isEmpty(recipes.data)) && (
+					<Section>
+						<Typography.TitleMedium style={{ paddingInline: 16 }}>
+							{t('home.topRecipes')}
+						</Typography.TitleMedium>
+						<TopRecipesList>
+							{recipes.status === 'pending' && Array.from({ length: 5 }, (_, index) => <RecipeListItemSkeleton key={index} />)}
+							{recipes.status === 'success' && getTopRecipes(recipes.data, 10).map(recipe => (
+								<RecipeListItem
+									key={recipe.id}
+									recipe={recipe}
+									details={(
+										<ListItemDetail>
+											{recipe.rating}
+											<ListItemIcon name="star" />
+										</ListItemDetail>
 									)}
 								/>
 							))}
-						</TagsContainer>
-					</CompositeProvider>
-				</Section>
-			)}
-			{(recipes.isLoading || !isEmpty(recipes.data)) && (
-				<FullbleedSection>
-					<Typography.TitleMedium style={{ paddingInline: 16 }}>
-						{t('home.topRecipes')}
-					</Typography.TitleMedium>
-					<List.Root>
-						{recipes.status === 'pending' && Array.from({ length: 5 }, (_, index) => <RecipeListItemSkeleton key={index} />)}
-						{recipes.status === 'success' && getTopRecipes(recipes.data, 10).map(recipe => (
-							<RecipeListItem
-								key={recipe.id}
-								recipe={recipe}
-								details={(
-									<ListItemDetail>
-										{recipe.rating}
-										<ListItemIcon name="star" />
-									</ListItemDetail>
-								)}
-							/>
-						))}
-					</List.Root>
-				</FullbleedSection>
-			)}
+						</TopRecipesList>
+					</Section>
+				)}
+				{(recipes.isLoading || !isEmpty(recipes.data)) && (
+					<PaddedSection>
+						<Typography.TitleMedium>
+							{t('home.mostCommonTags')}
+						</Typography.TitleMedium>
+						<CompositeProvider>
+							<TagsContainer>
+								{recipes.status === 'pending' && <TagsSkeleton />}
+								{recipes.status === 'success' && getMostCommonTags(recipes.data, 15).map(tag => (
+									<CompositeItem
+										key={tag}
+										render={(
+											<StyledChip
+												text={tag}
+												variant="outlined"
+												to="/search"
+												search={{ query: tag }}
+											/>
+										)}
+									/>
+								))}
+							</TagsContainer>
+						</CompositeProvider>
+					</PaddedSection>
+				)}
+			</Columns>
 		</Container>
 	)
 }
 
 const Container = styled('div', {
 	base: {
-		display: 'grid',
-		gridTemplateColumns: '16px 1fr 16px',
+		display: 'flex',
+		flexDirection: 'column',
 		paddingBlock: 16,
 		rowGap: 24,
 	},
@@ -159,6 +163,11 @@ const TagsContainer = styled(Composite, {
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		gap: 8,
+		'@media': {
+			[mq.atLeast('lg')]: {
+				maxWidth: 500,
+			},
+		},
 	},
 })
 
@@ -168,13 +177,24 @@ const Section = styled('div', {
 		flexDirection: 'column',
 		gap: 16,
 		color: theme.colors.onBackground,
-		gridColumn: '2',
 	},
 })
 
-const FullbleedSection = styled(Section, {
+const PaddedSection = styled(Section, {
 	base: {
-		gridColumn: '1 / -1',
+		paddingInline: 16,
+		'@media': {
+			[mq.atLeast('md')]: {
+				paddingInline: 0,
+			},
+		},
+	},
+})
+
+const CarouselSection = styled(Section, {
+	base: {
+		display: 'grid',
+		width: '100%',
 	},
 })
 
@@ -211,5 +231,35 @@ const EmptyState = styled('div', {
 		alignItems: 'center',
 		justifyContent: 'center',
 		paddingBlock: '128px',
+	},
+})
+
+const Columns = styled('div', {
+	base: {
+		display: 'flex',
+		flexDirection: 'column-reverse',
+		gap: 32,
+		'@media': {
+			[mq.atLeast('lg')]: {
+				display: 'grid',
+				gridTemplateColumns: '1fr 1fr',
+			},
+			[mq.atLeast('xl')]: {
+				gridTemplateColumns: 'auto auto',
+			},
+		},
+	},
+})
+
+const TopRecipesList = styled(List.Root, {
+	base: {
+		'@media': {
+			[mq.atLeast('md')]: {
+				backgroundColor: theme.colors.surfaceContainerLow,
+				borderRadius: 12,
+				overflow: 'hidden',
+				maxWidth: '800px',
+			},
+		},
 	},
 })

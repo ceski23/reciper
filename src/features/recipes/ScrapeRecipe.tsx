@@ -10,8 +10,7 @@ import { useNotifications } from 'features/notifications'
 import { RecipeContent } from 'features/recipes/components/RecipeContent'
 import { RecipeContentSkeleton } from 'features/recipes/components/RecipeContentSkeleton'
 import { ScrappingErrorDialog } from 'features/recipes/components/ScrappingErrorDialog'
-import { scrapeRecipe } from 'features/recipes/providers/scrapper'
-import { useAddRecipe, useEditRecipe } from 'features/recipes/recipes'
+import { scrapeRecipeQuery, useAddRecipe, useEditRecipe } from 'features/recipes/recipes'
 import { type Recipe, type recipeScheme } from 'features/recipes/types'
 import { ContentOverlayPortal } from 'lib/components/ContentOverlayPortal'
 import { FloatingActionButton } from 'lib/components/FloatingActionButton'
@@ -27,11 +26,7 @@ export const ScrapeRecipe: FunctionComponent = () => {
 	const [isListScrolled, setIsListScrolled] = useState(false)
 	const renderProbe = useIsContainerScrolled(setIsListScrolled)
 	const { url, id } = scrapeRecipeRoute.useSearch()
-	const query = useQuery({
-		queryKey: ['scraped', url],
-		queryFn: () => scrapeRecipe(url, id).catch(),
-		retry: false,
-	})
+	const query = useQuery(scrapeRecipeQuery(url, id))
 	const addRecipe = useAddRecipe()
 	const editRecipe = useEditRecipe()
 	const { notify } = useNotifications()

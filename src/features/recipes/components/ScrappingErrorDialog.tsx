@@ -5,7 +5,7 @@ import { withDialogAnimation } from '@components/dialog/withDialogAnimation'
 import { styled } from '@macaron-css/react'
 import { theme } from '@styles/theme'
 import { isValidUrl } from '@utils/urls'
-import { Fragment, type FunctionComponent } from 'react'
+import { type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as v from 'valibot'
 import { type recipeScheme } from 'features/recipes/types'
@@ -55,17 +55,19 @@ export const ScrappingErrorDialog: FunctionComponent<ScrappingErrorDialogProps> 
 				)
 				: undefined}
 			actions={[
-				error !== undefined
-					? (
-						<Ariakit.Disclosure
-							key="toggle"
-							store={disclosure}
-							render={<Button variant="text" />}
-						>
-							{isOpen ? t('scraping.hideIssues') : t('scraping.showIssues')}
-						</Ariakit.Disclosure>
-					)
-					: <Fragment />,
+				...(error !== undefined
+					? [
+						(
+							<Ariakit.Disclosure
+								key="toggle"
+								store={disclosure}
+								render={<Button variant="text" />}
+							>
+								{isOpen ? t('scraping.hideIssues') : t('scraping.showIssues')}
+							</Ariakit.Disclosure>
+						),
+					]
+					: []),
 				{
 					label: t('scraping.close'),
 					onClick: onClose,
