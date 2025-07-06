@@ -100,9 +100,9 @@ const setColorsSeries = (colors: Array<string>, delay: number, callback: (color:
 }
 
 export const TopAppBarOptions: FunctionComponent<PropsWithChildren> = ({ children }) => {
-	const element = document.getElementById('app-bar-options')
+	const { topAppBarOptions } = uiStore.useStore()
 
-	return element ? createPortal(children, element) : null
+	return topAppBarOptions ? createPortal(children, topAppBarOptions) : null
 }
 
 export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
@@ -122,6 +122,10 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 	const scrollContainer = container ?? mainContent
 
 	useAppBarColor(isContentScrolled, elevation)
+
+	const topAppBarOptionsCallbackRef = useCallback((node: HTMLElement | null) => {
+		uiStore.actions.setTopAppBarOptions(node)
+	}, [])
 
 	return (
 		<Fragment>
@@ -152,7 +156,7 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 							)}
 						/>
 					)}
-					<OptionsContainer id="app-bar-options">
+					<OptionsContainer ref={topAppBarOptionsCallbackRef}>
 						{options}
 					</OptionsContainer>
 				</AppBarBase>
