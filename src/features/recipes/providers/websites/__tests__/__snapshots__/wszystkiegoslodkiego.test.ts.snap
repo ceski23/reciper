@@ -1,0 +1,232 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should parse recipes from Wszystkiego Słodkiego > should parse recipe for Ciasto z dyni 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "Halo, jesieniary! Ciasto marchewkowe ma całkiem poważną konkurencję i lada moment może spaść z jesiennego piedestału. A wszystko za sprawą idealnego ciasta z dyni 🧡- wilgotnego i pachnącego korzenną przyprawą. Krem z serka mascarpone i cukru pudru idealnie komponuje się z cynamonowymi nutami, a orzechy pekan przyjemnie chrupią podczas jedzenia. Jeśli do tej pory nie byliście gotowi na nadejście jesieni☔🍄, z ciastem z dyni gładko wejdziecie w sezon szalików i ciepłych swetrów 🍂 Przepis powstał w ramach współpracy reklamowej z markami: Dr. Oetker, Bosch oraz Mąka Polka.",
+  "image": "https://wszystkiegoslodkiego.pl/storage/images/202442/ciasto-z-dyni.webp",
+  "ingredients": [
+    {
+      "group": "Ciasto z dyni",
+      "text": "4 jajka",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "text": "200 g cukru",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "text": "250 g śmietany 18%",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "text": "150 ml oleju",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "text": "400 g puree z dyni",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "text": "300 g mąki pszennej Polka typ 450",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "text": "2 łyżki przyprawy korzennej Dr. Oetkera",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "text": "2 łyżeczki proszku do pieczenia Dr. Oetkera",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "text": "1 łyżeczka sody oczyszczonej Dr. Oetkera",
+    },
+    {
+      "group": "Krem",
+      "text": "250 g serka mascarpone",
+    },
+    {
+      "group": "Krem",
+      "text": "20 g cukru pudru",
+    },
+    {
+      "group": "Dodatkowo",
+      "text": "1 łyżka cynamonu do oprószenia ciasta",
+    },
+    {
+      "group": "Dodatkowo",
+      "text": "50 g orzechów pekan lub włoskich",
+    },
+  ],
+  "instructions": [
+    {
+      "group": "Ciasto z dyni",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202442/ciasto-z-dyni-przepis-krok-1.jpg",
+      "text": "Jajka ubij z cukrem na puszystą masę.",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202442/ciasto-z-dyni-przepis-krok-2.jpg",
+      "text": "Śmietanę wymieszaj z olejem i puree z dyni*. Mąkę wymieszaj z przyprawą korzenną, proszkiem do pieczenia i sodą oczyszczoną.",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202442/ciasto-z-dyni-przepis-krok-3.jpg",
+      "text": "Masę jajeczną zmiksuj z puree z dyni, na końcu wmiksuj wymieszane suche składniki.",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202442/ciasto-z-dyni-przepis-krok-4.jpg",
+      "text": "Ciasto wyłóż do formy wielkości 22 x 33 cm wyłożonej papierem do pieczenia.",
+    },
+    {
+      "group": "Ciasto z dyni",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202442/ciasto-z-dyni-przepis-krok-5.jpg",
+      "text": "Piecz w nagrzanym piekarniku do180°C i piecz 45 minut.",
+    },
+    {
+      "group": "Krem z serka mascarpone",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202442/ciasto-z-dyni-przepis-krok-6.jpg",
+      "text": "Serek wymieszaj z przesianym cukrem pudrem i wyłóż na wierzch ciasta. Przed podaniem oprósz cukrem pudrem i posyp kawałkami orzechów.",
+    },
+  ],
+  "name": "Ciasto z dyni",
+  "prepTime": 80,
+  "rating": 5,
+  "servings": 16,
+  "tags": [
+    "babki i ciasta ucierane",
+  ],
+}
+`;
+
+exports[`should parse recipes from Wszystkiego Słodkiego > should parse recipe for Tiramisu 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "Jeśli lubisz uczucie dumy i satysfakcji z przygotowania deseru od podstaw, wypróbuj przepis na włoskie tiramisu, w którym biszkopty wypiekamy samodzielnie 💪🏻 Przepis jest klasyczny - masę przygotowujemy jedynie na bazie jajek i mascarpone - dokładnie tak, jak w słonecznej Italii ☀️ Biszkopty namoczone w mocnym, aromatycznym espresso ☕ nadają charakteru całemu deserowi. W tiramisu grzechem byłoby pominięcie dobrego gatunku kakao - wybierz Ciemne Kakao od Dr. Oetkera z linii "Ze świata natury" o intensywnym smaku i zapachu i miej pewność, że Twój deser jest idealny w każdym calu 👌🏻 Tiramisu możesz przygotować w jednym większym naczyniu lub mniejszych pucharkach czy kieliszkach. Smakuje obłędnie w każdym wydaniu 😋 Zobacz również inne nasze pyszne przepisy na desery z mascarpone",
+  "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-2-1.webp",
+  "ingredients": [
+    {
+      "group": "Biszkopty",
+      "text": "3 jajka rozmiar L",
+    },
+    {
+      "group": "Biszkopty",
+      "text": "90 g cukru drobnego",
+    },
+    {
+      "group": "Biszkopty",
+      "text": "1 Cukier z Wanilią Dr. Oetkera",
+    },
+    {
+      "group": "Biszkopty",
+      "text": "80 g mąki pszennej",
+    },
+    {
+      "group": "Biszkopty",
+      "text": "1 łyżeczka skrobii ziemniaczanej",
+    },
+    {
+      "group": "Biszkopty",
+      "text": "cukier puder do oprószenia",
+    },
+    {
+      "group": "Krem",
+      "text": "4 jajka",
+    },
+    {
+      "group": "Krem",
+      "text": "90 g cukru drobnego",
+    },
+    {
+      "group": "Krem",
+      "text": "500 g schłodzonego mascarpone",
+    },
+    {
+      "group": "Dodatkowo",
+      "text": "espresso do nasączenia",
+    },
+    {
+      "group": "Dodatkowo",
+      "text": "ciemne kakao do oprószenia",
+    },
+  ],
+  "instructions": [
+    {
+      "group": "Biszkopty lady fingers",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-1.jpg",
+      "text": "Piekarnik nagrzej do temperatury 170°C. Żółtka oddziel od białek i utrzyj z 40 g cukru i cukrem z wanilią na jasną masę.",
+    },
+    {
+      "group": "Biszkopty lady fingers",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-2.jpg",
+      "text": "Białka ubij z pozostałą porcją cukru.",
+    },
+    {
+      "group": "Biszkopty lady fingers",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-3.jpg",
+      "text": "Połącz bezową pianę z koglem moglem. Następnie dodaj mąkę, skrobię i wymieszaj delikatnie do połączenia składników.",
+    },
+    {
+      "group": "Biszkopty lady fingers",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-4.jpg",
+      "text": "Ciasto na biszkopty przełóż do rękawa cukierniczego i wyciskaj na blasze wyłożonej papierem do pieczenia. Oprósz cukrem pudrem.",
+    },
+    {
+      "group": "Biszkopty lady fingers",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-5.jpg",
+      "text": "Wstaw do piekarnika i piecz około 15 minut do lekiego zarumienienia. Po upieczeniu wystudź.",
+    },
+    {
+      "group": "Krem z mascarpone",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-6.jpg",
+      "text": "Żółtka oddziel od białek i utrzyj z cukrem na kogel mogel.",
+    },
+    {
+      "group": "Krem z mascarpone",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-7.jpg",
+      "text": "Dodaj maskarpone i zmiksuj na najniższych obrotach do zgęstnienia.",
+    },
+    {
+      "group": "Krem z mascarpone",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-8.jpg",
+      "text": "Białka ubij na pianę, dodaj do masy z mascarpone i wymieszaj na jednolitą masę.",
+    },
+    {
+      "group": "Przełożenie",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-10.jpg",
+      "text": "Biszkopty nasączaj w kawie i ułóż na dnie naczynia. Oprósz kakao.",
+    },
+    {
+      "group": "Przełożenie",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-11.jpg",
+      "text": "Wyłóż na biskzopty połowę kremu i oprósz kakao.",
+    },
+    {
+      "group": "Przełożenie",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-12.jpg",
+      "text": "Ułóż kolejną warstwę nasączonych kawą biszkoptów i oprósz je kakao.",
+    },
+    {
+      "group": "Przełożenie",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-13.jpg",
+      "text": "Pozostałą część kremu przełóż do rękawa cukierniczego z dużą okrągłą tylką i wyciskaj stożki kremu na biszkopty",
+    },
+    {
+      "group": "Przełożenie",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202211/tiramisu-przepis-krok-14.jpg",
+      "text": "Na koniec oprósz kakao i wstaw do lodówki na kilka godzin do schłodzenia.",
+    },
+  ],
+  "name": "Tiramisu",
+  "prepTime": 300,
+  "rating": 5,
+  "servings": 8,
+  "tags": [
+    "desery",
+  ],
+}
+`;

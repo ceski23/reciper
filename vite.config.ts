@@ -1,112 +1,118 @@
-/// <reference types="vitest" />
+import packageConfig from './package.json'
+import { macaronVitePlugin } from '@macaron-css/vite'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vitest/config'
+import i18nextLoader from 'vite-plugin-i18next-loader'
+import tsconfigPaths from 'vite-tsconfig-paths'
+import { ManifestOptions, VitePWA } from 'vite-plugin-pwa'
+import child from 'node:child_process'
+import svgSprite from '@ceski23/vite-plugin-svg-sprite'
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
+import { SondaRollupPlugin } from 'sonda'
 
-import react from '@vitejs/plugin-react';
-import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig } from 'vite';
-import checker from 'vite-plugin-checker';
-import { VitePWA } from 'vite-plugin-pwa';
-import svgr from 'vite-plugin-svgr';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import GithubActionsReporter from 'vitest-github-actions-reporter';
-import size from 'rollup-plugin-size';
+const pwaManifest: Partial<ManifestOptions> = {
+	short_name: 'Reciper',
+	name: 'Reciper - your recipes',
+	theme_color: '#ffffff',
+	icons: [
+		{
+			src: 'pwa-64x64.png',
+			sizes: '64x64',
+			type: 'image/png',
+		},
+		{
+			src: 'pwa-192x192.png',
+			sizes: '192x192',
+			type: 'image/png',
+		},
+		{
+			src: 'pwa-512x512.png',
+			sizes: '512x512',
+			type: 'image/png',
+			purpose: 'any',
+		},
+		{
+			src: 'maskable-icon-512x512.png',
+			sizes: '512x512',
+			type: 'image/png',
+			purpose: 'maskable',
+		},
+	],
+	share_target: {
+		action: '/recipes/scrape',
+		method: 'GET',
+		enctype: 'application/x-www-form-urlencoded',
+		params: {
+			text: 'url',
+			url: 'url',
+		},
+	},
+}
 
-import manifest from './src/manifest';
+export default defineConfig({
+	build: {
+		sourcemap: true,
+		rollupOptions: {
+			output: {
+				manualChunks: id => {
+					if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/@ariakit/react/')) {
+						return 'react-ariakit'
+					}
 
-const reactPlugin = react({
-  jsxImportSource: '@emotion/react',
-  babel: {
-    plugins: ['@emotion/babel-plugin'],
-  },
-});
+					if (id.includes('node_modules/i18next')) {
+						return 'i18next'
+					}
 
-const svgrPlugin = svgr({
-  svgrOptions: {
+					if (id.includes('node_modules/@tanstack/')) {
+						return 'tanstack'
+					}
 
-  },
-});
-
-const tsconfigPathsPlugin = tsconfigPaths({
-
-});
-
-const checkerPlugin = checker({
-  typescript: true,
-  eslint: {
-    lintCommand: 'eslint --cache --cache-location "node_modules/.cache/.eslintcache" "./src/**/*.{ts,tsx}"',
-  },
-  overlay: {
-    initialIsOpen: false,
-  },
-});
-
-const pwaPlugin = VitePWA({
-  includeAssets: ['favicon.ico', 'robots.txt'],
-  manifest,
-  workbox: {
-    runtimeCaching: [{
-      urlPattern: /^https?:\/\/.*?\.(?:jpg|png|gif|webp)/,
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'recipesImages',
-        expiration: {
-          maxEntries: 100,
-        },
-      },
-    }],
-  },
-});
-
-const bundleVisualizerPlugin = visualizer({
-  sourcemap: true,
-  open: true,
-});
-
-const reportSizePlugin = size({
-  stripHash(fileName: string) {
-    const regexp = /^(?<fileName>[\w\/]+)(?:\W+\w*\W*?)?(?<extension>\.\w+)$/;
-    const matches = fileName.match(regexp);
-    return matches?.groups ? `${matches.groups.fileName}${matches.groups.extension}` : fileName;
-  },
+					if (id.includes('node_modules/@material/material-color-utilities/')) {
+						return 'material-color'
+					}
+				},
+			},
+		},
+	},
+	define: {
+		__APP_VERSION__: JSON.stringify(packageConfig.version),
+		__COMMIT_HASH__: JSON.stringify(child.execSync('git rev-parse --short HEAD').toString()),
+	},
+	plugins: [
+		tsconfigPaths(),
+		macaronVitePlugin(),
+		react(),
+		i18nextLoader({
+			paths: ['./locales'],
+			namespaceResolution: 'basename',
+		}),
+		svgSprite({
+			iconsDir: 'src/assets/icons',
+			generateDts: true,
+		}),
+		VitePWA({
+			registerType: 'prompt',
+			workbox: {
+				globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg}'],
+				runtimeCaching: [{
+					urlPattern: /^https?:\/\/.*?\.(?:jpg|png|gif|webp)/,
+					handler: 'StaleWhileRevalidate',
+					options: {
+						cacheName: 'recipesImages',
+						expiration: {
+							maxEntries: 100,
+						},
+					},
+				}],
+			},
+			manifest: pwaManifest,
+		}),
+		TanStackRouterVite(),
+		SondaRollupPlugin({ detailed: true }),
+	],
+	test: {
+		environment: 'happy-dom',
+		setupFiles: ['./src/vitest.setup.ts'],
+		watch: false,
+	},
 })
-
-export default defineConfig(({ mode }) => {
-  const visualizeBundle = false;
-
-  return {
-    server: {
-      port: 3000
-    },
-    define: {
-      APP_VERSION: JSON.stringify(process.env.npm_package_version),
-    },
-    plugins: [
-      reactPlugin,
-      svgrPlugin,
-      tsconfigPathsPlugin,
-      pwaPlugin,
-      mode !== 'test' && checkerPlugin,
-      mode === 'production' && visualizeBundle && bundleVisualizerPlugin,
-      reportSizePlugin,
-    ],
-    build: {
-      outDir: 'build',
-      sourcemap: visualizeBundle,
-    },
-    test: {
-      globals: true,
-      environment: 'jsdom',
-      setupFiles: './src/test/setup.ts',
-      exclude: [
-        '**/node_modules/**',
-        '**/dist/**',
-        '**/cypress/**',
-        '**/e2e/**',
-        '**/.{idea,git,cache,output,temp}/**'
-      ],
-      reporters: process.env.GITHUB_ACTIONS ? new GithubActionsReporter() : 'default'
-    },
-    esbuild: {
-      logOverride: { 'this-is-undefined-in-esm': 'silent' },
-    },
-  }
-});

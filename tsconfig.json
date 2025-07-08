@@ -1,36 +1,51 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
-    "baseUrl": "./src",
-    "types": [
-      "vite/client",
-      "vitest/globals",
-      "vite-plugin-pwa",
-      "vitest/config"
-    ]
-  },
-  "include": [
-    "src",
-    "e2e",
-    "playwright.config.ts"
-  ],
+	"compilerOptions": {
+		"target": "ES2020",
+		"useDefineForClassFields": true,
+		"lib": [
+			"ES2022",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"module": "ESNext",
+		"skipLibCheck": true,
+		/* Bundler mode */
+		"moduleResolution": "Bundler",
+		"allowImportingTsExtensions": true,
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"types": [
+			"vite/client",
+			"vite-plugin-pwa/react",
+			"dom-close-watcher"
+		],
+		"baseUrl": "src",
+		"paths": {
+			"@components/*": ["lib/components/*"],
+			"@hooks/*": ["lib/hooks/*"],
+			"@utils/*": ["lib/utils/*"],
+			"@styles/*": ["lib/styles/*"],
+			"@stores/*": ["lib/stores/*"]
+		}
+	},
+	"include": [
+		"src",
+		"svg-component.d.ts",
+		"vite-env.d.ts",
+		"svgSpritePlugin.d.ts",
+		"vitest.d.ts"
+	],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		}
+	]
 }

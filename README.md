@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/ceski23/reciper/blob/master/public/logo192.png" />
+  <img src="https://github.com/ceski23/reciper/blob/master/public/pwa-192x192.png" />
 </p>
 
 # Reciper
@@ -12,9 +12,7 @@ Reciper is a web application designed to store recipes from multiple cooking sit
 - Works **offline**
 - Backup/restore recipes from cloud
 - **Light** and **dark** mode
-- Saving shopping lists to supported to-do apps
 - Servings calculator
-- Ingredients **units converter**
 
 ## Installation
 1. Clone the repository
@@ -44,21 +42,14 @@ npm run build
 
 Start server with production build
 ```
-npm run start
+npm run preview
 ```
 
 ## Supported sites
 - [AniaStarmach.pl](https://aniastarmach.pl/)
 - [Beszamel](https://beszamel.se.pl/)
 - [Kwestia Smaku](https://www.kwestiasmaku.com/)
+- and possibly many more!
 
 ## Supported account providers
 - Google
-
-## Screenshots
-
-<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/1.jpg" />
-<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/2.jpg" />
-<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/3.jpg" />
-<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/4.jpg" />
-<img width="300" src="https://github.com/ceski23/reciper/blob/master/public/screenshots/5.jpg" />

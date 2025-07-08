@@ -1,0 +1,355 @@
+{
+	"paths": {
+		"home": "Dashboard",
+		"recipes": "Przepisy",
+		"settings": "Ustawienia",
+		"theme": "Wygląd",
+		"account": "Konto i synchronizacja",
+		"units": "Jednostki",
+		"search": "Szukaj"
+	},
+	"appUpdate": {
+		"updateAvailable": "Dostępna jest aktualizacja aplikacji",
+		"update": "Aktualizuj"
+	},
+	"notifications": {
+		"title": "Powiadomienia",
+		"close": "Zamknij"
+	},
+	"forms": {
+		"clearField": "Wyczyść"
+	},
+	"navigation": {
+		"goBack": "Cofnij"
+	},
+	"recipes": {
+		"details": {
+			"ingredients_one": "{{count}} składnik",
+			"ingredients_few": "{{count}} składniki",
+			"ingredients_many": "{{count}} składników",
+			"ingredients_other": "{{count}} składników",
+			"prepTime_one": "{{count}} minuta",
+			"prepTime_few": "{{count}} minuty",
+			"prepTime_many": "{{count}} minut",
+			"prepTime_other": "{{count}} minut",
+			"calories": "{{count}} kcal",
+			"servings_one": "{{count}} porcja",
+			"servings_few": "{{count}} porcje",
+			"servings_many": "{{count}} porcji",
+			"servings_other": "{{count}} porcji"
+		},
+		"ingredients": {
+			"title": "Składniki",
+			"amount_one": "{{count}} produkt",
+			"amount_few": "{{count}} produkty",
+			"amount_many": "{{count}} produktów",
+			"amount_other": "{{count}} produktów",
+			"increase": "Zwiększ ilość porcji",
+			"decrease": "Zmniejsz ilość porcji",
+			"servings_one": "{{count}} porcja",
+			"servings_few": "{{count}} porcje",
+			"servings_many": "{{count}} porcji",
+			"servings_other": "{{count}} porcji"
+		},
+		"tags": "Tagi",
+		"gallery": "Galeria",
+		"steps": {
+			"title": "Przygotowywanie",
+			"step": "Krok {{step}}"
+		},
+		"sharing": {
+			"menuItem": "Udostępnij przepis",
+			"error": "Wystąpił błąd podczas udostępniania przepisu, spróbuj ponownie"
+		},
+		"loadError": "Nie udało się załadować przepisu",
+		"moreOptions": "Opcje",
+		"edit": "Edytuj przepis",
+		"delete": {
+			"menuItem": "Usuń przepis",
+			"title": "Usuń przepis",
+			"confirmation": "Czy na pewno chcesz usunąć przepis na {{name}}?",
+			"cancel": "Anuluj",
+			"delete": "Usuń"
+		},
+		"sampleRecipes": {
+			"text": "Nie masz zapisanych żadnych przepisów. Może chcesz dodać kilka przykładowych?",
+			"add": "Dodaj",
+			"dismiss": "Ignoruj"
+		},
+		"sync": {
+			"menuItem": "Synchronizuj przepisy",
+			"error": "Wystąpił błąd podczas synchronizacji przepisów",
+			"ok": "OK"
+		},
+		"addRecipe": {
+			"cta": "Dodaj przepis",
+			"title": "Dodaj przepis",
+			"description": "Dodaj nowy przepis ręcznie lub zaimportuj go za pomocą adresu URL",
+			"close": "Zamknij",
+			"addManually": "Dodaj ręcznie",
+			"addByUrl": {
+				"title": "Import z adresu URL",
+				"description": "Wklej adres URL przepisu, który chcesz zaimportować.",
+				"import": "Importuj",
+				"label": "Adres URL",
+				"invalid": "Nieprawidłowy adres URL"
+			}
+		},
+		"view": {
+			"list": "Pokaż jako listę",
+			"grid": "Pokaż jako siatkę"
+		},
+		"listLoadError": "Nie udało się załadować przepisów",
+		"selection": {
+			"start": "Wybierz przepisy",
+			"reset": "Wyczyść",
+			"selected_one": "1 wybrany",
+			"selected_few": "{{count}} wybrane",
+			"selected_many": "{{count}} wybranych",
+			"selected_other": "{{count}} wybranych"
+		},
+		"rescrape": {
+			"menuItem": "Pobierz ponownie przepis"
+		}
+	},
+	"newRecipe": {
+		"title": "Nowy przepis",
+		"fields": {
+			"basicInfo": "Podstawowe informacje",
+			"cover": "Zdjęcie",
+			"name": "Nazwa",
+			"description": "Opis",
+			"url": "Adres URL",
+			"prepTime": {
+				"label": "Czas przygotowywania",
+				"unit_one": "minuta",
+				"unit_few": "minuty",
+				"unit_many": "minut",
+				"unit_other": "minut"
+			},
+			"servings": "Porcje",
+			"calories": "Kalorie",
+			"tags": {
+				"title": "Tagi",
+				"addTag": "Dodaj tag",
+				"dialog": {
+					"title": "Dodaj tag",
+					"description": "Dodaj nowy tag do przepisu",
+					"cancel": "Anuluj",
+					"add": "Dodaj",
+					"label": "Tag"
+				}
+			},
+			"ingredients": {
+				"title": "Składniki",
+				"delete": "Usuń składnik",
+				"add": "Dodaj składnik",
+				"ingredient": "Składnik nr. {{index}}",
+				"group": {
+					"add": "Dodaj grupę składników",
+					"delete": "Usuń grupę składników",
+					"group": "Grupa składników nr. {{index}}"
+				}
+			},
+			"steps": {
+				"title": "Przygotowywanie",
+				"delete": "Usuń krok",
+				"step": "Krok nr. {{index}}",
+				"add": "Dodaj krok",
+				"group": {
+					"add": "Dodaj grupę kroków",
+					"delete": "Usuń grupę kroków",
+					"group": "Grupa kroków nr. {{index}}"
+				}
+			},
+			"rating": {
+				"label": "Ocena"
+			},
+			"color": {
+				"label": "Kolor",
+				"extract": "Pobierz kolor z obrazu",
+				"dialog": {
+					"title": "Wybierz kolor",
+					"description": "Wybierz kolor dla swojego przepisu",
+					"cancel": "Anuluj",
+					"select": "Wybierz"
+				}
+			},
+			"save": "Zapisz przepis"
+		},
+		"invalid": "Nieprawidłowe dane przepisu",
+		"form": {
+			"name": {
+				"required": "Nazwa przepisu jest wymagana"
+			},
+			"image": {
+				"invalid": "Nieprawidłowe adres zdjęcia"
+			},
+			"ingredients": {
+				"required": "Składnik nie może być pusty",
+				"notEmpty": "Przynajmniej jeden składnik jest wymagany"
+			},
+			"instructions": {
+				"required": "Krok nie może być pusty",
+				"notEmpty": "Przynajmniej jeden krok jest wymagany"
+			},
+			"url": {
+				"invalid": "Nieprawidłowy adres URL"
+			},
+			"calories": {
+				"invalid": "Kalorie muszą być liczbą większą od zera"
+			},
+			"tags": {
+				"notEmpty": "Tag nie może być pusty",
+				"unique": "Tagi muszą być unikalne"
+			},
+			"servings": {
+				"invalid": "Porcje muszą być liczbą większą od zera"
+			},
+			"rating": {
+				"invalid": "Ocena musi być liczbą od 1 do 5"
+			},
+			"gallery": {
+				"invalid": "Nieprawidłowe adres zdjęcia"
+			},
+			"color": {
+				"invalid": "Nieprawidłowy kolor"
+			}
+		}
+	},
+	"editRecipe": {
+		"title": "Edytuj przepis",
+		"save": "Zapisz przepis",
+		"success": "Pomyślnie zaktualizowano przepis"
+	},
+	"scraping": {
+		"title": "Import przepisu",
+		"error": "Nie można pobrać tego przepisu. Strona {{website}} może nie być obsługiwana.",
+		"save": "Zapisz przepis",
+		"close": "Zamknij",
+		"showIssues": "Pokaż szczegóły błędu",
+		"hideIssues": "Ukryj szczegóły błędu"
+	},
+	"home": {
+		"searchBarPlaceholder": "Na co masz ochotę?",
+		"emptyMessage": "Brak przepisów",
+		"recentRecipes": "Ostatnio dodane",
+		"mostCommonTags": "Najczęstsze tagi",
+		"topRecipes": "Najwyżej oceniane"
+	},
+	"settings": {
+		"account": {
+			"title": "Konto i synchronizacja",
+			"text": "Ustawienia związane z synchronizacją przepisów",
+			"loggedInText": "Jesteś zalogowany do swojego konta Google",
+			"logout": "Wyloguj",
+			"login": "Zaloguj",
+			"loggedOutTitle": "Konto",
+			"loggedOutText": "Zaloguj się na swoje konto Google",
+			"sync": {
+				"title": "Synchronizacja przepisów",
+				"text": "Automatycznie synchronizuj swoje przepisy"
+			},
+			"quickActions": {
+				"title": "Szybkie akcje",
+				"importFile": "Import z pliku",
+				"exportFile": "Eksport do pliku",
+				"exportUrls": "Eksportuj adresy URL przepisów",
+				"import": {
+					"success_one": "Pomyślnie zaimportowano {{count}} przepis",
+					"success_few": "Pomyślnie zaimportowano {{count}} przepisy",
+					"success_many": "Pomyślnie zaimportowano {{count}} przepisów",
+					"success_other": "Pomyślnie zaimportowano {{count}} przepisów",
+					"error": "Wystąpił błąd podczas importowania przepisów"
+				}
+			}
+		},
+		"theme": {
+			"title": "Wygląd",
+			"text": "Wybierz preferowany wygląd",
+			"colorScheme": {
+				"title": "Schemat kolorów",
+				"dialog": {
+					"title": "Schemat kolorów",
+					"description": "Wybierz schemat kolorów aplikacji",
+					"options": {
+						"light": "Jasny",
+						"dark": "Ciemny",
+						"system": "Systemowy"
+					},
+					"cancel": "Anuluj",
+					"save": "Zapisz"
+				}
+			},
+			"dynamicColors": {
+				"title": "Dynamiczne kolory",
+				"text": "Użyj dynamicznego schematu kolorów opartego na kolorach zdjęcia przepisu"
+			},
+			"disableAnimations": {
+				"title": "Wyłącz animacje",
+				"forcedText": "Wymuszone przez ustawienia systemu",
+				"text": "Wyłącz wszystkie animacje w aplikacji"
+			}
+		},
+		"units": {
+			"title": "Jednostki",
+			"text": "Ustawienia przeliczania jednostek",
+			"conversion": {
+				"title": "Przeliczanie jednostek",
+				"text": "Konwersja jednostek na preferowane"
+			},
+			"precision": {
+				"title": "Precyzja przeliczania",
+				"text_one": "Zaokrąglij do {{count}} cyfry po przecinku",
+				"text_few": "Zaokrąglij do {{count}} cyfr po przecinku",
+				"text_many": "Zaokrąglij do {{count}} cyfr po przecinku",
+				"text_other": "Zaokrąglij do {{count}} cyfr po przecinku"
+			},
+			"preferred": {
+				"title": "Preferowane jednostki składników",
+				"preferred": "Preferowana jednostka: {{unit}}"
+			}
+		},
+		"about": {
+			"title": "O aplikacji",
+			"version": "Wersja aplikacji {{version}}"
+		},
+		"language": {
+			"title": "Język",
+			"text": "Wybierz język aplikacji"
+		}
+	},
+	"auth": {
+		"logoutError": {
+			"text": "Nie udało się odnowić sesji. Zostałeś wylogowany",
+			"action": "OK"
+		},
+		"google": {
+			"error": {
+				"title": "Błąd logowania",
+				"description": "Błąd podczas logowania, mógł wystąpić błąd na koncie lub nie wszystkie niezbędne uprawnienia zostały przyznane.",
+				"close": "Zamknij"
+			}
+		}
+	},
+	"search": {
+		"placeholder": "Szukaj przepisów...",
+		"noResults": "Brak wyników",
+		"clear": "Wyczyść",
+		"filters": {
+			"title": "Filtry",
+			"clear": "Wyczyść filtry",
+			"preparationTime": {
+				"title": "Czas przygotowania",
+				"noLimit": "Bez limitu",
+				"upTo_one": "Do {{count}} minuty",
+				"upTo_few": "Do {{count}} minut",
+				"upTo_many": "Do {{count}} minut",
+				"upTo_other": "Do {{count}} minut"
+			},
+			"requiredIngredients": {
+				"title": "Zawiera składniki"
+			}
+		}
+	}
+}

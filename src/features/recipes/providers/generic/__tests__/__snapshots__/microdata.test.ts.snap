@@ -1,0 +1,184 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should scrape recipes using Microdata format > should scrape valid recipe for Gofry bananowe 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "Gofry bananowe to idealny sposób na wykorzystanie dojrzałych bananów w swojej kuchni. Wyróżniają się prostotą przygotowania - wystarczy kilka składników i parę minut, aby przygotować pyszne i pożywne gofry, które zachwycą całą Twoją rodzinę.",
+  "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-5-768x1151.jpg",
+  "ingredients": [
+    {
+      "text": "1 duży, dojrzały banan (ewentualnie 2 małe)",
+    },
+    {
+      "text": "190 g mąki pszennej",
+    },
+    {
+      "text": "40 ml oleju",
+    },
+    {
+      "text": "1 duże jajko",
+    },
+    {
+      "text": "1 łyżeczka proszku do pieczenia",
+    },
+    {
+      "text": "szczypta cynamonu",
+    },
+    {
+      "text": "150 ml mleka",
+    },
+    {
+      "text": "cukier puder do oprószenia",
+    },
+    {
+      "text": "owoce do dekoracji",
+    },
+  ],
+  "instructions": [
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-7.jpg",
+      "text": "Zaczynamy od przygotowania ciasta na gofry bananowe. Dojrzałego dużego banana (lub dwa małe) rozgniatamy np. za pomocą widelca lub tłuczka do ziemniaków.",
+    },
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-1.jpg",
+      "text": "Dodajemy mąkę pszenną tortową (190 g), olej lub roztopione masło (40 ml), duże jajko, proszek do pieczenia (1 płaska łyżeczka), cynamon (szczypta) oraz mleko (150 ml). PS. Nie używam w tym przepisie cukru, bo użyłam słodkiego, dojrzałego banana, ale jeśli chcesz to dodaj 1 łyżkę cukru białego lub pudru.",
+    },
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-2.jpg",
+      "text": "Całość mieszamy za pomocą rózgi kuchennej jedynie do momentu połączenia się składników. Ciasto ma wyjść nieco gęste. Odstawiamy je na 5-10 minut, aby się lekko napuszyło.",
+    },
+    {
+      "image": "https://poprostupycha.com.pl/wp-content/uploads/2021/06/gofry-bananowe-3.jpg",
+      "text": "Smażymy gofry w rozgrzanej gofrownicy aż będą ładnie rumiane. Podajemy z ulubionymi dodatkami. U mnie z serkiem homogenizowanym waniliowym i świeżymi owocami. Smacznego!",
+    },
+  ],
+  "name": "Gofry bananowe",
+  "prepTime": 10,
+  "rating": 4.6,
+  "servings": 6,
+  "tags": [
+    "gofry",
+  ],
+}
+`;
+
+exports[`should scrape recipes using Microdata format > should scrape valid recipe for Sernik Izaura 1`] = `
+{
+  "calories": undefined,
+  "color": "#ffffff",
+  "description": "W jaki sposób połączyć dwa ulubione ciasta w jedno? Poznaj przepis na sernik Izaura łączący w sobie to co najlepsze w klasycznym smaku sernika oraz mocno czekoladowym murzynku! Chcesz więcej? Nie zapomnij o pysznej polewie z dodatkiem wiórek kokosowych! Sernik Izaura zachwyci każdego! Jestem przekonana, że to pyszne ciasto w mig zniknie z Twojego stołu 😊.",
+  "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-1-1.jpg",
+  "ingredients": [
+    {
+      "text": "250 g masła irlandzkiego Kerrygold",
+    },
+    {
+      "text": "200 g cukru",
+    },
+    {
+      "text": "50 ml wody",
+    },
+    {
+      "text": "3 łyżki ciemnego kakao",
+    },
+    {
+      "text": "200 g mąki pszennej Polka typ 450",
+    },
+    {
+      "text": "2 łyżeczki Proszku do pieczenia Dr. Oetkera",
+    },
+    {
+      "text": "4 jajka",
+    },
+    {
+      "text": "1 kg twarogu sernikowego",
+    },
+    {
+      "text": "230 g cukru",
+    },
+    {
+      "text": "5 jajek",
+    },
+    {
+      "text": "100 g roztopionego masła irlandzkiego Kerrygold",
+    },
+    {
+      "text": "2 budynie śmietankowe Dr. Oetkera",
+    },
+    {
+      "text": "Kilka łyżek wiórków kokosowych",
+    },
+  ],
+  "instructions": [
+    {
+      "group": "Przygotowanie ciasta kakaowego",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-1-1.jpg",
+      "text": "Formę o wymiarach 25 x 35 cm wyłóż papierem do pieczenia.",
+    },
+    {
+      "group": "Przygotowanie ciasta kakaowego",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-1-2.jpg",
+      "text": "Do garnka przełóż masło i rozpuść je z cukrem.",
+    },
+    {
+      "group": "Przygotowanie ciasta kakaowego",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-2.jpg",
+      "text": "Dodaj wodę i kakao, wymieszaj do połączenia się składników.",
+    },
+    {
+      "group": "Przygotowanie ciasta kakaowego",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-3.jpg",
+      "text": "Odlej okolo 100 ml masy czekoladowej na polewę i odstaw.",
+    },
+    {
+      "group": "Przygotowanie ciasta kakaowego",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-4.jpg",
+      "text": "Do przestudzonej masy dodaj żółtka oraz wymieszną z proszkiem do pieczenia mąkę. Wymieszaj do uzyskania jednolitej konsystencji.",
+    },
+    {
+      "group": "Przygotowanie ciasta kakaowego",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-5.jpg",
+      "text": "Białka ubij na sztywną pianę i dodaj do ciasta.",
+    },
+    {
+      "group": "Przygotowanie masy serowej",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-6.jpg",
+      "text": "Białka oddziel od żółtek. Do miski przełóż twaróg z cukrem, żółtakami i budyniami. Na końcu dodaj roztopione masło.",
+    },
+    {
+      "group": "Przygotowanie masy serowej",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-7.jpg",
+      "text": "Masę serową dokładnie zmiksuj.",
+    },
+    {
+      "group": "Przygotowanie masy serowej",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-8.jpg",
+      "text": "Białka ubij na sztywną pianę i wymieszaj z masą serową.",
+    },
+    {
+      "group": "Przygotowanie masy serowej",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-9.jpg",
+      "text": "Do formy przełóż ciasto czekoladowe naprzemiennie z serowym. Na koniec przy użyciu łyżki i drewnianego patyczka pomieszaj delikatnie ciasto tworząc esy floresy.",
+    },
+    {
+      "group": "Przygotowanie masy serowej",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-10.jpg",
+      "text": "Wstaw do nagrzanego do 160°C piekarnika i piecz około 45 - 50 minut.",
+    },
+    {
+      "group": "Przygotowanie masy serowej",
+      "image": "https://wszystkiegoslodkiego.pl/storage/images/202011/sernik-izaura-przepis-krok-11.jpg",
+      "text": "Na upieczone ciasto przelej przygotowaną wcześniej polewę i posyp wiórkami kokosowymi Bakal.",
+    },
+  ],
+  "name": "Sernik Izaura",
+  "prepTime": 90,
+  "rating": 4.98,
+  "servings": 24,
+  "tags": [
+    "ciasta czekoladowe",
+    "serniki i ciasta z serem",
+  ],
+}
+`;

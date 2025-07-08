@@ -1,0 +1,335 @@
+{
+	"paths": {
+		"home": "Home",
+		"recipes": "Recipes",
+		"settings": "Settings",
+		"theme": "Theme",
+		"account": "Account and sync",
+		"units": "Units",
+		"search": "Search"
+	},
+	"appUpdate": {
+		"updateAvailable": "App update available",
+		"update": "Update"
+	},
+	"notifications": {
+		"title": "Notifications",
+		"close": "Close"
+	},
+	"forms": {
+		"clearField": "Clear"
+	},
+	"navigation": {
+		"goBack": "Go back"
+	},
+	"recipes": {
+		"details": {
+			"ingredients_one": "{{count}} ingredient",
+			"ingredients_other": "{{count}} ingredients",
+			"prepTime_one": "{{count}} minute",
+			"prepTime_other": "{{count}} minutes",
+			"calories": "{{count}} kcal",
+			"servings_one": "{{count}} serving",
+			"servings_other": "{{count}} servings"
+		},
+		"ingredients": {
+			"title": "Ingredients",
+			"amount_one": "{{count}} product",
+			"amount_other": "{{count}} products",
+			"increase": "Increase servings",
+			"decrease": "Decrease servings",
+			"servings_one": "{{count}} serving",
+			"servings_other": "{{count}} servings"
+		},
+		"tags": "Tags",
+		"gallery": "Gallery",
+		"steps": {
+			"title": "Steps",
+			"step": "Step {{step}}"
+		},
+		"sharing": {
+			"menuItem": "Share recipe",
+			"error": "There was an error while sharing recipe, try again"
+		},
+		"loadError": "Couldn't load this recipe",
+		"moreOptions": "More",
+		"edit": "Edit recipe",
+		"delete": {
+			"menuItem": "Delete recipe",
+			"title": "Delete recipe",
+			"confirmation": "Do you really want to delete recipe {{name}}?",
+			"cancel": "Cancel",
+			"delete": "Delete"
+		},
+		"sampleRecipes": {
+			"text": "You have no recipes saved. Do you want to add some sample recipes?",
+			"add": "Add",
+			"dismiss": "Dismiss"
+		},
+		"sync": {
+			"menuItem": "Sync recipes",
+			"error": "Error while syncing recipes",
+			"ok": "OK"
+		},
+		"addRecipe": {
+			"cta": "Add recipe",
+			"title": "Add recipe",
+			"description": "Add a new recipe manually or import using the URL",
+			"close": "Close",
+			"addManually": "Add manually",
+			"addByUrl": {
+				"title": "Import from URL",
+				"description": "Paste URL address to recipe that you want to import",
+				"import": "Import",
+				"label": "URL address",
+				"invalid": "Invalid URL address"
+			}
+		},
+		"view": {
+			"list": "Show as list",
+			"grid": "Show as grid"
+		},
+		"listLoadError": "Couldn't load recipes",
+		"selection": {
+			"start": "Select recipes",
+			"reset": "Reset selection",
+			"selected_one": "1 selected",
+			"selected_other": "{{count}} selected"
+		},
+		"rescrape": {
+			"menuItem": "Rescrape recipe"
+		}
+	},
+	"newRecipe": {
+		"title": "New recipe",
+		"fields": {
+			"basicInfo": "Basic info",
+			"cover": "Cover image",
+			"name": "Name",
+			"description": "Description",
+			"url": "URL",
+			"prepTime": {
+				"label": "Preparation time",
+				"unit_one": "minute",
+				"unit_other": "minutes"
+			},
+			"servings": "Servings",
+			"calories": "Calories",
+			"tags": {
+				"title": "Tags",
+				"addTag": "Add tag",
+				"dialog": {
+					"title": "New tag",
+					"description": "Add a new tag to your recipe",
+					"cancel": "Cancel",
+					"add": "Add",
+					"label": "Tag"
+				}
+			},
+			"ingredients": {
+				"title": "Ingredients",
+				"delete": "Delete ingredient",
+				"add": "Add ingredient",
+				"ingredient": "Ingredient no. {{index}}",
+				"group": {
+					"add": "Add ingredient group",
+					"delete": "Delete ingredient group",
+					"group": "Ingredients group no. {{index}}"
+				}
+			},
+			"steps": {
+				"title": "Steps",
+				"delete": "Delete step",
+				"step": "Step no. {{index}}",
+				"add": "Add step",
+				"group": {
+					"add": "Add step group",
+					"delete": "Delete step group",
+					"group": "Steps group no. {{index}}"
+				}
+			},
+			"rating": {
+				"label": "Rating"
+			},
+			"color": {
+				"label": "Color",
+				"extract": "Extract color from image",
+				"dialog": {
+					"title": "Select color",
+					"description": "Select color for your recipe",
+					"cancel": "Cancel",
+					"select": "Select"
+				}
+			},
+			"save": "Save recipe"
+		},
+		"invalid": "Invalid recipe data",
+		"form": {
+			"name": {
+				"required": "Name is required"
+			},
+			"image": {
+				"invalid": "Invalid image URL"
+			},
+			"ingredients": {
+				"required": "Ingredient must not be empty",
+				"notEmpty": "At least one ingredient is required"
+			},
+			"instructions": {
+				"required": "Step must not be empty",
+				"notEmpty": "At least one step is required"
+			},
+			"url": {
+				"invalid": "Invalid recipe URL"
+			},
+			"calories": {
+				"invalid": "Calories must be positive number"
+			},
+			"tags": {
+				"notEmpty": "Tag must not be empty",
+				"unique": "Tags must be unique"
+			},
+			"servings": {
+				"invalid": "Servings must be positive number"
+			},
+			"rating": {
+				"invalid": "Rating must be a number between 1 and 5"
+			},
+			"gallery": {
+				"invalid": "Invalid image URL"
+			},
+			"color": {
+				"invalid": "Invalid color"
+			}
+		}
+	},
+	"editRecipe": {
+		"title": "Edit recipe",
+		"save": "Save recipe",
+		"success": "Recipe saved successfully"
+	},
+	"scraping": {
+		"title": "Scraping error",
+		"error": "Couldn't scrape this recipe. Website {{website}} might not be supported.",
+		"save": "Save recipe",
+		"close": "Close",
+		"showIssues": "Show error details",
+		"hideIssues": "Hide error details"
+	},
+	"home": {
+		"searchBarPlaceholder": "What do you want to eat?",
+		"emptyMessage": "No recipes",
+		"recentRecipes": "Recently added",
+		"mostCommonTags": "Most common tags",
+		"topRecipes": "Top rated"
+	},
+	"settings": {
+		"account": {
+			"title": "Account and sync",
+			"text": "Settings related to recipes synchronization",
+			"loggedInText": "You are logged in to your Google account",
+			"logout": "Logout",
+			"login": "Login",
+			"loggedOutTitle": "Account",
+			"loggedOutText": "Log in to your Google account",
+			"sync": {
+				"title": "Recipes synchronization",
+				"text": "Automatically synchronize your recipes"
+			},
+			"quickActions": {
+				"title": "Quick actions",
+				"importFile": "Import from file",
+				"exportFile": "Export to file",
+				"exportUrls": "Export recipes urls",
+				"import": {
+					"success_one": "Successfully imported {{count}} recipe",
+					"success_other": "Successfully imported {{count}} recipes",
+					"error": "An error occurred while importing recipes"
+				}
+			}
+		},
+		"theme": {
+			"title": "Theme",
+			"text": "Select your preferred theme",
+			"colorScheme": {
+				"title": "Color scheme",
+				"dialog": {
+					"title": "Color scheme",
+					"description": "Select app's color scheme",
+					"options": {
+						"light": "Light",
+						"dark": "Dark",
+						"system": "System"
+					},
+					"cancel": "Cancel",
+					"save": "Save"
+				}
+			},
+			"dynamicColors": {
+				"title": "Dynamic colors",
+				"text": "Use dynamic color scheme based on recipe’s image colors"
+			},
+			"disableAnimations": {
+				"title": "Disable animations",
+				"forcedText": "Forced by system settings",
+				"text": "Disable all animations inside app"
+			}
+		},
+		"units": {
+			"title": "Units",
+			"text": "Units conversion settings",
+			"conversion": {
+				"title": "Units conversion",
+				"text": "Convert units to preferred ones"
+			},
+			"precision": {
+				"title": "Conversion precision",
+				"text_one": "Round up to {{count}} decimal digit",
+				"text_other": "Round up to {{count}} decimal digits"
+			},
+			"preferred": {
+				"title": "Ingredients preferred units",
+				"preferred": "Preferred unit: {{unit}}"
+			}
+		},
+		"about": {
+			"title": "About app",
+			"version": "App version {{version}}"
+		},
+		"language": {
+			"title": "Language",
+			"text": "Select app's language"
+		}
+	},
+	"auth": {
+		"logoutError": {
+			"text": "The session could not be renewed. You have been logged out",
+			"action": "OK"
+		},
+		"google": {
+			"error": {
+				"title": "Login error",
+				"description": "Error when logging in, there may have been an error in the account or not all the necessary permissions were granted.",
+				"close": "Close"
+			}
+		}
+	},
+	"search": {
+		"placeholder": "Search recipes...",
+		"noResults": "No results",
+		"clear": "Clear",
+		"filters": {
+			"title": "Filters",
+			"clear": "Clear all filters",
+			"preparationTime": {
+				"title": "Preparation time",
+				"noLimit": "No limit",
+				"upTo_one": "Up to {{count}} minute",
+				"upTo_other": "Up to {{count}} minutes"
+			},
+			"requiredIngredients": {
+				"title": "Contains ingredients"
+			}
+		}
+	}
+}
