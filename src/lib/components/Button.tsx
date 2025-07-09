@@ -2,7 +2,7 @@ import * as Ariakit from '@ariakit/react'
 import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
-import { type ComponentProps, forwardRef } from 'react'
+import { type ComponentProps } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { styleUtils, theme } from 'lib/styles'
 import { Icon } from './Icon'
@@ -11,16 +11,15 @@ type ButtonProps = ComponentProps<typeof Container> & {
 	leftIcon?: SvgSpriteIconName
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
+export const Button = ({
 	children,
 	leftIcon,
 	...props
-}, ref) => {
+}: ButtonProps) => {
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
 		<Container
-			ref={ref}
 			{...mergeProps(props, eventHandlers)}
 		>
 			{!props.disabled && renderRipples}
@@ -33,7 +32,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
 			{children}
 		</Container>
 	)
-})
+}
 
 const Container = styled(Ariakit.Button, {
 	base: {

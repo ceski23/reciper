@@ -1,13 +1,14 @@
 import * as Ariakit from '@ariakit/react'
+import { useResizeObserver } from '@hooks/useResizeObserver'
 import { styled } from '@macaron-css/react'
 import { animated, useSpring } from '@react-spring/web'
 import { mq } from '@styles/utils'
 import { useDrag } from '@use-gesture/react'
-import { type FunctionComponent, type ReactNode, useCallback, useEffect, useState } from 'react'
+import { type FunctionComponent, type ReactNode, useCallback, useState } from 'react'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography } from './Typography'
 
-export type SheetState = 'open' | 'close' | 'peek'
+export type SheetState = 'open' | 'close'
 
 type BottomSheetProps = {
 	state: SheetState
@@ -31,28 +32,18 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 	const handleHeight = 36
 	const [sheetHeight, setSheetHeight] = useState(0)
 	const [showBackdrop, setShowBackdrop] = useState(false)
-	// eslint-disable-next-line react/hook-use-state
-	const [resizeObserver] = useState(() => new ResizeObserver(([entry]) => setSheetHeight(entry.borderBoxSize.at(0)?.blockSize ?? 0 + handleHeight)))
-
-	const measuredRef = useCallback((node: HTMLElement | null) => {
-		if (node) {
-			resizeObserver.observe(node)
-			return
-		}
-
-		resizeObserver.disconnect()
-	}, [resizeObserver])
+	const measuredRef = useResizeObserver(rect => setSheetHeight(rect?.height ?? 0 + handleHeight))
 
 	const backdropStyles = useSpring({ opacity: state !== 'close' ? 1 : 0 })
 	const [{ y }, api] = useSpring({
-		y: 0,
+		y: state === 'close' ? 0 : -sheetHeight + gap,
 		onStart(result) {
 			if (result.value.y !== 0) setShowBackdrop(true)
 		},
 		onRest(result) {
 			if (result.value.y === 0) setShowBackdrop(false)
 		},
-	}, [])
+	}, [state, sheetHeight, gap])
 
 	const openSheet = useCallback(() => {
 		api.start({ y: -sheetHeight + gap, immediate: false })
@@ -63,25 +54,6 @@ export const BottomSheet: FunctionComponent<BottomSheetProps> = ({
 		api.start({ y: 0, immediate: false })
 		onStateChange('close')
 	}, [api, onStateChange])
-
-	const peekSheet = useCallback(() => {
-		api.start({ y: -sheetHeight * 0.4, immediate: false })
-		onStateChange('peek')
-	}, [api, onStateChange, sheetHeight])
-
-	useEffect(() => {
-		switch (state) {
-			case 'open':
-				openSheet()
-				break
-			case 'close':
-				closeSheet()
-				break
-			case 'peek':
-				peekSheet()
-				break
-		}
-	}, [closeSheet, openSheet, peekSheet, state])
 
 	// eslint-disable-next-line newline-destructuring/newline
 	const bind = useDrag(({

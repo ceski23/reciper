@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { type AriaAttributes, forwardRef, useState } from 'react'
+import { type AriaAttributes, useState } from 'react'
 import { styleUtils, theme } from 'lib/styles'
 
 type SwitchProps = AriaAttributes & {
@@ -9,13 +9,13 @@ type SwitchProps = AriaAttributes & {
 	disabled?: boolean
 }
 
-export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
+export const Switch = ({
 	defaultValue,
 	checked,
 	onCheckedChange,
 	disabled,
 	...props
-}, ref) => {
+}: SwitchProps) => {
 	const [isOn, setIsOn] = useState(defaultValue ?? false)
 
 	if (checked !== isOn && checked !== undefined) {
@@ -25,7 +25,6 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
 	return (
 		<Track
 			type="button"
-			ref={ref}
 			role="switch"
 			disabled={disabled}
 			aria-checked={isOn}
@@ -38,7 +37,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(({
 			<Handle />
 		</Track>
 	)
-})
+}
 
 const Track = styled('button', {
 	base: {

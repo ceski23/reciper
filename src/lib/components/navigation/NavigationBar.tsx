@@ -1,6 +1,6 @@
 import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import { type ComponentProps, forwardRef } from 'react'
+import { type ComponentProps } from 'react'
 import { theme } from 'lib/styles'
 import { NavigationSegment, type NavigationSegmentProps } from './NavigationSegment'
 
@@ -8,13 +8,12 @@ type NavigationBarProps = {
 	segments: Array<NavigationSegmentProps>
 }
 
-export const NavigationBar = forwardRef<HTMLDivElement, NavigationBarProps & ComponentProps<typeof NavigationBarBase>>(({
+export const NavigationBar = ({
 	segments,
 	...props
-}, ref) => (
+}: NavigationBarProps & ComponentProps<typeof NavigationBarBase>) => (
 	<CompositeProvider>
 		<NavigationBarBase
-			ref={ref}
 			{...props}
 			render={(
 				<nav>
@@ -32,7 +31,7 @@ export const NavigationBar = forwardRef<HTMLDivElement, NavigationBarProps & Com
 			)}
 		/>
 	</CompositeProvider>
-))
+)
 
 const NavigationBarBase = styled(Composite, {
 	base: {

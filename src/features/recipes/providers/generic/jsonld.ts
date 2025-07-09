@@ -18,6 +18,7 @@ import {
 	type Recipe as RecipeSchemaType,
 	type Role,
 	type Text,
+	type TextObject,
 	type Thing,
 } from 'schema-dts'
 import { type Recipe } from 'features/recipes/types'
@@ -43,7 +44,7 @@ const isRecipe = (value: Thing): value is RecipeSchemaType =>
 	typeof value === 'object' && '@type' in value
 	&& (value['@type'] === 'Recipe' || Array.isArray(value['@type']) && value['@type'].includes('Recipe'))
 
-const parseStringValue = (value: SchemaValue<Text> | undefined): string | Array<string> | undefined => {
+const parseStringValue = (value: SchemaValue<IdReference | Text | TextObject> | undefined): string | Array<string> | undefined => {
 	if (!isDefined(value)) return undefined
 
 	if (typeof value === 'string') return decodeHTML5Strict(value)

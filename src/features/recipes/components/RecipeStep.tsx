@@ -1,6 +1,6 @@
 import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
-import { forwardRef } from 'react'
+import { type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TemperatureSegment } from 'features/recipes/components/TemperatureSegment'
 import type { Recipe } from 'features/recipes/types'
@@ -13,9 +13,10 @@ import { segmentizeText } from 'lib/utils/text'
 type RecipeStepProps = {
 	number: number
 	step: Recipe['instructions'][number]
+	ref?: Ref<HTMLButtonElement>
 }
 
-export const RecipeStep = forwardRef<HTMLButtonElement, RecipeStepProps>(({ number, step }, ref) => {
+export const RecipeStep = ({ number, step, ref }: RecipeStepProps) => {
 	const { t } = useTranslation()
 	const { eventHandlers, renderRipples } = useRipples()
 
@@ -49,7 +50,7 @@ export const RecipeStep = forwardRef<HTMLButtonElement, RecipeStepProps>(({ numb
 			)}
 		</Ariakit.Checkbox>
 	)
-})
+}
 
 const Item = styled('button', {
 	base: {

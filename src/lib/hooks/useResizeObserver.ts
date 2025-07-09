@@ -6,10 +6,11 @@ export const useResizeObserver = <TElement extends Element>(callback: (contentRe
 
 	const callbackRef = useCallback((node: TElement | null) => {
 		callback(node?.getBoundingClientRect())
-		resizeObserver.disconnect()
 
 		if (node) {
 			resizeObserver.observe(node)
+
+			return () => resizeObserver.disconnect()
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [resizeObserver])

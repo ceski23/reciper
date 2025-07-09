@@ -3,8 +3,7 @@ import { typography } from '@components/Typography'
 import { styled } from '@macaron-css/react'
 import { mq } from '@styles/utils'
 import { getVariableColorValue } from '@utils/dom'
-import { forwardRef, useLayoutEffect, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
+import { type Ref, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'lib/styles'
 
@@ -13,9 +12,10 @@ type TopSearchBarProps = {
 	placeholder?: string
 	onQueryChange: (newQuery: string) => void
 	onBackClick: () => void
+	ref?: Ref<HTMLInputElement>
 }
 
-export const TopSearchBar = forwardRef<HTMLInputElement, TopSearchBarProps>(({ onQueryChange, query, placeholder, onBackClick }, ref) => {
+export const TopSearchBar = ({ onQueryChange, query, placeholder, onBackClick, ref }: TopSearchBarProps) => {
 	const { t } = useTranslation()
 	const [themeColor, setThemeColor] = useState<string>()
 
@@ -28,12 +28,10 @@ export const TopSearchBar = forwardRef<HTMLInputElement, TopSearchBarProps>(({ o
 
 	return (
 		<AppBarBase>
-			<Helmet>
-				<meta
-					name="theme-color"
-					content={themeColor}
-				/>
-			</Helmet>
+			<meta
+				name="theme-color"
+				content={themeColor}
+			/>
 			<IconButton
 				icon="backArrow"
 				title={t('navigation.goBack')}
@@ -56,7 +54,7 @@ export const TopSearchBar = forwardRef<HTMLInputElement, TopSearchBarProps>(({ o
 			)}
 		</AppBarBase>
 	)
-})
+}
 
 const AppBarBase = styled('div', {
 	base: {

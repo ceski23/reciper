@@ -2,6 +2,7 @@ import { useCheckboxContext } from '@ariakit/react'
 import * as Ariakit from '@ariakit/react'
 import { Icon } from '@components/Icon'
 import { Link } from '@components/Link'
+import { style } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
 import { theme } from '@styles/theme'
@@ -70,10 +71,11 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 					)
 					: recipe.image
 					? (
-						<RecipeImage
+						<UnLazyImage
 							src={recipe.image}
 							onClick={handleLeadingElementClick}
 							thumbhash={recipe.thumbhash}
+							className={recipeImageStyle}
 						/>
 					)
 					: (
@@ -98,13 +100,11 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 	)
 }
 
-const RecipeImage = styled(UnLazyImage, {
-	base: {
-		width: 56,
-		height: 56,
-		borderRadius: 8,
-		objectFit: 'cover',
-	},
+const recipeImageStyle = style({
+	width: 56,
+	height: 56,
+	borderRadius: 8,
+	objectFit: 'cover',
 })
 
 const RecipeImageFallback = styled('div', {

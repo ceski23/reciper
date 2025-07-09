@@ -5,8 +5,8 @@ import { IconButton } from '@components/IconButton'
 import { Typography } from '@components/Typography'
 import { styled } from '@macaron-css/react'
 import { styleUtils, theme } from '@styles/index'
-import { Link, type ReactNode, type ToOptions } from '@tanstack/react-router'
-import { type ComponentPropsWithoutRef, forwardRef, type FunctionComponent } from 'react'
+import { Link, type ToOptions } from '@tanstack/react-router'
+import { type ComponentPropsWithoutRef, type FunctionComponent, type ReactNode } from 'react'
 import { type SvgSpriteIconName } from 'virtual:svg-sprite'
 
 type NavigationRailRootProps = {
@@ -22,27 +22,25 @@ const NavigationRailRoot: FunctionComponent<NavigationRailRootProps> = ({
 	fab,
 	segmentsAlignment = 'top',
 	...props
-}) => {
-	return (
-		<RailContainer {...props}>
-			<TopContainer>
-				{onMenuClick && (
-					<IconButton
-						icon="menu"
-						title="Menu"
-						onClick={onMenuClick}
-					/>
-				)}
-				{fab && <FloatingActionButton {...fab} />}
-			</TopContainer>
-			<RailNavWrapper alignment={segmentsAlignment}>
-				<RailNav>
-					{children}
-				</RailNav>
-			</RailNavWrapper>
-		</RailContainer>
-	)
-}
+}) => (
+	<RailContainer {...props}>
+		<TopContainer>
+			{onMenuClick && (
+				<IconButton
+					icon="menu"
+					title="Menu"
+					onClick={onMenuClick}
+				/>
+			)}
+			{fab && <FloatingActionButton {...fab} />}
+		</TopContainer>
+		<RailNavWrapper alignment={segmentsAlignment}>
+			<RailNav>
+				{children}
+			</RailNav>
+		</RailNavWrapper>
+	</RailContainer>
+)
 
 export type NavigationRailSegmentProps = {
 	label: string
@@ -52,18 +50,17 @@ export type NavigationRailSegmentProps = {
 	to: ToOptions['to']
 }
 
-const NavigationRailSegment = forwardRef<HTMLAnchorElement, NavigationRailSegmentProps>(({
+const NavigationRailSegment = ({
 	icon,
 	badge,
 	label,
 	hideLabel,
 	to,
 	...props
-}, ref) => {
+}: NavigationRailSegmentProps) => {
 	return (
 		<SegmentBase
 			aria-label={hideLabel ? label : undefined}
-			ref={ref}
 			to={to}
 			{...props}
 		>
@@ -89,7 +86,7 @@ const NavigationRailSegment = forwardRef<HTMLAnchorElement, NavigationRailSegmen
 			)}
 		</SegmentBase>
 	)
-})
+}
 
 export const NavigationRail = {
 	Root: NavigationRailRoot,

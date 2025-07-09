@@ -15,7 +15,7 @@ type RecipeCoverProps = {
 }
 
 const RecipeCover: FunctionComponent<RecipeCoverProps> = ({ image }) => {
-	const galleryRef = useRef<PhotoSwipe>()
+	const galleryRef = useRef<PhotoSwipe>(undefined)
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false)
 	const dimensions = useImageDimensions(image)
 

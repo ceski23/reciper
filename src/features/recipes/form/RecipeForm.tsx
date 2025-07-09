@@ -74,6 +74,7 @@ export const RecipeForm: FunctionComponent<RecipeFormProps> = ({ onSubmit, id, i
 			servings: null,
 			tags: [],
 			url: null,
+			thumbhash: null,
 		},
 	})
 	const ingredientsFields = useFieldArray({

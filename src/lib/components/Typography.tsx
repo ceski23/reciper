@@ -1,6 +1,6 @@
 import { Role } from '@ariakit/react'
 import { styleVariants } from '@macaron-css/core'
-import { type ComponentPropsWithoutRef, forwardRef } from 'react'
+import { type ComponentProps } from 'react'
 import { styleUtils } from 'lib/styles'
 
 export const typography = styleVariants({
@@ -112,18 +112,19 @@ export const typography = styleVariants({
 })
 
 const typographyComponent = (typographyClassName: string) =>
-	forwardRef<HTMLParagraphElement, ComponentPropsWithoutRef<typeof Role.p>>(({
+	function({
 		className,
 		render,
 		...props
-	}, ref) => (
-		<Role.p
-			{...props}
-			className={styleUtils.mergeClassNames([typographyClassName, className])}
-			ref={ref}
-			render={render}
-		/>
-	))
+	}: ComponentProps<typeof Role.p>) {
+		return (
+			<Role.p
+				{...props}
+				className={styleUtils.mergeClassNames([typographyClassName, className])}
+				render={render}
+			/>
+		)
+	}
 
 export const Typography = {
 	DisplayLarge: typographyComponent(typography.displayLarge),

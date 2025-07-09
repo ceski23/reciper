@@ -1,4 +1,4 @@
-import { type CSSProperties, forwardRef } from 'react'
+import { type CSSProperties, type Ref } from 'react'
 import sprite, { type SvgSpriteIconName } from 'virtual:svg-sprite'
 
 type IconProps = {
@@ -6,9 +6,10 @@ type IconProps = {
 	name: SvgSpriteIconName
 	className?: string
 	style?: CSSProperties
+	ref?: Ref<SVGSVGElement>
 }
 
-export const Icon = forwardRef<SVGSVGElement, IconProps>(({ name, size, className, style }, ref) => (
+export const Icon = ({ name, size, className, style, ref }: IconProps) => (
 	<svg
 		ref={ref}
 		width={size}
@@ -18,4 +19,4 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(({ name, size, classNam
 	>
 		<use xlinkHref={`${sprite}#${name}`} />
 	</svg>
-))
+)

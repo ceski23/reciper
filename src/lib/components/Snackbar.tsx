@@ -3,21 +3,21 @@ import { styled } from '@macaron-css/react'
 import { animated, to, useSpring } from '@react-spring/web'
 import { mq } from '@styles/utils'
 import { useDrag } from '@use-gesture/react'
-import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type NotificationComponentProps } from 'features/notifications'
 import { styleUtils, theme } from 'lib/styles'
 import { Icon } from './Icon'
 import { Typography } from './Typography'
 
-export const Snackbar = forwardRef<HTMLOutputElement, NotificationComponentProps>(({
+export const Snackbar = ({
 	action,
 	dismissable,
 	content,
 	onHide,
 	style,
 	loading,
-}, ref) => {
+	ref,
+}: NotificationComponentProps) => {
 	const { t } = useTranslation()
 	const [{ x, opacity }, api] = useSpring(() => ({ x: 0, opacity: 1 }))
 	const bind = useDrag(({ last, movement: [x], currentTarget }) => {
@@ -80,7 +80,7 @@ export const Snackbar = forwardRef<HTMLOutputElement, NotificationComponentProps
 			)}
 		</SnackbarBase>
 	)
-})
+}
 
 const SnackbarBase = styled(animated.output, {
 	base: {

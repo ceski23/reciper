@@ -1,6 +1,6 @@
 import { styled } from '@macaron-css/react'
 import { type SpringValue, useTransition } from '@react-spring/web'
-import { type ComponentProps, type FunctionComponent, type ReactNode, useEffect, useState } from 'react'
+import { type ComponentProps, type FunctionComponent, type ReactNode, type Ref, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type NotificationOptions, notificationsStore } from './store'
 import { useNotifications } from './useNotifications'
@@ -8,6 +8,7 @@ import { useNotifications } from './useNotifications'
 export type NotificationComponentProps = NotificationOptions & {
 	onHide: () => void
 	style: Record<string, SpringValue<number>>
+	ref?: Ref<HTMLOutputElement>
 }
 
 type NotificationViewportProps = Omit<ComponentProps<typeof Container>, 'children'> & {

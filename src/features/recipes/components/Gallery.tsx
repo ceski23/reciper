@@ -16,7 +16,7 @@ type GalleryProps = {
 }
 
 const Gallery: FunctionComponent<GalleryProps> = ({ images }) => {
-	const galleryRef = useRef<PhotoSwipe>()
+	const galleryRef = useRef<PhotoSwipe>(undefined)
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false)
 
 	useBlocker(() => galleryRef.current?.close(), isGalleryOpen)

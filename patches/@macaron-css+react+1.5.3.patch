@@ -1,3 +1,13 @@
+diff --git a/node_modules/@macaron-css/react/dist/index.d.mts b/node_modules/@macaron-css/react/dist/index.d.mts
+index 03338b6..ad9bee4 100644
+--- a/node_modules/@macaron-css/react/dist/index.d.mts
++++ b/node_modules/@macaron-css/react/dist/index.d.mts
+@@ -1,4 +1,4 @@
+-import { ComponentType, PropsWithChildren } from 'react';
++import { ComponentType, PropsWithChildren, JSX } from 'react';
+ import { VariantGroups, PatternOptions, VariantSelection, RuntimeFn } from '@macaron-css/core/types';
+ 
+ declare type StyledComponent<TProps = {}, Variants extends VariantGroups = {}> = ComponentType<PropsWithChildren<TProps & {
 diff --git a/node_modules/@macaron-css/react/dist/runtime.mjs b/node_modules/@macaron-css/react/dist/runtime.mjs
 index ea29e11..9b660c8 100644
 --- a/node_modules/@macaron-css/react/dist/runtime.mjs

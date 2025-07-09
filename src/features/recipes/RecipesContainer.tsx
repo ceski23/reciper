@@ -8,7 +8,7 @@ import { styled } from '@macaron-css/react'
 import { uiStore } from '@stores/ui'
 import { theme } from '@styles/theme'
 import { mq } from '@styles/utils'
-import { type ComponentPropsWithoutRef, forwardRef, type ReactElement } from 'react'
+import { type ComponentPropsWithoutRef, type ReactElement, type Ref } from 'react'
 import { match, P } from 'ts-pattern'
 import { type Recipe } from 'features/recipes/types'
 import { RecipeListItemSkeleton } from './components/RecipeListItemSkeleton'
@@ -22,9 +22,10 @@ type RecipesContainerProps = {
 		isSelecting?: boolean
 	}
 	listHeader?: ReactElement
+	ref?: Ref<HTMLDivElement>
 }
 
-export const RecipesContainer = forwardRef<HTMLDivElement, RecipesContainerProps>(({
+export const RecipesContainer = ({
 	recipes,
 	isLoading,
 	scrollRestorationId = 'recipesList',
@@ -33,7 +34,8 @@ export const RecipesContainer = forwardRef<HTMLDivElement, RecipesContainerProps
 		...listProps
 	} = {},
 	listHeader,
-}, ref) => {
+	ref,
+}: RecipesContainerProps) => {
 	const { recipesViewMode, setRecipesViewMode } = uiStore.useStore()
 	const isMobile = useIsMobile()
 
@@ -102,7 +104,7 @@ export const RecipesContainer = forwardRef<HTMLDivElement, RecipesContainerProps
 				.otherwise(() => null)}
 		</Container>
 	)
-})
+}
 
 const Container = styled('div', {
 	base: {

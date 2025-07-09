@@ -2,7 +2,7 @@ import { styled } from '@macaron-css/react'
 import { type MaskitoOptions } from '@maskito/core'
 import { useMaskito } from '@maskito/react'
 import mergeRefs from 'merge-refs'
-import { type ComponentProps, forwardRef, type ReactElement, type ReactNode, type RefCallback, useId } from 'react'
+import { type ComponentProps, type ReactElement, type ReactNode, type Ref, type RefCallback, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { styleUtils, theme } from 'lib/styles'
@@ -25,9 +25,10 @@ export type TextInputProps = {
 	hasError?: boolean
 	isSelected?: boolean
 	mask?: MaskitoOptions
+	ref?: Ref<HTMLInputElement>
 }
 
-export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
+export const TextInput = ({
 	label,
 	placeholder,
 	value,
@@ -42,7 +43,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 	className,
 	isSelected,
 	mask,
-}, ref) => {
+	ref,
+}: TextInputProps) => {
 	const maskitoRef = useMaskito({ options: mask }) as RefCallback<HTMLInputElement>
 	const { t } = useTranslation()
 	const fieldId = useId()
@@ -121,7 +123,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
 			)}
 		</FieldContainer>
 	)
-})
+}
 
 const FieldContainer = styled('div', {
 	base: {

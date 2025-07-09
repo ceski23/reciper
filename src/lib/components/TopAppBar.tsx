@@ -16,7 +16,6 @@ import {
 	useState,
 } from 'react'
 import { createPortal } from 'react-dom'
-import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { theme } from 'lib/styles'
 import { isDefined } from 'lib/utils'
@@ -125,15 +124,15 @@ export const TopAppBar: FunctionComponent<TopAppBarProps> = ({
 
 	const topAppBarOptionsCallbackRef = useCallback((node: HTMLElement | null) => {
 		uiStore.actions.setTopAppBarOptions(node)
+
+		return () => uiStore.actions.setTopAppBarOptions(null)
 	}, [])
 
 	return (
 		<Fragment>
 			{renderProbe}
 			<HeaderPortal>
-				<Helmet>
-					<meta name="theme-color" />
-				</Helmet>
+				<meta name="theme-color" />
 				<AppBarBase elevation={elevation ?? (isContentScrolled ? 'onScroll' : 'flat')}>
 					{leadingButton ?? (
 						<IconButton

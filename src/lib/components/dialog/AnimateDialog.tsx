@@ -7,8 +7,15 @@ type AnimateDialogProps = {
 	children: ReactElement
 }
 
+// TODO: do something better here
 export const AnimateDialog: FunctionComponent<AnimateDialogProps> = ({ children, open }) => {
 	const transition = useTransition(open, DIALOG_ANIMATION)
 
-	return transition((styles, open) => React.cloneElement(children, { styles, open }))
+	return transition((styles, open) =>
+		React.cloneElement(children, {
+			// @ts-expect-error will need to get rid of this
+			styles,
+			open,
+		})
+	)
 }

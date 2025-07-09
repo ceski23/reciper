@@ -2,7 +2,7 @@ import { TextInput, type TextInputProps } from '@components/TextInput'
 import { maskitoTransform } from '@maskito/core'
 import { maskitoNumberOptionsGenerator, maskitoParseNumber } from '@maskito/kit'
 import { getSeparator } from '@utils/numbers'
-import { forwardRef, useMemo } from 'react'
+import { useMemo } from 'react'
 
 type NumberMaskParams = NonNullable<Parameters<typeof maskitoNumberOptionsGenerator>[0]>
 
@@ -10,7 +10,7 @@ export type NumberInputProps = Omit<TextInputProps, 'mask'> & NumberMaskParams &
 	onNumberChange?: (value: number) => void
 }
 
-export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
+export const NumberInput = ({
 	min,
 	max,
 	precision = 2,
@@ -24,8 +24,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
 	onValueChange,
 	onNumberChange,
 	value,
+	ref,
 	...props
-}, ref) => {
+}: NumberInputProps) => {
 	const mask = useMemo(() =>
 		maskitoNumberOptionsGenerator({
 			min,
@@ -52,4 +53,4 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(({
 			{...props}
 		/>
 	)
-})
+}

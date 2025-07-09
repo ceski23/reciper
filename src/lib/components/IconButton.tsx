@@ -3,7 +3,7 @@ import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
 import { useLongPress } from '@uidotdev/usehooks'
 import mergeProps from 'merge-props'
-import { type ComponentProps, forwardRef, useCallback, useState } from 'react'
+import { type ComponentProps, useCallback, useState } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { styleUtils, theme } from 'lib/styles'
 import { Icon } from './Icon'
@@ -14,12 +14,12 @@ type IconButtonProps = ComponentProps<typeof ButtonBase> & {
 	title: string
 }
 
-export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(({
+export const IconButton = ({
 	icon,
 	type = 'button',
 	title,
 	...props
-}, ref) => {
+}: IconButtonProps) => {
 	const [isTooltipOpen, setIsTooltipOpen] = useState(false)
 	const { eventHandlers, renderRipples } = useRipples()
 	const handleLongPress = useCallback(() => {
@@ -37,7 +37,6 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(({
 		>
 			<ButtonBase
 				type={type}
-				ref={ref}
 				aria-label={title}
 				{...mergeProps(props, eventHandlers, longPressHandlers)}
 			>
@@ -49,7 +48,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(({
 			</ButtonBase>
 		</Tooltip>
 	)
-})
+}
 
 const ButtonBase = styled(Ariakit.Button, {
 	base: {

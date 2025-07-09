@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query'
 import { getVariableColorValue } from '@utils/dom'
 import { counting, isEmpty, sort } from 'radashi'
 import { type FunctionComponent, useLayoutEffect, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { RecipeListItemSkeleton } from 'features/recipes/components/RecipeListItemSkeleton'
@@ -51,12 +50,10 @@ export const Home: FunctionComponent = () => {
 
 	return (
 		<Container>
-			<Helmet>
-				<meta
-					name="theme-color"
-					content={themeColor}
-				/>
-			</Helmet>
+			<meta
+				name="theme-color"
+				content={themeColor}
+			/>
 			<PaddedSection>
 				<FakeSearchBar
 					leadingIcon="search"

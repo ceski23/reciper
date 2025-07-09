@@ -4,7 +4,7 @@ import { styled } from '@macaron-css/react'
 import { useElementScrollRestoration } from '@tanstack/react-router'
 import mergeRefs from 'merge-refs'
 import { cluster } from 'radashi'
-import { forwardRef, useCallback, useMemo, useState } from 'react'
+import { type Ref, useCallback, useMemo, useState } from 'react'
 import { VList, type VListHandle } from 'virtua'
 import { RecipeCard } from 'features/home/components/RecipeCard'
 import { type Recipe } from 'features/recipes/types'
@@ -12,6 +12,7 @@ import { type Recipe } from 'features/recipes/types'
 type RecipesGridProps = {
 	recipes: Array<Recipe>
 	className?: string
+	ref?: Ref<HTMLDivElement>
 }
 
 const calcColumns = (width: number) => {
@@ -26,7 +27,7 @@ const calcColumns = (width: number) => {
 	}
 }
 
-export const RecipesGrid = forwardRef<HTMLDivElement, RecipesGridProps>(({ recipes, className }, ref) => {
+export const RecipesGrid = ({ recipes, className, ref }: RecipesGridProps) => {
 	const scrollEntry = useElementScrollRestoration({ id: 'recipesGrid' })
 	const virtualListRefCallback = useCallback((handle: VListHandle | null) => scrollEntry && handle?.scrollTo(scrollEntry.scrollY), [scrollEntry])
 	const contentRef = useResizeObserver<HTMLDivElement>(size => {
@@ -65,7 +66,7 @@ export const RecipesGrid = forwardRef<HTMLDivElement, RecipesGridProps>(({ recip
 			)}
 		</GridWrapper>
 	)
-})
+}
 
 const GridWrapper = styled('div', {
 	base: {

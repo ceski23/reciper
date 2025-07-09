@@ -1,7 +1,7 @@
 import * as Ariakit from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import { useElementScrollRestoration } from '@tanstack/react-router'
-import { type ComponentProps, forwardRef, type FunctionComponent, useCallback, useRef } from 'react'
+import { type ComponentProps, type FunctionComponent, type Ref, useCallback, useRef } from 'react'
 import { VList, type VListHandle } from 'virtua'
 
 const OptionalSelectionProvider: FunctionComponent<Pick<ComponentProps<typeof List>, 'selectionStore' | 'children'>> = ({
@@ -17,22 +17,23 @@ const OptionalSelectionProvider: FunctionComponent<Pick<ComponentProps<typeof Li
 		)
 		: children
 
-export const List = forwardRef<
-	HTMLDivElement,
-	ComponentProps<typeof NormalList> & {
-		virtual?: Omit<ComponentProps<typeof VList>, 'children'> | true
-		scrollRestorationId?: string
-		selectionStore?: Ariakit.CheckboxStore<Array<string>>
-		onIsScrolledChange?: (isScrolled: boolean) => void
-	}
->(({
+type ListProps = ComponentProps<typeof NormalList> & {
+	virtual?: Omit<ComponentProps<typeof VList>, 'children'> | true
+	scrollRestorationId?: string
+	selectionStore?: Ariakit.CheckboxStore<Array<string>>
+	onIsScrolledChange?: (isScrolled: boolean) => void
+	ref?: Ref<HTMLDivElement>
+}
+
+export const List = ({
 	children,
 	virtual,
 	scrollRestorationId,
 	selectionStore,
 	onIsScrolledChange,
+	ref,
 	...props
-}, ref) => {
+}: ListProps) => {
 	const scrollEntry = useElementScrollRestoration({ id: scrollRestorationId ?? '' })
 	const virtualListRefCallback = useCallback((handle: VListHandle | null) => scrollEntry && handle?.scrollTo(scrollEntry.scrollY), [scrollEntry])
 	const isScrolled = useRef(false)
@@ -45,6 +46,11 @@ export const List = forwardRef<
 			onIsScrolledChange?.(isScrolledNow)
 		}
 	}, [onIsScrolledChange])
+
+	const listCallbackRef = useCallback((handle: HTMLDivElement | null) => {
+		typeof ref === 'function' ? ref(handle) : ref && (ref.current = handle)
+		scrollEntry && handle?.scrollTo({ top: scrollEntry.scrollY })
+	}, [ref, scrollEntry])
 
 	return (
 		<OptionalSelectionProvider selectionStore={selectionStore}>
@@ -69,10 +75,7 @@ export const List = forwardRef<
 						: (
 							<NormalList
 								{...props}
-								ref={handle => {
-									typeof ref === 'function' ? ref(handle) : ref && (ref.current = handle)
-									scrollEntry && handle?.scrollTo({ top: scrollEntry.scrollY })
-								}}
+								ref={listCallbackRef}
 								data-scroll-restoration-id={scrollRestorationId}
 								onScroll={event => handleScrollOffset(event.currentTarget.scrollTop)}
 							>
@@ -83,7 +86,7 @@ export const List = forwardRef<
 			</Ariakit.CompositeProvider>
 		</OptionalSelectionProvider>
 	)
-})
+}
 
 const NormalList = styled('div', {
 	base: {

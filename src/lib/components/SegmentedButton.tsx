@@ -5,7 +5,7 @@ import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
 import { theme } from '@styles/theme'
 import mergeProps from 'merge-props'
-import { type ComponentProps, forwardRef } from 'react'
+import { type ComponentProps } from 'react'
 import { match, P } from 'ts-pattern'
 import { type SvgSpriteIconName } from 'virtual:svg-sprite'
 import { styleUtils } from 'lib/styles'
@@ -16,13 +16,13 @@ type SegmentProps = ComponentProps<typeof SegmentButton> & {
 	hiddenLabel?: boolean
 }
 
-const Segment = forwardRef<HTMLButtonElement, SegmentProps>(({
+const Segment = ({
 	label,
 	icon,
 	disabled,
 	hiddenLabel,
 	...props
-}, ref) => {
+}: SegmentProps) => {
 	const { eventHandlers, renderRipples } = useRipples()
 	const isSelected = props['aria-checked'] === true
 
@@ -32,7 +32,6 @@ const Segment = forwardRef<HTMLButtonElement, SegmentProps>(({
 			selected={isSelected}
 			disabled={disabled}
 			aria-label={hiddenLabel ? label : undefined}
-			ref={ref}
 		>
 			{!disabled && renderRipples}
 			{isSelected && (
@@ -64,7 +63,7 @@ const Segment = forwardRef<HTMLButtonElement, SegmentProps>(({
 			{!hiddenLabel && <Typography.LabelLarge>{label}</Typography.LabelLarge>}
 		</SegmentButton>
 	)
-})
+}
 
 const Root = styled(Ariakit.Role, {
 	base: {

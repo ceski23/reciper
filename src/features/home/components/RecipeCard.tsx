@@ -2,6 +2,7 @@ import * as Ariakit from '@ariakit/react'
 import { Icon } from '@components/Icon'
 import { Link } from '@components/Link'
 import { useDynamicTheme } from '@hooks/useDynamicTheme'
+import { style } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import { animated, useInView, useSpring } from '@react-spring/web'
 import { UnLazyImage } from '@unlazy/react'
@@ -60,9 +61,10 @@ export const RecipeCard: FunctionComponent<RecipeCardProps> = ({ recipe, style: 
 				{renderRipples}
 				{recipe.image
 					? (
-						<RecipeImage
+						<UnLazyImage
 							src={recipe.image}
 							thumbhash={recipe.thumbhash}
+							className={recipeImageStyle}
 						/>
 					)
 					: (
@@ -104,13 +106,11 @@ const Card = styled(Ariakit.Role, {
 	},
 })
 
-const RecipeImage = styled(UnLazyImage, {
-	base: {
-		width: '100%',
-		flex: 1,
-		minHeight: 0,
-		objectFit: 'cover',
-	},
+const recipeImageStyle = style({
+	width: '100%',
+	flex: 1,
+	minHeight: 0,
+	objectFit: 'cover',
 })
 
 const RecipeImageFallback = styled('div', {

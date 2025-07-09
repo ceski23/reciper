@@ -2,24 +2,22 @@ import * as Ariakit from '@ariakit/react'
 import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
 import mergeProps from 'merge-props'
-import { forwardRef } from 'react'
 
-export const Ripples = forwardRef<HTMLDivElement, Ariakit.RoleProps>(({
+export const Ripples = ({
 	children,
 	...props
-}, ref) => {
+}: Ariakit.RoleProps) => {
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
 		<Container
-			ref={ref}
 			{...mergeProps(props, eventHandlers)}
 		>
 			{renderRipples}
 			{children}
 		</Container>
 	)
-})
+}
 
 const Container = styled(Ariakit.Role, {
 	base: {

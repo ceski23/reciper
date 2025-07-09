@@ -3,7 +3,7 @@ import { Icon } from '@components/Icon'
 import { typography } from '@components/Typography'
 import { styled } from '@macaron-css/react'
 import { theme } from '@styles/theme'
-import { forwardRef, type ReactElement } from 'react'
+import { type ReactElement, type Ref } from 'react'
 import { type SvgSpriteIconName } from 'virtual:svg-sprite'
 
 type BannerProps = {
@@ -13,9 +13,10 @@ type BannerProps = {
 		label: string
 		onClick: () => void
 	}>
+	ref?: Ref<HTMLDivElement>
 }
 
-export const Banner = forwardRef<HTMLDivElement, BannerProps>(({ actions, content, icon }, ref) => (
+export const Banner = ({ actions, content, icon, ref }: BannerProps) => (
 	<Container ref={ref}>
 		<Content className={typography.bodyMedium}>
 			{icon && (
@@ -39,7 +40,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(({ actions, conten
 			})}
 		</Actions>
 	</Container>
-))
+)
 
 const Container = styled('header', {
 	base: {

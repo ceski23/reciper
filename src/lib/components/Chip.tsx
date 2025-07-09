@@ -3,7 +3,7 @@ import { useRipples } from '@hooks/useRipples'
 import { styled } from '@macaron-css/react'
 import { Link, type ToOptions } from '@tanstack/react-router'
 import mergeProps from 'merge-props'
-import { type ComponentProps, forwardRef } from 'react'
+import { type ComponentProps } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { styleUtils, theme } from 'lib/styles'
 import { Icon } from './Icon'
@@ -16,20 +16,19 @@ type ChipProps = ToOptions & {
 	onClose?: VoidFunction
 }
 
-export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase> & ChipProps>(({
+export const Chip = ({
 	text,
 	leadingIcon,
 	trailingIcon,
 	onClose,
 	...props
-}, ref) => {
+}: ComponentProps<typeof ChipBase> & ChipProps) => {
 	const { eventHandlers, renderRipples } = useRipples()
 
 	return (
 		<ChipBase
 			withLeadingIcon={leadingIcon !== undefined}
 			withTrailingIcon={onClose !== undefined || trailingIcon !== undefined}
-			ref={ref}
 			// @ts-expect-error TS is shouting but it works
 			as={props.to !== undefined ? Link : undefined}
 			{...mergeProps(props, eventHandlers)}
@@ -69,7 +68,7 @@ export const Chip = forwardRef<HTMLButtonElement, ComponentProps<typeof ChipBase
 			{renderRipples}
 		</ChipBase>
 	)
-})
+}
 
 const ChipBase = styled(Button, {
 	base: {

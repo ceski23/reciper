@@ -1,6 +1,6 @@
 import * as Ariakit from '@ariakit/react'
 import { Ripples } from '@components/Ripples'
-import { type ComponentProps, forwardRef, type ReactNode } from 'react'
+import { type ComponentProps, type ReactNode } from 'react'
 import { ListItemContainer } from './ListItemContainer'
 import { ListItemContent, type ListItemContentProps } from './ListItemContent'
 
@@ -10,10 +10,7 @@ type SimpleItemProps = {
 	isDisabled?: boolean
 }
 
-export const SimpleItem = forwardRef<
-	HTMLDivElement,
-	ComponentProps<typeof ListItemContainer> & SimpleItemProps & Omit<ListItemContentProps, 'hasWrappedText'>
->(({
+export const SimpleItem = ({
 	title,
 	text,
 	leadingElement,
@@ -24,13 +21,12 @@ export const SimpleItem = forwardRef<
 	render,
 	variant,
 	...props
-}, ref) => {
+}: ComponentProps<typeof ListItemContainer> & SimpleItemProps & Omit<ListItemContentProps, 'hasWrappedText'>) => {
 	const isClickable = variant === 'clickable' || props.onClick
 
 	return (
 		<ListItemContainer
 			aria-label={title}
-			ref={ref}
 			variant={isDisabled ? 'disabled' : (isClickable ? 'clickable' : 'nonClickable')}
 			render={isClickable
 				? (
@@ -57,4 +53,4 @@ export const SimpleItem = forwardRef<
 			{trailingElement}
 		</ListItemContainer>
 	)
-})
+}

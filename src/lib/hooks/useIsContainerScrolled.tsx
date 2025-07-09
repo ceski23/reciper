@@ -5,11 +5,11 @@ export const useIsContainerScrolled = (callback: (isScrolled: boolean) => void) 
 	const [intersectionObserver] = useState(() => new IntersectionObserver(([entry]) => callback(entry.isIntersecting === false)))
 
 	const probeRef = useCallback((node: HTMLSpanElement | null) => {
-		if (node === null) {
-			return intersectionObserver.disconnect()
-		}
+		if (node) {
+			intersectionObserver.observe(node)
 
-		return intersectionObserver.observe(node)
+			return () => intersectionObserver.disconnect()
+		}
 	}, [intersectionObserver])
 
 	return (

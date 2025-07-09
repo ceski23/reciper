@@ -4,7 +4,7 @@ import { createTheme, createVar, fallbackVar } from '@macaron-css/core'
 import { setElementVars } from '@macaron-css/core/dynamic'
 import { styled } from '@macaron-css/react'
 import { mq } from '@styles/utils'
-import { Outlet, ScrollRestoration } from '@tanstack/react-router'
+import { Outlet } from '@tanstack/react-router'
 import { type FunctionComponent, lazy, Suspense, useCallback, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NotificationsViewport } from 'features/notifications'
@@ -22,7 +22,7 @@ import { AppUpdatePrompt } from './AppUpdatePrompt'
 
 const TanStackRouterDevtools = import.meta.env.PROD
 	? () => null
-	: lazy(() => import('@tanstack/router-devtools').then(res => ({ default: res.TanStackRouterDevtools })))
+	: lazy(() => import('@tanstack/react-router-devtools').then(res => ({ default: res.TanStackRouterDevtools })))
 
 const ReactQueryDevtools = import.meta.env.PROD
 	? () => null
@@ -67,6 +67,8 @@ export const Layout: FunctionComponent = () => {
 	const headerCallbackRef = useCallback((node: HTMLElement | null) => {
 		uiStore.actions.setHeader(node)
 		headerRef(node)
+
+		return () => uiStore.actions.setHeader(null)
 	}, [headerRef])
 
 	useLayoutEffect(() => {
@@ -110,7 +112,6 @@ export const Layout: FunctionComponent = () => {
 				<TanStackRouterDevtools />
 				<ReactQueryDevtools />
 			</Suspense>
-			<ScrollRestoration />
 		</LayoutBase>
 	)
 }

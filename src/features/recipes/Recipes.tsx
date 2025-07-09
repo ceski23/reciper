@@ -63,7 +63,7 @@ export const Recipes: FunctionComponent = () => {
 				progress={isSyncing}
 				container={container}
 				elevation={isMobile ? (isListScrolled ? 'onScroll' : 'flat') : 'flat'}
-				onBackClick={() => navigate({ from: recipesIndexRoute.fullPath, to: '../', params: {} })}
+				onBackClick={() => navigate({ from: recipesIndexRoute.fullPath, to: '..', params: {} })}
 				leadingButton={selection.isSelecting
 					? (
 						<IconButton

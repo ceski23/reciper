@@ -2,7 +2,7 @@ import { styled } from '@macaron-css/react'
 import { type MaskitoOptions } from '@maskito/core'
 import { useMaskito } from '@maskito/react'
 import mergeRefs from 'merge-refs'
-import { type ComponentProps, forwardRef, type RefCallback, useId } from 'react'
+import { type ComponentProps, type Ref, type RefCallback, useId } from 'react'
 import { styleUtils, theme } from 'lib/styles'
 import { Typography, typography } from './Typography'
 
@@ -19,9 +19,10 @@ export type TextAreaProps = {
 	hasError?: boolean
 	isSelected?: boolean
 	mask?: MaskitoOptions
+	ref?: Ref<HTMLTextAreaElement>
 }
 
-export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({
+export const TextArea = ({
 	label,
 	placeholder,
 	value,
@@ -34,7 +35,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({
 	className,
 	isSelected,
 	mask,
-}, ref) => {
+	ref,
+}: TextAreaProps) => {
 	const maskitoRef = useMaskito({ options: mask }) as RefCallback<HTMLTextAreaElement>
 	const fieldId = useId()
 	const supportingTextId = useId()
@@ -83,7 +85,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({
 			)}
 		</FieldContainer>
 	)
-})
+}
 
 const FieldContainer = styled('div', {
 	base: {

@@ -1,6 +1,5 @@
 import { styled } from '@macaron-css/react'
 import { Link, type ToOptions, useMatchRoute } from '@tanstack/react-router'
-import { forwardRef } from 'react'
 import type { SvgSpriteIconName } from 'virtual:svg-sprite'
 import { styleUtils, theme } from 'lib/styles'
 import { Icon } from '../Icon'
@@ -13,19 +12,18 @@ export type NavigationSegmentProps = {
 	to: ToOptions['to']
 }
 
-export const NavigationSegment = forwardRef<HTMLAnchorElement, NavigationSegmentProps>(({
+export const NavigationSegment = ({
 	label,
 	icon,
 	badge,
 	to,
 	...props
-}, ref) => {
+}: NavigationSegmentProps) => {
 	const matchRoute = useMatchRoute()
 
 	return (
 		<SegmentBase
 			to={to}
-			ref={ref}
 			onClick={event => (matchRoute({ to }) !== false) && event.preventDefault()}
 			{...props}
 		>
@@ -48,7 +46,7 @@ export const NavigationSegment = forwardRef<HTMLAnchorElement, NavigationSegment
 			)}
 		</SegmentBase>
 	)
-})
+}
 
 const SegmentBase = styled(Link, {
 	base: {

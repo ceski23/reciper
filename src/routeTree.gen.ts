@@ -10,246 +10,92 @@
 
 import { createFileRoute } from '@tanstack/react-router'
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as SettingsIndexRouteImport } from './routes/settings/index'
+import { Route as RecipesIndexRouteImport } from './routes/recipes/index'
+import { Route as SettingsUnitsRouteImport } from './routes/settings/units'
+import { Route as SettingsThemeRouteImport } from './routes/settings/theme'
+import { Route as SettingsAccountRouteImport } from './routes/settings/account'
+import { Route as RecipesScrapeRouteImport } from './routes/recipes/scrape'
+import { Route as RecipesNewRouteImport } from './routes/recipes/new'
+import { Route as RecipesMasterDetailRouteImport } from './routes/recipes/_masterDetail'
+import { Route as AuthGoogleRouteImport } from './routes/auth/google'
+import { Route as RecipesIdEditRouteImport } from './routes/recipes_/$id.edit'
+import { Route as RecipesMasterDetailIdRouteImport } from './routes/recipes/_masterDetail.$id'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as SearchImport } from './routes/search'
-import { Route as IndexImport } from './routes/index'
-import { Route as SettingsIndexImport } from './routes/settings/index'
-import { Route as RecipesIndexImport } from './routes/recipes/index'
-import { Route as SettingsUnitsImport } from './routes/settings/units'
-import { Route as SettingsThemeImport } from './routes/settings/theme'
-import { Route as SettingsAccountImport } from './routes/settings/account'
-import { Route as RecipesScrapeImport } from './routes/recipes/scrape'
-import { Route as RecipesNewImport } from './routes/recipes/new'
-import { Route as RecipesMasterDetailImport } from './routes/recipes/_masterDetail'
-import { Route as AuthGoogleImport } from './routes/auth/google'
-import { Route as RecipesIdEditImport } from './routes/recipes_/$id.edit'
-import { Route as RecipesMasterDetailIdImport } from './routes/recipes/_masterDetail.$id'
+const RecipesRouteImport = createFileRoute('/recipes')()
 
-// Create Virtual Routes
-
-const RecipesImport = createFileRoute('/recipes')()
-
-// Create/Update Routes
-
-const RecipesRoute = RecipesImport.update({
+const RecipesRoute = RecipesRouteImport.update({
   id: '/recipes',
   path: '/recipes',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const SearchRoute = SearchImport.update({
+const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const SettingsIndexRoute = SettingsIndexImport.update({
+const SettingsIndexRoute = SettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RecipesIndexRoute = RecipesIndexImport.update({
+const RecipesIndexRoute = RecipesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => RecipesRoute,
 } as any)
-
-const SettingsUnitsRoute = SettingsUnitsImport.update({
+const SettingsUnitsRoute = SettingsUnitsRouteImport.update({
   id: '/settings/units',
   path: '/settings/units',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const SettingsThemeRoute = SettingsThemeImport.update({
+const SettingsThemeRoute = SettingsThemeRouteImport.update({
   id: '/settings/theme',
   path: '/settings/theme',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const SettingsAccountRoute = SettingsAccountImport.update({
+const SettingsAccountRoute = SettingsAccountRouteImport.update({
   id: '/settings/account',
   path: '/settings/account',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RecipesScrapeRoute = RecipesScrapeImport.update({
+const RecipesScrapeRoute = RecipesScrapeRouteImport.update({
   id: '/scrape',
   path: '/scrape',
   getParentRoute: () => RecipesRoute,
 } as any)
-
-const RecipesNewRoute = RecipesNewImport.update({
+const RecipesNewRoute = RecipesNewRouteImport.update({
   id: '/new',
   path: '/new',
   getParentRoute: () => RecipesRoute,
 } as any)
-
-const RecipesMasterDetailRoute = RecipesMasterDetailImport.update({
+const RecipesMasterDetailRoute = RecipesMasterDetailRouteImport.update({
   id: '/_masterDetail',
   getParentRoute: () => RecipesRoute,
 } as any)
-
-const AuthGoogleRoute = AuthGoogleImport.update({
+const AuthGoogleRoute = AuthGoogleRouteImport.update({
   id: '/auth/google',
   path: '/auth/google',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RecipesIdEditRoute = RecipesIdEditImport.update({
+const RecipesIdEditRoute = RecipesIdEditRouteImport.update({
   id: '/recipes_/$id/edit',
   path: '/recipes/$id/edit',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RecipesMasterDetailIdRoute = RecipesMasterDetailIdImport.update({
+const RecipesMasterDetailIdRoute = RecipesMasterDetailIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => RecipesMasterDetailRoute,
 } as any)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/search': {
-      id: '/search'
-      path: '/search'
-      fullPath: '/search'
-      preLoaderRoute: typeof SearchImport
-      parentRoute: typeof rootRoute
-    }
-    '/auth/google': {
-      id: '/auth/google'
-      path: '/auth/google'
-      fullPath: '/auth/google'
-      preLoaderRoute: typeof AuthGoogleImport
-      parentRoute: typeof rootRoute
-    }
-    '/recipes': {
-      id: '/recipes'
-      path: '/recipes'
-      fullPath: '/recipes'
-      preLoaderRoute: typeof RecipesImport
-      parentRoute: typeof rootRoute
-    }
-    '/recipes/_masterDetail': {
-      id: '/recipes/_masterDetail'
-      path: '/recipes'
-      fullPath: '/recipes'
-      preLoaderRoute: typeof RecipesMasterDetailImport
-      parentRoute: typeof RecipesRoute
-    }
-    '/recipes/new': {
-      id: '/recipes/new'
-      path: '/new'
-      fullPath: '/recipes/new'
-      preLoaderRoute: typeof RecipesNewImport
-      parentRoute: typeof RecipesImport
-    }
-    '/recipes/scrape': {
-      id: '/recipes/scrape'
-      path: '/scrape'
-      fullPath: '/recipes/scrape'
-      preLoaderRoute: typeof RecipesScrapeImport
-      parentRoute: typeof RecipesImport
-    }
-    '/settings/account': {
-      id: '/settings/account'
-      path: '/settings/account'
-      fullPath: '/settings/account'
-      preLoaderRoute: typeof SettingsAccountImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/theme': {
-      id: '/settings/theme'
-      path: '/settings/theme'
-      fullPath: '/settings/theme'
-      preLoaderRoute: typeof SettingsThemeImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/units': {
-      id: '/settings/units'
-      path: '/settings/units'
-      fullPath: '/settings/units'
-      preLoaderRoute: typeof SettingsUnitsImport
-      parentRoute: typeof rootRoute
-    }
-    '/recipes/': {
-      id: '/recipes/'
-      path: '/'
-      fullPath: '/recipes/'
-      preLoaderRoute: typeof RecipesIndexImport
-      parentRoute: typeof RecipesImport
-    }
-    '/settings/': {
-      id: '/settings/'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/recipes/_masterDetail/$id': {
-      id: '/recipes/_masterDetail/$id'
-      path: '/$id'
-      fullPath: '/recipes/$id'
-      preLoaderRoute: typeof RecipesMasterDetailIdImport
-      parentRoute: typeof RecipesMasterDetailImport
-    }
-    '/recipes_/$id/edit': {
-      id: '/recipes_/$id/edit'
-      path: '/recipes/$id/edit'
-      fullPath: '/recipes/$id/edit'
-      preLoaderRoute: typeof RecipesIdEditImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
-
-interface RecipesMasterDetailRouteChildren {
-  RecipesMasterDetailIdRoute: typeof RecipesMasterDetailIdRoute
-}
-
-const RecipesMasterDetailRouteChildren: RecipesMasterDetailRouteChildren = {
-  RecipesMasterDetailIdRoute: RecipesMasterDetailIdRoute,
-}
-
-const RecipesMasterDetailRouteWithChildren =
-  RecipesMasterDetailRoute._addFileChildren(RecipesMasterDetailRouteChildren)
-
-interface RecipesRouteChildren {
-  RecipesMasterDetailRoute: typeof RecipesMasterDetailRouteWithChildren
-  RecipesNewRoute: typeof RecipesNewRoute
-  RecipesScrapeRoute: typeof RecipesScrapeRoute
-  RecipesIndexRoute: typeof RecipesIndexRoute
-}
-
-const RecipesRouteChildren: RecipesRouteChildren = {
-  RecipesMasterDetailRoute: RecipesMasterDetailRouteWithChildren,
-  RecipesNewRoute: RecipesNewRoute,
-  RecipesScrapeRoute: RecipesScrapeRoute,
-  RecipesIndexRoute: RecipesIndexRoute,
-}
-
-const RecipesRouteWithChildren =
-  RecipesRoute._addFileChildren(RecipesRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -266,7 +112,6 @@ export interface FileRoutesByFullPath {
   '/recipes/$id': typeof RecipesMasterDetailIdRoute
   '/recipes/$id/edit': typeof RecipesIdEditRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
@@ -281,9 +126,8 @@ export interface FileRoutesByTo {
   '/recipes/$id': typeof RecipesMasterDetailIdRoute
   '/recipes/$id/edit': typeof RecipesIdEditRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/auth/google': typeof AuthGoogleRoute
@@ -299,7 +143,6 @@ export interface FileRoutesById {
   '/recipes/_masterDetail/$id': typeof RecipesMasterDetailIdRoute
   '/recipes_/$id/edit': typeof RecipesIdEditRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
@@ -348,7 +191,6 @@ export interface FileRouteTypes {
     | '/recipes_/$id/edit'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SearchRoute: typeof SearchRoute
@@ -361,6 +203,137 @@ export interface RootRouteChildren {
   RecipesIdEditRoute: typeof RecipesIdEditRoute
 }
 
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/recipes': {
+      id: '/recipes'
+      path: '/recipes'
+      fullPath: '/recipes'
+      preLoaderRoute: typeof RecipesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/': {
+      id: '/settings/'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/': {
+      id: '/recipes/'
+      path: '/'
+      fullPath: '/recipes/'
+      preLoaderRoute: typeof RecipesIndexRouteImport
+      parentRoute: typeof RecipesRoute
+    }
+    '/settings/units': {
+      id: '/settings/units'
+      path: '/settings/units'
+      fullPath: '/settings/units'
+      preLoaderRoute: typeof SettingsUnitsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/theme': {
+      id: '/settings/theme'
+      path: '/settings/theme'
+      fullPath: '/settings/theme'
+      preLoaderRoute: typeof SettingsThemeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/account': {
+      id: '/settings/account'
+      path: '/settings/account'
+      fullPath: '/settings/account'
+      preLoaderRoute: typeof SettingsAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/scrape': {
+      id: '/recipes/scrape'
+      path: '/scrape'
+      fullPath: '/recipes/scrape'
+      preLoaderRoute: typeof RecipesScrapeRouteImport
+      parentRoute: typeof RecipesRoute
+    }
+    '/recipes/new': {
+      id: '/recipes/new'
+      path: '/new'
+      fullPath: '/recipes/new'
+      preLoaderRoute: typeof RecipesNewRouteImport
+      parentRoute: typeof RecipesRoute
+    }
+    '/recipes/_masterDetail': {
+      id: '/recipes/_masterDetail'
+      path: '/recipes'
+      fullPath: '/recipes'
+      preLoaderRoute: typeof RecipesMasterDetailRouteImport
+      parentRoute: typeof RecipesRoute
+    }
+    '/auth/google': {
+      id: '/auth/google'
+      path: '/auth/google'
+      fullPath: '/auth/google'
+      preLoaderRoute: typeof AuthGoogleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes_/$id/edit': {
+      id: '/recipes_/$id/edit'
+      path: '/recipes/$id/edit'
+      fullPath: '/recipes/$id/edit'
+      preLoaderRoute: typeof RecipesIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/_masterDetail/$id': {
+      id: '/recipes/_masterDetail/$id'
+      path: '/$id'
+      fullPath: '/recipes/$id'
+      preLoaderRoute: typeof RecipesMasterDetailIdRouteImport
+      parentRoute: typeof RecipesMasterDetailRoute
+    }
+  }
+}
+
+interface RecipesMasterDetailRouteChildren {
+  RecipesMasterDetailIdRoute: typeof RecipesMasterDetailIdRoute
+}
+
+const RecipesMasterDetailRouteChildren: RecipesMasterDetailRouteChildren = {
+  RecipesMasterDetailIdRoute: RecipesMasterDetailIdRoute,
+}
+
+const RecipesMasterDetailRouteWithChildren =
+  RecipesMasterDetailRoute._addFileChildren(RecipesMasterDetailRouteChildren)
+
+interface RecipesRouteChildren {
+  RecipesMasterDetailRoute: typeof RecipesMasterDetailRouteWithChildren
+  RecipesNewRoute: typeof RecipesNewRoute
+  RecipesScrapeRoute: typeof RecipesScrapeRoute
+  RecipesIndexRoute: typeof RecipesIndexRoute
+}
+
+const RecipesRouteChildren: RecipesRouteChildren = {
+  RecipesMasterDetailRoute: RecipesMasterDetailRouteWithChildren,
+  RecipesNewRoute: RecipesNewRoute,
+  RecipesScrapeRoute: RecipesScrapeRoute,
+  RecipesIndexRoute: RecipesIndexRoute,
+}
+
+const RecipesRouteWithChildren =
+  RecipesRoute._addFileChildren(RecipesRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SearchRoute: SearchRoute,
@@ -372,84 +345,6 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsIndexRoute: SettingsIndexRoute,
   RecipesIdEditRoute: RecipesIdEditRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/search",
-        "/auth/google",
-        "/recipes",
-        "/settings/account",
-        "/settings/theme",
-        "/settings/units",
-        "/settings/",
-        "/recipes_/$id/edit"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/search": {
-      "filePath": "search.tsx"
-    },
-    "/auth/google": {
-      "filePath": "auth/google.tsx"
-    },
-    "/recipes": {
-      "filePath": "recipes",
-      "children": [
-        "/recipes/_masterDetail",
-        "/recipes/new",
-        "/recipes/scrape",
-        "/recipes/"
-      ]
-    },
-    "/recipes/_masterDetail": {
-      "filePath": "recipes/_masterDetail.tsx",
-      "parent": "/recipes",
-      "children": [
-        "/recipes/_masterDetail/$id"
-      ]
-    },
-    "/recipes/new": {
-      "filePath": "recipes/new.tsx",
-      "parent": "/recipes"
-    },
-    "/recipes/scrape": {
-      "filePath": "recipes/scrape.tsx",
-      "parent": "/recipes"
-    },
-    "/settings/account": {
-      "filePath": "settings/account.tsx"
-    },
-    "/settings/theme": {
-      "filePath": "settings/theme.tsx"
-    },
-    "/settings/units": {
-      "filePath": "settings/units.tsx"
-    },
-    "/recipes/": {
-      "filePath": "recipes/index.tsx",
-      "parent": "/recipes"
-    },
-    "/settings/": {
-      "filePath": "settings/index.tsx"
-    },
-    "/recipes/_masterDetail/$id": {
-      "filePath": "recipes/_masterDetail.$id.tsx",
-      "parent": "/recipes/_masterDetail"
-    },
-    "/recipes_/$id/edit": {
-      "filePath": "recipes_/$id.edit.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
