@@ -108,7 +108,7 @@ export default defineConfig({
 			manifest: pwaManifest,
 		}),
 		TanStackRouterVite(),
-		SondaRollupPlugin({ detailed: true }),
+		SondaRollupPlugin(),
 	],
 	test: {
 		environment: 'happy-dom',

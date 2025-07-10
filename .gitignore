@@ -26,3 +26,4 @@ dist-ssr
 # Generated files
 svgSpritePlugin.d.ts
 sonda-report.html
+.sonda
