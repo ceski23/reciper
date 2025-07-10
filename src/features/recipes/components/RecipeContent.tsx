@@ -2,7 +2,7 @@ import { Composite, CompositeItem, CompositeProvider } from '@ariakit/react'
 import { styled } from '@macaron-css/react'
 import { mq } from '@styles/utils'
 import { useMediaQuery } from '@uidotdev/usehooks'
-import { group } from 'radashi'
+import { groupBy } from 'es-toolkit'
 import { type CSSProperties, type FunctionComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IngredientsSection } from 'features/recipes/components/IngredientsSection'
@@ -86,7 +86,7 @@ export const RecipeContent: FunctionComponent<RecipeContentProps> = ({ recipe, s
 				)}
 				{!shouldShowTwoColumns ? <IngredientsSection ingredients={recipe.ingredients} /> : null}
 				{Object
-					.entries(group(recipe.instructions, item => item.group ?? ''))
+					.entries(groupBy(recipe.instructions, item => item.group ?? ''))
 					.map(([name, steps]) =>
 						steps
 							? (

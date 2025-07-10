@@ -2,8 +2,8 @@ import { getTextFromNode } from '@utils/dom'
 import { getColorFromImage } from '@utils/images'
 import { parseValidNumber } from '@utils/numbers'
 import { decodeHTML5Strict } from 'entities'
+import { uniq } from 'es-toolkit'
 import { parse, toSeconds } from 'iso8601-duration'
-import { unique } from 'radashi'
 import { type Recipe } from 'features/recipes/types'
 import { isDefined } from 'lib/utils'
 
@@ -69,7 +69,7 @@ const findTags = (doc: Document) => {
 	const keywords = getDataFromElement(doc.querySelector('[itemprop="keywords"]'))?.split(',') ?? []
 	const category = getDataFromElement(doc.querySelector('[itemprop="recipeCategory"]'))?.split(',') ?? []
 
-	return unique(
+	return uniq(
 		[...keywords, ...category]
 			.filter(isDefined)
 			.map(text => text.trim().toLocaleLowerCase()),

@@ -1,4 +1,4 @@
-import { group, mapValues } from 'radashi'
+import { groupBy, mapValues } from 'es-toolkit'
 import type { RecipeFormValues } from 'features/recipes/form/scheme'
 import type { Recipe } from 'features/recipes/types'
 
@@ -40,7 +40,7 @@ export const mapRecipeToFormValues = ({
 	tags,
 	...rest
 }: Recipe) => ({
-	ingredients: Object.entries(group(ingredients, item => item.group ?? '')).map(([group, items]) => ({
+	ingredients: Object.entries(groupBy(ingredients, item => item.group ?? '')).map(([group, items]) => ({
 		group: group || null,
 		items: items?.map(({
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -48,7 +48,7 @@ export const mapRecipeToFormValues = ({
 			...item
 		}) => item) ?? [],
 	})),
-	instructions: Object.entries(group(instructions, item => item.group ?? '')).map(([group, items]) => ({
+	instructions: Object.entries(groupBy(instructions, item => item.group ?? '')).map(([group, items]) => ({
 		group: group || null,
 		items: items?.map(({
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars

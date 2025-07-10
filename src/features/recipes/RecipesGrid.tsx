@@ -2,8 +2,8 @@ import { useResizeObserver } from '@hooks/useResizeObserver'
 import { globalStyle } from '@macaron-css/core'
 import { styled } from '@macaron-css/react'
 import { useElementScrollRestoration } from '@tanstack/react-router'
+import { chunk } from 'es-toolkit'
 import mergeRefs from 'merge-refs'
-import { cluster } from 'radashi'
 import { type Ref, useCallback, useMemo, useState } from 'react'
 import { VList, type VListHandle } from 'virtua'
 import { RecipeCard } from 'features/home/components/RecipeCard'
@@ -36,7 +36,7 @@ export const RecipesGrid = ({ recipes, className, ref }: RecipesGridProps) => {
 		newColumns !== columns && setColumns(newColumns)
 	})
 	const [columns, setColumns] = useState<number>()
-	const clusteredRecipes = useMemo(() => columns === undefined ? [] : cluster(recipes, columns), [recipes, columns])
+	const clusteredRecipes = useMemo(() => columns === undefined ? [] : chunk(recipes, columns), [recipes, columns])
 
 	return (
 		<GridWrapper

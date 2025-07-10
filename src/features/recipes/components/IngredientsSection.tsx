@@ -1,5 +1,5 @@
 import { styled } from '@macaron-css/react'
-import { group } from 'radashi'
+import { groupBy } from 'es-toolkit'
 import { type FunctionComponent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Recipe } from 'features/recipes/types'
@@ -16,7 +16,7 @@ export const IngredientsSection: FunctionComponent<IngredientsSectionProps> = ({
 	const { t } = useTranslation()
 	const [servingsCount, setServingsCount] = useState(1)
 
-	const groups = group(ingredients, item => item.group ?? '')
+	const groups = groupBy(ingredients, item => item.group ?? '')
 
 	return Object.entries(groups).map(([name, ingredients]) =>
 		ingredients

@@ -3,7 +3,8 @@ import { styled } from '@macaron-css/react'
 import { mq } from '@styles/utils'
 import { useQuery } from '@tanstack/react-query'
 import { getVariableColorValue } from '@utils/dom'
-import { counting, isEmpty, sort } from 'radashi'
+import { countBy, identity, sortBy } from 'es-toolkit'
+import { isEmpty } from 'es-toolkit/compat'
 import { type FunctionComponent, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RecipeCard } from 'features/home/components/RecipeCard'
@@ -28,17 +29,16 @@ export const Home: FunctionComponent = () => {
 	const { t } = useTranslation()
 	const recipes = useQuery(recipesQuery())
 	const getRecentRecipes = (recipes: Array<Recipe>, amount: number) =>
-		sort(recipes, recipe => recipe.addedDate, true)
+		sortBy(recipes, [recipe => recipe.addedDate])
 			.slice(0, amount)
 	const getTopRecipes = (recipes: Array<Recipe>, amount: number) =>
-		sort(recipes.filter(recipeHasRating), recipe => recipe.rating, true)
+		sortBy(recipes.filter(recipeHasRating), [recipe => recipe.rating])
 			.slice(0, amount)
 	const getMostCommonTags = (recipes: Array<Recipe>, amount: number) =>
-		sort(
+		sortBy(
 			Object
-				.entries(counting(recipes.flatMap(recipe => recipe.tags), tag => tag)),
-			([, count]) => count,
-			true,
+				.entries(countBy(recipes.flatMap(recipe => recipe.tags), identity)),
+			[([, count]) => count],
 		).slice(0, amount).map(([key]) => key)
 
 	useLayoutEffect(() => {

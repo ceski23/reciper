@@ -7,7 +7,6 @@ import { styled } from '@macaron-css/react'
 import { animated, useInView } from '@react-spring/web'
 import { theme } from '@styles/theme'
 import { UnLazyImage } from '@unlazy/react'
-import { toggle } from 'radashi'
 import { type FunctionComponent, type ReactNode } from 'react'
 import * as providers from 'features/recipes/providers/websites'
 import type { Recipe } from 'features/recipes/types'
@@ -43,7 +42,12 @@ export const RecipeListItem: FunctionComponent<RecipeListItemProps> = ({
 	const provider = Object.values(providers).find(provider => provider.matcher.test(String(recipe.url)))
 	const store = useCheckboxContext() as Ariakit.CheckboxStore<Array<string>> | undefined
 	const isSelected = store?.useState().value.includes(recipe.id)
-	const toggleSelection = () => store?.setValue(prev => toggle(prev, recipe.id))
+	const toggleSelection = () =>
+		store?.setValue(prev =>
+			prev.includes(recipe.id)
+				? prev.filter(item => item !== recipe.id)
+				: prev.concat(recipe.id)
+		)
 
 	const handleLeadingElementClick = (event: React.MouseEvent) => {
 		if (!store) return
