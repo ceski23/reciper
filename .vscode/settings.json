@@ -1,24 +1,11 @@
 {
-	"editor.defaultFormatter": "dprint.dprint",
 	"editor.formatOnSave": true,
-	"eslint.enable": true,
-	"eslint.experimental.useFlatConfig": true,
-	"eslint.codeActionsOnSave.mode": "all",
-	"[svg]": {
-		"editor.defaultFormatter": "jock.svg"
+	"[javascript][javascriptreact][typescriptreact][typescript]": {
+		"editor.defaultFormatter": "oxc.oxc-vscode"
 	},
-	"i18n-ally.localesPaths": [
-		"locales"
-	],
-	"i18n-ally.displayLanguage": "en",
-	"i18n-ally.keystyle": "nested",
-	"[jsonc]": {
-		"editor.defaultFormatter": "dprint.dprint"
-	},
-	"[json]": {
-		"editor.defaultFormatter": "dprint.dprint"
-	},
-	"[typescriptreact]": {
-		"editor.defaultFormatter": "dprint.dprint"
-	}
+	"editor.rulers": [120],
+	"oxc.unusedDisableDirectives": "deny",
+	"oxc.lint.run": "onType",
+	"oxc.enable": true,
+	"oxc.typeAware": true
 }

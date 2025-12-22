@@ -1,0 +1,13 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"rules": {
+		"typescript/consistent-type-definitions": ["error", "type"],
+		"func-style": [
+			"error",
+			{
+				"allowArrowFunctions": true,
+				"style": "expression"
+			}
+		]
+	}
+}

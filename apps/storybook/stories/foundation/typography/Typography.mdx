@@ -1,0 +1,46 @@
+import { Meta, Typeset, Story, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as TypographyStories from './Typography.stories';
+
+<Meta of={TypographyStories} />
+
+## Typography
+
+The typography system provides a comprehensive set of text styles for consistent typographic hierarchy across the application. Each style variant is carefully designed to work together to create visual balance and readability.
+
+### Available Styles
+
+The typography system includes the following style categories:
+
+- **Display** (Large, Medium, Small) - For prominent headlines and attention-grabbing text
+- **Headline** (Large, Medium, Small) - For section headers and major content divisions
+- **Title** (Large, Medium, Small) - For subsection titles and card headers
+- **Body** (Large, Medium, Small) - For body text and main content paragraphs
+- **Label** (Large, Medium, Small) - For labels, buttons, and small UI text
+
+### Usage
+
+<Source code={`import { typography } from '@repo/ui/typography'
+
+<Typography className={typography.displayLarge}>
+    Display Large
+</Typography>`} />
+
+### All Variants
+
+Below is a complete showcase of all available typography styles:
+
+<Story of={TypographyStories.DisplayLarge} />
+<Story of={TypographyStories.DisplayMedium} />
+<Story of={TypographyStories.DisplaySmall} />
+<Story of={TypographyStories.HeadlineLarge} />
+<Story of={TypographyStories.HeadlineMedium} />
+<Story of={TypographyStories.HeadlineSmall} />
+<Story of={TypographyStories.TitleLarge} />
+<Story of={TypographyStories.TitleMedium} />
+<Story of={TypographyStories.TitleSmall} />
+<Story of={TypographyStories.BodyLarge} />
+<Story of={TypographyStories.BodyMedium} />
+<Story of={TypographyStories.BodySmall} />
+<Story of={TypographyStories.LabelLarge} />
+<Story of={TypographyStories.LabelMedium} />
+<Story of={TypographyStories.LabelSmall} />

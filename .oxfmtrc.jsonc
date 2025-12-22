@@ -1,0 +1,18 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"arrowParens": "avoid",
+	"bracketSameLine": false,
+	"bracketSpacing": true,
+	"endOfLine": "lf",
+	"jsxSingleQuote": false,
+	"objectWrap": "preserve",
+	"printWidth": 120,
+	"semi": false,
+	"quoteProps": "as-needed",
+	"singleAttributePerLine": true,
+	"singleQuote": true,
+	"tabWidth": 4,
+	"trailingComma": "all",
+	"useTabs": true,
+	"ignorePatterns": ["apps/web/src/routeTree.gen.ts", "apps/web/.output", "packages/database/migrations"],
+}
