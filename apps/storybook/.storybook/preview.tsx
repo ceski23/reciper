@@ -7,6 +7,7 @@ import { themes } from 'storybook/theming'
 import { DocsContainer } from '@storybook/addon-docs/blocks'
 import type { ComponentProps } from 'react'
 import '@repo/ui/fonts'
+import '../global.css'
 
 const ThemedDocsContainer = ({ children, ...props }: ComponentProps<typeof DocsContainer>) => {
 	const isDarkMode = useDarkMode()

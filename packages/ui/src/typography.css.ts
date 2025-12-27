@@ -3,9 +3,6 @@ import { recipe } from '@vanilla-extract/recipes'
 import { pxToRem } from './utils/style'
 
 export const typography = recipe({
-	base: {
-		color: theme.colors.onBackground,
-	},
 	variants: {
 		variant: {
 			displayLarge: {

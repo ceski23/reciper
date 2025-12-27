@@ -2,9 +2,9 @@ import { FunctionComponent, type ComponentType, type SVGProps } from 'react'
 import { buttonStyle, iconStyle, type ButtonVariants } from './style.css'
 import mergeProps from 'merge-props'
 import { RippleContainer, useRipple } from '#hooks/ripple'
-import { Button as ButtonBase, ButtonProps as ButtonBaseProps } from '@base-ui/react/button'
+import { Button as ButtonBase } from '@base-ui/react/button'
 
-type ButtonProps = Extract<ButtonBaseProps, { nativeButton?: true }> &
+type ButtonProps = Extract<ButtonBase.Props, { nativeButton?: true }> &
 	ButtonVariants & {
 		leftIcon?: ComponentType<SVGProps<SVGSVGElement>>
 	}

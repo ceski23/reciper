@@ -2,10 +2,10 @@ import preview from '#.storybook/preview'
 import { typography } from '@repo/ui/typography'
 import type { ComponentProps } from 'react'
 
-const Typography = (props: ComponentProps<'p'>) => <p {...props} />
+const p = (props: ComponentProps<'p'>) => <p {...props} />
 
 const meta = preview.meta({
-	component: Typography,
+	component: p,
 	tags: ['!dev'],
 })
 
