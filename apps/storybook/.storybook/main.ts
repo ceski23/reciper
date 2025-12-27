@@ -24,7 +24,7 @@ export default defineMain({
 			shouldExtractValuesFromUnion: true,
 			shouldRemoveUndefinedFromOptional: true,
 			propFilter: prop => {
-				if (['disabled'].includes(prop.name)) {
+				if (['disabled', 'min', 'max'].includes(prop.name)) {
 					return true
 				}
 				return prop.parent ? !/node_modules/.test(prop.parent.fileName) : true
