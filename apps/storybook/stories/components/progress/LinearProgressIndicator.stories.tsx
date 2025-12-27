@@ -3,7 +3,8 @@ import { ProgressIndicator } from '@repo/ui/components/progress-indicator'
 import { Stack } from '@repo/ui/components/utils'
 
 const meta = preview.meta({
-	component: ProgressIndicator,
+	title: 'Components/Progress Indicator/Linear',
+	component: ProgressIndicator.Linear,
 	argTypes: {
 		value: {
 			control: { type: 'range', min: 0, max: 100, step: 1 },
@@ -33,8 +34,8 @@ export const Value = meta.story({
 	},
 	render: args => (
 		<Stack gap={8}>
-			<ProgressIndicator {...args} />
-			<ProgressIndicator
+			<ProgressIndicator.Linear {...args} />
+			<ProgressIndicator.Linear
 				{...args}
 				value={null}
 			/>
@@ -49,11 +50,11 @@ export const Size = meta.story({
 	},
 	render: args => (
 		<Stack gap={8}>
-			<ProgressIndicator
+			<ProgressIndicator.Linear
 				{...args}
 				size="thin"
 			/>
-			<ProgressIndicator
+			<ProgressIndicator.Linear
 				{...args}
 				size="thick"
 			/>

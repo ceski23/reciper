@@ -1,7 +1,10 @@
 import { theme } from '#theme'
-import { keyframes } from '@vanilla-extract/css'
+import { createVar, keyframes } from '@vanilla-extract/css'
 import { calc } from '@vanilla-extract/css-utils'
 import { recipe, type RecipeVariants } from '@vanilla-extract/recipes'
+
+export const progressVar = createVar('progress')
+export const gapVar = createVar('gap')
 
 // Animation duration constants based on Material 3 specs
 const LINEAR_ANIMATION_DURATION = 1750 // Total duration for one linear cycle in ms
@@ -57,8 +60,8 @@ export const trackStyle = recipe({
 		},
 		isIndeterminate: {
 			false: {
-				width: calc(1).subtract('var(--progress)').multiply('100%').subtract('var(--gap)').toString(),
-				left: `min(100%, ${calc('var(--progress)').multiply('100%').add('var(--gap)').toString()})`,
+				width: calc(1).subtract(progressVar).multiply('100%').subtract(gapVar).toString(),
+				left: `min(100%, ${calc(progressVar).multiply('100%').add(gapVar).toString()})`,
 			},
 			true: {
 				width: '100%',
@@ -158,4 +161,108 @@ export const stopStyle = recipe({
 	},
 })
 
+const circularSpinningAnimation = keyframes({
+	'0%': {
+		transform: 'rotate(0deg)',
+	},
+	'100%': {
+		transform: 'rotate(270deg)',
+	},
+})
+
+const offset = createVar('strokeDashoffset')
+const duration = createVar('animationDuration')
+const dashAnimation = keyframes({
+	'0%': {
+		strokeDashoffset: offset,
+	},
+	'50%': {
+		strokeDashoffset: `calc(${offset} / 4)`,
+		transform: 'rotate(135deg)',
+	},
+	'100%': {
+		strokeDashoffset: offset,
+		transform: 'rotate(450deg)',
+	},
+})
+
+export const circularRootStyle = recipe({
+	base: {
+		display: 'inline-flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		position: 'relative',
+		transform: 'rotate(-90deg)',
+		vars: {
+			[offset]: '187px',
+			[duration]: '1.4s',
+		},
+	},
+})
+
+export const circularSvgStyle = recipe({
+	variants: {
+		isIndeterminate: {
+			false: {},
+			true: {
+				animation: `${circularSpinningAnimation} ${duration} linear infinite`,
+			},
+		},
+	},
+})
+
+export const circularTrackStyle = recipe({
+	base: {
+		fill: 'none',
+		stroke: theme.colors.secondaryContainer,
+	},
+	variants: {
+		size: {
+			thin: {
+				strokeWidth: 10,
+			},
+			thick: {
+				strokeWidth: 16,
+			},
+		},
+		isIndeterminate: {
+			false: {},
+			true: {},
+		},
+	},
+})
+
+export const circularIndicatorStyle = recipe({
+	base: {
+		fill: 'none',
+		stroke: theme.colors.primary,
+		strokeLinecap: 'round',
+		strokeLinejoin: 'round',
+		transformOrigin: 'center',
+		willChange: 'stroke-dashoffset, transform',
+	},
+	variants: {
+		size: {
+			thin: {
+				strokeWidth: 10,
+			},
+			thick: {
+				strokeWidth: 16,
+			},
+		},
+		isIndeterminate: {
+			false: {
+				strokeDasharray: 282.7433388230814,
+				strokeDashoffset: `calc(282.7433388230814 * (1 - ${progressVar}))`,
+				transition: 'stroke-dashoffset 0.3s ease',
+			},
+			true: {
+				strokeDasharray: offset,
+				animation: `${dashAnimation} ${duration} ease-in-out infinite`,
+			},
+		},
+	},
+})
+
 export type ProgressIndicatorVariants = RecipeVariants<typeof trackStyle>
+export type CircularProgressIndicatorVariants = RecipeVariants<typeof circularTrackStyle>

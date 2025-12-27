@@ -7,10 +7,13 @@ import {
 	indicatorStyle,
 	indicatorSecondStyle,
 	rootStyle,
+	progressVar,
+	gapVar,
 } from './style.css'
 import { VisuallyHidden } from '../utils'
+import { assignInlineVars } from '@vanilla-extract/dynamic'
 
-type ProgressIndicatorProps = Progress.Root.Props &
+type LinearProgressIndicatorProps = Progress.Root.Props &
 	Omit<NonNullable<ProgressIndicatorVariants>, 'isIndeterminate'> & {
 		label: string
 	}
@@ -21,7 +24,7 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
  * A progress indicator component that displays the progress of a task.
  * Based on https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/ProgressIndicator.kt;l=249
  */
-export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
+export const LinearProgressIndicator: FunctionComponent<LinearProgressIndicatorProps> = ({
 	value,
 	min = 0,
 	max = 100,
@@ -37,12 +40,10 @@ export const ProgressIndicator: FunctionComponent<ProgressIndicatorProps> = ({
 			value={isIndeterminate ? null : clamp(value ?? 0, min, max)}
 			min={min}
 			max={max}
-			style={
-				{
-					'--progress': progress,
-					'--gap': progress === 0 ? '0px' : '6px',
-				} as React.CSSProperties
-			}
+			style={assignInlineVars({
+				[progressVar]: progress.toString(),
+				[gapVar]: progress === 0 ? '0px' : '6px',
+			})}
 		>
 			<Progress.Label render={<VisuallyHidden />}>{label}</Progress.Label>
 			{!isIndeterminate && <Progress.Indicator className={indicatorStyle({ size, isIndeterminate })} />}

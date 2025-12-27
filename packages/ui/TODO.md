@@ -7,7 +7,7 @@ This is an ordered, dependency-aware task list for recreating `src/lib/component
 ## Foundations (no component dependencies)
 
 - [x] `Typography`
-- [ ] `ProgressIndicator`
+- [x] `ProgressIndicator`
 - [ ] `Skeleton`
 - [ ] `AnimatedTitle`
 
