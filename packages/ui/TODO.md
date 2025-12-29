@@ -16,7 +16,7 @@ This is an ordered, dependency-aware task list for recreating `src/lib/component
 - [x] `Ripple`
 - [x] `Ripples`
     - Depends on: `@hooks/useRipples`
-- [ ] `Tooltip`
+- [x] `Tooltip`
     - [ ] Depends on: `Typography`
 - [x] `Button`
     - [ ] Depends on: `Icon`, `@hooks/useRipples`

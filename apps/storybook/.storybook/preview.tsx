@@ -8,6 +8,7 @@ import { DocsContainer } from '@storybook/addon-docs/blocks'
 import type { ComponentProps } from 'react'
 import '@repo/ui/fonts'
 import '../global.css'
+import { Tooltip } from '@repo/ui/components/tooltip'
 
 const ThemedDocsContainer = ({ children, ...props }: ComponentProps<typeof DocsContainer>) => {
 	const isDarkMode = useDarkMode()
@@ -41,4 +42,11 @@ export default definePreview({
 		},
 	},
 	tags: ['autodocs'],
+	decorators: [
+		Story => (
+			<Tooltip.Provider closeDelay={1500}>
+				<Story />
+			</Tooltip.Provider>
+		),
+	],
 })
