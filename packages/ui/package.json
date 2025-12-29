@@ -35,6 +35,7 @@
 		"@dessert-box/react": "^0.7.5",
 		"@fontsource-variable/roboto-flex": "^5.2.8",
 		"@materialx/material-color-utilities": "^0.4.8",
+		"@uidotdev/usehooks": "^2.4.1",
 		"@vanilla-extract/css-utils": "^0.1.6",
 		"@vanilla-extract/dynamic": "2.1.5",
 		"@vanilla-extract/sprinkles": "^1.6.5",

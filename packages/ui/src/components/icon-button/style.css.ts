@@ -1,12 +1,10 @@
-import { recipe, type RecipeVariants } from '@vanilla-extract/recipes'
-import { calc } from '@vanilla-extract/css-utils'
-import { styleUtils } from '#utils'
 import { theme } from '#theme'
-import { typography } from '#typography'
+import { styleUtils } from '#utils'
+import { calc } from '@vanilla-extract/css-utils'
+import { recipe, type RecipeVariants } from '@vanilla-extract/recipes'
 
-export const buttonStyle = recipe({
+export const containerStyle = recipe({
 	base: {
-		letterSpacing: styleUtils.pxToRem(0.1),
 		position: 'relative',
 		overflow: 'clip',
 		cursor: 'pointer',
@@ -16,45 +14,30 @@ export const buttonStyle = recipe({
 		justifyContent: 'center',
 		transition: 'background-color .2s,  box-shadow .2s, border-radius .2s',
 		WebkitTapHighlightColor: 'transparent',
-		textDecoration: 'none',
 		':focus-visible': {
 			outlineOffset: theme.spacing[1],
 			outlineColor: theme.colors.outline,
 		},
 	},
 	variants: {
-		variant: {
-			elevated: {
-				color: theme.colors.primary,
-				backgroundColor: theme.colors.surfaceContainerLow,
-				boxShadow: theme.elevation[1],
+		style: {
+			filled: {
+				backgroundColor: theme.colors.primary,
+				color: theme.colors.onPrimary,
 				border: 'none',
 				selectors: {
 					'&:hover:not([data-disabled])': {
-						backgroundColor: styleUtils.blendWithColor(
-							theme.colors.surfaceContainerLow,
-							theme.colors.primary,
-							0.08,
-						),
+						backgroundColor: styleUtils.blendWithColor(theme.colors.primary, theme.colors.onPrimary, 0.08),
 					},
 					'&:active:not([data-disabled])': {
-						backgroundColor: styleUtils.blendWithColor(
-							theme.colors.surfaceContainerLow,
-							theme.colors.primary,
-							0.08,
-						),
+						backgroundColor: styleUtils.blendWithColor(theme.colors.primary, theme.colors.onPrimary, 0.08),
 					},
 					'&:focus-visible:not([data-disabled])': {
-						backgroundColor: styleUtils.blendWithColor(
-							theme.colors.surfaceContainerLow,
-							theme.colors.primary,
-							0.1,
-						),
+						backgroundColor: styleUtils.blendWithColor(theme.colors.primary, theme.colors.onPrimary, 0.1),
 					},
 					'&[data-disabled]': {
 						color: styleUtils.transparentize(theme.colors.onSurface, 0.38),
 						backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.1),
-						boxShadow: theme.elevation[0],
 						cursor: 'not-allowed',
 					},
 				},
@@ -92,27 +75,6 @@ export const buttonStyle = recipe({
 					},
 				},
 			},
-			filled: {
-				backgroundColor: theme.colors.primary,
-				color: theme.colors.onPrimary,
-				border: 'none',
-				selectors: {
-					'&:hover:not([data-disabled])': {
-						backgroundColor: styleUtils.blendWithColor(theme.colors.primary, theme.colors.onPrimary, 0.08),
-					},
-					'&:active:not([data-disabled])': {
-						backgroundColor: styleUtils.blendWithColor(theme.colors.primary, theme.colors.onPrimary, 0.08),
-					},
-					'&:focus-visible:not([data-disabled])': {
-						backgroundColor: styleUtils.blendWithColor(theme.colors.primary, theme.colors.onPrimary, 0.1),
-					},
-					'&[data-disabled]': {
-						color: styleUtils.transparentize(theme.colors.onSurface, 0.38),
-						backgroundColor: styleUtils.transparentize(theme.colors.onSurface, 0.1),
-						cursor: 'not-allowed',
-					},
-				},
-			},
 			outlined: {
 				color: theme.colors.onSurfaceVariant,
 				backgroundColor: 'transparent',
@@ -134,19 +96,19 @@ export const buttonStyle = recipe({
 					},
 				},
 			},
-			text: {
-				color: theme.colors.primary,
+			standard: {
+				color: theme.colors.onSurfaceVariant,
 				backgroundColor: 'transparent',
 				border: 'none',
 				selectors: {
 					'&:hover:not([data-disabled])': {
-						backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.08),
+						backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.08),
 					},
 					'&:active:not([data-disabled])': {
-						backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.08),
+						backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.08),
 					},
 					'&:focus-visible:not([data-disabled])': {
-						backgroundColor: styleUtils.transparentize(theme.colors.primary, 0.1),
+						backgroundColor: styleUtils.transparentize(theme.colors.onSurfaceVariant, 0.1),
 					},
 					'&[data-disabled]': {
 						color: styleUtils.transparentize(theme.colors.onSurface, 0.38),
@@ -156,56 +118,37 @@ export const buttonStyle = recipe({
 				},
 			},
 		},
-		size: {
-			extraSmall: [
-				typography({ variant: 'labelLarge' }),
-				{
-					height: theme.spacing[8],
-					paddingInline: theme.spacing[3],
-					gap: theme.spacing[1],
-				},
-			],
-			small: [
-				typography({ variant: 'labelLarge' }),
-				{
-					height: theme.spacing[10],
-					paddingInline: theme.spacing[4],
-					gap: theme.spacing[2],
-				},
-			],
-			medium: [
-				typography({ variant: 'titleMedium' }),
-				{
-					height: theme.spacing[14],
-					paddingInline: theme.spacing[6],
-					gap: theme.spacing[2],
-				},
-			],
-			large: [
-				typography({ variant: 'headlineSmall' }),
-				{
-					height: theme.spacing[24],
-					paddingInline: theme.spacing[12],
-					gap: theme.spacing[3],
-				},
-			],
-			extraLarge: [
-				typography({ variant: 'headlineLarge' }),
-				{
-					height: theme.spacing[34],
-					paddingInline: theme.spacing[16],
-					gap: theme.spacing[4],
-				},
-			],
-		},
 		shape: {
 			round: {
 				borderRadius: calc.multiply('infinity', '1px'),
 			},
 			square: {},
 		},
+		size: {
+			extraSmall: {
+				height: theme.spacing[8],
+			},
+			small: {
+				height: theme.spacing[10],
+			},
+			medium: {
+				height: theme.spacing[14],
+			},
+			large: {
+				height: theme.spacing[24],
+			},
+			extraLarge: {
+				height: theme.spacing[34],
+			},
+		},
+		width: {
+			narrow: {},
+			default: {},
+			wide: {},
+		},
 	},
 	compoundVariants: [
+		// Square shape border radius adjustments
 		{
 			variants: { shape: 'square', size: 'extraSmall' },
 			style: {
@@ -234,6 +177,97 @@ export const buttonStyle = recipe({
 			variants: { shape: 'square', size: 'extraLarge' },
 			style: {
 				borderRadius: 28,
+			},
+		},
+		// Width adjustments
+		{
+			variants: { width: 'default', size: 'extraSmall' },
+			style: {
+				width: theme.spacing[8],
+			},
+		},
+		{
+			variants: { width: 'default', size: 'small' },
+			style: {
+				width: theme.spacing[10],
+			},
+		},
+		{
+			variants: { width: 'default', size: 'medium' },
+			style: {
+				width: theme.spacing[14],
+			},
+		},
+		{
+			variants: { width: 'default', size: 'large' },
+			style: {
+				width: theme.spacing[24],
+			},
+		},
+		{
+			variants: { width: 'default', size: 'extraLarge' },
+			style: {
+				width: theme.spacing[34],
+			},
+		},
+		{
+			variants: { width: 'narrow', size: 'extraSmall' },
+			style: {
+				width: theme.spacing[7],
+			},
+		},
+		{
+			variants: { width: 'narrow', size: 'small' },
+			style: {
+				width: theme.spacing[8],
+			},
+		},
+		{
+			variants: { width: 'narrow', size: 'medium' },
+			style: {
+				width: theme.spacing[12],
+			},
+		},
+		{
+			variants: { width: 'narrow', size: 'large' },
+			style: {
+				width: theme.spacing[16],
+			},
+		},
+		{
+			variants: { width: 'narrow', size: 'extraLarge' },
+			style: {
+				width: theme.spacing[26],
+			},
+		},
+		{
+			variants: { width: 'wide', size: 'extraSmall' },
+			style: {
+				width: theme.spacing[10],
+			},
+		},
+		{
+			variants: { width: 'wide', size: 'small' },
+			style: {
+				width: theme.spacing[13],
+			},
+		},
+		{
+			variants: { width: 'wide', size: 'medium' },
+			style: {
+				width: theme.spacing[18],
+			},
+		},
+		{
+			variants: { width: 'wide', size: 'large' },
+			style: {
+				width: theme.spacing[32],
+			},
+		},
+		{
+			variants: { width: 'wide', size: 'extraLarge' },
+			style: {
+				width: theme.spacing[46],
 			},
 		},
 	],
@@ -266,4 +300,4 @@ export const iconStyle = recipe({
 	},
 })
 
-export type ButtonVariants = RecipeVariants<typeof buttonStyle>
+export type ContainerVariants = RecipeVariants<typeof containerStyle>

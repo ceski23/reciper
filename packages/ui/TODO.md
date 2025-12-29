@@ -17,11 +17,11 @@ This is an ordered, dependency-aware task list for recreating `src/lib/component
 - [x] `Ripples`
     - Depends on: `@hooks/useRipples`
 - [x] `Tooltip`
-    - [ ] Depends on: `Typography`
+    - Depends on: `Typography`
 - [x] `Button`
-    - [ ] Depends on: `Icon`, `@hooks/useRipples`
-- [ ] `IconButton`
-    - [ ] Depends on: `Icon`, `Tooltip`, `@hooks/useRipples`
+    - Depends on: `Icon`, `@hooks/useRipples`
+- [x] `IconButton`
+    - Depends on: `Icon`, `Tooltip`, `@hooks/useRipples`
 
 ## Form controls (build upward from text base)
 

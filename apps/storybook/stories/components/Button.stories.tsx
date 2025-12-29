@@ -147,21 +147,22 @@ export const Shape = meta.story({
 })
 
 export const WithIcon = meta.story({
-	render: args => (
-		<Button
-			{...args}
-			children="Button with icon"
-			leftIcon={SampleIcon}
-		/>
-	),
+	args: {
+		leftIcon: SampleIcon,
+		children: 'Button with icon',
+	},
 })
 
 export const Disabled = meta.story({
-	render: args => (
-		<Button
-			{...args}
-			children="Disabled"
-			disabled
-		/>
-	),
+	args: {
+		children: 'Disabled',
+		disabled: true,
+	},
+})
+
+export const Link = meta.story({
+	args: {
+		children: 'Link Button',
+		render: <a href="https://google.com" />,
+	},
 })

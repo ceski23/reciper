@@ -31,6 +31,7 @@ const InternalTooltip = <TPayload,>({
 					<BaseTooltip.Trigger
 						render={children}
 						closeDelay={closeDelay}
+						id={props.triggerId ?? undefined}
 					/>
 				)}
 				<BaseTooltip.Portal>
