@@ -8,7 +8,7 @@ This is an ordered, dependency-aware task list for recreating `src/lib/component
 
 - [x] `Typography`
 - [x] `ProgressIndicator`
-- [ ] `Skeleton`
+- [x] `Skeleton`
 - [ ] `AnimatedTitle`
 
 ## Interaction / feedback primitives

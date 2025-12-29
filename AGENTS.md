@@ -79,6 +79,7 @@ bun run format               # oxfmt (120 char width, tabs, single quotes)
 ### Layout Primitives (`packages/ui/src/components/utils/`)
 
 - `Box` - Atomic CSS wrapper via `@dessert-box/react` with sprinkles
+    - **Escape Hatch**: Use `__<property>="value"` syntax (e.g., `__margin="42px"`, `__width="200px"`, `__backgroundColor="yellow"`) to specify arbitrary non-design-token values for any atomic property
 - `Stack` - Flexbox container with gap
 - `Inline` - Inline-flex container
 - `Center` - Center content (flex)

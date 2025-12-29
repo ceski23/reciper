@@ -56,6 +56,17 @@ const layout = defineProperties({
 			['width', 'maxWidth', 'height', 'maxHeight', 'left', 'top', 'right', 'bottom'],
 			['0', '0%', '50%', '100%', 'auto', '100vh', '100vw', '100vmin', '100vmax'],
 		),
+		// Border radius properties
+		...mapTo(
+			[
+				'borderRadius',
+				'borderTopLeftRadius',
+				'borderTopRightRadius',
+				'borderBottomLeftRadius',
+				'borderBottomRightRadius',
+			],
+			{ ...theme.spacing, '50%': '50%' },
+		),
 	},
 	shorthands: {
 		// Space shorthands
