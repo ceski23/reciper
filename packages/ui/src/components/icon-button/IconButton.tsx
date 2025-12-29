@@ -28,13 +28,7 @@ export const IconButton: FunctionComponent<IconButtonProps> = ({
 	const ripple = useRipple()
 	const triggerId = useId()
 	const [tooltipHandle] = useState(() => Tooltip.createHandle())
-	const longPressHandlers = useLongPress(
-		() => {
-			tooltipHandle.open(triggerId)
-			navigator.vibrate(1)
-		},
-		{ threshold: 700 },
-	)
+	const longPressHandlers = useLongPress(() => tooltipHandle.open(triggerId))
 
 	return (
 		<Tooltip
