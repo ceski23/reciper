@@ -37,9 +37,9 @@ This is an ordered, dependency-aware task list for recreating `src/lib/component
 
 ## Small composites / building blocks
 
-- [ ] `Link`
+- [x] `Link`
     - Depends on: router (`@tanstack/react-router`)
-- [ ] `Chip`
+- [x] `Chip`
     - Depends on: `Icon`, `Typography`, router
 - [ ] `SegmentedButton`
     - Depends on: `Icon`, `Typography`, `@hooks/useRipples`, `@styles/theme`
