@@ -64,16 +64,16 @@ bun run format               # oxfmt (120 char width, tabs, single quotes)
 
     ```ts
     // component.css.ts
-    import { style } from '@vanilla-extract/css';
-    import { theme } from '#theme';
+    import { style } from '@vanilla-extract/css'
+    import { theme } from '#theme'
 
     export const container = style({
-      padding: theme.spacing[4],
-      backgroundColor: theme.colors.surface,
-      borderRadius: '8px',
-      display: 'flex',
-      gap: theme.spacing[2]
-    });
+    	padding: theme.spacing[4],
+    	backgroundColor: theme.colors.surface,
+    	borderRadius: '8px',
+    	display: 'flex',
+    	gap: theme.spacing[2],
+    })
     ```
 
 ### Layout Primitives (`packages/ui/src/components/utils/`)
@@ -111,16 +111,16 @@ bun run format               # oxfmt (120 char width, tabs, single quotes)
 - **Example:**
 
     ```ts
-    import { db } from '@repo/database';
-    import { users } from '@repo/database/schema';
-    import { eq } from 'drizzle-orm';
+    import { db } from '@repo/database'
+    import { users } from '@repo/database/schema'
+    import { eq } from 'drizzle-orm'
 
     const user = await db.query.users.findFirst({
-      where: eq(users.id, userId),
-      with: {
-        posts: true,
-      },
-    });
+    	where: eq(users.id, userId),
+    	with: {
+    		posts: true,
+    	},
+    })
     ```
 
 ## Package Imports

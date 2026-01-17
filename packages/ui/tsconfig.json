@@ -15,8 +15,8 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "ES2022",
-		"jsx": "react-jsx",
+		"jsx": "react-jsx"
 	},
 	"include": ["src", "./scripts"],
-	"exclude": ["node_modules"],
+	"exclude": ["node_modules"]
 }

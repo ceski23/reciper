@@ -1,7 +1,7 @@
 ---
 name: Storybook Guidelines
 description: Conventions for authoring Storybook stories and docs in this repo.
-applyTo: "apps/storybook/**"
+applyTo: 'apps/storybook/**'
 ---
 
 # Storybook conventions (`apps/storybook`)

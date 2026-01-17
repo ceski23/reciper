@@ -1,7 +1,7 @@
 ---
 name: UI Components Guidelines
 description: Guidelines for developing and maintaining UI components in the project.
-applyTo: "packages/ui/**"
+applyTo: 'packages/ui/**'
 ---
 
 # UI package agent notes (`packages/ui`)

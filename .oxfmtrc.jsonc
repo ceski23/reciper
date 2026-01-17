@@ -15,4 +15,5 @@
 	"trailingComma": "all",
 	"useTabs": true,
 	"ignorePatterns": ["apps/web/src/routeTree.gen.ts", "apps/web/.output", "packages/database/migrations"],
+	"experimentalSortPackageJson": false,
 }

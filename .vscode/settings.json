@@ -1,6 +1,6 @@
 {
 	"editor.formatOnSave": true,
-	"[javascript][javascriptreact][typescriptreact][typescript]": {
+	"[javascript][javascriptreact][typescriptreact][typescript][json][jsonc]": {
 		"editor.defaultFormatter": "oxc.oxc-vscode"
 	},
 	"editor.rulers": [120],
